@@ -75,4 +75,6 @@ dependencies {
     api project.okhttp
     api project.okhttpLogging
 
+    api (project.rxkotlin)
+
 }

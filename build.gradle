@@ -62,6 +62,8 @@ buildscript {
         okhttp = "com.squareup.okhttp3:okhttp:$okhttp_version"
         okhttpLogging = "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
+        def rxKotlin_version = "3.0.1"
+        rxkotlin = "io.reactivex.rxjava3:rxkotlin:$rxKotlin_version"
 
     }
 }
