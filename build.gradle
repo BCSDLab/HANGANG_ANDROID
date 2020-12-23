@@ -57,6 +57,11 @@ buildscript {
         glide = "com.github.bumptech.glide:glide:$glide_version"
         glideAnnotation = "com.github.bumptech.glide:compiler:$glide_version"
 
+        /* Dependency - okhttp */
+        def okhttp_version = "3.12.0"
+        okhttp = "com.squareup.okhttp3:okhttp:$okhttp_version"
+        okhttpLogging = "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
 
     }
 }

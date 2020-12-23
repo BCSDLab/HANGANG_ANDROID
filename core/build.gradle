@@ -71,4 +71,8 @@ dependencies {
     api project.glide
     annotationProcessor project.glideAnnotation
 
+    /* Dependency - okhttp */
+    api project.okhttp
+    api project.okhttpLogging
+
 }
