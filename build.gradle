@@ -8,9 +8,34 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath 'com.google.gms:google-services:4.3.4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+    ext{
+        /* Dependency - AndroidX Jetpack */
+        def androidx_appcompat_version = "1.2.0"
+        androidxAppCompat = "androidx.appcompat:appcompat:$androidx_appcompat_version"
+
+        def android_cardview_version = "1.0.0"
+        androidxCardView = "androidx.cardview:cardview:$android_cardview_version"
+
+        def android_recyclerview_version = "1.1.0"
+        androidxRecyclerView = "androidx.recyclerview:recyclerview:$android_recyclerview_version"
+
+        /* Dependency - AndroidX Navigation */
+        def android_navigation_version = "2.3.2"
+        androidxNavigation = "androidx.navigation:navigation-fragment:$android_navigation_version"
+        androidxNavigationUi = "androidx.navigation:navigation-ui:$android_navigation_version"
+        androidxNavgationKtx = "androidx.navigation:navigation-ui-ktx:$android_navigation_version"
+        androidxNavgationFragment = "androidx.navigation:navigation-fragment-ktx:$android_navigation_version"
+
+        /* Dependency - AndroidX Lifecycle */
+        def android_lifecycle_version = "2.2.0"
+        androidxLifecycleLivedata = "androidx.lifecycle:lifecycle-livedata-ktx:$android_lifecycle_version"
+        androidLifecycleViewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$android_lifecycle_version"
+
+
     }
 }
 
