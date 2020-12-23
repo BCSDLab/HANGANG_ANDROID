@@ -50,6 +50,7 @@ dependencies {
     api project.androidxNavgationFragment
     api project.androidxNavgationKtx
     api project.androidxNavigationUi
+    api project.androidxMaterial
 
     /* Dependency - AndroidX lifecycle */
     api project.androidxLifecycleLivedata
@@ -61,5 +62,8 @@ dependencies {
     api project.retrofitRxJava
     api project.retrofitMoshiConvert
 
-
+    /* Dependency - leakcanary */
+    debugImplementation project.leakcanaryDebug
+    releaseImplementation project.leakcanaryRelease
+    debugImplementation project.leakcanrySupportFragment
 }
