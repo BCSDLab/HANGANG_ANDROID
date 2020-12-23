@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "339697160687",
+    "project_id": "hangang-b124b",
+    "storage_bucket": "hangang-b124b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339697160687:android:527356a5c53ec50dbfe61a",
+        "android_client_info": {
+          "package_name": "in.hangang.hangang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339697160687-el4dc4g82tb16k52ssdebe8hghpi8fbu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxl2TJzcb8pD-mnUT8-cst8DzwjpSZqlk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339697160687-el4dc4g82tb16k52ssdebe8hghpi8fbu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
