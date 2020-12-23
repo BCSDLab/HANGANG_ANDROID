@@ -66,4 +66,9 @@ dependencies {
     debugImplementation project.leakcanaryDebug
     releaseImplementation project.leakcanaryRelease
     debugImplementation project.leakcanrySupportFragment
+
+    /* Dependency - glide */
+    api project.glide
+    annotationProcessor project.glideAnnotation
+
 }

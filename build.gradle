@@ -52,6 +52,10 @@ buildscript {
         leakcanaryRelease = "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
         leakcanrySupportFragment = "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanary_version"
 
+        /* Dependency - glide */
+        def glide_version = "4.11.0"
+        glide = "com.github.bumptech.glide:glide:$glide_version"
+        glideAnnotation = "com.github.bumptech.glide:compiler:$glide_version"
 
 
     }
