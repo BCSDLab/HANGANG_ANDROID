@@ -55,7 +55,11 @@ dependencies {
     api project.androidxLifecycleLivedata
     api project.androidLifecycleViewmodel
 
-
+    /* Dependency - Retrofit2 */
+    api project.retrofit
+    api project.retrofitGsonConvert
+    api project.retrofitRxJava
+    api project.retrofitMoshiConvert
 
 
 }

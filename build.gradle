@@ -35,6 +35,12 @@ buildscript {
         androidxLifecycleLivedata = "androidx.lifecycle:lifecycle-livedata-ktx:$android_lifecycle_version"
         androidLifecycleViewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$android_lifecycle_version"
 
+        /* Dependency - Retrofit2 */
+        def retrofit_version = "2.9.0"
+        retrofit = "com.squareup.retrofit2:retrofit:$retrofit_version"
+        retrofitMoshiConvert = "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+        retrofitGsonConvert = "com.squareup.retrofit2:converter-gson:$retrofit_version"
+        retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
     }
 }
