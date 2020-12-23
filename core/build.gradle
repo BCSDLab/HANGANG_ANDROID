@@ -77,4 +77,7 @@ dependencies {
     /* Dependency - rxkotlin */
     api (project.rxkotlin)
 
+    /* Dependency - lottie */
+    api project.lottie
+
 }
