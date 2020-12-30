@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dialog_text_margin"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:gravity="top|start"
         app:layout_constraintBottom_toTopOf="@id/button_positive"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
