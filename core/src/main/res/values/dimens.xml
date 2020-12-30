@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dialog_text_margin">16dp</dimen>
+    <dimen name="dialog_button_margin">8dp</dimen>
+    <dimen name="dialog_button_height">36dp</dimen>
+    <dimen name="dialog_background_corner_radius">4dp</dimen>
+</resources>
