@@ -14,23 +14,32 @@ open class ActivityBase : AppCompatActivity() {
     }
 
     fun showSimpleDialog(
-        message: String,
-        positiveButtonText: String? = null,
-        negativeButtonString: String? = null,
-        positiveButtonOnClickListener: View.OnClickListener? = null,
-        negativeButtonOnClickListener: View.OnClickListener? = null
+            message: String,
+            positiveButtonText: String? = null,
+            negativeButtonString: String? = null,
+            cancelable: Boolean = true,
+            positiveButtonOnClickListener: View.OnClickListener? = null,
+            negativeButtonOnClickListener: View.OnClickListener? = null
     ) {
         if (simpleDialog == null) {
             simpleDialog = SimpleDialog(
-                this,
-                message,
-                positiveButtonText,
-                negativeButtonString,
-                positiveButtonOnClickListener,
-                negativeButtonOnClickListener
+                    this,
+                    message,
+                    positiveButtonText,
+                    negativeButtonString,
+                    cancelable,
+                    positiveButtonOnClickListener,
+                    negativeButtonOnClickListener
             )
 
             simpleDialog!!.show()
+        }
+    }
+
+    fun dismissSimpleDialog() {
+        simpleDialog?.let {
+            it.dismiss()
+            simpleDialog = null
         }
     }
 }

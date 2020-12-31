@@ -16,9 +16,10 @@ class MainActivity : ActivityBase() {
         NavigationUI.setupWithNavController(navView, navController)
 
         showSimpleDialog(
-            message = "omg",
-            positiveButtonText = "ok",
-            negativeButtonString = "cancel"
+                message = "OMG",
+                positiveButtonText = "확인",
+                negativeButtonString = "닫기",
+                cancelable = false
         )
     }
 }
