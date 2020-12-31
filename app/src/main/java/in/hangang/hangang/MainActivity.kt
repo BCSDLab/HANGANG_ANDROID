@@ -18,7 +18,10 @@ class MainActivity : ActivityBase() {
         showSimpleDialog(
                 message = "OMG",
                 positiveButtonText = "확인",
-                negativeButtonString = "닫기",
+                negativeButtonText = "닫기",
+                positiveButtonOnClickListener = {
+                    dismissSimpleDialog()
+                },
                 cancelable = false
         )
     }
