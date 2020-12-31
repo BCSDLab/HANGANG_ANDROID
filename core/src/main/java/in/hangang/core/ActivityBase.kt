@@ -1,12 +1,14 @@
 package `in`.hangang.core
 
-import `in`.hangang.core.dialog.SimpleDialog
+import `in`.hangang.core.util.DialogUtil
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 open class ActivityBase : AppCompatActivity() {
-    var simpleDialog: SimpleDialog? = null
+    var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,32 +16,31 @@ open class ActivityBase : AppCompatActivity() {
     }
 
     fun showSimpleDialog(
-            message: String,
-            positiveButtonText: String? = null,
-            negativeButtonString: String? = null,
-            cancelable: Boolean = true,
+            title: String? = null,
+            message: String = "",
+            positiveButtonText: String = "OK",
+            negativeButtonText: String? = null,
             positiveButtonOnClickListener: View.OnClickListener? = null,
-            negativeButtonOnClickListener: View.OnClickListener? = null
+            negativeButtonOnClickListener: View.OnClickListener? = null,
+            cancelable: Boolean = true
     ) {
-        if (simpleDialog == null) {
-            simpleDialog = SimpleDialog(
-                    this,
+        if (dialog == null) {
+            dialog = DialogUtil.makeSimpleDialog(this,
+                    title,
                     message,
                     positiveButtonText,
-                    negativeButtonString,
-                    cancelable,
+                    negativeButtonText,
                     positiveButtonOnClickListener,
-                    negativeButtonOnClickListener
-            )
-
-            simpleDialog!!.show()
+                    negativeButtonOnClickListener,
+                    cancelable)
+            dialog!!.show()
         }
     }
 
     fun dismissSimpleDialog() {
-        simpleDialog?.let {
+        dialog?.let {
             it.dismiss()
-            simpleDialog = null
+            dialog = null
         }
     }
 }
