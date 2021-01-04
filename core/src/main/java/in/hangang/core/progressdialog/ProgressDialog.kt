@@ -8,19 +8,20 @@ import android.widget.TextView
 
 class ProgressDialog(val activity: Activity, val message: String) :
     AsyncTask<Void?, Void?, Void?>() {
+    private val TAG = "CustomProgressDialog"
     private var progressDialog: AlertDialog? = null
     lateinit private var progressMessage: TextView
-    private val TAG = "CustomProgressDialog"
+
 
     init {
-        val view = activity.layoutInflater.inflate(R.layout.layout_progressbar, null)
+        val view = activity.layoutInflater.inflate(R.layout.layout_progressbar, null)  //findviewbyId를 하기위해 view를 가져온다.
 
         var builder = AlertDialog.Builder(activity)
         builder.setCancelable(false)
-        builder.setView(view)
+        builder.setView(view)       //AlertDialog의 화면을 설정
 
         progressMessage = view.findViewById(R.id.progress_message)
-        progressMessage.text = message
+        progressMessage.text = message      //progressMessage 설정
 
         progressDialog = builder.create()
     }
