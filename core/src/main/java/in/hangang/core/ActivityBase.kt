@@ -6,9 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 
 open class ActivityBase : AppCompatActivity() {
     var dialog: Dialog? = null
+    val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,5 +58,19 @@ open class ActivityBase : AppCompatActivity() {
         extras(bundle)
         intent.putExtras(bundle)
         startActivity(intent)
+    }
+
+    fun addDisposable(vararg disposables: Disposable) {
+        compositeDisposable.addAll(*disposables)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(dialog != null) {
+            dialog!!.dismiss()
+            dialog = null
+        }
+        if(!compositeDisposable.isDisposed)
+            compositeDisposable.dispose()
     }
 }
