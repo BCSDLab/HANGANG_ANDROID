@@ -13,7 +13,7 @@ open class FragmentBase : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(!compositeDisposable.isDisposed) {
+        if (!compositeDisposable.isDisposed) {
             compositeDisposable.dispose()
         }
     }
