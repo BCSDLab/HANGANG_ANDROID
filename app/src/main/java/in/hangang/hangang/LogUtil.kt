@@ -7,25 +7,24 @@ import android.util.Log
 
 
 class LogUtil {
-    private val TAG = "HangangLog"
 
-    fun e(message: String?) {
+    fun e(TAG: String?, message: String?) {
         if (HangangApplication.DEBUG) Log.e(TAG, buildLogMsg(message))
     }
 
-    fun w(message: String?) {
+    fun w(TAG: String?,message: String?) {
         if (HangangApplication.DEBUG) Log.w(TAG, buildLogMsg(message))
     }
 
-    fun i(message: String?) {
+    fun i(TAG: String?,message: String?) {
         if (HangangApplication.DEBUG) Log.i(TAG, buildLogMsg(message))
     }
 
-    fun d(message: String?) {
+    fun d(TAG: String?,message: String?) {
         if (HangangApplication.DEBUG) Log.d(TAG, buildLogMsg(message))
     }
 
-    fun v(message: String?) {
+    fun v(TAG: String?,message: String?) {
         if (HangangApplication.DEBUG) Log.v(TAG, buildLogMsg(message))
     }
 
