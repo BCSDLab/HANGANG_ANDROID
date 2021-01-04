@@ -47,21 +47,24 @@ open class ActivityBase : AppCompatActivity() {
         }
     }
 
-    fun startActivity(javaClass: Class<*>) {
+    fun startActivity(javaClass: Class<*>, extras: ((Bundle) -> Unit)? = null) {
         val intent = Intent(this, javaClass)
+        if(extras != null) {
+            val bundle = Bundle()
+            extras(bundle)
+            intent.putExtras(bundle)
+        }
         startActivity(intent)
     }
 
-    fun startActivity(javaClass: Class<*>, extras: (Bundle) -> Unit) {
+    fun startActivityForResult(javaClass: Class<*>, requestCode: Int, extras: ((Bundle) -> Unit)? = null) {
         val intent = Intent(this, javaClass)
-        val bundle = Bundle()
-        extras(bundle)
-        intent.putExtras(bundle)
-        startActivity(intent)
-    }
-
-    fun addDisposable(vararg disposables: Disposable) {
-        compositeDisposable.addAll(*disposables)
+        if(extras != null) {
+            val bundle = Bundle()
+            extras(bundle)
+            intent.putExtras(bundle)
+        }
+        startActivityForResult(intent, requestCode)
     }
 
     override fun onDestroy() {
