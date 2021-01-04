@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 
 open class ActivityBase : AppCompatActivity() {
     var dialog: Dialog? = null
@@ -23,7 +22,7 @@ open class ActivityBase : AppCompatActivity() {
             message: String = "",
             positiveButtonText: String = "OK",
             negativeButtonText: String? = null,
-            positiveButtonOnClickListener: View.OnClickListener? = null,
+            positiveButtonOnClickListener: View.OnClickListener,
             negativeButtonOnClickListener: View.OnClickListener? = null,
             cancelable: Boolean = true
     ) {
@@ -49,7 +48,7 @@ open class ActivityBase : AppCompatActivity() {
 
     fun startActivity(javaClass: Class<*>, extras: ((Bundle) -> Unit)? = null) {
         val intent = Intent(this, javaClass)
-        if(extras != null) {
+        if (extras != null) {
             val bundle = Bundle()
             extras(bundle)
             intent.putExtras(bundle)
@@ -59,7 +58,7 @@ open class ActivityBase : AppCompatActivity() {
 
     fun startActivityForResult(javaClass: Class<*>, requestCode: Int, extras: ((Bundle) -> Unit)? = null) {
         val intent = Intent(this, javaClass)
-        if(extras != null) {
+        if (extras != null) {
             val bundle = Bundle()
             extras(bundle)
             intent.putExtras(bundle)
@@ -69,11 +68,11 @@ open class ActivityBase : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(dialog != null) {
+        if (dialog != null) {
             dialog!!.dismiss()
             dialog = null
         }
-        if(!compositeDisposable.isDisposed)
+        if (!compositeDisposable.isDisposed)
             compositeDisposable.dispose()
     }
 }

@@ -4,7 +4,6 @@ import `in`.hangang.core.R
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -19,11 +18,12 @@ object DialogUtil {
             message: String = "",
             positiveButtonText: String = "OK",
             negativeButtonText: String? = null,
-            positiveButtonOnClickListener: View.OnClickListener? = null,
+            positiveButtonOnClickListener: View.OnClickListener,
             negativeButtonOnClickListener: View.OnClickListener? = null,
             cancelable: Boolean = true
-    ) : Dialog {
+    ): Dialog {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_simple, null)
+        val textViewTitle = view.findViewById<TextView>(R.id.text_view_title)
         val textViewMessage = view.findViewById<TextView>(R.id.text_view_message)
         val buttonPositive = view.findViewById<Button>(R.id.button_positive)
         val buttonNegative = view.findViewById<Button>(R.id.button_negative)
@@ -33,7 +33,7 @@ object DialogUtil {
         buttonPositive.text = positiveButtonText
         buttonPositive.setOnClickListener(positiveButtonOnClickListener)
 
-        if(negativeButtonText == null)
+        if (negativeButtonText == null)
             buttonNegative.visibility = View.GONE
         else {
             buttonNegative.text = negativeButtonText
@@ -43,8 +43,10 @@ object DialogUtil {
         val builder = AlertDialog.Builder(context)
                 .setView(view)
 
-        if(title != null)
-            builder.setTitle(title)
+        if (title == null)
+            textViewTitle.visibility = View.GONE
+        else
+            textViewTitle.text = title
 
         val dialog = builder.create()
         dialog.setCancelable(cancelable)
