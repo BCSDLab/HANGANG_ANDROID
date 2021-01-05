@@ -3,7 +3,6 @@ package `in`.hangang.hangang
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.util.Log
 
 /**
  * 디버그모드인지 확인하는 함수

@@ -3,10 +3,7 @@ package `in`.hangang.core.progressdialog
 import `in`.hangang.core.R
 import android.app.Activity
 import android.app.AlertDialog
-import android.os.AsyncTask
 import android.widget.TextView
-import io.reactivex.Observable
-import io.reactivex.rxjava3.disposables.Disposable
 
 class ProgressDialog(val activity: Activity, val message: String){
     private val TAG = "CustomProgressDialog"

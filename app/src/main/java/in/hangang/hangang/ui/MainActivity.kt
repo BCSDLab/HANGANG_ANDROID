@@ -1,7 +1,6 @@
 package `in`.hangang.hangang.ui
 
 import `in`.hangang.core.ActivityBase
-import `in`.hangang.core.progressdialog.ProgressDialog
 import `in`.hangang.hangang.R
 import android.os.Bundle
 import androidx.navigation.Navigation
