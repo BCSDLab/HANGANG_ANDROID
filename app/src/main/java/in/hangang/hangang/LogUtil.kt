@@ -8,7 +8,7 @@ import android.util.Log
 
 object LogUtil {
     val TAG = "LogUtil"
-    private var isLoggable = false      //로그를 출력해도 되는지 판단하는 변수
+    var isLoggable = false      //로그를 출력해도 되는지 판단하는 변수
 
     /**
      * 로그 메세지를 생성하는 함수
