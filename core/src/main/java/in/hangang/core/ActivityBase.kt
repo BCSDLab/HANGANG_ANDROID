@@ -19,7 +19,7 @@ open class ActivityBase : AppCompatActivity() {
 
     fun showSimpleDialog(
             title: String? = null,
-            message: String = "",
+            message: String,
             positiveButtonText: String = "OK",
             negativeButtonText: String? = null,
             positiveButtonOnClickListener: View.OnClickListener,
