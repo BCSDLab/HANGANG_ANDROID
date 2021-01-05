@@ -10,7 +10,7 @@ public class HangangApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         hangangApplicationContext = this
-        LogUtil.isDebuggable(hangangApplicationContext)
+        LogUtil.isApplicationDebug(hangangApplicationContext)
     }
 
 }
