@@ -1,7 +1,8 @@
-package `in`.hangang.hangang
+package `in`.hangang.hangang.ui
 
 import `in`.hangang.core.ActivityBase
 import `in`.hangang.core.progressdialog.ProgressDialog
+import `in`.hangang.hangang.R
 import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
@@ -13,7 +14,7 @@ class MainActivity : ActivityBase() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val navController = Navigation.findNavController(this,R.id.nav_host_fragment)
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(navView, navController)
     }
 }

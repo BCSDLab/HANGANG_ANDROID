@@ -5,9 +5,10 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.os.AsyncTask
 import android.widget.TextView
+import io.reactivex.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 
-class ProgressDialog(val activity: Activity, val message: String) :
-    AsyncTask<Void?, Void?, Void?>() {
+class ProgressDialog(val activity: Activity, val message: String){
     private val TAG = "CustomProgressDialog"
     private var progressDialog: AlertDialog? = null
     lateinit private var progressMessage: TextView
@@ -34,27 +35,4 @@ class ProgressDialog(val activity: Activity, val message: String) :
         progressDialog?.dismiss()
     }
 
-    override fun onPreExecute() {
-
-        progressDialog?.show()
-    }
-
-    override fun onPostExecute(aVoid: Void?) {
-        if (progressDialog != null) progressDialog?.dismiss()
-    }
-
-    override fun onCancelled(aVoid: Void?) {
-        if (progressDialog != null) progressDialog!!.dismiss()
-        super.onCancelled(aVoid)
-        progressDialog = null
-    }
-
-    override fun doInBackground(vararg params: Void?): Void? {
-        while (true) {
-            if (isCancelled) {
-                break
-            }
-        }
-        return null
-    }
 }
