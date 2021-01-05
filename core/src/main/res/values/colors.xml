@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Hangang blue color -->
+    <color name="blue_500">#ff238bfe</color>
+
+    <!-- Hangang orange color -->
+    <color name="orange_500">#ffffab2e</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="gray_500">#999999</color>
+    <color name="gray_300">#eeeeee</color>
+</resources>
