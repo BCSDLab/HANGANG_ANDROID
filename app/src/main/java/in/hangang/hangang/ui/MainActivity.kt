@@ -1,8 +1,10 @@
 package `in`.hangang.hangang.ui
 
 import `in`.hangang.core.ActivityBase
+import `in`.hangang.hangang.LogUtil
 import `in`.hangang.hangang.R
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
