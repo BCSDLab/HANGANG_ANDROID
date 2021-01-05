@@ -29,13 +29,15 @@ object LogUtil {
      * 디버그모드인지 확인하는 함수
      */
     fun isApplicationDebug(context: Context): Boolean {
+        var debuggable = false
         val pm: PackageManager = context.getPackageManager()
         try {
             val appinfo = pm.getApplicationInfo(context.getPackageName(), 0)
-            isLoggable = 0 != appinfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
+            debuggable = 0 != appinfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
         } catch (e: PackageManager.NameNotFoundException) {
         }
-        return isLoggable
+
+        return debuggable
     }
 
     fun setIsLoggable(value: Boolean) {
