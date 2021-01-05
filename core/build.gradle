@@ -83,7 +83,7 @@ dependencies {
     api project.okhttpLogging
 
     /* Dependency - rxkotlin */
-    api(project.rxkotlin)
+    api (project.rxkotlin)
 
     /* Dependency - lottie */
     api project.lottie
