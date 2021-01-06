@@ -2,17 +2,18 @@ package `in`.hangang.hangang.ui
 
 import `in`.hangang.core.ActivityBase
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.databinding.ActivityMainBinding
 import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : ActivityBase<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : ActivityBase() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        NavigationUI.setupWithNavController(binding.navView, navController)
+        NavigationUI.setupWithNavController(navView, navController)
     }
 }
