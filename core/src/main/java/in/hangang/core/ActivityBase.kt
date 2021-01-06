@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 open class ActivityBase<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : AppCompatActivity() {
     protected var dialog: Dialog? = null
@@ -19,6 +20,10 @@ open class ActivityBase<T : ViewDataBinding>(@LayoutRes private val layoutId: In
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layoutId)
+    }
+
+    fun addDisposable(vararg disposables: Disposable) {
+        compositeDisposable.addAll(*disposables)
     }
 
     fun showSimpleDialog(
