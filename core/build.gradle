@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -38,6 +39,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -83,7 +87,7 @@ dependencies {
     api project.okhttpLogging
 
     /* Dependency - rxkotlin */
-    api (project.rxkotlin)
+    api(project.rxkotlin)
 
     /* Dependency - lottie */
     api project.lottie

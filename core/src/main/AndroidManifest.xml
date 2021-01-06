@@ -3,7 +3,7 @@
     package="in.hangang.core">
 
     <application>
-        <activity android:name=".ActivityBase"></activity>
+        <activity android:name=".base.activity.ActivityBase"></activity>
     </application>
 
 </manifest>
