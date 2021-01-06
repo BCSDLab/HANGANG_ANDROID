@@ -9,11 +9,11 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.disposables.CompositeDisposable
 
 open class ActivityBase<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : AppCompatActivity() {
-    var dialog: Dialog? = null
-    lateinit var binding : T
+    protected var dialog: Dialog? = null
+    protected lateinit var binding : T
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {

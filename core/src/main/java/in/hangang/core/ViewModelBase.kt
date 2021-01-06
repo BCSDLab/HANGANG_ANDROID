@@ -1,8 +1,8 @@
 package `in`.hangang.core
 
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 open class ViewModelBase : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
