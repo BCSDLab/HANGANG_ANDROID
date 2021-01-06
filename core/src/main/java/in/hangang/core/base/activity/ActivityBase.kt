@@ -1,25 +1,20 @@
-package `in`.hangang.core
+package `in`.hangang.core.base.activity
 
 import `in`.hangang.core.util.DialogUtil
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class ActivityBase<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : AppCompatActivity() {
+open class ActivityBase : AppCompatActivity() {
     protected var dialog: Dialog? = null
-    protected lateinit var binding : T
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, layoutId)
     }
 
     fun addDisposable(vararg disposables: Disposable) {
@@ -83,6 +78,5 @@ open class ActivityBase<T : ViewDataBinding>(@LayoutRes private val layoutId: In
         }
         if (!compositeDisposable.isDisposed)
             compositeDisposable.dispose()
-        binding.unbind()
     }
 }

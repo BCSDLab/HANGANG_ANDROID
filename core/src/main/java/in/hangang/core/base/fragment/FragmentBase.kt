@@ -1,4 +1,4 @@
-package `in`.hangang.core
+package `in`.hangang.core.base.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,19 +11,9 @@ import androidx.fragment.app.Fragment
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class FragmentBase<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : Fragment() {
+open class FragmentBase : Fragment() {
 
-    protected lateinit var binding : T
     private val compositeDisposable = CompositeDisposable()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        return binding.root
-    }
 
     fun addDisposable(vararg disposables: Disposable) {
         compositeDisposable.addAll(*disposables)
@@ -34,6 +24,5 @@ open class FragmentBase<T : ViewDataBinding>(@LayoutRes private val layoutId: In
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.dispose()
         }
-        binding.unbind()
     }
 }

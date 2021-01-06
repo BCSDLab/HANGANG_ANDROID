@@ -1,4 +1,4 @@
-package `in`.hangang.core
+package `in`.hangang.core.base.viewmodel
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
