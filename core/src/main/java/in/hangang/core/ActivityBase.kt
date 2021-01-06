@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 open class ActivityBase : AppCompatActivity() {
     var dialog: Dialog? = null
-    val compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
