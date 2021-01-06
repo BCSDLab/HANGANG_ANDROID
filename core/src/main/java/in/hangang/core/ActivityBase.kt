@@ -5,16 +5,20 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-open class ActivityBase : AppCompatActivity() {
+open class ActivityBase<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : AppCompatActivity() {
     var dialog: Dialog? = null
+    lateinit var binding : T
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+        binding = DataBindingUtil.setContentView(this, layoutId)
     }
 
     fun showSimpleDialog(
@@ -74,5 +78,6 @@ open class ActivityBase : AppCompatActivity() {
         }
         if (!compositeDisposable.isDisposed)
             compositeDisposable.dispose()
+        binding.unbind()
     }
 }
