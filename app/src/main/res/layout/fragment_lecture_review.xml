@@ -9,6 +9,7 @@
             type="in.hangang.hangang.ui.home.LectureReviewFragment" />
     </data>
 
+
    <com.github.mikephil.charting.charts.BarChart
        android:id="@+id/barchart"
        android:layout_width="match_parent"
