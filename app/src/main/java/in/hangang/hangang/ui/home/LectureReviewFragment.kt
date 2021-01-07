@@ -67,19 +67,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
             setPinchZoom(false) // 핀치줌(두손가락으로 줌인 줌 아웃하는것) 설정
             setDrawBarShadow(false)//그래프의 그림자
             setDrawGridBackground(false)//격자구조 넣을건지
-            axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
-                axisMaximum = 101f //100 위치에 선을 그리기 위해 101f로 맥시멈을 정해주었다
-                axisMinimum = 0f // 최소값 0
-                granularity = 50f // 50 단위마다 선을 그리려고 granularity 설정 해 주었다.
-                //위 설정이 20f였다면 총 5개의 선이 그려졌을 것
-                setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
-                setDrawGridLines(true) //격자 라인 활용
-                setDrawAxisLine(false) // 축 그리기 설정
-                axisLineColor = ContextCompat.getColor(context,R.color.mango) // 축 색깔 설정
-                gridColor = ContextCompat.getColor(context,R.color.mango) // 축 아닌 격자 색깔 설정
-                textColor = ContextCompat.getColor(context,R.color.mango) // 라벨 텍스트 컬러 설정
-                textSize = 14f //라벨 텍스트 크기
-            }
+
             xAxis.run {
                 position = XAxis.XAxisPosition.BOTTOM//X축을 아래에다가 둔다.
                 setDrawAxisLine(true) // 축 그림
@@ -100,9 +88,9 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
     }
 
     inner class MyXAxisFormatter : ValueFormatter(){
-        private val days = arrayOf(" ","1.0"," ","2.0"," ","3.0"," ", "4.0", " ", "5.0")
+        private val values = arrayOf(" ","1.0"," ","2.0"," ","3.0"," ", "4.0", " ", "5.0")
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-            return days.getOrNull(value.toInt()-1) ?: value.toString()
+            return values.getOrNull(value.toInt()-1) ?: value.toString()
         }
     }
 
