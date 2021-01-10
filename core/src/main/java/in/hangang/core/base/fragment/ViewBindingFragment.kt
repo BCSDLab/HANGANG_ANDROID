@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-class ViewBindingFragment<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : FragmentBase() {
+open class ViewBindingFragment<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : FragmentBase() {
 
     protected lateinit var binding : T
 

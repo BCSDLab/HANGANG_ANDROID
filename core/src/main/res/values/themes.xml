@@ -24,8 +24,13 @@
         <item name="android:textColorTertiary">@color/gray_100</item>
     </style>
 
-    <style name="Theme.Hangang.Dialog" parent="android:Theme.Translucent">
-        <item name="android:windowBackground">#77ff0000</item>
-        <item name="android:windowFullscreen">true</item>
+    <style name="HangangBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/HangangModalStyle</item>
+    </style>
+
+    <style name="HangangModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/drawable_background_bottom_sheet</item>
     </style>
 </resources>

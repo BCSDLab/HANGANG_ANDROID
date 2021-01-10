@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/drawable_background_bottom_sheet">
+
+    <View
+        android:layout_width="@dimen/spinner_bottom_sheet_handle_width"
+        android:layout_height="1dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/drawable_handle"
+        android:backgroundTint="@color/gray_200" />
+
+    <ListView
+        android:id="@+id/spinner_bottom_sheet_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>
+

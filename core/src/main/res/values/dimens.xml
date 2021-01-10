@@ -13,4 +13,9 @@
 
     <!-- Dimension for hangang radio button -->
     <dimen name="radio_min_width">64dp</dimen>
+
+    <!-- Dimension for hangang spinner -->
+    <dimen name="spinner_background_radius">4dp</dimen>
+    <dimen name="spinner_bottom_sheet_handle_width">32dp</dimen>
+    <dimen name="spinner_bottom_sheet_background_radius">16dp</dimen>
 </resources>
