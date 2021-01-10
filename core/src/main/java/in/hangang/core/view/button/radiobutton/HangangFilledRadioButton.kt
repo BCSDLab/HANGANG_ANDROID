@@ -1,10 +1,9 @@
-package `in`.hangang.core.view.button
+package `in`.hangang.core.view.button.radiobutton
 
 import `in`.hangang.core.R
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 
 class HangangFilledRadioButton @JvmOverloads constructor(
@@ -19,7 +18,10 @@ class HangangFilledRadioButton @JvmOverloads constructor(
         isClickable = true
         buttonDrawable = null
         setBackgroundResource(R.drawable.rounded_corner_rectangle_filled)
-        backgroundTintList = ContextCompat.getColorStateList(context, R.color.color_state_radio_button_blue)
-        setTextColor(ContextCompat.getColorStateList(context, R.color.color_state_radio_button_text))
+        backgroundTintList =
+            ContextCompat.getColorStateList(context, R.color.color_state_radio_button_blue)
+        setTextColor(
+            ContextCompat.getColorStateList(context, R.color.color_state_radio_button_text)
+        )
     }
 }

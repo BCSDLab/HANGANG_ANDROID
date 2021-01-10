@@ -9,6 +9,7 @@
 
     <!-- Dimension for small checkbox -->
     <dimen name="checkbox_button_size">12dp</dimen>
+    <dimen name="checkbox_button_padding">16dp</dimen>
 
     <!-- Dimension for hangang radio button -->
     <dimen name="radio_min_width">64dp</dimen>
