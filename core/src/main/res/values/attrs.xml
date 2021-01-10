@@ -6,4 +6,16 @@
             <enum name="outlined" value="1" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="HangangAppBar">
+        <attr name="showBackButton" format="boolean" />
+        <attr name="showRightButton" format="boolean" />
+        <attr name="titleText" format="string|reference" />
+        <attr name="rightButtonText" format="string|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="HangangProgressAppBar">
+        <attr name="max" format="integer|reference" />
+        <attr name="progress" format="integer|reference" />
+    </declare-styleable>
 </resources>
