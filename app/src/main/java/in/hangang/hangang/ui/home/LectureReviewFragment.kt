@@ -2,8 +2,7 @@ package `in`.hangang.hangang.ui.home
 
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentLectureReviewBinding
-import `in`.hangang.hangang.util.initScoreChar
-import android.content.Context
+import `in`.hangang.hangang.util.initScoreChart
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +44,7 @@ class LectureReviewFragment : Fragment() {
         entries.add(BarEntry(9f, 56.0f))
         entries.add(BarEntry(10f, 38.0f))
 
-        binding.barchart.initScoreChar(requireContext(), entries)
+        binding.barchart.initScoreChart(requireContext(), entries)
     }
 
 

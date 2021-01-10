@@ -13,7 +13,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 
 
-fun BarChart.initScoreChar(context: Context, entries: ArrayList<BarEntry>) {
+fun BarChart.initScoreChart(context: Context, entries: ArrayList<BarEntry>) {
 
     var set = BarDataSet(entries, "DataSet")//데이터셋 초기화 하기
     set.color = ContextCompat.getColor(context, R.color.mango)
