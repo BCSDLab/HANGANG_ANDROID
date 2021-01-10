@@ -2,6 +2,7 @@
 <resources>
     <!-- Hangang blue color -->
     <color name="blue_500">#ff238bfe</color>
+    <color name="blue_100">#bddcff</color>
 
     <!-- Hangang orange color -->
     <color name="orange_500">#ffffab2e</color>

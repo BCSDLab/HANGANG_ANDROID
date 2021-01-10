@@ -3,12 +3,12 @@
     <style name="Theme.Hangang.Base" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary Hangang color(Blue). -->
         <item name="colorPrimary">@color/blue_500</item>
-        <item name="colorPrimaryVariant">@color/blue_500</item>
+        <item name="colorPrimaryVariant">@color/blue_100</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary Hangang color(Orange). -->
         <item name="colorSecondary">@color/orange_500</item>
         <item name="colorSecondaryVariant">@color/orange_500</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSurface</item>
     </style>
