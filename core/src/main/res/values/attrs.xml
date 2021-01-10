@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundedCornerButton">
+        <attr name="buttonAppearence" format="enum">
+            <enum name="filled" value="0" />
+            <enum name="outlined" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>
