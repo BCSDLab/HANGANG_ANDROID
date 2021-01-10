@@ -7,7 +7,7 @@ import android.view.Gravity
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 
-class HangangRadioButton @JvmOverloads constructor(
+class HangangFilledRadioButton @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
