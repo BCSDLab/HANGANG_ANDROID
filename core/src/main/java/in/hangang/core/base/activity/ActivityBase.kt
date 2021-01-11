@@ -1,4 +1,4 @@
-package `in`.hangang.core
+package `in`.hangang.core.base.activity
 
 import `in`.hangang.core.util.DialogUtil
 import android.app.Dialog
@@ -6,21 +6,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 open class ActivityBase : AppCompatActivity() {
-    var dialog: Dialog? = null
+    protected var dialog: Dialog? = null
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+    }
+
+    fun addDisposable(vararg disposables: Disposable) {
+        compositeDisposable.addAll(*disposables)
     }
 
     fun showSimpleDialog(
             title: String? = null,
-            message: String = "",
+            message: String,
             positiveButtonText: String = "OK",
             negativeButtonText: String? = null,
-            positiveButtonOnClickListener: View.OnClickListener? = null,
+            positiveButtonOnClickListener: View.OnClickListener,
             negativeButtonOnClickListener: View.OnClickListener? = null,
             cancelable: Boolean = true
     ) {
@@ -44,16 +50,33 @@ open class ActivityBase : AppCompatActivity() {
         }
     }
 
-    fun startActivity(javaClass: Class<*>) {
+    fun startActivity(javaClass: Class<*>, extras: ((Bundle) -> Unit)? = null) {
         val intent = Intent(this, javaClass)
+        if (extras != null) {
+            val bundle = Bundle()
+            extras(bundle)
+            intent.putExtras(bundle)
+        }
         startActivity(intent)
     }
 
-    fun startActivity(javaClass: Class<*>, extras: (Bundle) -> Unit) {
+    fun startActivityForResult(javaClass: Class<*>, requestCode: Int, extras: ((Bundle) -> Unit)? = null) {
         val intent = Intent(this, javaClass)
-        val bundle = Bundle()
-        extras(bundle)
-        intent.putExtras(bundle)
-        startActivity(intent)
+        if (extras != null) {
+            val bundle = Bundle()
+            extras(bundle)
+            intent.putExtras(bundle)
+        }
+        startActivityForResult(intent, requestCode)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (dialog != null) {
+            dialog!!.dismiss()
+            dialog = null
+        }
+        if (!compositeDisposable.isDisposed)
+            compositeDisposable.dispose()
     }
 }
