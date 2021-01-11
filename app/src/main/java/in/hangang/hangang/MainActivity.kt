@@ -3,15 +3,12 @@ package `in`.hangang.hangang
 import `in`.hangang.core.ActivityBase
 import `in`.hangang.hangang.ui.home.LectureReviewFragment
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : ActivityBase() {
-
-    val manager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +26,6 @@ class MainActivity : ActivityBase() {
             },
             cancelable = false
         )
-        graph.setOnClickListener {
-            GraphSet()
-        }
-
-
     }
 
-    fun GraphSet() {
-        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment,LectureReviewFragment()).commit()
-
-    }
 }
