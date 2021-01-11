@@ -1,12 +1,10 @@
 package `in`.hangang.hangang
 
 import `in`.hangang.core.ActivityBase
-import `in`.hangang.hangang.ui.home.LectureReviewFragment
 import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : ActivityBase() {
 
