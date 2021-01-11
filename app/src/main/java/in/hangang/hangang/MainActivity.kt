@@ -20,7 +20,7 @@ class MainActivity : ActivityBase() {
                 positiveButtonText = "확인",
                 negativeButtonText = "닫기",
                 positiveButtonOnClickListener = {
-                 dismissSimpleDialog()
+                    dismissSimpleDialog()
                    },
                    cancelable = false
         )
