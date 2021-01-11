@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/drawable_background_bottom_sheet">
+    android:background="@drawable/background_bottom_sheet">
 
     <View
         android:layout_width="@dimen/spinner_bottom_sheet_handle_width"
         android:layout_height="1dp"
         android:layout_marginTop="11dp"
-        android:background="@drawable/drawable_handle"
+        android:background="@drawable/handle_rectangle"
         android:backgroundTint="@color/gray_200" />
 
     <ListView

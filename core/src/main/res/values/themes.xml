@@ -31,6 +31,6 @@
 
     <style name="HangangModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/drawable_background_bottom_sheet</item>
+        <item name="android:background">@drawable/background_bottom_sheet</item>
     </style>
 </resources>

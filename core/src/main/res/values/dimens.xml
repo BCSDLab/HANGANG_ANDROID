@@ -18,4 +18,8 @@
     <dimen name="spinner_background_radius">4dp</dimen>
     <dimen name="spinner_bottom_sheet_handle_width">32dp</dimen>
     <dimen name="spinner_bottom_sheet_background_radius">16dp</dimen>
+
+    <!-- Dimension for search layout -->
+    <dimen name="search_layout_corner_radius">8dp</dimen>
+    <dimen name="search_layout_height">48dp</dimen>
 </resources>
