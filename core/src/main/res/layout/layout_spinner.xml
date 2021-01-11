@@ -19,7 +19,7 @@
             android:paddingEnd="12dp"
             android:paddingBottom="16dp"
             android:textColor="?colorOnSurface"
-            tools:text="asdfasdfdafasdf" />
+            tools:text="Item 1" />
 
         <ImageButton
             android:layout_width="wrap_content"

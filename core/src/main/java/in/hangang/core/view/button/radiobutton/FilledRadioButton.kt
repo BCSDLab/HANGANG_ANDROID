@@ -1,17 +1,16 @@
-package `in`.hangang.core.view.button.checkbox
+package `in`.hangang.core.view.button.radiobutton
 
 import `in`.hangang.core.R
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.widget.CheckBox
 import androidx.core.content.ContextCompat
 
-class HangangFilledCheckBox @JvmOverloads constructor(
+class FilledRadioButton @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : androidx.appcompat.widget.AppCompatCheckBox(context, attributeSet, defStyleAttr) {
+) : androidx.appcompat.widget.AppCompatRadioButton(context, attributeSet, defStyleAttr) {
 
     init {
         minWidth = resources.getDimensionPixelSize(R.dimen.radio_min_width)

@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.CheckBox
 
-class HangangCheckBox @JvmOverloads constructor(
+class CheckBox @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
