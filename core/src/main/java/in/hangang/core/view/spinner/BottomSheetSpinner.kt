@@ -44,11 +44,11 @@ class BottomSheetSpinner @JvmOverloads constructor(
 
         context.theme.obtainStyledAttributes(
                 attributeSet,
-                R.styleable.HangangBottomSheetSpinner,
+                R.styleable.BottomSheetSpinner,
                 defStyleAttr,
                 defStyleRes
         ).apply {
-            val entries = getTextArray(R.styleable.HangangBottomSheetSpinner_android_entries)
+            val entries = getTextArray(R.styleable.BottomSheetSpinner_android_entries)
             if(entries != null) {
                 items = entries.toList()
             }

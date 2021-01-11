@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 
-class BaseProgressAppBar @JvmOverloads constructor(
+class ProgressAppBar @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
@@ -62,33 +62,33 @@ class BaseProgressAppBar @JvmOverloads constructor(
 
         context.theme.obtainStyledAttributes(
             attributeSet,
-            R.styleable.HangangAppBar,
+            R.styleable.BaseAppBar,
             defStyleAttr,
             defStyleRes
         ).apply {
             _buttonBack.visibility =
-                if (getBoolean(R.styleable.HangangAppBar_showBackButton, true))
+                if (getBoolean(R.styleable.BaseAppBar_showBackButton, true))
                     View.VISIBLE
                 else
                     View.GONE
             _buttonRight.visibility =
-                if (getBoolean(R.styleable.HangangAppBar_showRightButton, false))
+                if (getBoolean(R.styleable.BaseAppBar_showRightButton, false))
                     View.VISIBLE
                 else
                     View.GONE
 
-            _buttonRight.text = getString(R.styleable.HangangAppBar_rightButtonText)
-            _textViewTitle.text = getString(R.styleable.HangangAppBar_titleText)
+            _buttonRight.text = getString(R.styleable.BaseAppBar_rightButtonText)
+            _textViewTitle.text = getString(R.styleable.BaseAppBar_titleText)
         }
 
         context.theme.obtainStyledAttributes(
             attributeSet,
-            R.styleable.HangangProgressAppBar,
+            R.styleable.ProgressAppBar,
             defStyleAttr,
             defStyleRes
         ).apply {
-            progress = getInteger(R.styleable.HangangProgressAppBar_progress, 0)
-            max = getInteger(R.styleable.HangangProgressAppBar_max, 100)
+            progress = getInteger(R.styleable.ProgressAppBar_progress, 0)
+            max = getInteger(R.styleable.ProgressAppBar_max, 100)
         }
     }
 }

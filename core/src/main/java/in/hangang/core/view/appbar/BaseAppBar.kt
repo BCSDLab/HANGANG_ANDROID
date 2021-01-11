@@ -46,23 +46,23 @@ class BaseAppBar @JvmOverloads constructor(
 
         context.theme.obtainStyledAttributes(
             attributeSet,
-            R.styleable.HangangAppBar,
+            R.styleable.BaseAppBar,
             defStyleAttr,
             defStyleRes
         ).apply {
             _buttonBack.visibility =
-                if (getBoolean(R.styleable.HangangAppBar_showBackButton, true))
+                if (getBoolean(R.styleable.BaseAppBar_showBackButton, true))
                     View.VISIBLE
                 else
                     View.GONE
             _buttonRight.visibility =
-                if (getBoolean(R.styleable.HangangAppBar_showRightButton, false))
+                if (getBoolean(R.styleable.BaseAppBar_showRightButton, false))
                     View.VISIBLE
                 else
                     View.GONE
 
-            _buttonRight.text = getString(R.styleable.HangangAppBar_rightButtonText)
-            _textViewTitle.text = getString(R.styleable.HangangAppBar_titleText)
+            _buttonRight.text = getString(R.styleable.BaseAppBar_rightButtonText)
+            _textViewTitle.text = getString(R.styleable.BaseAppBar_titleText)
         }
     }
 }

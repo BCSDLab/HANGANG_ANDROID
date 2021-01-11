@@ -7,19 +7,19 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="HangangAppBar">
+    <declare-styleable name="BaseAppBar">
         <attr name="showBackButton" format="boolean" />
         <attr name="showRightButton" format="boolean" />
         <attr name="titleText" format="string|reference" />
         <attr name="rightButtonText" format="string|reference" />
     </declare-styleable>
 
-    <declare-styleable name="HangangProgressAppBar">
+    <declare-styleable name="ProgressAppBar">
         <attr name="max" format="integer|reference" />
         <attr name="progress" format="integer|reference" />
     </declare-styleable>
 
-    <declare-styleable name="HangangBottomSheetSpinner">
+    <declare-styleable name="BottomSheetSpinner">
         <attr name="android:entries" />
     </declare-styleable>
 </resources>
