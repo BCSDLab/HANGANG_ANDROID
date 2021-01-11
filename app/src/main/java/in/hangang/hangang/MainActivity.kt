@@ -16,13 +16,13 @@ class MainActivity : ActivityBase() {
         NavigationUI.setupWithNavController(navView, navController)
 
         showSimpleDialog(
-             message = "OMG",
-             positiveButtonText = "확인",
-             negativeButtonText = "닫기",
-             positiveButtonOnClickListener = {
+                message = "OMG",
+                positiveButtonText = "확인",
+                negativeButtonText = "닫기",
+                positiveButtonOnClickListener = {
                  dismissSimpleDialog()
-                },
-                cancelable = false
+                   },
+                   cancelable = false
         )
     }
 }
