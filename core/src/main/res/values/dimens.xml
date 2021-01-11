@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="divider_height">1dp</dimen>
+
     <!-- Dimension for simple text and 2 buttons dialog -->
     <dimen name="dialog_text_margin">24dp</dimen>
     <dimen name="dialog_button_margin">8dp</dimen>

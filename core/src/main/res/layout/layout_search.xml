@@ -19,6 +19,7 @@
         tools:hint="교과명, 교수명, 과목코드 검색"/>
 
     <ImageButton
+        android:id="@+id/search_layout_button_search"
         android:background="@null"
         android:layout_width="@dimen/search_layout_height"
         android:layout_height="@dimen/search_layout_height"
