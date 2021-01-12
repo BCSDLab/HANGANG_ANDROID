@@ -24,4 +24,8 @@
     <declare-styleable name="BottomSheetSpinner">
         <attr name="android:entries" />
     </declare-styleable>
+
+    <declare-styleable name="SingleLineEditText">
+        <attr name="android:inputType" />
+    </declare-styleable>
 </resources>

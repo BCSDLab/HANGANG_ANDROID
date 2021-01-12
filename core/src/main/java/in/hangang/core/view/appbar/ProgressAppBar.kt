@@ -14,6 +14,7 @@ class ProgressAppBar @JvmOverloads constructor(
         private val defStyleRes: Int = 0
 ) : BaseAppBar(context, attributeSet, defStyleAttr, defStyleRes) {
     override var showDivider = false
+        get() = false
         set(value) {
             super.showDivider = false
             field = value
