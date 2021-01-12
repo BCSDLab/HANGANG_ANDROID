@@ -93,4 +93,15 @@ dependencies {
     /* Dependency - lottie */
     api project.lottie
 
+    /*Dependency - Koin */
+    api project.koinCore
+    api project.koinCoreExtension
+    api project.koinTest
+    api project.koinAndroidXScope
+    api project.koinAndroidXViewModel
+    api project.koinAndoridXFragment
+    api project.koinAndoridXWorkerManager
+    api project.koinAndoridXCompose
+    api project.koinAndoridXExtension
+
 }

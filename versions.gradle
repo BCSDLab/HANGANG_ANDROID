@@ -58,4 +58,17 @@ ext {
     /* Dependency - lottie */
     def lottie_verison = "3.4.2"
     lottie = "com.airbnb.android:lottie:$lottie_verison"
+
+    /* Dependnecy koin- */
+    ext.koin_version = '2.2.2'
+    koinCore = "org.koin:koin-core:$koin_version"
+    koinCoreExtension = "org.koin:koin-core-ext:$koin_version"
+    koinTest = "org.koin:koin-test:$koin_version"
+    koinAndroidXScope = "org.koin:koin-androidx-scope:$koin_version"
+    koinAndroidXViewModel = "org.koin:koin-androidx-viewmodel:$koin_version"
+    koinAndoridXFragment = "org.koin:koin-androidx-fragment:$koin_version"
+    koinAndoridXWorkerManager = "org.koin:koin-androidx-workmanager:$koin_version"
+    koinAndoridXCompose = "org.koin:koin-androidx-compose:$koin_version"
+    koinAndoridXExtension = "org.koin:koin-androidx-ext:$koin_version"
+
 }

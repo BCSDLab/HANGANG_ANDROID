@@ -5,6 +5,9 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class HangangApplication : Application() {
     private lateinit var hangangApplicationContext: Context
@@ -14,6 +17,9 @@ class HangangApplication : Application() {
         hangangApplicationContext = this
         LogUtil.isLoggable.apply {
             isApplicationDebug(hangangApplicationContext)
+        }
+        startKoin{
+            androidContext(this@HangangApplication)
         }
     }
 
