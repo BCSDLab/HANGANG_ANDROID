@@ -1,6 +1,7 @@
 package `in`.hangang.core.view.spinner
 
 import `in`.hangang.core.R
+import `in`.hangang.core.util.DialogUtil
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -56,21 +57,8 @@ class BottomSheetSpinner @JvmOverloads constructor(
     }
 
     private fun showBottomSheet() {
-        val bottomSheet = BottomSheetDialog(context, R.style.HangangBottomSheetDialogTheme)
-        val bottomSheetView =
-                LayoutInflater.from(context).inflate(R.layout.layout_spinner_bottom_sheet, null)
-        bottomSheetView.findViewById<ListView>(R.id.spinner_bottom_sheet_list_view).apply {
-            adapter =
-                    ArrayAdapter(context, R.layout.simple_text_item_1, android.R.id.text1, items)
-            divider = null
-
-            setOnItemClickListener { parent, view, position, id ->
-                this@BottomSheetSpinner.position = position
-                this@BottomSheetSpinner.onItemClickListener?.onItemClick(parent, view, position, id)
-                bottomSheet.dismiss()
-            }
-        }
-        bottomSheet.setContentView(bottomSheetView)
-        bottomSheet.show()
+        DialogUtil.makeListBottomSheet(context, items, null) { _, _, position, _ ->
+            this.position = position
+        }.show()
     }
 }

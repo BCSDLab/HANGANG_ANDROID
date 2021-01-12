@@ -8,8 +8,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 object DialogUtil {
     fun makeSimpleDialog(
@@ -52,5 +52,33 @@ object DialogUtil {
         dialog.setCancelable(cancelable)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return dialog
+    }
+
+    fun makeListBottomSheet(
+            context: Context,
+            items: List<CharSequence>,
+            footerView: View? = null,
+            onItemClickListener: AdapterView.OnItemClickListener? = null): BottomSheetDialog {
+
+        val bottomSheet = BottomSheetDialog(context, R.style.HangangBottomSheetDialogTheme)
+        val bottomSheetView =
+                LayoutInflater.from(context).inflate(R.layout.layout_simple_list_bottom_sheet, null)
+
+        if (footerView != null)
+            bottomSheetView.findViewById<LinearLayout>(R.id.container).addView(footerView)
+
+        bottomSheetView.findViewById<ListView>(R.id.simple_list_bottom_sheet_list_view).apply {
+            adapter =
+                    ArrayAdapter(context, R.layout.simple_text_item_1, android.R.id.text1, items)
+            divider = null
+
+            setOnItemClickListener { parent, view, position, id ->
+                onItemClickListener?.onItemClick(parent, view, position, id)
+                bottomSheet.dismiss()
+            }
+        }
+
+        bottomSheet.setContentView(bottomSheetView)
+        return bottomSheet
     }
 }
