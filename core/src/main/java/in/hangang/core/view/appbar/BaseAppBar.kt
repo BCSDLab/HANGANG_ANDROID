@@ -1,18 +1,17 @@
 package `in`.hangang.core.view.appbar
 
 import `in`.hangang.core.R
-import `in`.hangang.core.view.appbar.interfaces.AppBarClickListener
+import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.contains
@@ -40,7 +39,7 @@ open class BaseAppBar @JvmOverloads constructor(
     private val rightContainer = view.findViewById<LinearLayout>(R.id.app_bar_container_right)
     private val divider = view.findViewById<View>(R.id.app_bar_divider)
 
-    private val appBarClickListener : AppBarClickListener? = null
+    var onAppBarButtonButtonClickListener: OnAppBarButtonClickListener? = null
 
     //App bar height (?android:attr/actionBarSize)
     private val appBarHeight: Int = with(TypedValue()) {
@@ -97,37 +96,31 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun addViewInLeft(view: View, index: Int = -1) {
-        val layoutParams = LayoutParams(context, attributeSet).apply {
-            width = appBarHeight
-            height = appBarHeight
-        }
+        val layoutParams = LinearLayout.LayoutParams(appBarHeight, appBarHeight)
         view.layoutParams = layoutParams
 
         if (index > -1) leftContainer.addView(view, index)
         else leftContainer.addView(view)
 
         view.setOnClickListener {
-            appBarClickListener?.onClickViewInLeftContainer(view, leftContainer.indexOfChild(view))
+            onAppBarButtonButtonClickListener?.onClickViewInLeftContainer(view, leftContainer.indexOfChild(view))
         }
     }
 
     fun addViewInRight(view: View, index: Int = -1) {
-        val layoutParams = LayoutParams(context, attributeSet).apply {
-            width = appBarHeight
-            height = appBarHeight
-        }
+        val layoutParams = LinearLayout.LayoutParams(appBarHeight, appBarHeight)
         view.layoutParams = layoutParams
 
         if (index > -1) rightContainer.addView(view, index)
-        else leftContainer.addView(view)
+        else rightContainer.addView(view)
 
         view.setOnClickListener {
-            appBarClickListener?.onClickViewInRightContainer(view, rightContainer.indexOfChild(view))
+            onAppBarButtonButtonClickListener?.onClickViewInRightContainer(view, rightContainer.indexOfChild(view))
         }
     }
 
     fun removeViewInLeft(view: View) {
-        if(leftContainer.contains(view)) {
+        if (leftContainer.contains(view)) {
             leftContainer.removeView(view)
         }
     }
@@ -137,7 +130,7 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun removeViewInRight(view: View) {
-        if(rightContainer.contains(view)) {
+        if (rightContainer.contains(view)) {
             rightContainer.removeView(view)
         }
     }
@@ -171,4 +164,21 @@ open class BaseAppBar @JvmOverloads constructor(
         }
         textViewTitle.gravity = Gravity.CENTER_VERTICAL or Gravity.START
     }
+}
+
+fun Context.appBarImageButton(drawable: Drawable) = ImageButton(this).apply {
+    background = null
+    setImageDrawable(drawable)
+}
+
+fun Context.appBarImageButton(@DrawableRes resId: Int) = ImageButton(this).apply {
+    background = null
+    setImageResource(resId)
+}
+
+fun Context.appBarTextButton(text: CharSequence) = Button(this).apply {
+    background = null
+    this.text = text
+    gravity = Gravity.CENTER
+    textSize = 14f
 }

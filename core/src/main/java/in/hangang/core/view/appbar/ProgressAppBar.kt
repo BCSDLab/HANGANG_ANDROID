@@ -3,14 +3,15 @@ package `in`.hangang.core.view.appbar
 import `in`.hangang.core.R
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
+import android.widget.FrameLayout
 import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
 
 class ProgressAppBar @JvmOverloads constructor(
-    context: Context,
-    private val attributeSet: AttributeSet? = null,
-    private val defStyleAttr: Int = 0,
-    private val defStyleRes: Int = 0
+        context: Context,
+        private val attributeSet: AttributeSet? = null,
+        private val defStyleAttr: Int = 0,
+        private val defStyleRes: Int = 0
 ) : BaseAppBar(context, attributeSet, defStyleAttr, defStyleRes) {
     override var showDivider = false
         set(value) {
@@ -18,9 +19,10 @@ class ProgressAppBar @JvmOverloads constructor(
             field = value
         }
 
-    val progressBar = LayoutInflater.from(context)
-        .inflate(R.layout.layout_app_bar_progress, dividerContainer, true)
-        .findViewById<ProgressBar>(R.id.app_bar_progress)
+    val progressBar = ProgressBar(context, attributeSet, R.style.Widget_AppCompat_ProgressBar_Horizontal).apply {
+        layoutParams = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        progressDrawable = ContextCompat.getDrawable(context, R.drawable.app_bar_progress)
+    }
 
     var max = 100
         set(value) {
@@ -35,11 +37,12 @@ class ProgressAppBar @JvmOverloads constructor(
         }
 
     init {
+        dividerContainer.addView(progressBar)
         context.theme.obtainStyledAttributes(
-            attributeSet,
-            R.styleable.ProgressAppBar,
-            defStyleAttr,
-            defStyleRes
+                attributeSet,
+                R.styleable.ProgressAppBar,
+                defStyleAttr,
+                defStyleRes
         ).apply {
             max = getInteger(R.styleable.ProgressAppBar_max, 100)
             progress = getInteger(R.styleable.ProgressAppBar_progress, 0)
