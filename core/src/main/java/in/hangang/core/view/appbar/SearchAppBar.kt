@@ -2,6 +2,8 @@ package `in`.hangang.core.view.appbar
 
 import `in`.hangang.core.R
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -33,7 +35,41 @@ class SearchAppBar @JvmOverloads constructor(
         }
     }
 
+    init {
+        context.theme.obtainStyledAttributes(
+                attributeSet,
+                R.styleable.SearchAppBar,
+                defStyleAttr,
+                defStyleRes
+        ).apply {
+            searchField.hint = getString(R.styleable.SearchAppBar_android_hint)
+            searchField.setText(getString(R.styleable.SearchAppBar_android_text))
+        }
+    }
+
     fun search() {
         filterable?.filter?.filter(searchField.text.toString(), filterListener)
     }
+
+    //This is editText methods
+    var text: Editable
+        set(value) {
+            searchField.text = value
+        }
+        get() = searchField.text
+
+    val selectionStart get() = searchField.selectionStart
+    val selectionEnd get() = searchField.selectionEnd
+
+    fun setText(s: CharSequence) {
+        searchField.setText(s)
+    }
+
+    fun setSelection(start: Int, end: Int) = searchField.setSelection(start, end)
+    fun setSelection(index: Int) = searchField.setSelection(index)
+    fun extendSelection(index: Int) = searchField.extendSelection(index)
+    fun selectAll() = searchField.selectAll()
+
+    fun addTextChangedListener(textWatcher: TextWatcher) = searchField.addTextChangedListener(textWatcher)
+    fun removeTextChangedListener(textWatcher: TextWatcher) = searchField.removeTextChangedListener(textWatcher)
 }

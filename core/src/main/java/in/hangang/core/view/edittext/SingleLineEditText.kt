@@ -39,7 +39,6 @@ open class SingleLineEditText @JvmOverloads constructor(
         }
     }
 
-
     //This is editText methods
     var text: Editable
         set(value) {
@@ -49,6 +48,10 @@ open class SingleLineEditText @JvmOverloads constructor(
 
     val selectionStart get() = editText.selectionStart
     val selectionEnd get() = editText.selectionEnd
+
+    fun setText(s: CharSequence) {
+        editText.setText(s)
+    }
 
     fun setSelection(start: Int, end: Int) = editText.setSelection(start, end)
     fun setSelection(index: Int) = editText.setSelection(index)

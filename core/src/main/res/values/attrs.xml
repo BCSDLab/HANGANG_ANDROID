@@ -9,11 +9,14 @@
 
     <declare-styleable name="BaseAppBar">
         <attr name="showBackButton" format="boolean" />
-        <attr name="showRightButton" format="boolean" />
         <attr name="titleText" format="string|reference" />
-        <attr name="rightButtonText" format="string|reference" />
         <attr name="centerTitle" format="boolean" />
         <attr name="showDivider" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SearchAppBar">
+        <attr name="android:hint" />
+        <attr name="android:text" />
     </declare-styleable>
 
     <declare-styleable name="ProgressAppBar">
