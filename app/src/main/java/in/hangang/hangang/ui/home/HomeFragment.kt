@@ -1,5 +1,9 @@
 package `in`.hangang.hangang.ui.home
 
+import `in`.hangang.core.view.appbar.ProgressAppBar
+import `in`.hangang.core.view.appbar.appBarTextButton
+import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
+import `in`.hangang.hangang.LogUtil
 import `in`.hangang.hangang.R
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,5 +19,28 @@ class HomeFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val appBar = view.findViewById<ProgressAppBar>(R.id.app_bar)
+
+        activity?.let {
+            appBar.addViewInRight(it.appBarTextButton("우1"))
+            appBar.addViewInRight(it.appBarTextButton("우2"))
+            appBar.addViewInLeft(it.appBarTextButton("좌1"))
+            appBar.addViewInLeft(it.appBarTextButton("좌2"))
+            appBar.removeViewInLeft(1)
+        }
+
+        appBar.onAppBarButtonButtonClickListener = object : OnAppBarButtonClickListener {
+            override fun onClickViewInLeftContainer(view: View, index: Int) {
+                LogUtil.d("Clicked left button #$index")
+            }
+
+            override fun onClickViewInRightContainer(view: View, index: Int) {
+                LogUtil.d("Clicked right button #$index")
+            }
+        }
     }
 }

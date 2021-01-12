@@ -20,34 +20,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
+    <in.hangang.core.view.appbar.ProgressAppBar
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
+        android:progress="40" />
 
-        <in.hangang.core.view.button.HangangRadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="6dp"
-            android:layout_margin="4dp"
-            android:text="item 1" />
+    <in.hangang.core.view.edittext.KoreatechEmailEditText
+        android:id="@+id/edit_text_1"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <in.hangang.core.view.button.HangangRadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:padding="6dp"
-            android:text="item 1" />
-
-        <in.hangang.core.view.button.HangangRadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:padding="6dp"
-            android:text="item 1" />
-
-    </RadioGroup>
+    <in.hangang.core.view.edittext.SingleLineEditText
+        android:id="@+id/edit_text_2"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

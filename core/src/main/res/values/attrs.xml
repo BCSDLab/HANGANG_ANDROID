@@ -17,8 +17,8 @@
     </declare-styleable>
 
     <declare-styleable name="ProgressAppBar">
-        <attr name="max" format="integer|reference" />
-        <attr name="progress" format="integer|reference" />
+        <attr name="android:max" format="integer|reference" />
+        <attr name="android:progress" format="integer|reference" />
     </declare-styleable>
 
     <declare-styleable name="BottomSheetSpinner">

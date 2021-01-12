@@ -90,8 +90,6 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun addViewInLeft(view: View, index: Int = -1) {
-        view.layoutParams = layoutParams
-
         if (index > -1) leftContainer.addView(view, index)
         else leftContainer.addView(view)
 
@@ -101,8 +99,6 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun addViewInRight(view: View, index: Int = -1) {
-        view.layoutParams = layoutParams
-
         if (index > -1) rightContainer.addView(view, index)
         else rightContainer.addView(view)
 

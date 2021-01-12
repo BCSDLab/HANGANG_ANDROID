@@ -45,8 +45,8 @@ class ProgressAppBar @JvmOverloads constructor(
                 defStyleAttr,
                 defStyleRes
         ).apply {
-            max = getInteger(R.styleable.ProgressAppBar_max, 100)
-            progress = getInteger(R.styleable.ProgressAppBar_progress, 0)
+            max = getInteger(R.styleable.ProgressAppBar_android_max, 100)
+            progress = getInteger(R.styleable.ProgressAppBar_android_progress, 0)
         }
     }
 }

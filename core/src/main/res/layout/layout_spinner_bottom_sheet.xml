@@ -10,7 +10,7 @@
         android:layout_width="@dimen/spinner_bottom_sheet_handle_width"
         android:layout_height="1dp"
         android:layout_marginTop="11dp"
-        android:background="@drawable/handle_rectangle"
+        android:background="@drawable/rectangle_handle"
         android:backgroundTint="@color/gray_200" />
 
     <ListView
