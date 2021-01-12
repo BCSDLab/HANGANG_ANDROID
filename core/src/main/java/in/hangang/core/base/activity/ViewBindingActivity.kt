@@ -6,11 +6,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 class ViewBindingActivity<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : ActivityBase() {
-    protected lateinit var binding : T
+    private lateinit var _binding: T
+    val binding: T
+        get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, layoutId)
+        _binding = DataBindingUtil.setContentView(this, layoutId)
     }
 
     override fun onDestroy() {

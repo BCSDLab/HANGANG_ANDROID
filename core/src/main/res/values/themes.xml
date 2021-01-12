@@ -23,8 +23,10 @@
         <item name="android:textColorSecondary">@color/gray_500</item>
     </style>
 
-    <style name="Theme.Hangang.Dialog" parent="android:Theme.Translucent">
-        <item name="android:windowBackground">#77ff0000</item>
-        <item name="android:windowFullscreen">true</item>
+    <style name="Theme.Hangang.AlertDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
+
 </resources>

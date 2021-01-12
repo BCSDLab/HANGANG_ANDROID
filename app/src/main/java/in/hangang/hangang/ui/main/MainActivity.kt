@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.ui
+package `in`.hangang.hangang.ui.main
 
 import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.hangang.R
