@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -40,13 +41,6 @@ open class BaseAppBar @JvmOverloads constructor(
     private val divider = view.findViewById<View>(R.id.app_bar_divider)
 
     var onAppBarButtonButtonClickListener: OnAppBarButtonClickListener? = null
-
-    //App bar height (?android:attr/actionBarSize)
-    private val appBarHeight: Int = with(TypedValue()) {
-        if (context.theme.resolveAttribute(android.R.attr.actionBarSize, this, true))
-            TypedValue.complexToDimension(this.data, context.resources.displayMetrics).toInt()
-        else 0
-    }
 
     var title = ""
         set(value) {
@@ -96,7 +90,6 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun addViewInLeft(view: View, index: Int = -1) {
-        val layoutParams = LinearLayout.LayoutParams(appBarHeight, appBarHeight)
         view.layoutParams = layoutParams
 
         if (index > -1) leftContainer.addView(view, index)
@@ -108,7 +101,6 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun addViewInRight(view: View, index: Int = -1) {
-        val layoutParams = LinearLayout.LayoutParams(appBarHeight, appBarHeight)
         view.layoutParams = layoutParams
 
         if (index > -1) rightContainer.addView(view, index)
@@ -166,17 +158,28 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 }
 
+//App bar height (?android:attr/actionBarSize)
+private val Context.appBarHeight: Int
+    get() = with(TypedValue()) {
+        if (theme.resolveAttribute(android.R.attr.actionBarSize, this, true))
+            TypedValue.complexToDimension(this.data, resources.displayMetrics).toInt()
+        else 0
+    }
+
 fun Context.appBarImageButton(drawable: Drawable) = ImageButton(this).apply {
+    layoutParams = ViewGroup.LayoutParams(appBarHeight, appBarHeight)
     background = null
     setImageDrawable(drawable)
 }
 
 fun Context.appBarImageButton(@DrawableRes resId: Int) = ImageButton(this).apply {
+    layoutParams = ViewGroup.LayoutParams(appBarHeight, appBarHeight)
     background = null
     setImageResource(resId)
 }
 
 fun Context.appBarTextButton(text: CharSequence) = Button(this).apply {
+    layoutParams = ViewGroup.LayoutParams(appBarHeight, appBarHeight)
     background = null
     this.text = text
     gravity = Gravity.CENTER
