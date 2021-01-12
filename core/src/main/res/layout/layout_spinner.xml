@@ -15,10 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
-            android:paddingTop="16dp"
+            android:paddingTop="10dp"
             android:paddingEnd="12dp"
-            android:paddingBottom="16dp"
+            android:paddingBottom="10dp"
             android:textColor="?colorOnSurface"
+            android:textSize="14sp"
             tools:text="Item 1" />
 
         <ImageButton
@@ -26,7 +27,8 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:src="@drawable/ic_spinner_open"
-            android:padding="16dp" />
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"/>
 
     </LinearLayout>
 </merge>

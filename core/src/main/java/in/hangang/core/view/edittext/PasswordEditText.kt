@@ -17,7 +17,7 @@ open class PasswordEditText @JvmOverloads constructor(
 ) : EditTextWithError(context, attributeSet, defStyleAttr, defStyleRes) {
 
     private val maskedPasswordIcon = ContextCompat.getDrawable(context, R.drawable.ic_password_masked)
-    private val unmaskedPasswordIcon = ContextCompat.getDrawable(context, R.drawable.ic_password_masked) //TODO : Replace drawable to unmasked password eye icon
+    private val unmaskedPasswordIcon = ContextCompat.getDrawable(context, R.drawable.ic_password_unmasked)
 
     var masked = true
         set(value) {
