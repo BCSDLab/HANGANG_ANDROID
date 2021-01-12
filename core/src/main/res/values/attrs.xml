@@ -28,4 +28,8 @@
     <declare-styleable name="SingleLineEditText">
         <attr name="android:inputType" />
     </declare-styleable>
+
+    <declare-styleable name="EmsEditText">
+        <attr name="android:maxLength" />
+    </declare-styleable>
 </resources>

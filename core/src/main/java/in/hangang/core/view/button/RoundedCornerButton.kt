@@ -10,15 +10,16 @@ class RoundedCornerButton @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatButton(context, attributeSet, defStyleAttr) {
 
-    enum class Appearence {
-        FILLED, OUTLINED
+    companion object {
+        const val FILLED = 0
+        const val OUTLINED = 1
     }
 
-    var appearence: Appearence = Appearence.FILLED
+    var appearence: Int = FILLED
         set(value) {
             when (value) {
-                Appearence.FILLED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_filled)
-                Appearence.OUTLINED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_outline)
+                FILLED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_filled)
+                OUTLINED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_outline)
             }
             field = value
         }
@@ -30,11 +31,7 @@ class RoundedCornerButton @JvmOverloads constructor(
             defStyleAttr,
             0
         ).apply {
-            appearence =
-                if (getInteger(R.styleable.RoundedCornerButton_buttonAppearence, 0) == 0)
-                    Appearence.FILLED
-                else
-                    Appearence.OUTLINED
+            appearence = getInteger(R.styleable.RoundedCornerButton_buttonAppearence, 0)
         }
     }
 }
