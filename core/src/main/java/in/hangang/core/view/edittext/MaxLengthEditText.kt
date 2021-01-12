@@ -6,7 +6,7 @@ import android.text.InputFilter
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 
-open class MaxLengthEditText @JvmOverloads constructor(
+class MaxLengthEditText @JvmOverloads constructor(
         context: Context,
         attributeSet: AttributeSet? = null,
         defStyleAttr: Int = 0,

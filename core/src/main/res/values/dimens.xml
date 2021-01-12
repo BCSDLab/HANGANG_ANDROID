@@ -24,4 +24,7 @@
     <!-- Dimension for search layout -->
     <dimen name="search_layout_corner_radius">8dp</dimen>
     <dimen name="search_layout_height">48dp</dimen>
+
+    <!-- Dimension for custom edittext -->
+    <dimen name="edit_text_right_icon_size">24dp</dimen>
 </resources>

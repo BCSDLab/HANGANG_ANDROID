@@ -4,8 +4,8 @@ import `in`.hangang.core.R
 import android.content.Context
 import android.text.InputType
 import android.util.AttributeSet
-import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
 
 
@@ -27,10 +27,14 @@ open class PasswordEditText @JvmOverloads constructor(
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         }
 
-    private val passwordMaskToggleButton = ImageButton(context, attributeSet, defStyleAttr, defStyleRes).apply {
-        layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+    private val passwordMaskToggleButton = ImageButton(context).apply {
+        layoutParams = LayoutParams(
+                resources.getDimensionPixelOffset(R.dimen.edit_text_right_icon_size),
+                resources.getDimensionPixelOffset(R.dimen.edit_text_right_icon_size))
+
         setOnClickListener { masked = !masked }
         background = null
+
         container.addView(this)
     }
 
@@ -43,6 +47,17 @@ open class PasswordEditText @JvmOverloads constructor(
             super.inputType = if (masked) InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             else InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         }
+
+    init {
+        context.theme.obtainStyledAttributes(
+                attributeSet,
+                R.styleable.PasswordEditText,
+                defStyleAttr,
+                defStyleRes
+        ).apply {
+            masked = getBoolean(R.styleable.PasswordEditText_mask, true)
+        }
+    }
 
     private fun maskPassword() {
         passwordMaskToggleButton.setImageDrawable(maskedPasswordIcon)

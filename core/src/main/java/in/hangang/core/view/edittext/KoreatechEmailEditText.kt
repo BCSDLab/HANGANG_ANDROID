@@ -12,7 +12,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 
-open class KoreatechEmailEditText @JvmOverloads constructor(
+class KoreatechEmailEditText @JvmOverloads constructor(
         context: Context,
         attributeSet: AttributeSet? = null,
         defStyleAttr: Int = 0,

@@ -12,7 +12,7 @@
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:maxLines="1"
-            android:minHeight="32dp"
+            android:minHeight="@dimen/edit_text_right_icon_size"
             android:textColor="?android:attr/textColorPrimary"
             android:textColorHint="?android:attr/textColorSecondary"
             android:textSize="14sp"

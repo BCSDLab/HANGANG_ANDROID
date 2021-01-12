@@ -32,4 +32,8 @@
     <declare-styleable name="EmsEditText">
         <attr name="android:maxLength" />
     </declare-styleable>
+
+    <declare-styleable name="PasswordEditText">
+        <attr name="mask" format="boolean" />
+    </declare-styleable>
 </resources>
