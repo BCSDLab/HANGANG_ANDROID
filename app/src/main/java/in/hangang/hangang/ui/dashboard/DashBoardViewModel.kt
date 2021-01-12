@@ -17,7 +17,7 @@ class DashBoardViewModel : ViewModelBase() {
     }
 
     fun getUsers(forceFetch: Boolean = false): LiveData<Boolean> {
-        if (users.value != null && forceFetch) getData()
+        if (forceFetch) getData()
         return users
     }
 

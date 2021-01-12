@@ -1,33 +1,43 @@
 package `in`.hangang.hangang
 
+import `in`.hangang.hangang.di.dataSourceModule
+import `in`.hangang.hangang.di.netWorkModule
+import `in`.hangang.hangang.di.repositoryModule
+import `in`.hangang.hangang.di.viewModelModule
 import `in`.hangang.hangang.util.LogUtil
 import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import com.orhanobut.hawk.Hawk
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 class HangangApplication : Application() {
-    private lateinit var hangangApplicationContext: Context
+    private val hangangApplicationContext: Context = this
+    val isApplicationDebug
+        get() = isApplicationDebug(hangangApplicationContext)
 
     override fun onCreate() {
         super.onCreate()
-        hangangApplicationContext = this
+        instance = this
+        Hawk.init(hangangApplicationContext).build()
         LogUtil.isLoggable.apply {
-            isApplicationDebug(hangangApplicationContext)
+            isApplicationDebug
         }
-        startKoin{
+        startKoin {
             androidContext(this@HangangApplication)
+            modules(dataSourceModule)
+            modules(repositoryModule)
+            modules(viewModelModule)
+            modules(netWorkModule)
         }
     }
-
 
     /**
      * 디버그모드인지 확인하는 함수
      */
-    fun isApplicationDebug(context: Context): Boolean {
+    private fun isApplicationDebug(context: Context): Boolean {
         var debuggable = false
         val pm: PackageManager = context.getPackageManager()
         try {
@@ -39,4 +49,8 @@ class HangangApplication : Application() {
         return debuggable
     }
 
+    companion object {
+        lateinit var instance: HangangApplication
+            private set
+    }
 }

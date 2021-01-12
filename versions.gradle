@@ -71,4 +71,7 @@ ext {
     koinAndoridXCompose = "org.koin:koin-androidx-compose:$koin_version"
     koinAndoridXExtension = "org.koin:koin-androidx-ext:$koin_version"
 
+    def hawk_version = "2.0.1"
+    hawk =  "com.orhanobut:hawk:$hawk_version"
+
 }
