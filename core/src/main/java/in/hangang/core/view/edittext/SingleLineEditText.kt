@@ -36,6 +36,8 @@ open class SingleLineEditText @JvmOverloads constructor(
                 defStyleRes
         ).apply {
             inputType = getInteger(R.styleable.SingleLineEditText_android_inputType, EditorInfo.TYPE_CLASS_TEXT)
+            editText.hint = getString(R.styleable.SingleLineEditText_android_hint)
+            editText.setText(getString(R.styleable.SingleLineEditText_android_text))
         }
     }
 

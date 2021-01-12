@@ -30,6 +30,8 @@
 
     <declare-styleable name="SingleLineEditText">
         <attr name="android:inputType" />
+        <attr name="android:hint" />
+        <attr name="android:text" />
     </declare-styleable>
 
     <declare-styleable name="EditTextWithError">
