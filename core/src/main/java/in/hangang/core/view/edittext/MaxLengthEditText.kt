@@ -11,7 +11,7 @@ class MaxLengthEditText @JvmOverloads constructor(
         attributeSet: AttributeSet? = null,
         defStyleAttr: Int = 0,
         defStyleRes: Int = 0
-) : SingleLineEditText(context, attributeSet, defStyleAttr, defStyleRes) {
+) : EditTextWithError(context, attributeSet, defStyleAttr, defStyleRes) {
     var maxLength = 9
         set(value) {
             editText.filters = arrayOf(InputFilter.LengthFilter(value))

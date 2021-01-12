@@ -29,11 +29,23 @@
         <attr name="android:inputType" />
     </declare-styleable>
 
+    <declare-styleable name="EditTextWithError">
+        <attr name="status" format="enum">
+            <enum name="undefined" value="0" />
+            <enum name="check" value="1" />
+            <enum name="error" value="2" />
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="EmsEditText">
         <attr name="android:maxLength" />
     </declare-styleable>
 
     <declare-styleable name="PasswordEditText">
         <attr name="mask" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="PasswordEditTextWithRegex">
+        <attr name="passwordViewId" format="reference" />
     </declare-styleable>
 </resources>
