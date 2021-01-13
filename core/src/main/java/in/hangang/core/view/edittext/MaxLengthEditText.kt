@@ -22,11 +22,11 @@ class MaxLengthEditText @JvmOverloads constructor(
     init {
         context.theme.obtainStyledAttributes(
                 attributeSet,
-                R.styleable.EmsEditText,
+                R.styleable.MaxLengthEditText,
                 defStyleAttr,
                 defStyleRes
         ).apply {
-            maxLength = getInteger(R.styleable.EmsEditText_android_maxLength, 9)
+            maxLength = getInteger(R.styleable.MaxLengthEditText_android_maxLength, 9)
         }
     }
 }

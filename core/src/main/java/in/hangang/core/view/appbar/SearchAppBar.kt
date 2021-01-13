@@ -14,7 +14,7 @@ class SearchAppBar @JvmOverloads constructor(
         attributeSet: AttributeSet? = null,
         defStyleAttr: Int = 0,
         defStyleRes: Int = 0
-) : FrameLayout(context, attributeSet, defStyleAttr, defStyleRes) {
+) : LinearLayout(context, attributeSet, defStyleAttr, defStyleRes) {
     private val view = LayoutInflater.from(context).inflate(R.layout.layout_app_bar_search, this, true)
 
     var filterable: Filterable? = null

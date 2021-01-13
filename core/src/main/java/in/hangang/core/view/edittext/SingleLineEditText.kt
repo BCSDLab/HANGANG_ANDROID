@@ -19,8 +19,8 @@ open class SingleLineEditText @JvmOverloads constructor(
 ) : ConstraintLayout(context, attributeSet, defStyleAttr, defStyleRes) {
     private val view = LayoutInflater.from(context).inflate(R.layout.layout_single_line_edit_text, this, true)
 
-    protected val container = view.findViewById<LinearLayout>(R.id.single_line_edit_text_container)
-    protected val editText = view.findViewById<EditText>(R.id.single_line_edit_text)
+    protected val container: LinearLayout = view.findViewById<LinearLayout>(R.id.single_line_edit_text_container)
+    protected val editText: EditText = view.findViewById<EditText>(R.id.single_line_edit_text)
 
     open var inputType: Int = EditorInfo.TYPE_CLASS_TEXT
         set(value) {

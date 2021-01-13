@@ -42,7 +42,7 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="EmsEditText">
+    <declare-styleable name="MaxLengthEditText">
         <attr name="android:maxLength" />
     </declare-styleable>
 
