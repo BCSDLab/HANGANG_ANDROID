@@ -53,6 +53,8 @@ class BottomSheetSpinner @JvmOverloads constructor(
             if(entries != null) {
                 items = entries.toList()
             }
+
+            recycle()
         }
     }
 

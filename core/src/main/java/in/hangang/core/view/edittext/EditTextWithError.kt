@@ -55,6 +55,8 @@ open class EditTextWithError @JvmOverloads constructor(
                 defStyleRes
         ).apply {
             status = getInteger(R.styleable.EditTextWithError_status, UNDEFINED)
+
+            recycle()
         }
     }
 }

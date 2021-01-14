@@ -27,6 +27,8 @@ class MaxLengthEditText @JvmOverloads constructor(
                 defStyleRes
         ).apply {
             maxLength = getInteger(R.styleable.MaxLengthEditText_android_maxLength, 9)
+
+            recycle()
         }
     }
 }

@@ -32,6 +32,8 @@ class RoundedCornerButton @JvmOverloads constructor(
             0
         ).apply {
             appearence = getInteger(R.styleable.RoundedCornerButton_buttonAppearence, 0)
+
+            recycle()
         }
     }
 }

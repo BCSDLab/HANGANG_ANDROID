@@ -56,6 +56,8 @@ open class PasswordEditText @JvmOverloads constructor(
                 defStyleRes
         ).apply {
             masked = getBoolean(R.styleable.PasswordEditText_mask, true)
+
+            recycle()
         }
     }
 

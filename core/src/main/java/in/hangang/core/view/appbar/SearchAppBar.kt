@@ -44,6 +44,8 @@ class SearchAppBar @JvmOverloads constructor(
         ).apply {
             searchField.hint = getString(R.styleable.SearchAppBar_android_hint)
             searchField.setText(getString(R.styleable.SearchAppBar_android_text))
+
+            recycle()
         }
     }
 
