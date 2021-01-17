@@ -11,6 +11,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="gray_500">#999999</color>
+    <color name="gray_300">#eeeeee</color>
+    <color name="mango">#ffab2e</color>
     <color name="gray_200">#c4c4c4</color>
     <color name="gray_100">#eeeeee</color>
+
 </resources>
