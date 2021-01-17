@@ -2,6 +2,7 @@
 <resources>
     <!-- Hangang blue color -->
     <color name="blue_500">#ff238bfe</color>
+    <color name="blue_100">#bddcff</color>
 
     <!-- Hangang orange color -->
     <color name="orange_500">#ffffab2e</color>
@@ -10,5 +11,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="gray_500">#999999</color>
-    <color name="gray_300">#eeeeee</color>
+    <color name="gray_200">#c4c4c4</color>
+    <color name="gray_100">#eeeeee</color>
 </resources>
