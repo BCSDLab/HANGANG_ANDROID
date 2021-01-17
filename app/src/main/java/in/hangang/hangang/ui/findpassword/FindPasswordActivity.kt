@@ -1,5 +1,6 @@
-package `in`.hangang.hangang.ui.authentication
+package `in`.hangang.hangang.ui.findpassword
 
+import `in`.hangang.hangang.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
