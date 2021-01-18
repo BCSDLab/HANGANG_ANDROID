@@ -5,7 +5,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-class ViewBindingActivity<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : ActivityBase() {
+open class ViewBindingActivity<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : ActivityBase() {
     protected lateinit var binding : T
 
     override fun onCreate(savedInstanceState: Bundle?) {
