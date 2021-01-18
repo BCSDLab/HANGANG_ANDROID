@@ -20,7 +20,7 @@
         tools:context=".ui.findpassword.EmailAuthenticationFragment">
 
         <TextView
-            android:id="@+id/text_view_email_auth_title"
+            android:id="@+id/text_view_new_password_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_email_auth_number_title"
+            android:id="@+id/text_view_confirm_new_password_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -41,10 +41,10 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_email" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_new_password" />
 
         <in.hangang.core.view.edittext.KoreatechEmailEditText
-            android:id="@+id/edit_text_email"
+            android:id="@+id/edit_text_new_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -53,10 +53,10 @@
             android:hint="비밀번호 찾기를 위해 이용"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_email_auth_title" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_new_password_title" />
 
         <in.hangang.core.view.edittext.SingleLineEditText
-            android:id="@+id/edit_text_auth_number"
+            android:id="@+id/edit_text_confirm_new_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -77,11 +77,11 @@
             android:text="인증번호 전송"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_email_auth_number_title"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_confirm_new_password_title"
             tools:enabled="false" />
 
         <in.hangang.core.view.button.RoundedCornerButton
-            android:id="@+id/button_finish_email_auth"
+            android:id="@+id/button_finish_change_password"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
