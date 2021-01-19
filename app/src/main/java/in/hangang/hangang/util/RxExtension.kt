@@ -46,7 +46,6 @@ fun <T> Single<T>.handleProgress(viewModel: ViewModelBase): Single<T> {
     return this.doOnSubscribe { viewModel.isLoading.postValue(true) }
         .doOnError { viewModel.isLoading.postValue(false) }
         .doOnSuccess { viewModel.isLoading.postValue(false) }
-        .doOnDispose { viewModel.isLoading.postValue(false) }
 }
 
 private fun <T> retryOnNotAuthorized(): SingleTransformer<T, T> {
