@@ -84,7 +84,6 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
 
     }
 
-
     private fun showResentEmailAuthNumberDialog() {
         (activity as ActivityBase).showSimpleDialog(
                 title = "재전송 되었습니다.",
