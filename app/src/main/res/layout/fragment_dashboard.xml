@@ -3,23 +3,95 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="vm"
+            type="in.hangang.hangang.ui.dashboard.DashBoardViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         tools:context=".ui.dashboard.DashboardFragment">
 
-        <Button
-            android:id="@+id/text_dashboard"
+        <EditText
+            android:id="@+id/nick_name_check_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
+            android:hint="닉네임 입력"
+            app:layout_constraintBottom_toTopOf="@+id/nick_name_check_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/nick_name_check_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@{vm.nickNameCheckText}"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/nick_name_check_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nick_name_check_edit_text" />
+
+
+        <Button
+            android:id="@+id/nick_name_check_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="닉네임 검사"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/email_check_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nick_name_check_text_view" />
+
+
+        <EditText
+            android:id="@+id/email_check_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="이메일 입력"
+            app:layout_constraintBottom_toTopOf="@+id/email_check_text_viewt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nick_name_check_button" />
+
+
+        <TextView
+            android:id="@+id/email_check_text_viewt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{vm.emailSendText}"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/email_check_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_check_edit_text" />
+
+        <Button
+            android:id="@+id/email_check_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이메일 전송"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/email_check_text_viewt" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

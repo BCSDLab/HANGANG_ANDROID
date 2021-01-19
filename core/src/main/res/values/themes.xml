@@ -22,6 +22,7 @@
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:textColorSecondary">@color/gray_500</item>
         <item name="android:textColorTertiary">@color/gray_100</item>
+        <item name="android:textColor">@color/orange_500</item>
     </style>
 
     <style name="Theme.Hangang.AlertDialog" parent="Theme.AppCompat.Dialog">
