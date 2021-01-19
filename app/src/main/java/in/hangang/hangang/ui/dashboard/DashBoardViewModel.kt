@@ -21,7 +21,7 @@ class DashBoardViewModel(private val userRepository: UserRepository) : ViewModel
 
 
     private fun getData() {
-        userRepository.emailPasswordCheck("jason")
+        userRepository.checkNickname("jason")
             .toSingleConvert()
             .handleHttpException()
             .handleProgress(this)
