@@ -1,62 +1,67 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.remote
 
+import `in`.hangang.hangang.api.AuthApi
+import `in`.hangang.hangang.api.NoAuthApi
+import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
+import `in`.hangang.hangang.data.source.UserDataSource
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-class UserRepository(
-    private val userLocalDataSource: UserDataSource,
-    private val userRemoteDataSource: UserDataSource
-) : UserDataSource {
+class UserRemoteDataSource(
+    private val noAuthApi: NoAuthApi,
+    private val authApi: AuthApi,
+    private val refreshApi: AuthApi
+) :
+    UserDataSource {
     override fun signUp(
         major: Array<String>,
         nickName: String,
         password: String,
         portalAccount: String
     ): Single<CommonResponse> {
-        return userRemoteDataSource.signUp(major, nickName, password, portalAccount)
+        return noAuthApi.signUp(major, nickName, password, portalAccount)
     }
 
     override fun checkAccessTokenValid(): Single<String> {
-        return userRemoteDataSource.checkAccessTokenValid()
+        return authApi.authCheck()
     }
 
     override fun login(portalID: String, password: String): Single<TokenResponse> {
-        return userRemoteDataSource.login(portalID, password)
-            .flatMap { userLocalDataSource.saveToken(it.accessToken!!, it.refreshToken!!) }
+        return noAuthApi.login(LoginRequest(portalID, password))
     }
 
     override fun updateToken(): Single<TokenResponse> {
-        return userRemoteDataSource.updateToken()
-            .flatMap { userLocalDataSource.saveToken(it.accessToken!!, it.refreshToken!!) }
+        return refreshApi.refreshToken()
     }
 
     override fun saveToken(accessToken: String, refreshToken: String): Single<TokenResponse> {
-        return userLocalDataSource.saveToken(accessToken, refreshToken)
+        return Single.never()
     }
 
+
     override fun emailCheck(portalAccount: String): Completable {
-        return userRemoteDataSource.emailCheck(portalAccount)
+        return noAuthApi.checkEmail(EmailRequest(0, portalAccount))
     }
 
     override fun emailConfig(portalAccount: String, secret: String): Completable {
-        return userRemoteDataSource.emailConfig(portalAccount, secret)
+        return noAuthApi.configEmail(EmailConfigRequest(0, portalAccount, secret))
     }
 
     override fun checkNickname(nickName: String): Completable {
-        return userRemoteDataSource.checkNickname(nickName)
+        return noAuthApi.checkNickName(NickNameCheckRequest(nickName))
     }
 
     override fun emailPasswordCheck(portalAccount: String): Completable {
-        return userRemoteDataSource.emailPasswordCheck(portalAccount)
+        return noAuthApi.sendPasswordFindEmail(EmailRequest(1, portalAccount))
     }
 
     override fun emailPasswordConfig(portalAccount: String, secret: String): Completable {
-        return userRemoteDataSource.emailPasswordConfig(portalAccount, secret)
+        return noAuthApi.sendPasswordConfigEmail(EmailConfigRequest(1, portalAccount, secret))
     }
 
     override fun changePassword(portalAccount: String, password: String): Completable {
-        return userRemoteDataSource.changePassword(portalAccount, password)
+        return noAuthApi.passwordFind(PasswordFindRequest(portalAccount, password))
     }
 }

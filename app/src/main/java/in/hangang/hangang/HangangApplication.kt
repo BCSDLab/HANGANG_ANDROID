@@ -22,15 +22,13 @@ class HangangApplication : Application() {
         super.onCreate()
         instance = this
         Hawk.init(hangangApplicationContext).build()
-        LogUtil.isLoggable.apply {
-            isApplicationDebug
-        }
+        LogUtil.isLoggable = isApplicationDebug
         startKoin {
             androidContext(this@HangangApplication)
+            modules(netWorkModule)
             modules(dataSourceModule)
             modules(repositoryModule)
             modules(viewModelModule)
-            modules(netWorkModule)
         }
     }
 

@@ -5,7 +5,8 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-class ViewBindingActivity<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) : ActivityBase() {
+abstract class ViewBindingActivity<T : ViewDataBinding> : ActivityBase() {
+    @get:LayoutRes abstract  val layoutId: Int
     private lateinit var _binding: T
     val binding: T
         get() = _binding

@@ -16,7 +16,7 @@ object LogUtil {
     fun buildLogMsg(message: String?): String? {
         val ste = Thread.currentThread().stackTrace[4]
         val sb = StringBuilder()
-        sb.append("[")
+        sb.append(" [")
         sb.append(ste.className.split(".").last())
         sb.append("::")
         sb.append(ste.methodName)

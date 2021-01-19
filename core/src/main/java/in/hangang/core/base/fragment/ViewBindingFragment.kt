@@ -11,8 +11,9 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-open class ViewBindingFragment<T : ViewDataBinding>(@LayoutRes private val layoutId: Int) :
-    FragmentBase(), IProgressDialog {
+abstract class ViewBindingFragment<T : ViewDataBinding> : FragmentBase(), IProgressDialog {
+    @get:LayoutRes
+    abstract val layoutId: Int
     private lateinit var _binding: T
     val binding: T
         get() = _binding
@@ -34,10 +35,9 @@ open class ViewBindingFragment<T : ViewDataBinding>(@LayoutRes private val layou
     }
 
     override fun showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = ProgressDialog(requireContext(), getString(R.string.loading))
-            progressDialog?.show()
-        }
+        progressDialog?.dismiss()
+        progressDialog = ProgressDialog(requireContext(), getString(R.string.loading))
+        progressDialog?.show()
     }
 
     override fun hideProgressDialog() {

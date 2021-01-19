@@ -1,15 +1,13 @@
 package `in`.hangang.hangang.ui.dashboard
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.util.handleHttpException
-import `in`.hangang.hangang.util.handleProgress
-import `in`.hangang.hangang.util.withThread
+import `in`.hangang.hangang.data.source.UserRepository
+import `in`.hangang.hangang.util.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
-class DashBoardViewModel : ViewModelBase() {
+class DashBoardViewModel(private val userRepository: UserRepository) : ViewModelBase() {
     private val users: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>().also {
             getData()
@@ -23,12 +21,13 @@ class DashBoardViewModel : ViewModelBase() {
 
 
     private fun getData() {
-        Single.just(" ")
-            .map { Thread.sleep(5000L) }
+        userRepository.emailPasswordCheck("jason")
+            .toSingleConvert()
             .handleHttpException()
             .handleProgress(this)
             .withThread()
-            .subscribe()
+            .subscribe({ data -> LogUtil.d(data.toString()) },
+                { error -> LogUtil.e(error.message) })
             .addTo(compositeDisposable)
     }
 }

@@ -34,6 +34,7 @@ ext {
     retrofitMoshiConvert = "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     retrofitGsonConvert = "com.squareup.retrofit2:converter-gson:$retrofit_version"
     retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
+    retrofitScalarsConverter = "com.squareup.retrofit2:converter-scalars:$retrofit_version"
 
     /* Dependency - leakcanary */
     def leakcanary_version = "1.6.3"
