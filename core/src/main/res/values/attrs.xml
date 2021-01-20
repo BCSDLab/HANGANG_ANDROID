@@ -50,4 +50,8 @@
     <declare-styleable name="PasswordEditText">
         <attr name="mask" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="ViewPager">
+        <attr name="pagingEnabled" format="boolean" />
+    </declare-styleable>
 </resources>
