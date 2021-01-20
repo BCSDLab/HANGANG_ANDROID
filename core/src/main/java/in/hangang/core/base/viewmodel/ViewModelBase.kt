@@ -1,11 +1,14 @@
 package `in`.hangang.core.base.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
+
 
 open class ViewModelBase : ViewModel() {
-    private val compositeDisposable = CompositeDisposable()
+    protected val compositeDisposable = CompositeDisposable()
+    val isLoading = MutableLiveData<Boolean>()
 
     fun addDisposable(vararg disposables: Disposable) {
         compositeDisposable.addAll(*disposables)

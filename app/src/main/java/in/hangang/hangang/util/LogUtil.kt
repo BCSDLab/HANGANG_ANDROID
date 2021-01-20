@@ -1,4 +1,4 @@
-package `in`.hangang.hangang
+package `in`.hangang.hangang.util
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
@@ -7,7 +7,7 @@ import android.util.Log
 
 
 object LogUtil {
-    val TAG = "LogUtil"
+    private const val TAG = "LogUtil"
     var isLoggable = false      //로그를 출력해도 되는지 판단하는 변수
 
     /**
@@ -16,7 +16,7 @@ object LogUtil {
     fun buildLogMsg(message: String?): String? {
         val ste = Thread.currentThread().stackTrace[4]
         val sb = StringBuilder()
-        sb.append("[")
+        sb.append(" [")
         sb.append(ste.className.split(".").last())
         sb.append("::")
         sb.append(ste.methodName)
@@ -25,23 +25,8 @@ object LogUtil {
         return sb.toString()
     }
 
-    /**
-     * 디버그모드인지 확인하는 함수
-     */
-    fun isApplicationDebug(context: Context): Boolean {
-        var debuggable = false
-        val pm: PackageManager = context.getPackageManager()
-        try {
-            val appinfo = pm.getApplicationInfo(context.getPackageName(), 0)
-            debuggable = 0 != appinfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
-        } catch (e: PackageManager.NameNotFoundException) {
-        }
-
-        return debuggable
-    }
-
     fun setIsLoggable(value: Boolean) {
-        this.isLoggable = value
+        isLoggable = value
     }
 
     fun e(message: String?) {
