@@ -14,7 +14,6 @@ class DashboardFragment : ViewBindingFragment<FragmentDashboardBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this
         binding.vm = dashBoardViewModel
         initEvent()
         handleObserver()
@@ -38,6 +37,4 @@ class DashboardFragment : ViewBindingFragment<FragmentDashboardBinding>() {
             }
         })
     }
-
-
 }

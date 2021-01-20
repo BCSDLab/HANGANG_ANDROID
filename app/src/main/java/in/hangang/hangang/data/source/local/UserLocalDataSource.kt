@@ -6,7 +6,6 @@ import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
 import com.orhanobut.hawk.Hawk
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserLocalDataSource : UserDataSource {
@@ -19,7 +18,7 @@ class UserLocalDataSource : UserDataSource {
         return Single.never()
     }
 
-    override fun checkAccessTokenValid(): Single<String> {
+    override fun checkAccessTokenValid(): Single<CommonResponse> {
         return Single.never()
     }
 
@@ -46,27 +45,30 @@ class UserLocalDataSource : UserDataSource {
         }
     }
 
-    override fun emailCheck(portalAccount: String): Completable {
-        return Completable.never()
+    override fun emailCheck(portalAccount: String): Single<CommonResponse> {
+        return Single.never()
     }
 
-    override fun emailConfig(portalAccount: String, secret: String): Completable {
-        return Completable.never()
+    override fun emailConfig(portalAccount: String, secret: String): Single<CommonResponse> {
+        return Single.never()
     }
 
-    override fun checkNickname(nickName: String): Completable {
-        return Completable.never()
+    override fun checkNickname(nickName: String): Single<CommonResponse> {
+        return Single.never()
     }
 
-    override fun emailPasswordCheck(portalAccount: String): Completable {
-        return Completable.never()
+    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse> {
+        return Single.never()
     }
 
-    override fun emailPasswordConfig(portalAccount: String, secret: String): Completable {
-        return Completable.never()
+    override fun emailPasswordConfig(
+        portalAccount: String,
+        secret: String
+    ): Single<CommonResponse> {
+        return Single.never()
     }
 
-    override fun changePassword(portalAccount: String, password: String): Completable {
-        return Completable.never()
+    override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
+        return Single.never()
     }
 }

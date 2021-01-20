@@ -6,32 +6,35 @@ import `in`.hangang.hangang.util.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.addTo
+import retrofit2.HttpException
 
 class DashBoardViewModel(private val userRepository: UserRepository) : ViewModelBase() {
-    val nickNameCheckText = MutableLiveData<String>()
-    val emailSendText = MutableLiveData<String>()
+    private val _nickNameCheckText = MutableLiveData<String>()
+    val nickNameCheckText: LiveData<String>
+        get() = _nickNameCheckText
+    private val _emailSendText = MutableLiveData<String>()
+    val emailSendText: LiveData<String>
+        get() = _emailSendText
 
     fun checkNickName(nickName: String) {
         userRepository.checkNickname(nickName)
-            .toSingleConvert()
             .handleHttpException()
             .handleProgress(this)
             .withThread()
-            .doOnSubscribe { nickNameCheckText.postValue("검색중") }
-            .subscribe({ data -> nickNameCheckText.value = data.toString() },
-                { error -> LogUtil.e(error.message) })
+            .doOnSubscribe { _nickNameCheckText.postValue("검색중") }
+            .subscribe({ data -> _nickNameCheckText.value = data.message },
+                { error -> LogUtil.e(error.message)})
             .addTo(compositeDisposable)
     }
 
 
-    fun sendEmail(portalID : String){
+    fun sendEmail(portalID: String) {
         userRepository.emailCheck(portalID)
-            .toSingleConvert()
             .handleHttpException()
             .handleProgress(this)
             .withThread()
-            .doOnSubscribe { emailSendText.postValue("전송중") }
-            .subscribe({ data -> emailSendText.value = data.toString() },
+            .doOnSubscribe { _emailSendText.postValue("전송중") }
+            .subscribe({ data -> _emailSendText.value = data.message },
                 { error -> LogUtil.e(error.message) })
             .addTo(compositeDisposable)
     }

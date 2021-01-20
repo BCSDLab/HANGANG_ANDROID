@@ -116,16 +116,15 @@ val netWorkModule = module {
             .build()
     }
 
-    factory(named(NO_AUTH)) {
+    single(named(NO_AUTH)) {
         provideNoAuthApi(get(named(NO_AUTH)))
     }
 
-
-    factory(named(AUTH)) {
+    single(named(AUTH)) {
         provideAuthApi(get(named(AUTH)))
     }
 
-    factory(named(REFRESH_AUTH)) {
+    single(named(REFRESH_AUTH)) {
         provideAuthApi(get(named(REFRESH_AUTH)))
     }
 }

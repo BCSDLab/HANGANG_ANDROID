@@ -9,6 +9,9 @@ open class CommonResponse {
     @SerializedName("errorMessage")
     val errorMessage: String? = null
 
+    @SerializedName("message")
+    val message: String? = null
+
     @SerializedName("code")
     val code: Int? = null
 

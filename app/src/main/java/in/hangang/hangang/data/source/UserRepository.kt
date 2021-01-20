@@ -2,7 +2,6 @@ package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserRepository(
@@ -18,7 +17,7 @@ class UserRepository(
         return userRemoteDataSource.signUp(major, nickName, password, portalAccount)
     }
 
-    override fun checkAccessTokenValid(): Single<String> {
+    override fun checkAccessTokenValid(): Single<CommonResponse> {
         return userRemoteDataSource.checkAccessTokenValid()
     }
 
@@ -36,27 +35,30 @@ class UserRepository(
         return userLocalDataSource.saveToken(accessToken, refreshToken)
     }
 
-    override fun emailCheck(portalAccount: String): Completable {
+    override fun emailCheck(portalAccount: String): Single<CommonResponse> {
         return userRemoteDataSource.emailCheck(portalAccount)
     }
 
-    override fun emailConfig(portalAccount: String, secret: String): Completable {
+    override fun emailConfig(portalAccount: String, secret: String): Single<CommonResponse> {
         return userRemoteDataSource.emailConfig(portalAccount, secret)
     }
 
-    override fun checkNickname(nickName: String): Completable {
+    override fun checkNickname(nickName: String): Single<CommonResponse> {
         return userRemoteDataSource.checkNickname(nickName)
     }
 
-    override fun emailPasswordCheck(portalAccount: String): Completable {
+    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse> {
         return userRemoteDataSource.emailPasswordCheck(portalAccount)
     }
 
-    override fun emailPasswordConfig(portalAccount: String, secret: String): Completable {
+    override fun emailPasswordConfig(
+        portalAccount: String,
+        secret: String
+    ): Single<CommonResponse> {
         return userRemoteDataSource.emailPasswordConfig(portalAccount, secret)
     }
 
-    override fun changePassword(portalAccount: String, password: String): Completable {
+    override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return userRemoteDataSource.changePassword(portalAccount, password)
     }
 }

@@ -21,10 +21,10 @@ class UserRemoteDataSource(
         password: String,
         portalAccount: String
     ): Single<CommonResponse> {
-        return noAuthApi.signUp(major, nickName, password, portalAccount)
+        return noAuthApi.signUp(SignUpRequest(major, nickName, password, portalAccount))
     }
 
-    override fun checkAccessTokenValid(): Single<String> {
+    override fun checkAccessTokenValid(): Single<CommonResponse>{
         return authApi.authCheck()
     }
 
@@ -41,27 +41,27 @@ class UserRemoteDataSource(
     }
 
 
-    override fun emailCheck(portalAccount: String): Completable {
+    override fun emailCheck(portalAccount: String): Single<CommonResponse> {
         return noAuthApi.checkEmail(EmailRequest(0, portalAccount))
     }
 
-    override fun emailConfig(portalAccount: String, secret: String): Completable {
+    override fun emailConfig(portalAccount: String, secret: String): Single<CommonResponse> {
         return noAuthApi.configEmail(EmailConfigRequest(0, portalAccount, secret))
     }
 
-    override fun checkNickname(nickName: String): Completable {
+    override fun checkNickname(nickName: String): Single<CommonResponse>{
         return noAuthApi.checkNickName(NickNameCheckRequest(nickName))
     }
 
-    override fun emailPasswordCheck(portalAccount: String): Completable {
+    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse>{
         return noAuthApi.sendPasswordFindEmail(EmailRequest(1, portalAccount))
     }
 
-    override fun emailPasswordConfig(portalAccount: String, secret: String): Completable {
+    override fun emailPasswordConfig(portalAccount: String, secret: String): Single<CommonResponse> {
         return noAuthApi.sendPasswordConfigEmail(EmailConfigRequest(1, portalAccount, secret))
     }
 
-    override fun changePassword(portalAccount: String, password: String): Completable {
+    override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return noAuthApi.passwordFind(PasswordFindRequest(portalAccount, password))
     }
 }

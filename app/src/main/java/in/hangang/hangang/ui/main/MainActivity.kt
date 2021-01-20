@@ -15,8 +15,6 @@ class MainActivity : ActivityBase() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(navView, navController)
-        navView.setOnNavigationItemReselectedListener {
-        }
-
+        navView.setOnNavigationItemReselectedListener {}
     }
 }
