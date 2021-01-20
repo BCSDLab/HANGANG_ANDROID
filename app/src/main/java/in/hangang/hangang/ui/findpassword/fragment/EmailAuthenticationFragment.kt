@@ -4,6 +4,7 @@ import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentEmailAuthenticationBinding
+import `in`.hangang.hangang.ui.findpassword.activity.FindPasswordActivity
 import `in`.hangang.hangang.ui.findpassword.viewmodel.EmailAuthenticationViewModel
 import android.os.Bundle
 import android.text.Editable
@@ -81,7 +82,7 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
     }
 
     fun nextStep() {
-
+        (activity as FindPasswordActivity).nextPage()
     }
 
     private fun showResentEmailAuthNumberDialog() {
