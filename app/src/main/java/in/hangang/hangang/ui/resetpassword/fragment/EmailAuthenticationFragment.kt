@@ -1,17 +1,20 @@
-package `in`.hangang.hangang.ui.findpassword.fragment
+package `in`.hangang.hangang.ui.resetpassword.fragment
 
 import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.fragment.ViewBindingFragment
+import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentEmailAuthenticationBinding
-import `in`.hangang.hangang.ui.findpassword.activity.FindPasswordActivity
-import `in`.hangang.hangang.ui.findpassword.viewmodel.EmailAuthenticationViewModel
+import `in`.hangang.hangang.ui.resetpassword.activity.ResetPasswordActivity
+import `in`.hangang.hangang.ui.resetpassword.viewmodel.EmailAuthenticationViewModel
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import java.lang.StringBuilder
 
-class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticationBinding>(R.layout.fragment_email_authentication) {
+class EmailAuthenticationFragment :
+    ViewBindingFragment<FragmentEmailAuthenticationBinding>(R.layout.fragment_email_authentication) {
 
     private val emailAuthenticationViewModel: EmailAuthenticationViewModel by viewModel()
 
@@ -82,27 +85,27 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
     }
 
     fun nextStep() {
-        (activity as FindPasswordActivity).nextPage()
+        (activity as ResetPasswordActivity).nextPage()
     }
 
     private fun showResentEmailAuthNumberDialog() {
         (activity as ActivityBase).showSimpleDialog(
-                title = "재전송 되었습니다.",
-                message = "아우누리 메일을 확인해주세요.\n이메일 인증 완료 후 서비스를 이용할 수 있습니다.",
-                positiveButtonText = "확인",
-                positiveButtonOnClickListener = { (activity as ActivityBase).dismissSimpleDialog() }
+            title = getString(R.string.reset_password_dialog_resent_title),
+            message = getString(R.string.reset_password_dialog_check_portal_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { (activity as ActivityBase).dismissSimpleDialog() }
         )
     }
 
     private fun showEmailAuthFailedDialog() {
         (activity as ActivityBase).showSimpleDialog(
-                title = "인증 오류",
-                message = "아우누리 메일을 확인해주세요.\n이메일 인증 완료 후 서비스를 이용할 수 있습니다.",
-                positiveButtonText = "다시 인증하기",
-                positiveButtonOnClickListener = {
-                    binding.editTextEmailAuthNumber.setText("")
-                    (activity as ActivityBase).dismissSimpleDialog()
-                }
+            title = getString(R.string.reset_password_error_auth),
+            message = getString(R.string.reset_password_dialog_check_portal_message),
+            positiveButtonText = getString(R.string.reset_password_retry_auth),
+            positiveButtonOnClickListener = {
+                binding.editTextEmailAuthNumber.setText("")
+                (activity as ActivityBase).dismissSimpleDialog()
+            }
         )
     }
 

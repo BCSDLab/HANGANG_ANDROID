@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.ui.findpassword.viewmodel
+package `in`.hangang.hangang.ui.resetpassword.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import androidx.lifecycle.MutableLiveData

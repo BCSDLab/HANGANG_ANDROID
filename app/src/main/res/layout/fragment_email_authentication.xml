@@ -7,7 +7,7 @@
 
         <variable
             name="fragment"
-            type="in.hangang.hangang.ui.findpassword.fragment.EmailAuthenticationFragment" />
+            type="in.hangang.hangang.ui.resetpassword.fragment.EmailAuthenticationFragment" />
 
         <variable
             name="canSendAuthNumber"
@@ -23,7 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.findpassword.fragment.EmailAuthenticationFragment">
+        tools:context=".ui.resetpassword.fragment.EmailAuthenticationFragment">
 
         <TextView
             android:id="@+id/text_view_email_auth_title"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:text="학교 이메일 인증"
+            android:text="@string/reset_password_auth_koreatech_email_title"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:text="인증번호"
+            android:text="@string/reset_password_auth_number_title"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="비밀번호 찾기를 위해 이용"
+            android:hint="@string/reset_password_auth_koreatech_email_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_email_auth_title" />
@@ -66,7 +66,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:hint="인증번호를 입력해주세요"
+            android:hint="@string/reset_password_auth_number_hint"
             android:enabled="@{sentAuthNumber}"
             app:layout_constraintBottom_toBottomOf="@+id/button_send_auth_number"
             app:layout_constraintEnd_toStartOf="@+id/button_send_auth_number"
@@ -82,7 +82,7 @@
             android:enabled="@{canSendAuthNumber}"
             android:gravity="center"
             android:onClick="@{fragment::onClickSendAuthNumber}"
-            android:text="@{sentAuthNumber ? `재전송` : `인증번호 전송`}"
+            android:text="@{sentAuthNumber ? @string/reset_password_resend_auth_number : @string/reset_password_send_auth_number}"
             app:buttonAppearence="@{sentAuthNumber ? `outlined` : `filled`}"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +100,7 @@
             android:enabled="@{canSendAuthNumber}"
             android:gravity="center"
             android:onClick="@{fragment::onClickFinishEmailAuth}"
-            android:text="인증 완료"
+            android:text="@string/reset_password_finish_email_auth"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

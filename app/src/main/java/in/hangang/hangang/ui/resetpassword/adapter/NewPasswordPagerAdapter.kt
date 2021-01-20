@@ -1,11 +1,10 @@
-package `in`.hangang.hangang.ui.findpassword.adapter
+package `in`.hangang.hangang.ui.resetpassword.adapter
 
-import `in`.hangang.hangang.ui.findpassword.fragment.EmailAuthenticationFragment
-import `in`.hangang.hangang.ui.findpassword.fragment.NewPasswordFragment
+import `in`.hangang.hangang.ui.resetpassword.fragment.EmailAuthenticationFragment
+import `in`.hangang.hangang.ui.resetpassword.fragment.NewPasswordFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import java.lang.IllegalStateException
 
 class NewPasswordPagerAdapter(fragmentManager: FragmentManager) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
