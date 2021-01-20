@@ -17,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang">
         <activity
-            android:name=".ui.home.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/Theme.Hangang.NoActionBar"></activity>
-        <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>

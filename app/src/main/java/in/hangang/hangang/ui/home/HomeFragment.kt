@@ -1,10 +1,9 @@
 package `in`.hangang.hangang.ui.home
-
 import `in`.hangang.core.view.appbar.ProgressAppBar
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
-import `in`.hangang.hangang.LogUtil
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.util.LogUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

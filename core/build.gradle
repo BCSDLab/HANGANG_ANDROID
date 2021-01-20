@@ -46,7 +46,6 @@ android {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -72,6 +71,7 @@ dependencies {
     api project.retrofitGsonConvert
     api project.retrofitRxJava
     api project.retrofitMoshiConvert
+    api project.retrofitScalarsConverter
 
     /* Dependency - leakcanary */
     debugImplementation project.leakcanaryDebug
@@ -88,8 +88,23 @@ dependencies {
 
     /* Dependency - rxkotlin */
     api(project.rxkotlin)
+    api project.rxandroid
 
     /* Dependency - lottie */
     api project.lottie
+
+    /* Dependency - Koin */
+    api project.koinCore
+    api project.koinCoreExtension
+    api project.koinTest
+    api project.koinAndroidXScope
+    api project.koinAndroidXViewModel
+    api project.koinAndoridXFragment
+    api project.koinAndoridXWorkerManager
+    api project.koinAndoridXCompose
+    api project.koinAndoridXExtension
+
+    /* Dependency - Hawk */
+    api project.hawk
 
 }
