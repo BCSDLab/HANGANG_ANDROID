@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.ui.home
+package `in`.hangang.hangang.ui.lecture
 
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentLectureReviewBinding

@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.ui
+package `in`.hangang.hangang.ui.main
 
 import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.hangang.R
@@ -15,5 +15,6 @@ class MainActivity : ActivityBase() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(navView, navController)
+        navView.setOnNavigationItemReselectedListener {}
     }
 }
