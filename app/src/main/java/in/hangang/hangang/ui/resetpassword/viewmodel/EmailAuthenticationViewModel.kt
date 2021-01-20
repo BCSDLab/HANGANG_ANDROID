@@ -1,25 +1,21 @@
 package `in`.hangang.hangang.ui.resetpassword.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class EmailAuthenticationViewModel : ViewModelBase() {
-    val email = MutableLiveData("")
-    val authNumber = MutableLiveData("")
-
     private val _sentEmailAuth = MutableLiveData(false)
     private val _finishedEmailAuth = MutableLiveData(false)
 
     private val _showResentEmailAuthNumberDialog = MutableLiveData(false)
     private val _showEmailAuthFailedDialog = MutableLiveData(false)
 
-    val sentEmailAuth get() = _sentEmailAuth
-
-    val showResentEmailAuthNumberDialog get() = _showResentEmailAuthNumberDialog
-    val showEmailAuthFailedDialog get() = _showEmailAuthFailedDialog
-    val finishedEmailAuth get() = _finishedEmailAuth
-
-
+    val sentEmailAuth : LiveData<Boolean> get() = _sentEmailAuth
+    val showResentEmailAuthNumberDialog : LiveData<Boolean> get() = _showResentEmailAuthNumberDialog
+    val showEmailAuthFailedDialog : LiveData<Boolean> get() = _showEmailAuthFailedDialog
+    val finishedEmailAuth : LiveData<Boolean> get() = _finishedEmailAuth
+    
     fun sendAuthNumber() {
         if(sentEmailAuth.value == true) {
             resendAuthNumber()

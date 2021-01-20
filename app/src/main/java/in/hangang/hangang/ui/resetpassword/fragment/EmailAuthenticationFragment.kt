@@ -12,9 +12,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import java.lang.StringBuilder
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EmailAuthenticationFragment :
-    ViewBindingFragment<FragmentEmailAuthenticationBinding>(R.layout.fragment_email_authentication) {
+class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticationBinding>() {
+    override val layoutId = R.layout.fragment_email_authentication
 
     private val emailAuthenticationViewModel: EmailAuthenticationViewModel by viewModel()
 

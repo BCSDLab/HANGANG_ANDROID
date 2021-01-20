@@ -10,6 +10,10 @@
             type="in.hangang.hangang.ui.resetpassword.fragment.EmailAuthenticationFragment" />
 
         <variable
+            name="vm"
+            type="in.hangang.hangang.ui.resetpassword.viewmodel.EmailAuthenticationViewModel" />
+
+        <variable
             name="canSendAuthNumber"
             type="boolean" />
         <variable
@@ -79,11 +83,11 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/color_state_button_blue"
-            android:enabled="@{canSendAuthNumber}"
+            android:enabled="@{fragment.binding.editTextEmail.text.length() > 0}"
             android:gravity="center"
             android:onClick="@{fragment::onClickSendAuthNumber}"
-            android:text="@{sentAuthNumber ? @string/reset_password_resend_auth_number : @string/reset_password_send_auth_number}"
-            app:buttonAppearence="@{sentAuthNumber ? `outlined` : `filled`}"
+            android:text="@{vm.sentEmailAuth ? @string/reset_password_resend_auth_number : @string/reset_password_send_auth_number}"
+            app:buttonAppearence="@{vm.sentEmailAuth ? `outlined` : `filled`}"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_confirm_email_auth_title"
@@ -97,7 +101,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
             android:backgroundTint="@color/color_state_button_blue"
-            android:enabled="@{canSendAuthNumber}"
+            android:enabled="@{}"
             android:gravity="center"
             android:onClick="@{fragment::onClickFinishEmailAuth}"
             android:text="@string/reset_password_finish_email_auth"

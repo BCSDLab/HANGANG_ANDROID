@@ -10,8 +10,11 @@ import `in`.hangang.hangang.ui.resetpassword.viewmodel.NewPasswordViewModel
 import android.text.Editable
 import android.text.TextWatcher
 import java.lang.StringBuilder
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NewPasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>(R.layout.fragment_new_password) {
+class NewPasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>() {
+
+    override val layoutId = R.layout.fragment_new_password
 
     val newPasswordViewModel : NewPasswordViewModel by viewModel()
 
