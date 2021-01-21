@@ -7,27 +7,17 @@
 
         <variable
             name="fragment"
-            type="in.hangang.hangang.ui.resetpassword.fragment.EmailAuthenticationFragment" />
+            type="in.hangang.hangang.ui.changepassword.fragment.EmailAuthenticationFragment" />
 
         <variable
             name="vm"
-            type="in.hangang.hangang.ui.resetpassword.viewmodel.EmailAuthenticationViewModel" />
-
-        <variable
-            name="canSendAuthNumber"
-            type="boolean" />
-        <variable
-            name="sentAuthNumber"
-            type="boolean" />
-        <variable
-            name="canFinishAuth"
-            type="boolean" />
+            type="in.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.resetpassword.fragment.EmailAuthenticationFragment">
+        tools:context=".ui.changepassword.fragment.EmailAuthenticationFragment">
 
         <TextView
             android:id="@+id/text_view_email_auth_title"
@@ -71,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:hint="@string/reset_password_auth_number_hint"
-            android:enabled="@{sentAuthNumber}"
+            android:enabled="@{vm.sentEmailAuth}"
             app:layout_constraintBottom_toBottomOf="@+id/button_send_auth_number"
             app:layout_constraintEnd_toStartOf="@+id/button_send_auth_number"
             app:layout_constraintStart_toStartOf="parent" />
@@ -83,9 +73,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/color_state_button_blue"
-            android:enabled="@{fragment.binding.editTextEmail.text.length() > 0}"
             android:gravity="center"
-            android:onClick="@{fragment::onClickSendAuthNumber}"
             android:text="@{vm.sentEmailAuth ? @string/reset_password_resend_auth_number : @string/reset_password_send_auth_number}"
             app:buttonAppearence="@{vm.sentEmailAuth ? `outlined` : `filled`}"
             android:textColor="?attr/colorOnPrimary"
@@ -101,9 +89,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
             android:backgroundTint="@color/color_state_button_blue"
-            android:enabled="@{}"
             android:gravity="center"
-            android:onClick="@{fragment::onClickFinishEmailAuth}"
             android:text="@string/reset_password_finish_email_auth"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"

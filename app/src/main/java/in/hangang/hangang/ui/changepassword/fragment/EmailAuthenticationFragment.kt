@@ -1,17 +1,15 @@
-package `in`.hangang.hangang.ui.resetpassword.fragment
+package `in`.hangang.hangang.ui.changepassword.fragment
 
 import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.fragment.ViewBindingFragment
-import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentEmailAuthenticationBinding
-import `in`.hangang.hangang.ui.resetpassword.activity.ResetPasswordActivity
-import `in`.hangang.hangang.ui.resetpassword.viewmodel.EmailAuthenticationViewModel
+import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
+import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationViewModel
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import java.lang.StringBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticationBinding>() {
@@ -27,7 +25,7 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
         }
 
         override fun afterTextChanged(s: Editable?) {
-            emailAuthenticationViewModel.email.postValue(s.toString())
+            binding.buttonSendAuthNumber.isEnabled = s?.isNotEmpty() ?: false
         }
     }
     private val editTextEmailAuthNumberTextWatcher = object : TextWatcher {
@@ -38,31 +36,16 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
         }
 
         override fun afterTextChanged(s: Editable?) {
-            emailAuthenticationViewModel.authNumber.postValue(s.toString())
+            binding.buttonFinishEmailAuth.isEnabled = s?.isNotEmpty() ?: false
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            editTextEmail.addTextChangedListener(editTextEmailTextWatcher)
-            editTextEmailAuthNumber.addTextChangedListener(editTextEmailAuthNumberTextWatcher)
-        }
+        initEvent()
 
         with(emailAuthenticationViewModel) {
-            email.observe(viewLifecycleOwner) {
-                binding.canSendAuthNumber = it.isNotEmpty()
-            }
-
-            authNumber.observe(viewLifecycleOwner) {
-                binding.canFinishAuth = it.isNotEmpty()
-            }
-
-            sentEmailAuth.observe(viewLifecycleOwner) {
-                binding.sentAuthNumber = it
-            }
-
             finishedEmailAuth.observe(viewLifecycleOwner) {
                 if (it) nextStep()
             }
@@ -77,16 +60,28 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
         }
     }
 
-    fun onClickSendAuthNumber(view: View) {
-        emailAuthenticationViewModel.sendAuthNumber()
-    }
+    private fun initEvent() {
+        with(binding) {
+            editTextEmail.addTextChangedListener(editTextEmailTextWatcher)
+            editTextEmailAuthNumber.addTextChangedListener(editTextEmailAuthNumberTextWatcher)
 
-    fun onClickFinishEmailAuth(view: View) {
-        emailAuthenticationViewModel.finishEmailAuth()
+            buttonSendAuthNumber.setOnClickListener {
+                emailAuthenticationViewModel.sendAuthNumber(
+                    "${editTextEmail.text}@koreatech.ac.kr"
+                )
+            }
+
+            buttonFinishEmailAuth.setOnClickListener {
+                emailAuthenticationViewModel.finishEmailAuth(
+                    "${editTextEmail.text}@koreatech.ac.kr",
+                    editTextEmailAuthNumber.text.toString()
+                )
+            }
+        }
     }
 
     fun nextStep() {
-        (activity as ResetPasswordActivity).nextPage()
+        (activity as ChangePasswordActivity).nextPage()
     }
 
     private fun showResentEmailAuthNumberDialog() {

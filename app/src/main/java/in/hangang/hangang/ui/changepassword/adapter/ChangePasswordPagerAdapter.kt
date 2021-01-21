@@ -1,16 +1,16 @@
-package `in`.hangang.hangang.ui.resetpassword.adapter
+package `in`.hangang.hangang.ui.changepassword.adapter
 
-import `in`.hangang.hangang.ui.resetpassword.fragment.EmailAuthenticationFragment
-import `in`.hangang.hangang.ui.resetpassword.fragment.NewPasswordFragment
+import `in`.hangang.hangang.ui.changepassword.fragment.EmailAuthenticationFragment
+import `in`.hangang.hangang.ui.changepassword.fragment.ChangePasswordFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class NewPasswordPagerAdapter(fragmentManager: FragmentManager) :
+class ChangePasswordPagerAdapter(fragmentManager: FragmentManager) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val emailAuthenticationFragment = EmailAuthenticationFragment()
-    private val newPasswordFragment = NewPasswordFragment()
+    private val newPasswordFragment = ChangePasswordFragment()
 
     override fun getCount(): Int = 2
 

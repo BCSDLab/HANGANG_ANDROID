@@ -1,16 +1,16 @@
-package `in`.hangang.hangang.ui.resetpassword.activity
+package `in`.hangang.hangang.ui.changepassword.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityFindPasswordBinding
-import `in`.hangang.hangang.ui.resetpassword.adapter.NewPasswordPagerAdapter
+import `in`.hangang.hangang.ui.changepassword.adapter.ChangePasswordPagerAdapter
 import android.os.Bundle
 
-class ResetPasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>() {
+class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>() {
     override val layoutId = R.layout.activity_find_password
 
-    val newPasswordPagerAdapter: NewPasswordPagerAdapter by lazy {
-        NewPasswordPagerAdapter(supportFragmentManager)
+    val changePasswordPagerAdapter: ChangePasswordPagerAdapter by lazy {
+        ChangePasswordPagerAdapter(supportFragmentManager)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
