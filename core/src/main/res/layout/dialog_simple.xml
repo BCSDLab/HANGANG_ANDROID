@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dialog_text_margin"
+            android:textColor="@color/black2"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dialog_text_margin"
             android:gravity="top|start"
+            android:textColor="@color/black2"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             app:layout_constraintBottom_toTopOf="@id/button_positive"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +50,8 @@
             android:layout_marginBottom="@dimen/dialog_button_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/blue_500"
+            android:textSize="14sp"
             tools:text="확인" />
 
         <Button
@@ -57,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dialog_button_margin"
             android:layout_marginBottom="@dimen/dialog_button_margin"
+            android:textSize="14sp"
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_positive"

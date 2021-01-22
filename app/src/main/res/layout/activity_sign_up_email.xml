@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="in.hangang.hangang.ui.signup.SignUpEmailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.signup.SignUpEmailActivity">
+
+        <in.hangang.core.view.appbar.ProgressAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="25" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="학교 이메일 인증"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <in.hangang.core.view.edittext.KoreatechEmailEditText
+            android:id="@+id/email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="학교 이메일을 적어주세요"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:text="인증번호"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+            android:orientation="horizontal">
+
+            <in.hangang.core.view.edittext.SingleLineEditText
+                android:id="@+id/authnum_edit_text"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="학교 이메일로 인증번호가 전송됩니다."
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/authnum_send_button"
+                android:layout_width="97dp"
+                android:layout_height="28dp"
+                android:background="@drawable/rectangle_rounded_corner_blue_100"
+                android:text="인증번호 전송"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/auth_complete_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/rectangle_rounded_corner_blue_100"
+                android:text="인증 완료"
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

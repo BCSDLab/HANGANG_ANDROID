@@ -21,6 +21,7 @@ class KoreatechEmailEditText @JvmOverloads constructor(
 
     val koreatechEmailTextView = TextView(context, attributeSet, defStyleAttr, defStyleRes).apply {
         text = "@koreatech.ac.kr"
+        setTextColor(resources.getColor(R.color.black2))
         container.addView(this)
         setPadding(0, 0, 0, 0)
     }
@@ -30,4 +31,5 @@ class KoreatechEmailEditText @JvmOverloads constructor(
         set(value) {
             super.inputType = EditorInfo.TYPE_CLASS_TEXT
         }
+
 }
