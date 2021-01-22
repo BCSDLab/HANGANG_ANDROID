@@ -11,6 +11,10 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.marginBottom
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
+import androidx.core.view.marginTop
 
 class KoreatechEmailEditText @JvmOverloads constructor(
         context: Context,
@@ -21,8 +25,9 @@ class KoreatechEmailEditText @JvmOverloads constructor(
 
     val koreatechEmailTextView = TextView(context, attributeSet, defStyleAttr, defStyleRes).apply {
         text = "@koreatech.ac.kr"
-        setPadding(0, 0, 0, 0)
         container.addView(this)
+        setPadding(0, 0, 0, 0)
+        gravity = Gravity.END
     }
 
     override var inputType: Int

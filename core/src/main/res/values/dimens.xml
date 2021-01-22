@@ -27,4 +27,5 @@
 
     <!-- Dimension for custom edittext -->
     <dimen name="edit_text_right_icon_size">24dp</dimen>
+    <dimen name="dialog_text_margin_small">12dp</dimen>
 </resources>
