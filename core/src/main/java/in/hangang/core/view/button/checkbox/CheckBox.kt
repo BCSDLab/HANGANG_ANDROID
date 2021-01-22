@@ -20,4 +20,8 @@ class CheckBox @JvmOverloads constructor(
         compoundDrawablePadding = resources.getDimensionPixelSize(R.dimen.checkbox_button_padding)
         gravity = Gravity.CENTER_VERTICAL
     }
+
+    override fun callOnClick(): Boolean {
+        return super.callOnClick()
+    }
 }
