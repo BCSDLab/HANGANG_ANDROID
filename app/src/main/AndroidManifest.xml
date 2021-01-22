@@ -20,6 +20,7 @@
         <activity android:name=".ui.signup.SignUpActivity"></activity>
         <activity android:name=".ui.signup.SignUpEmailActivity" />
         <activity android:name=".ui.signup.SignUpDocumentActivity" />
+        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity"/>
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name">

@@ -3,7 +3,10 @@ import `in`.hangang.core.view.appbar.ProgressAppBar
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.ui.signup.SignUpActivity
+import `in`.hangang.hangang.ui.signup.SignUpDocumentActivity
 import `in`.hangang.hangang.util.LogUtil
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +41,8 @@ class HomeFragment : Fragment() {
             }
 
             override fun onClickViewInRightContainer(view: View, index: Int) {
+                var intent = Intent(activity, SignUpActivity::class.java)
+                startActivity(intent)
                 LogUtil.d("Clicked right button #$index")
             }
         }
