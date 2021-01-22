@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="fragment"
-            type="in.hangang.hangang.ui.changepassword.fragment.EmailAuthenticationFragment" />
-
         <variable
             name="vm"
             type="in.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationViewModel" />
@@ -50,6 +45,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:enabled="true"
             android:hint="@string/reset_password_auth_koreatech_email_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,8 +70,6 @@
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/color_state_button_blue"
             android:gravity="center"
-            android:text="@{vm.sentEmailAuth ? @string/reset_password_resend_auth_number : @string/reset_password_send_auth_number}"
-            app:buttonAppearence="@{vm.sentEmailAuth ? `outlined` : `filled`}"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_confirm_email_auth_title"

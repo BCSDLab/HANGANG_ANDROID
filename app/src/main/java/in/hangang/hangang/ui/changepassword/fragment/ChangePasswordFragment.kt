@@ -41,7 +41,9 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
         }
 
         override fun afterTextChanged(s: Editable?) {
-
+            binding.buttonFinishChangePassword.isEnabled =
+                (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
+                        binding.editTextConfirmNewPassword.text.isNotEmpty()
         }
     }
 
@@ -63,7 +65,9 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
     }
 
     private fun generatePasswordRegexErrorString(errorCode: Int): String {
-        return if (errorCode and PasswordEditTextWithRegex.MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS == PasswordEditTextWithRegex.ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS)
+        return if(errorCode == PasswordEditTextWithRegex.NO_ERR) {
+            ""
+        } else if (errorCode and PasswordEditTextWithRegex.MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS == PasswordEditTextWithRegex.ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS)
             getString(R.string.reset_password_regex_error_included_not_supported_characters)
         else if (errorCode and PasswordEditTextWithRegex.MASK_ERR_NO_INPUT == PasswordEditTextWithRegex.ERR_NO_INPUT)
             getString(R.string.reset_password_regex_error_no_inputs)

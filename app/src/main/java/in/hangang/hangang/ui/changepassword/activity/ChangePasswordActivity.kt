@@ -15,6 +15,8 @@ class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.viewPager.adapter = changePasswordPagerAdapter
     }
 
     fun nextPage() {

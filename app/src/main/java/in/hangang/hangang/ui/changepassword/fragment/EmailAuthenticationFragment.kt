@@ -2,6 +2,8 @@ package `in`.hangang.hangang.ui.changepassword.fragment
 
 import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.fragment.ViewBindingFragment
+import `in`.hangang.core.base.fragment.getColorFromAttr
+import `in`.hangang.core.view.button.RoundedCornerButton
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentEmailAuthenticationBinding
 import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
@@ -9,7 +11,9 @@ import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationViewM
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.View
+import kotlinx.android.synthetic.main.fragment_email_authentication.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticationBinding>() {
@@ -50,12 +54,32 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
                 if (it) nextStep()
             }
 
+            sentEmailAuth.observe(viewLifecycleOwner) {
+                if (it) {
+                    button_send_auth_number.text =
+                        getString(R.string.reset_password_resend_auth_number)
+                    button_send_auth_number.appearence = RoundedCornerButton.OUTLINED
+                    getColorFromAttr(R.attr.colorOnSurface)?.let { color ->
+                        button_send_auth_number.setTextColor(color)
+                    }
+                    binding.editTextEmailAuthNumber.isEditTextEnabled = true
+                } else {
+                    button_send_auth_number.text =
+                        getString(R.string.reset_password_send_auth_number)
+                    button_send_auth_number.appearence = RoundedCornerButton.FILLED
+                    getColorFromAttr(R.attr.colorOnPrimary)?.let { color ->
+                        button_send_auth_number.setTextColor(color)
+                    }
+                    binding.editTextEmailAuthNumber.isEditTextEnabled = false
+                }
+            }
+
             showResentEmailAuthNumberDialog.observe(viewLifecycleOwner) {
-                showResentEmailAuthNumberDialog()
+                if (it) showResentEmailAuthNumberDialog()
             }
 
             showEmailAuthFailedDialog.observe(viewLifecycleOwner) {
-                showEmailAuthFailedDialog()
+                if (it) showEmailAuthFailedDialog()
             }
         }
     }

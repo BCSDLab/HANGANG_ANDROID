@@ -38,7 +38,7 @@ open class SingleLineEditText @JvmOverloads constructor(
             inputType = getInteger(R.styleable.SingleLineEditText_android_inputType, EditorInfo.TYPE_CLASS_TEXT)
             editText.hint = getString(R.styleable.SingleLineEditText_android_hint)
             editText.setText(getString(R.styleable.SingleLineEditText_android_text))
-            editText.isEnabled = getBoolean(R.styleable.SingleLineEditText_android_enabled, false)
+            editText.isEnabled = getBoolean(R.styleable.SingleLineEditText_android_enabled, true)
 
             recycle()
         }
