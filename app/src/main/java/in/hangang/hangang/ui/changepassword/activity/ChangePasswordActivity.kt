@@ -8,7 +8,7 @@ import android.os.Bundle
 
 class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>() {
     override val layoutId = R.layout.activity_find_password
-
+    var portalAccount : String = ""
     val changePasswordPagerAdapter: ChangePasswordPagerAdapter by lazy {
         ChangePasswordPagerAdapter(supportFragmentManager)
     }
@@ -19,7 +19,8 @@ class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>(
         binding.viewPager.adapter = changePasswordPagerAdapter
     }
 
-    fun nextPage() {
+    fun nextPage(portalAccount : String) {
+        this.portalAccount = portalAccount
         binding.viewPager.currentItem += 1
     }
 

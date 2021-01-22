@@ -11,7 +11,6 @@ import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationViewM
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.TypedValue
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_email_authentication.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -50,14 +49,10 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
         initEvent()
 
         with(emailAuthenticationViewModel) {
-            finishedEmailAuth.observe(viewLifecycleOwner) {
-                if (it) nextStep()
-            }
-
             sentEmailAuth.observe(viewLifecycleOwner) {
                 if (it) {
                     button_send_auth_number.text =
-                        getString(R.string.reset_password_resend_auth_number)
+                            getString(R.string.reset_password_resend_auth_number)
                     button_send_auth_number.appearence = RoundedCornerButton.OUTLINED
                     getColorFromAttr(R.attr.colorOnSurface)?.let { color ->
                         button_send_auth_number.setTextColor(color)
@@ -65,21 +60,13 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
                     binding.editTextEmailAuthNumber.isEditTextEnabled = true
                 } else {
                     button_send_auth_number.text =
-                        getString(R.string.reset_password_send_auth_number)
+                            getString(R.string.reset_password_send_auth_number)
                     button_send_auth_number.appearence = RoundedCornerButton.FILLED
                     getColorFromAttr(R.attr.colorOnPrimary)?.let { color ->
                         button_send_auth_number.setTextColor(color)
                     }
                     binding.editTextEmailAuthNumber.isEditTextEnabled = false
                 }
-            }
-
-            showResentEmailAuthNumberDialog.observe(viewLifecycleOwner) {
-                if (it) showResentEmailAuthNumberDialog()
-            }
-
-            showEmailAuthFailedDialog.observe(viewLifecycleOwner) {
-                if (it) showEmailAuthFailedDialog()
             }
         }
     }
@@ -91,41 +78,50 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
 
             buttonSendAuthNumber.setOnClickListener {
                 emailAuthenticationViewModel.sendAuthNumber(
-                    "${editTextEmail.text}@koreatech.ac.kr"
+                        portalAccount = "${editTextEmail.text}@koreatech.ac.kr",
+                        onSuccess = {
+                            if (emailAuthenticationViewModel.sentEmailAuth.value == true)
+                                showResentEmailAuthNumberDialog()
+                        },
+                        onError = {
+                            showEmailAuthFailedDialog()
+                        }
                 )
             }
 
             buttonFinishEmailAuth.setOnClickListener {
                 emailAuthenticationViewModel.finishEmailAuth(
-                    "${editTextEmail.text}@koreatech.ac.kr",
-                    editTextEmailAuthNumber.text.toString()
+                        portalAccount = "${editTextEmail.text}@koreatech.ac.kr",
+                        secret = editTextEmailAuthNumber.text.toString(),
+                        onSuccess = { nextStep() },
+                        onError = { showEmailAuthFailedDialog() }
                 )
             }
         }
     }
 
     fun nextStep() {
-        (activity as ChangePasswordActivity).nextPage()
+        (activity as ChangePasswordActivity).nextPage("${binding.editTextEmail.text}@koreatech.ac.kr")
     }
 
     private fun showResentEmailAuthNumberDialog() {
         (activity as ActivityBase).showSimpleDialog(
-            title = getString(R.string.reset_password_dialog_resent_title),
-            message = getString(R.string.reset_password_dialog_check_portal_message),
-            positiveButtonText = getString(R.string.ok),
-            positiveButtonOnClickListener = { (activity as ActivityBase).dismissSimpleDialog() }
+                title = getString(R.string.reset_password_dialog_resent_title),
+                message = getString(R.string.reset_password_dialog_check_portal_message),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { (activity as ActivityBase).dismissSimpleDialog() }
         )
     }
 
     private fun showEmailAuthFailedDialog() {
         (activity as ActivityBase).showSimpleDialog(
-            title = getString(R.string.reset_password_error_auth),
-            message = getString(R.string.reset_password_dialog_check_portal_message),
-            positiveButtonText = getString(R.string.reset_password_retry_auth),
-            positiveButtonOnClickListener = {
-                binding.editTextEmailAuthNumber.setText("")
-                (activity as ActivityBase).dismissSimpleDialog()
-            }
+                title = getString(R.string.reset_password_error_auth),
+                message = getString(R.string.reset_password_dialog_check_portal_message),
+                positiveButtonText = getString(R.string.reset_password_retry_auth),
+                positiveButtonOnClickListener = {
+                    binding.editTextEmailAuthNumber.setText("")
+                    (activity as ActivityBase).dismissSimpleDialog()
+                }
         )
     }
 

@@ -1,9 +1,11 @@
 package `in`.hangang.hangang.ui.changepassword.fragment
 
+import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentNewPasswordBinding
+import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordViewModel
 import android.os.Bundle
 import android.text.Editable
@@ -12,8 +14,6 @@ import android.view.View
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>() {
-
-    var portalAccount : String = ""
     override val layoutId = R.layout.fragment_new_password
 
     private val changePasswordViewModel: ChangePasswordViewModel by viewModel()
@@ -27,10 +27,10 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
 
         override fun afterTextChanged(s: Editable?) {
             binding.textViewPasswordRegexErrorMessage.text =
-                generatePasswordRegexErrorString(binding.editTextNewPassword.errorCode)
+                    generatePasswordRegexErrorString(binding.editTextNewPassword.errorCode)
             binding.buttonFinishChangePassword.isEnabled =
-                (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
-                        binding.editTextConfirmNewPassword.text.isNotEmpty()
+                    (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
+                            binding.editTextConfirmNewPassword.text.isNotEmpty()
         }
     }
     private val newPasswordConfirmTextWatcher = object : TextWatcher {
@@ -42,8 +42,8 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
 
         override fun afterTextChanged(s: Editable?) {
             binding.buttonFinishChangePassword.isEnabled =
-                (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
-                        binding.editTextConfirmNewPassword.text.isNotEmpty()
+                    (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
+                            binding.editTextConfirmNewPassword.text.isNotEmpty()
         }
     }
 
@@ -51,6 +51,13 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
         super.onViewCreated(view, savedInstanceState)
 
         initEvent()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        with(changePasswordViewModel) {
+
+        }
     }
 
     private fun initEvent() {
@@ -59,13 +66,17 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
             editTextConfirmNewPassword.addTextChangedListener(newPasswordConfirmTextWatcher)
 
             buttonFinishChangePassword.setOnClickListener {
-                changePasswordViewModel.applyNewPassword(portalAccount, editTextNewPassword.text.toString())
+                changePasswordViewModel.applyNewPassword(
+                        portalAccount = (activity as ChangePasswordActivity).portalAccount,
+                        password = editTextNewPassword.text.toString(),
+                        onSuccess = { showResetPasswordFinishedDialog() }
+                )
             }
         }
     }
 
     private fun generatePasswordRegexErrorString(errorCode: Int): String {
-        return if(errorCode == PasswordEditTextWithRegex.NO_ERR) {
+        return if (errorCode == PasswordEditTextWithRegex.NO_ERR) {
             ""
         } else if (errorCode and PasswordEditTextWithRegex.MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS == PasswordEditTextWithRegex.ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS)
             getString(R.string.reset_password_regex_error_included_not_supported_characters)
@@ -91,4 +102,15 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
         }
     }
 
+    private fun showResetPasswordFinishedDialog() {
+        //TODO : message에 닉네임 표시 추가
+        (activity as ActivityBase).showSimpleDialog(
+                title = getString(R.string.reset_password_finished_title),
+                message = getString(R.string.reset_password_finished_message),
+                positiveButtonText = getString(R.string.reset_password_finished_positive_button),
+                positiveButtonOnClickListener = {
+                    activity?.finish()
+                }
+        )
+    }
 }
