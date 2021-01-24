@@ -26,8 +26,6 @@ import java.util.concurrent.TimeUnit
 class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up
     private val signUpViewModel: SignUpViewModel by viewModel()
-    lateinit var newPasswordTextWatcher: TextWatcher
-    lateinit var passwordCheckWatcher: TextWatcher
     private var id: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +41,6 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
         initEvent()
         handleObserver()
         initTextWatcher()
-        binding.passwordEditText.addTextChangedListener(newPasswordTextWatcher)
-        binding.passwordCheckEditText.addTextChangedListener(passwordCheckWatcher)
 
     }
     private fun initEvent(){
@@ -60,34 +56,15 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     }
     private fun handleObserver() {
         Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<String>? ->
-            binding.nicknameEditText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-                override fun afterTextChanged(s: Editable?) {
-                    emitter?.onNext(s.toString())
-                }
-            })
+            binding.nicknameEditText.addTextChangedListener{
+                    emitter?.onNext(it.toString())
+            }
 
         })
             .debounce(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
-            .subscribe(object : Observer<String> {
-                override fun onSubscribe(d: Disposable?) {
-                }
+            .subscribe{ signUpViewModel.checkNickName(it) }
 
-                override fun onNext(t: String) {
-                    LogUtil.e(t.length.toString())
-                    signUpViewModel.checkNickName(t)
-                }
-
-                override fun onError(e: Throwable?) {
-                }
-
-                override fun onComplete() {
-                }
-            })
         signUpViewModel.nickNameCheckText.observe(this, {
             if (it.equals(getString(R.string.available_nickname))) {
                 if (binding.nicknameEditText.text.toString().length == 0) {
@@ -118,54 +95,40 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     }
 
     private fun initTextWatcher() {
-        newPasswordTextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                binding.passwordErrorText.text =
-                    generatePasswordRegexErrorString(binding.passwordEditText.errorCode)
-                if (binding.passwordEditText.errorCode == NO_ERR) {
+        with(binding){
+           passwordEditText.addTextChangedListener{
+                passwordErrorText.text =
+                    generatePasswordRegexErrorString(passwordEditText.errorCode)
+                if (passwordEditText.errorCode == NO_ERR) {
                     signUpViewModel.isPasswordAvailable.value = isConditionComplete()
                 } else
                     signUpViewModel.isPasswordAvailable.value = isConditionComplete()
             }
-        }
-
-        passwordCheckWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                var currentString = binding.passwordCheckEditText.text.toString()
-                if (binding.passwordEditText.text.toString().equals(currentString)) {
-                    binding.passwordCheckEditText.status = CHECK
+            passwordCheckEditText.addTextChangedListener{
+                var currentString = passwordCheckEditText.text.toString()
+                if (passwordEditText.text.toString().equals(currentString)) {
+                    passwordCheckEditText.status = CHECK
                     signUpViewModel.isPasswordAvailable.value = isConditionComplete()
                 } else {
-                    binding.passwordCheckEditText.status = ERROR
+                    passwordCheckEditText.status = ERROR
                     signUpViewModel.isPasswordAvailable.value = isConditionComplete()
                 }
             }
         }
     }
-
-
     private fun initAppBar() {
         binding.appBar.title = getString(R.string.join_in)
     }
 
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
     private fun isConditionComplete(): Boolean {
-        if (binding.passwordEditText.status == CHECK && binding.passwordCheckEditText.status == CHECK && binding.nicknameEditText.status == CHECK)
-            return true
-        else
-            return false
+        with(binding){
+            if (passwordEditText.status == CHECK && passwordCheckEditText.status == CHECK && nicknameEditText.status == CHECK)
+                return true
+            else
+                return false
+        }
+
     }
 
     private fun generatePasswordRegexErrorString(errorCode: Int): String {

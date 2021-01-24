@@ -24,29 +24,29 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
     }
 
     private fun initCheckBox() {
-        binding.agreeAllCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                binding.nextButton.isEnabled = isCheckBoxCheck()
-            } else {
-                binding.nextButton.isEnabled = isCheckBoxCheck()
+        with(binding){
+            agreeAllCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                } else {
+                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                }
+            }
+            agreeHangangService.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                } else {
+                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                }
+            }
+            agreePersonalInfo.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                } else {
+                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                }
             }
         }
-        binding.agreeHangangService.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                binding.nextButton.isEnabled = isCheckBoxCheck()
-            } else {
-                binding.nextButton.isEnabled = isCheckBoxCheck()
-            }
-        }
-        binding.agreePersonalInfo.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                binding.nextButton.isEnabled = isCheckBoxCheck()
-            } else {
-                binding.nextButton.isEnabled = isCheckBoxCheck()
-            }
-        }
-
-
     }
     private fun initEvent(){
         binding.nextButton.setOnClickListener {
@@ -55,7 +55,6 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
                 startActivity(intent)
             }
         }
-
     }
 
     private fun isCheckBoxCheck(): Boolean {

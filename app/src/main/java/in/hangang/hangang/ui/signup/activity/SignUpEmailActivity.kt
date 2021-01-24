@@ -12,6 +12,8 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import `in`.hangang.core.base.activity.showSimpleDialog
+import `in`.hangang.core.view.button.RoundedCornerButton.Companion.FILLED
 
 class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up_email
@@ -49,46 +51,46 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     }
 
     private fun initEvent() {
-        binding.authnumSendButton.setOnClickListener {
-            if (isAutnNumable) {
-                if (isAuthNumSend == false) {
-                    signUpEmailViewModel.sendEmail(
-                        binding.emailEditText.text.toString().plus("@koreatech.ac.kr")
-                    )
-                    resendAvailable()
-                    isAuthNumSend = true;
-                } else {
-                    signUpEmailViewModel.sendEmail(
-                        binding.emailEditText.text.toString().plus("@koreatech.ac.kr")
-                    )
-                    initResendDialog()
+        with(binding){
+            authnumSendButton.setOnClickListener {
+                if (isAutnNumable) {
+                    if (isAuthNumSend == false) {
+                        signUpEmailViewModel.sendEmail(
+                            binding.emailEditText.text.toString().plus("@koreatech.ac.kr")
+                        )
+                        resendAvailable()
+                        isAuthNumSend = true;
+                    } else {
+                        signUpEmailViewModel.sendEmail(
+                            binding.emailEditText.text.toString().plus("@koreatech.ac.kr")
+                        )
+                        initResendDialog()
+                    }
                 }
+            }
+            authCompleteButton.setOnClickListener {
+                if (binding.authCompleteButton.isEnabled)
+                    signUpEmailViewModel.sendEmailConfig(
+                        binding.emailEditText.text.toString().plus("@koreatech.ac.kr"),
+                        binding.authnumEditText.text.toString()
+                    )
             }
         }
 
-        binding.authCompleteButton.setOnClickListener {
-            if (binding.authCompleteButton.isEnabled)
-                signUpEmailViewModel.sendEmailConfig(
-                    binding.emailEditText.text.toString().plus("@koreatech.ac.kr"),
-                    binding.authnumEditText.text.toString()
-                )
-        }
+
+
     }
 
     private fun initEmailEditText() {
-        binding.emailEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s?.length!! > 0 && isAuthNumSend == false) {
+        with(binding){
+            emailEditText.addTextChangedListener{
+                if (it?.length!! > 0 && isAuthNumSend == false) {
                     authNumAvailable()
                     isAutnNumable = true
-                } else if (s?.length!! > 0 && isAuthNumSend) {
+                } else if (it?.length!! > 0 && isAuthNumSend) {
                     resendAvailable()
                     isAutnNumable = true
-                } else if ((s?.length!! <= 0 && isAuthNumSend == false)) {
+                } else if ((it?.length!! <= 0 && isAuthNumSend == false)) {
                     authNumDisavailable()
                     isAutnNumable = false
                 } else {
@@ -96,80 +98,79 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
                     isAutnNumable = false
                 }
             }
-        })
+        }
+
     }
 
     private fun initAuthnumEditText() {
-        binding.authnumEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s?.length!! > 0) {
+        with(binding){
+            authnumEditText.addTextChangedListener{
+                if (it?.length!! > 0) {
                     binding.authCompleteButton.isEnabled = true
                 } else {
                     binding.authCompleteButton.isEnabled = false
                 }
             }
-        })
+        }
     }
 
     private fun initErrorDialog() {
-        var dialogListener = View.OnClickListener {
-            binding.authnumEditText.setText("")
-            authNumAvailable()
-            isAuthNumSend = false
-            dialog?.dismiss()
-
-        }
         showSimpleDialog(
             title = getString(R.string.reset_password_error_auth),
             message = getString(R.string.check_authnum_or_email),
             positiveButtonText = getString(R.string.reset_password_retry_auth),
-            positiveButtonOnClickListener = dialogListener,
-            cancelable = false
-        )
+            positiveButtonOnClickListener = {dialog, _ ->
+                binding.authnumEditText.setText("")
+                authNumAvailable()
+                isAuthNumSend = false
+                dialog?.dismiss()
 
+            },
+            cancelable = false)
     }
 
     private fun initResendDialog() {
-
         showSimpleDialog(
             title = getString(R.string.reset_password_dialog_resent_title),
             message = getString(R.string.reset_password_dialog_check_portal_message),
             positiveButtonText = getString(R.string.ok),
-            positiveButtonOnClickListener = { dismissSimpleDialog() },
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            },
             cancelable = false
         )
 
     }
 
     private fun authNumAvailable() {
-        binding.authnumSendButton.isEnabled = true
-        binding.authnumSendButton.text = getString(R.string.reset_password_send_auth_number)
+        with(binding){
+            authnumSendButton.isEnabled = true
+            authnumSendButton.appearence = FILLED
+            authnumSendButton.text = getString(R.string.reset_password_send_auth_number)
+        }
     }
 
     private fun authNumDisavailable() {
-        binding.authnumSendButton.isEnabled = false
-        binding.authnumSendButton.text = getString(R.string.reset_password_send_auth_number)
+        with(binding){
+            authnumSendButton.isEnabled = false
+            authnumSendButton.text = getString(R.string.reset_password_send_auth_number)
+        }
     }
 
     private fun resendDisavaiable() {
-        binding.authnumSendButton.appearence = OUTLINED
-        binding.authnumSendButton.isEnabled = false
-        binding.authnumSendButton.setTextColor(
-            ContextCompat.getColor(
-                baseContext,
-                `in`.hangang.core.R.color.blue_100
-            )
-        )
-        binding.authnumSendButton.text = getString(R.string.reset_password_resend_auth_number)
+        with(binding){
+            authnumSendButton.appearence = OUTLINED
+            authnumSendButton.isEnabled = false
+            authnumSendButton.setTextColor(ContextCompat.getColor(baseContext, `in`.hangang.core.R.color.blue_100))
+            authnumSendButton.text = getString(R.string.reset_password_resend_auth_number)
+        }
     }
 
     private fun resendAvailable() {
-        binding.authnumSendButton.appearence = OUTLINED
-        binding.authnumSendButton.isEnabled = true
-        binding.authnumSendButton.text = getString(R.string.reset_password_resend_auth_number)
+        with(binding){
+            authnumSendButton.appearence = OUTLINED
+            authnumSendButton.isEnabled = true
+            authnumSendButton.text = getString(R.string.reset_password_resend_auth_number)
+        }
     }
 }
