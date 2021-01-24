@@ -32,6 +32,7 @@
         <attr name="android:inputType" />
         <attr name="android:hint" />
         <attr name="android:text" />
+        <attr name="android:enabled" />
     </declare-styleable>
 
     <declare-styleable name="EditTextWithError">
@@ -48,5 +49,9 @@
 
     <declare-styleable name="PasswordEditText">
         <attr name="mask" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ViewPager">
+        <attr name="pagingEnabled" format="boolean" />
     </declare-styleable>
 </resources>
