@@ -6,7 +6,6 @@ import `in`.hangang.core.base.fragment.getColorFromAttr
 import `in`.hangang.core.view.button.RoundedCornerButton
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentEmailAuthenticationBinding
-import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import android.os.Bundle
@@ -31,14 +30,12 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
         with(emailAuthenticationFragmentViewModel) {
             sentEmailAuth.observe(viewLifecycleOwner) {
                 if (it) {
-                    button_send_auth_number.text =
-                            getString(R.string.reset_password_resend_auth_number)
+                    button_send_auth_number.text = getString(R.string.reset_password_resend_auth_number)
                     button_send_auth_number.appearence = RoundedCornerButton.OUTLINED
                     button_send_auth_number.setTextColor(getColorFromAttr(R.attr.colorOnSurface))
                     binding.editTextEmailAuthNumber.isEditTextEnabled = true
                 } else {
-                    button_send_auth_number.text =
-                            getString(R.string.reset_password_send_auth_number)
+                    button_send_auth_number.text = getString(R.string.reset_password_send_auth_number)
                     button_send_auth_number.appearence = RoundedCornerButton.FILLED
                     button_send_auth_number.setTextColor(getColorFromAttr(R.attr.colorOnPrimary))
                     binding.editTextEmailAuthNumber.isEditTextEnabled = false

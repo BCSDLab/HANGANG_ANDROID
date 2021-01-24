@@ -5,7 +5,6 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityFindPasswordBinding
 import `in`.hangang.hangang.ui.changepassword.adapter.ChangePasswordPagerAdapter
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
-import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import android.os.Bundle
 import org.koin.androidx.viewmodel.ext.android.viewModel
