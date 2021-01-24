@@ -75,4 +75,17 @@
     <string name="energy_engineering">에너지신소재화학공학부</string>
     <string name="electronic_engineering">전기전자통신공학부</string>
     <string name="computer_engineering">컴퓨터공학부</string>
+
+    <string name="agree_to_term">약관 동의</string>
+    <string name="agree_to_under_term">아래 약관에 모두 동의합니다</string>
+    <string name="personal_to_term">개인정보 이용약관(필수)</string>
+    <string name="article_one_perpose">제1조(목적)</string>
+    <string name="article_one_perpose_text_1">한강 서비스 이용약관은 bcsd lab에서 서비스를 제공함에</string>
+    <string name="article_one_perpose_text_2">있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로</string>
+    <string name="article_one_perpose_text_3">합니다.</string>
+    <string name="use_to_term">한강 이용약관(필수)</string>
+    <string name="community_rule">커뮤니티 이용규칙</string>
+    <string name="community_rule_text_1">한강 서비스 이용약관은 bcsd lab에서 서비스를 제공함에</string>
+    <string name="community_rule_text_2">있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로</string>
+
 </resources>
