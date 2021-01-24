@@ -1,6 +1,5 @@
 package `in`.hangang.hangang.ui.changepassword.fragment
 
-import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex
@@ -22,7 +21,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>() {
@@ -31,52 +29,26 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
     private val changePasswordFragmentViewModel: ChangePasswordFragmentViewModel by sharedViewModel()
     private val emailAuthenticationFragmentViewModel: EmailAuthenticationFragmentViewModel by sharedViewModel()
 
-    private val newPasswordTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            binding.textViewPasswordRegexErrorMessage.text =
-                    generatePasswordRegexErrorString()
-            binding.buttonFinishChangePassword.isEnabled =
-                    (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
-                            binding.editTextConfirmNewPassword.text.isNotEmpty()
-        }
-    }
-    private val newPasswordConfirmTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            binding.buttonFinishChangePassword.isEnabled =
-                    (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
-                            binding.editTextConfirmNewPassword.text.isNotEmpty()
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initEvent()
-        initViewModel()
-    }
-
-    private fun initViewModel() {
-        with(changePasswordFragmentViewModel) {
-
-        }
     }
 
     private fun initEvent() {
         with(binding) {
-            editTextNewPassword.addTextChangedListener(newPasswordTextWatcher)
-            editTextConfirmNewPassword.addTextChangedListener(newPasswordConfirmTextWatcher)
+            editTextNewPassword.addTextChangedListener {
+                binding.textViewPasswordRegexErrorMessage.text =
+                        generatePasswordRegexErrorString()
+                binding.buttonFinishChangePassword.isEnabled =
+                        (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
+                                binding.editTextConfirmNewPassword.text.isNotEmpty()
+            }
+            editTextConfirmNewPassword.addTextChangedListener {
+                binding.buttonFinishChangePassword.isEnabled =
+                        (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
+                                binding.editTextConfirmNewPassword.text.isNotEmpty()
+            }
 
             buttonFinishChangePassword.setOnClickListener {
                 changePasswordFragmentViewModel.applyNewPassword(
@@ -133,7 +105,7 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
                 title = getString(R.string.reset_password_finished_title),
                 message = getString(R.string.reset_password_finished_message),
                 positiveButtonText = getString(R.string.reset_password_finished_positive_button),
-                positiveButtonOnClickListener = {_, _ ->
+                positiveButtonOnClickListener = { _, _ ->
                     activity?.finish()
                 }
         )

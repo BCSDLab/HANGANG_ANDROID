@@ -1,6 +1,5 @@
 package `in`.hangang.hangang.ui.changepassword.fragment
 
-import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.base.fragment.getColorFromAttr
@@ -11,7 +10,6 @@ import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import kotlinx.android.synthetic.main.fragment_email_authentication.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -105,5 +103,4 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
                 }
         )
     }
-
 }
