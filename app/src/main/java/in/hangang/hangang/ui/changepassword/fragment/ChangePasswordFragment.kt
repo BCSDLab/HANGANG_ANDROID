@@ -18,8 +18,6 @@ import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

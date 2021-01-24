@@ -48,5 +48,4 @@ class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>(
     fun finishChangePassword() {
         changePasswordActivityViewModel.currentPage.postValue(2)
     }
-
 }
