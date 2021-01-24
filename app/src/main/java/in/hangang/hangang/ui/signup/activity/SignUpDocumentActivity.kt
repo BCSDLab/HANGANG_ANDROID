@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.ui.signup
+package `in`.hangang.hangang.ui.signup.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R

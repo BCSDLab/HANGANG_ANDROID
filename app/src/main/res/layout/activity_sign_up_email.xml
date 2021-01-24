@@ -7,14 +7,14 @@
 
         <variable
             name="vm"
-            type="in.hangang.hangang.ui.signup.SignUpEmailViewModel" />
+            type="in.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.signup.SignUpEmailActivity">
+        tools:context=".ui.signup.activity.SignUpEmailActivity">
 
         <in.hangang.core.view.appbar.ProgressAppBar
             android:id="@+id/app_bar"

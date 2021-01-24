@@ -3,13 +3,10 @@ package `in`.hangang.hangang.ui.home
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityLoginBinding
-import `in`.hangang.hangang.databinding.ActivitySignUpMajorBinding
 import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
-import `in`.hangang.hangang.ui.signup.SignUpDocumentActivity
+import `in`.hangang.hangang.ui.signup.activity.SignUpDocumentActivity
 import android.content.Intent
 import android.os.Bundle
-
-import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : ViewBindingActivity<ActivityLoginBinding>() {
     override val layoutId: Int = R.layout.activity_login

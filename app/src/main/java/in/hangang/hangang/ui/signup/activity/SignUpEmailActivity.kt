@@ -1,9 +1,10 @@
-package `in`.hangang.hangang.ui.signup
+package `in`.hangang.hangang.ui.signup.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.view.button.RoundedCornerButton.Companion.OUTLINED
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpEmailBinding
+import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable

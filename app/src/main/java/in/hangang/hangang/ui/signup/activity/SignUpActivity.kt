@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.ui.signup
+package `in`.hangang.hangang.ui.signup.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.view.edittext.EditTextWithError.Companion.CHECK
@@ -8,6 +8,7 @@ import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.NO_ERR
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpBinding
+import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
 import `in`.hangang.hangang.util.LogUtil
 import android.content.Intent
 import android.os.Bundle

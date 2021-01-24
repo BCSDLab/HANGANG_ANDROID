@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="in.hangang.hangang.ui.signup.SignUpViewModel" />
+            type="in.hangang.hangang.ui.signup.viewmodel.SignUpViewModel" />
     </data>
 
 
@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
             android:orientation="vertical"
-            tools:context=".ui.signup.SignUpActivity">
+            tools:context=".ui.signup.activity.SignUpActivity">
 
 
 

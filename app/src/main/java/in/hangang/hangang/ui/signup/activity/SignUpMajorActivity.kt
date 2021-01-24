@@ -1,10 +1,10 @@
-package `in`.hangang.hangang.ui.signup
+package `in`.hangang.hangang.ui.signup.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
-import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpMajorBinding
 import `in`.hangang.hangang.ui.home.LoginActivity
+import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -73,11 +73,11 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
         }
     }
 
-    fun initAppBar() {
+    private fun initAppBar() {
         binding.appBar.title = getString(R.string.join_in)
     }
 
-    fun initCheckBox() {
+    private fun initCheckBox() {
         binding.mechanicalEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 majorHashMap.put(1, getString(R.string.mechanical_engineering))
@@ -143,7 +143,7 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
         }
     }
 
-    fun checkBoxCheck(): Boolean {
+    private fun checkBoxCheck(): Boolean {
         if (binding.mechanicalEngineeringCheckbox.isChecked || binding.designEngineeringCheckbox.isChecked || binding.mechatronicsEngineeringCheckbox.isChecked ||
             binding.industryManagementCheckbox.isChecked || binding.energyEngineeringCheckbox.isChecked || binding.electronicEngineeringCheckbox.isChecked ||
             binding.computerEngineeringCheckbox.isChecked

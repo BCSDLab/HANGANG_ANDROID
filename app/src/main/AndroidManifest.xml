@@ -17,10 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.signup.SignUpMajorActivity"></activity>
-        <activity android:name=".ui.signup.SignUpActivity" />
-        <activity android:name=".ui.signup.SignUpEmailActivity" />
-        <activity android:name=".ui.signup.SignUpDocumentActivity" />
+        <activity android:name=".ui.signup.activity.SignUpMajorActivity"></activity>
+        <activity android:name=".ui.signup.activity.SignUpActivity" />
+        <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
+        <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
         <activity android:name=".ui.changepassword.activity.ChangePasswordActivity" />
         <activity android:name=".ui.main.MainActivity"/>
         <activity

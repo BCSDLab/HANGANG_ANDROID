@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.ui.signup
+package `in`.hangang.hangang.ui.signup.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.source.UserRepository
