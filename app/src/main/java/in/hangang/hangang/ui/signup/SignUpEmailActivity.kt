@@ -1,11 +1,9 @@
 package `in`.hangang.hangang.ui.signup
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
-import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.button.RoundedCornerButton.Companion.OUTLINED
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpEmailBinding
-import `in`.hangang.hangang.util.LogUtil
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -32,7 +30,8 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
         initEvent()
         handleObserver()
     }
-    private fun handleObserver(){
+
+    private fun handleObserver() {
         signUpEmailViewModel.emailConfigSendText.observe(this, {
             if (it.equals("OK")) {
                 var intent = Intent(this, SignUpActivity::class.java)
@@ -47,7 +46,8 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     private fun initAppBar() {
         binding.appBar.title = getString(R.string.join_in)
     }
-    private fun initEvent(){
+
+    private fun initEvent() {
         binding.authnumSendButton.setOnClickListener {
             if (isAutnNumable) {
                 if (isAuthNumSend == false) {
@@ -120,6 +120,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             authNumAvailable()
             isAuthNumSend = false
             dialog?.dismiss()
+
         }
         showSimpleDialog(
             title = getString(R.string.reset_password_error_auth),
@@ -137,7 +138,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             title = getString(R.string.reset_password_dialog_resent_title),
             message = getString(R.string.reset_password_dialog_check_portal_message),
             positiveButtonText = getString(R.string.ok),
-            positiveButtonOnClickListener = {dismissSimpleDialog()},
+            positiveButtonOnClickListener = { dismissSimpleDialog() },
             cancelable = false
         )
 
