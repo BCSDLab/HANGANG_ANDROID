@@ -2,7 +2,7 @@ package `in`.hangang.hangang.ui.signup
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.util.DialogUtil
-import `in`.hangang.core.view.appbar.ProgressAppBar
+import `in`.hangang.core.view.button.RoundedCornerButton.Companion.OUTLINED
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpEmailBinding
 import `in`.hangang.hangang.util.LogUtil
@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,17 +18,39 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up_email
     private var isAuthNumSend = false // 한번이라도 인증번호 전송을 눌렀는지 확인
     private var isAutnNumable = false // 인증번호 전송활성화 여부
-    private var isConfigable = false
     private val signUpEmailViewModel: SignUpEmailViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.vm = signUpEmailViewModel
         init()
+    }
 
+    private fun init() {
+        initAppBar()
+        initEmailEditText()
+        initAuthnumEditText()
+        initEvent()
+        handleObserver()
+    }
+    private fun handleObserver(){
+        signUpEmailViewModel.emailConfigSendText.observe(this, {
+            if (it.equals("OK")) {
+                var intent = Intent(this, SignUpActivity::class.java)
+                intent.putExtra("id", binding.emailEditText.text.toString())
+                startActivity(intent)
+            } else {
+                initErrorDialog()
+            }
+        })
+    }
+
+    private fun initAppBar() {
+        binding.appBar.title = getString(R.string.join_in)
+    }
+    private fun initEvent(){
         binding.authnumSendButton.setOnClickListener {
             if (isAutnNumable) {
                 if (isAuthNumSend == false) {
-                    //resendAvailable()
                     signUpEmailViewModel.sendEmail(
                         binding.emailEditText.text.toString().plus("@koreatech.ac.kr")
                     )
@@ -40,51 +61,24 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
                         binding.emailEditText.text.toString().plus("@koreatech.ac.kr")
                     )
                     initResendDialog()
-                    dialog?.show()
                 }
             }
         }
 
-
         binding.authCompleteButton.setOnClickListener {
-            if (isConfigable)
+            if (binding.authCompleteButton.isEnabled)
                 signUpEmailViewModel.sendEmailConfig(
                     binding.emailEditText.text.toString().plus("@koreatech.ac.kr"),
                     binding.authnumEditText.text.toString()
                 )
         }
-
-        signUpEmailViewModel.emailConfigSendText.observe(this, {
-            if (it.equals("OK")) {
-                var intent = Intent(this, SignUpActivity::class.java)
-                startActivity(intent)
-            } else {
-                initErrorDialog()
-                dialog?.show()
-            }
-        })
-
-
     }
 
-    fun init() {
-
-        initAppBar()
-        initEmailEditText()
-        initAuthnumEditText()
-    }
-
-    fun initAppBar() {
-        binding.appBar.title = "회원가입"
-    }
-
-    fun initEmailEditText() {
+    private fun initEmailEditText() {
         binding.emailEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
                 if (s?.length!! > 0 && isAuthNumSend == false) {
@@ -103,104 +97,77 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             }
         })
     }
-    fun initAuthnumEditText(){
-        binding.authnumEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
+    private fun initAuthnumEditText() {
+        binding.authnumEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
                 if (s?.length!! > 0) {
-                    binding.authCompleteButton.background =
-                        getDrawable(R.drawable.rectangle_rounded_corner_blue_500)
-                    isConfigable = true
+                    binding.authCompleteButton.isEnabled = true
                 } else {
-                    binding.authCompleteButton.background =
-                        getDrawable(R.drawable.rectangle_rounded_corner_blue_100)
-                    isConfigable = false
+                    binding.authCompleteButton.isEnabled = false
                 }
             }
         })
     }
-    fun initErrorDialog(){
+
+    private fun initErrorDialog() {
         var dialogListener = View.OnClickListener {
             binding.authnumEditText.setText("")
             authNumAvailable()
-            isConfigable = false
             isAuthNumSend = false
             dialog?.dismiss()
         }
-        dialog = DialogUtil.makeSimpleDialog(
-            this,
-            "인증 오류",
-            "인증번호나 아우누리 메일을 다시 확인하여 주세요.\n이메일 인증 완료 후 서비스를 이용할 수 있습니다.",
-            "다시 인증하기",
-            null,
-            dialogListener,
-            null,
-            true
+        showSimpleDialog(
+            title = getString(R.string.reset_password_error_auth),
+            message = getString(R.string.check_authnum_or_email),
+            positiveButtonText = getString(R.string.reset_password_retry_auth),
+            positiveButtonOnClickListener = dialogListener,
+            cancelable = false
         )
+
     }
-    fun initResendDialog() {
-        var dialogListener = View.OnClickListener {
-            dialog?.dismiss()
-            LogUtil.e("click")
-        }
-        dialog = DialogUtil.makeSimpleDialog(
-            this,
-            "재전송 되었습니다",
-            "아우누리 메일을 확인해주세요.\n이메일 인증 완료 후 서비스를 이용할 수 있습니다.",
-            "확인",
-            null,
-            dialogListener,
-            null,
-            false
+
+    private fun initResendDialog() {
+
+        showSimpleDialog(
+            title = getString(R.string.reset_password_dialog_resent_title),
+            message = getString(R.string.reset_password_dialog_check_portal_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = {dismissSimpleDialog()},
+            cancelable = false
         )
+
     }
-    fun authNumAvailable(){
-        binding.authnumSendButton.background =
-            getDrawable(R.drawable.rectangle_rounded_corner_blue_500)
+
+    private fun authNumAvailable() {
+        binding.authnumSendButton.isEnabled = true
+        binding.authnumSendButton.text = getString(R.string.reset_password_send_auth_number)
+    }
+
+    private fun authNumDisavailable() {
+        binding.authnumSendButton.isEnabled = false
+        binding.authnumSendButton.text = getString(R.string.reset_password_send_auth_number)
+    }
+
+    private fun resendDisavaiable() {
+        binding.authnumSendButton.appearence = OUTLINED
+        binding.authnumSendButton.isEnabled = false
         binding.authnumSendButton.setTextColor(
             ContextCompat.getColor(
                 baseContext,
-                R.color.white
+                `in`.hangang.core.R.color.blue_100
             )
         )
-        binding.authnumSendButton.text = "인증번호 전송"
+        binding.authnumSendButton.text = getString(R.string.reset_password_resend_auth_number)
     }
-    fun authNumDisavailable(){
-        binding.authnumSendButton.background =
-            getDrawable(R.drawable.rectangle_rounded_corner_blue_100)
-        binding.authnumSendButton.setTextColor(
-            ContextCompat.getColor(
-                baseContext,
-                R.color.white
-            )
-        )
-        binding.authnumSendButton.text = "인증번호 전송"
-    }
-    fun resendDisavaiable(){
-        binding.authnumSendButton.background =
-            getDrawable(R.drawable.rectangle_rounded_corner_outline_blue_100)
-        binding.authnumSendButton.setTextColor(
-            ContextCompat.getColor(
-                baseContext,
-                R.color.blue_100
-            )
-        )
-        binding.authnumSendButton.text = "재전송"
-    }
-    fun resendAvailable(){
-        binding.authnumSendButton.background =
-            getDrawable(R.drawable.rectangle_rounded_corner_outline_blue_500)
-        binding.authnumSendButton.setTextColor(
-            ContextCompat.getColor(
-                baseContext,
-                R.color.blue_500
-            )
-        )
-        binding.authnumSendButton.text = "재전송"
+
+    private fun resendAvailable() {
+        binding.authnumSendButton.appearence = OUTLINED
+        binding.authnumSendButton.isEnabled = true
+        binding.authnumSendButton.text = getString(R.string.reset_password_resend_auth_number)
     }
 }

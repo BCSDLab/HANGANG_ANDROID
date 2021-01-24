@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:text="학교 이메일 인증"
+            android:text="@string/reset_password_auth_koreatech_email_title"
             android:textColor="@color/black2"
             android:textSize="16sp"
             android:textStyle="normal" />
@@ -36,7 +36,7 @@
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="학교 이메일을 적어주세요"
+            android:hint="@string/write_school_email"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="16dp" />
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
-            android:text="인증번호"
+            android:text="@string/reset_password_auth_number_title"
             android:textColor="@color/black2"
             android:textSize="16sp"
             android:textStyle="normal" />
@@ -62,19 +62,21 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:hint="학교 이메일로 인증번호가 전송됩니다."
+                android:hint="@string/send_authnum_school_email"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <in.hangang.core.view.button.RoundedCornerButton
                 android:id="@+id/authnum_send_button"
                 android:layout_width="97dp"
                 android:layout_height="28dp"
-                android:background="@drawable/rectangle_rounded_corner_blue_100"
-                android:text="인증번호 전송"
+                android:backgroundTint="@color/color_state_button_blue"
+                android:text="@string/reset_password_send_auth_number"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="14sp"
+                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -84,14 +86,16 @@
             android:layout_height="match_parent"
             android:gravity="bottom"
             android:orientation="vertical">
-            <Button
+            <in.hangang.core.view.button.RoundedCornerButton
                 android:id="@+id/auth_complete_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginBottom="32dp"
                 android:layout_marginHorizontal="16dp"
-                android:background="@drawable/rectangle_rounded_corner_blue_100"
-                android:text="인증 완료"
+                android:backgroundTint="@color/color_state_button_blue"
+                android:text="@string/reset_password_finish_email_auth"
+                android:gravity="center"
+                android:enabled="false"
                 android:textSize="14sp"
                 android:textColor="@color/white"/>
 
