@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="in.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationViewModel" />
+            type="in.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

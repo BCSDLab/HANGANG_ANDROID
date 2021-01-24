@@ -1,12 +1,10 @@
 package `in`.hangang.core.view.edittext
 
-import `in`.hangang.core.R
 import `in`.hangang.core.util.Regexps
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import androidx.core.content.ContextCompat
 
 
 open class PasswordEditTextWithRegex @JvmOverloads constructor(
@@ -60,21 +58,13 @@ open class PasswordEditTextWithRegex @JvmOverloads constructor(
 
     init {
         checkPassword(editText.text.toString())
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                modified = true
-                checkPassword(s.toString())
-            }
-        })
+        addTextChangedListener {
+            modified = true
+            checkPassword(it.toString())
+        }
     }
+
+    fun isErrorIncluded(errorCodeMask : Int) = errorCode and errorCodeMask == 0x11111111 and errorCodeMask
 
     private fun checkPassword(password: CharSequence) {
         _errorCode = checkPasswordContainsNotSupportedCharacter(password) or

@@ -10,20 +10,22 @@ import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.MutableLiveData
 
-class ChangePasswordViewModel(private val userRepository: UserRepository) : ViewModelBase() {
+class ChangePasswordFragmentViewModel(private val userRepository: UserRepository) : ViewModelBase() {
     val passwordRegexErrorMessage = MutableLiveData("")
 
-    fun applyNewPassword(portalAccount: String, password: String,
-                         onSuccess: ((CommonResponse) -> Unit)? = null, onError: ((Throwable) -> Unit)? = null) {
+    fun applyNewPassword(portalAccount: String,
+                         password: String,
+                         onSuccess: ((CommonResponse) -> Unit) = { _ -> },
+                         onError: ((Throwable) -> Unit) = { _ -> }) {
         userRepository.changePassword(portalAccount, password)
                 .handleHttpException()
                 .handleProgress(this)
                 .withThread()
                 .subscribe({
-                    onSuccess?.let { it1 -> it1(it) }
+                    onSuccess(it)
                 }, {
                     LogUtil.e("Error in changing password : ${it.toCommonResponse().errorMessage}")
-                    onError?.let { it1 -> it1(it) }
+                    onError(it)
                 })
     }
 
