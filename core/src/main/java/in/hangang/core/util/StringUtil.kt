@@ -3,16 +3,12 @@ package `in`.hangang.core.util
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
-object HashGeneratorUtil {
-    fun generateMD5(message: String): String? {
-        return hashString(message, "MD5")
-    }
+object StringUtil {
 
-    fun generateSHA256(message: String): String? {
-        return hashString(message, "SHA-256")
-    }
+    const val SHA256 = "SHA-256"
+    const val MD5 = "MD5"
 
-    private fun hashString(message: String, algorithm: String): String? {
+    fun hashString(message: String, algorithm: String): String? {
         try {
             val digest = MessageDigest.getInstance(algorithm)
             digest.update(message.toByteArray())

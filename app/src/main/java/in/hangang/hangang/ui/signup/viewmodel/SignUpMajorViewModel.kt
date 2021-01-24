@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.signup.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.core.util.HashGeneratorUtil
+import `in`.hangang.core.util.toSHA256
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.UserRepository
 import `in`.hangang.hangang.util.LogUtil
@@ -21,7 +21,7 @@ class SignUpMajorViewModel(private val userRepository: UserRepository) : ViewMod
                 nickName: String,
                 password: String,
                 portalAccount: String){
-        val hashPassword = HashGeneratorUtil.generateSHA256(password)
+        val hashPassword = password.toSHA256()
         LogUtil.e(hashPassword)
         hashPassword?.let {
             userRepository.signUp(major,nickName, it,portalAccount)
