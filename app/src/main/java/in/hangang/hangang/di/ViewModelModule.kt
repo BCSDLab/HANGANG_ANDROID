@@ -1,7 +1,8 @@
 package `in`.hangang.hangang.di
 
-import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordViewModel
-import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationViewModel
+import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
+import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
+import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import `in`.hangang.hangang.ui.dashboard.DashBoardViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
@@ -12,8 +13,10 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { DashBoardViewModel(get()) }
     viewModel { SignUpEmailViewModel(get()) }
-    viewModel { ChangePasswordViewModel(get()) }
-    viewModel { EmailAuthenticationViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { SignUpMajorViewModel(get()) }
+    //Change password activity, fragments
+    viewModel { ChangePasswordActivityViewModel() }
+    viewModel { ChangePasswordFragmentViewModel(get()) }
+    viewModel { EmailAuthenticationFragmentViewModel(get()) }
 }

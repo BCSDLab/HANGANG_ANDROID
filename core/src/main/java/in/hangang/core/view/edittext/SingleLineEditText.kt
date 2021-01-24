@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.addTextChangedListener
 
 open class SingleLineEditText @JvmOverloads constructor(
         context: Context,
@@ -20,7 +21,7 @@ open class SingleLineEditText @JvmOverloads constructor(
     private val view = LayoutInflater.from(context).inflate(R.layout.layout_single_line_edit_text, this, true)
 
     protected val container: LinearLayout = view.findViewById<LinearLayout>(R.id.single_line_edit_text_container)
-    protected val editText: EditText = view.findViewById<EditText>(R.id.single_line_edit_text)
+    val editText: EditText = view.findViewById<EditText>(R.id.single_line_edit_text)
 
     open var inputType: Int = EditorInfo.TYPE_CLASS_TEXT
         set(value) {
@@ -71,4 +72,10 @@ open class SingleLineEditText @JvmOverloads constructor(
 
     fun addTextChangedListener(textWatcher: TextWatcher) = editText.addTextChangedListener(textWatcher)
     fun removeTextChangedListener(textWatcher: TextWatcher) = editText.removeTextChangedListener(textWatcher)
+
+    inline fun addTextChangedListener(crossinline beforeTextChanged: (text: CharSequence?, start: Int, count: Int, after: Int) -> Unit = { _, _, _, _ -> },
+                                      crossinline onTextChanged: (text: CharSequence?, start: Int, before: Int, count: Int) -> Unit = { _, _, _, _ -> },
+                                      crossinline afterTextChanged: (text: Editable?) -> Unit = {}
+    ): TextWatcher = editText.addTextChangedListener(beforeTextChanged, onTextChanged, afterTextChanged)
 }
+

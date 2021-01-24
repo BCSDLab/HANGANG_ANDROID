@@ -4,6 +4,9 @@ import `in`.hangang.core.R
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.DialogInterface.BUTTON_NEGATIVE
+import android.content.DialogInterface.BUTTON_POSITIVE
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -18,8 +21,8 @@ object DialogUtil {
             message: String,
             positiveButtonText: String = "OK",
             negativeButtonText: String? = null,
-            positiveButtonOnClickListener: View.OnClickListener,
-            negativeButtonOnClickListener: View.OnClickListener? = null,
+            positiveButtonOnClickListener: DialogInterface.OnClickListener,
+            negativeButtonOnClickListener: DialogInterface.OnClickListener? = null,
             cancelable: Boolean = true
     ): Dialog {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_simple, null)
@@ -28,29 +31,34 @@ object DialogUtil {
         val buttonPositive = view.findViewById<Button>(R.id.button_positive)
         val buttonNegative = view.findViewById<Button>(R.id.button_negative)
 
+        val builder = AlertDialog.Builder(context)
+                .setView(view)
+
+        val dialog = builder.create()
+        dialog.setCancelable(cancelable)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         textViewMessage.text = message
 
         buttonPositive.text = positiveButtonText
-        buttonPositive.setOnClickListener(positiveButtonOnClickListener)
+        buttonPositive.setOnClickListener {
+            positiveButtonOnClickListener.onClick(dialog, BUTTON_POSITIVE)
+        }
 
         if (negativeButtonText == null)
             buttonNegative.visibility = View.GONE
         else {
             buttonNegative.text = negativeButtonText
-            buttonNegative.setOnClickListener(negativeButtonOnClickListener)
+            buttonNegative.setOnClickListener {
+                positiveButtonOnClickListener.onClick(dialog, BUTTON_NEGATIVE)
+            }
         }
-
-        val builder = AlertDialog.Builder(context)
-                .setView(view)
 
         if (title == null)
             textViewTitle.visibility = View.GONE
         else
             textViewTitle.text = title
 
-        val dialog = builder.create()
-        dialog.setCancelable(cancelable)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return dialog
     }
 

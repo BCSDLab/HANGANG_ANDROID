@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
-            type="in.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationViewModel" />
+            type="in.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,8 +57,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:hint="@string/reset_password_auth_number_hint"
             android:enabled="@{vm.sentEmailAuth}"
+            android:hint="@string/reset_password_auth_number_hint"
             app:layout_constraintBottom_toBottomOf="@+id/button_send_auth_number"
             app:layout_constraintEnd_toStartOf="@+id/button_send_auth_number"
             app:layout_constraintStart_toStartOf="parent" />

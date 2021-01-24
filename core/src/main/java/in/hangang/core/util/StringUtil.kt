@@ -8,7 +8,7 @@ object StringUtil {
     const val SHA256 = "SHA-256"
     const val MD5 = "MD5"
 
-    fun hashString(message: String, algorithm: String): String? {
+    fun hashString(message: String, algorithm: String): String {
         try {
             val digest = MessageDigest.getInstance(algorithm)
             digest.update(message.toByteArray())

@@ -33,7 +33,11 @@ class ProgressAppBar @JvmOverloads constructor(
 
     var progress = 0
         set(value) {
-            progressBar.progress = value
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                progressBar.setProgress(value, true)
+            } else {
+                progressBar.progress = value
+            }
             field = value
         }
 
