@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.changepassword.fragment
 
 import `in`.hangang.core.base.activity.ActivityBase
+import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.base.fragment.getColorFromAttr
 import `in`.hangang.core.view.button.RoundedCornerButton
@@ -83,22 +84,24 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
     }
 
     private fun showResentEmailAuthNumberDialog() {
-        (activity as ActivityBase).showSimpleDialog(
+        activity?.showSimpleDialog(
                 title = getString(R.string.reset_password_dialog_resent_title),
                 message = getString(R.string.reset_password_dialog_check_portal_message),
                 positiveButtonText = getString(R.string.ok),
-                positiveButtonOnClickListener = { (activity as ActivityBase).dismissSimpleDialog() }
+                positiveButtonOnClickListener = { dialog, _ ->
+                    dialog.dismiss()
+                }
         )
     }
 
     private fun showEmailAuthFailedDialog() {
-        (activity as ActivityBase).showSimpleDialog(
+        activity?.showSimpleDialog(
                 title = getString(R.string.reset_password_error_auth),
                 message = getString(R.string.reset_password_dialog_check_portal_message),
                 positiveButtonText = getString(R.string.reset_password_retry_auth),
-                positiveButtonOnClickListener = {
+                positiveButtonOnClickListener = { dialog, _ ->
                     binding.editTextEmailAuthNumber.setText("")
-                    (activity as ActivityBase).dismissSimpleDialog()
+                    dialog.dismiss()
                 }
         )
     }

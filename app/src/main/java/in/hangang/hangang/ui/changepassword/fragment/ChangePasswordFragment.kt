@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.changepassword.fragment
 
 import `in`.hangang.core.base.activity.ActivityBase
+import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.ERR_NOT_CONTAINS_ENGLISH
@@ -128,11 +129,11 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
 
     private fun showResetPasswordFinishedDialog() {
         //TODO : message에 닉네임 표시 추가
-        (activity as ActivityBase).showSimpleDialog(
+        activity?.showSimpleDialog(
                 title = getString(R.string.reset_password_finished_title),
                 message = getString(R.string.reset_password_finished_message),
                 positiveButtonText = getString(R.string.reset_password_finished_positive_button),
-                positiveButtonOnClickListener = {
+                positiveButtonOnClickListener = {_, _ ->
                     activity?.finish()
                 }
         )
