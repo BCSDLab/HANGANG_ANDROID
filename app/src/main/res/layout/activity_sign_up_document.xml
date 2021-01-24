@@ -118,8 +118,8 @@
 
             <in.hangang.core.view.button.checkbox.CheckBox
                 android:id="@+id/agree_hangang_service"
-                android:layout_width="11dp"
-                android:layout_height="16dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
 
                 />
 
@@ -176,14 +176,16 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <Button
+            <in.hangang.core.view.button.RoundedCornerButton
                 android:id="@+id/next_button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="32dp"
-                android:background="@drawable/rectangle_rounded_corner_blue_100"
-                android:text="다음"
+                android:backgroundTint="@color/color_state_button_blue"
+                android:gravity="center"
+                android:enabled="false"
+                android:text="@string/next_step"
                 android:textColor="@color/white" />
 
         </LinearLayout>
