@@ -64,7 +64,8 @@ open class PasswordEditTextWithRegex @JvmOverloads constructor(
         }
     }
 
-    fun isErrorIncluded(errorCodeMask : Int) = errorCode and errorCodeMask == 0x11111111 and errorCodeMask
+    fun isErrorIncluded(errorCodeMask : Int) = errorCode and errorCodeMask != NO_ERR
+    fun isErrorNotIncluded(errorCodeMask : Int) = !isErrorIncluded(errorCodeMask)
 
     private fun checkPassword(password: CharSequence) {
         _errorCode = checkPasswordContainsNotSupportedCharacter(password) or

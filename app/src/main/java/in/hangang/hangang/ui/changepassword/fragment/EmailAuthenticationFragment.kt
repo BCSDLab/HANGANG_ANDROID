@@ -12,11 +12,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import kotlinx.android.synthetic.main.fragment_email_authentication.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticationBinding>() {
     override val layoutId = R.layout.fragment_email_authentication
 
-    private val emailAuthenticationFragmentViewModel: EmailAuthenticationFragmentViewModel by activityViewModels()
+    private val emailAuthenticationFragmentViewModel: EmailAuthenticationFragmentViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -12,14 +12,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>() {
 
-    private val changePasswordActivityViewModel: ChangePasswordActivityViewModel by viewModel()
-    private val changePasswordFragmentViewModel: ChangePasswordFragmentViewModel by viewModel()
-    private val emailAuthenticationFragmentViewModel: EmailAuthenticationFragmentViewModel by viewModel()
+    val changePasswordActivityViewModel: ChangePasswordActivityViewModel by viewModel()
+    val changePasswordFragmentViewModel: ChangePasswordFragmentViewModel by viewModel()
+    val emailAuthenticationFragmentViewModel: EmailAuthenticationFragmentViewModel by viewModel()
 
     override val layoutId = R.layout.activity_find_password
-    private val changePasswordPagerAdapter: ChangePasswordPagerAdapter by lazy {
-        ChangePasswordPagerAdapter(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +35,9 @@ class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>(
     private fun initView() {
         with(binding) {
             viewPager.isUserInputEnabled = false
-            viewPager.adapter = changePasswordPagerAdapter
+            viewPager.adapter = ChangePasswordPagerAdapter(this@ChangePasswordActivity)
 
-            appBar.max = changePasswordPagerAdapter.itemCount
+            appBar.max = viewPager.adapter?.itemCount ?: 0
         }
     }
 
