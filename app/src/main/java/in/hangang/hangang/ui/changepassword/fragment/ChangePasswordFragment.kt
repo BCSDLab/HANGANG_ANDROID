@@ -15,16 +15,19 @@ import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.MASK_
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentNewPasswordBinding
 import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
+import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import android.os.Bundle
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>() {
     override val layoutId = R.layout.fragment_new_password
 
-    private val changePasswordFragmentViewModel: ChangePasswordFragmentViewModel by sharedViewModel()
+    private val changePasswordActivityViewModel: ChangePasswordActivityViewModel by sharedViewModel()
+    private val changePasswordFragmentViewModel: ChangePasswordFragmentViewModel by viewModel()
     private val emailAuthenticationFragmentViewModel: EmailAuthenticationFragmentViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +40,7 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
     private fun initViewModel() {
         with(changePasswordFragmentViewModel) {
             changePasswordResponse.observe(viewLifecycleOwner) {
-                (activity as ChangePasswordActivity).finishChangePassword()
+                changePasswordActivityViewModel.nextPage()
                 showResetPasswordFinishedDialog()
             }
         }

@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.changepassword.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.core.util.toSHA256
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.UserRepository
@@ -21,7 +22,7 @@ class ChangePasswordFragmentViewModel(private val userRepository: UserRepository
 
     fun applyNewPassword(portalAccount: String,
                          password: String) {
-        userRepository.changePassword(portalAccount, password)
+        userRepository.changePassword(portalAccount, password.toSHA256())
                 .handleHttpException()
                 .handleProgress(this)
                 .withThread()

@@ -7,6 +7,7 @@ import `in`.hangang.core.view.button.RoundedCornerButton
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentEmailAuthenticationBinding
 import `in`.hangang.hangang.ui.changepassword.activity.ChangePasswordActivity
+import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import android.os.Bundle
 import android.view.View
@@ -16,6 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticationBinding>() {
     override val layoutId = R.layout.fragment_email_authentication
 
+    private val changePasswordActivityViewModel: ChangePasswordActivityViewModel by sharedViewModel()
     private val emailAuthenticationFragmentViewModel: EmailAuthenticationFragmentViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +51,7 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
                 showResentEmailAuthNumberDialog()
             }
             finishEmailAuthResponse.observe(viewLifecycleOwner) {
-                nextPage()
+                changePasswordActivityViewModel.nextPage()
             }
             throwable.observe(viewLifecycleOwner) {
                 showEmailAuthFailedDialog()
@@ -77,10 +79,6 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
                 )
             }
         }
-    }
-
-    private fun nextPage() {
-        (activity as ChangePasswordActivity).nextPage()
     }
 
     private fun showResentEmailAuthNumberDialog() {

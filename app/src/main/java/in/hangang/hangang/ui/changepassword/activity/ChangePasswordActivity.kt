@@ -13,7 +13,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>() {
 
     val changePasswordActivityViewModel: ChangePasswordActivityViewModel by viewModel()
-    val changePasswordFragmentViewModel: ChangePasswordFragmentViewModel by viewModel()
     val emailAuthenticationFragmentViewModel: EmailAuthenticationFragmentViewModel by viewModel()
 
     override val layoutId = R.layout.activity_find_password
@@ -39,13 +38,5 @@ class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>(
 
             appBar.max = viewPager.adapter?.itemCount ?: 0
         }
-    }
-
-    fun nextPage() {
-        changePasswordActivityViewModel.currentPage.postValue(1)
-    }
-
-    fun finishChangePassword() {
-        changePasswordActivityViewModel.currentPage.postValue(2)
     }
 }
