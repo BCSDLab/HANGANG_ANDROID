@@ -4,87 +4,166 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="in.hangang.hangang.ui.signup.SignUpViewModel" />
+    </data>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="16dp"
-        tools:context=".ui.signup.SignUpActivity">
-
+        android:orientation="vertical">
         <in.hangang.core.view.appbar.ProgressAppBar
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:progress="50" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="16sp"
-            android:layout_marginTop="32dp"
-            android:textColor="@color/black2"
-            android:text="아이디"
-            />
-
-        <in.hangang.core.view.edittext.KoreatechEmailEditText
-            android:id="@+id/id_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="학교 이메일을 적어주세요"
-            android:clickable="false"
-            android:focusable="false"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="16dp" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/black2"
-            android:text="비밀번호"/>
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical"
+            tools:context=".ui.signup.SignUpActivity">
+
+
+
             <TextView
-                android:id="@+id/password_error_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/mango"/>
+                android:layout_marginTop="32dp"
+                android:text="@string/id"
+                android:textColor="@color/black2"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <in.hangang.core.view.edittext.KoreatechEmailEditText
+                android:id="@+id/id_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:focusableInTouchMode="false"
+                android:inputType="textEmailAddress"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/password"
+                    android:textColor="@color/black2"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/password_error_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/mango"
+                    android:textSize="11sp"
+                    tools:text="asdfadfg" />
+            </LinearLayout>
+
+            <in.hangang.core.view.edittext.PasswordEditTextWithRegex
+                android:id="@+id/password_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/reset_password_confirm_new_password"
+                    android:textColor="@color/black2"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/password_check_error_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/mango"
+                    android:textSize="11sp"
+                    tools:text="asdfadfg" />
+            </LinearLayout>
+
+            <in.hangang.core.view.edittext.PasswordEditTextWithRegex
+                android:id="@+id/password_check_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/nickname"
+                    android:textColor="@color/black2"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/nickname_edit_error_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="8dp"
+                    android:text="@{vm.nickNameCheckText}"
+                    android:textColor="@color/mango"
+                    android:textSize="11sp"
+                    tools:text="asdfadfg" />
+            </LinearLayout>
+
+            <in.hangang.core.view.edittext.EditTextWithError
+                android:id="@+id/nickname_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <in.hangang.core.view.button.RoundedCornerButton
+                    android:id="@+id/sign_up_next_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/color_state_button_blue"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:layout_marginBottom="32dp"
+                    android:text="@string/next_step"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
-        <in.hangang.core.view.edittext.PasswordEditTextWithRegex
-            android:id="@+id/password_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="16sp"
-            android:layout_marginTop="36dp"
-            android:textColor="@color/black2"
-            android:text="비밀번호 확인"/>
-        <in.hangang.core.view.edittext.PasswordEditTextWithRegex
-            android:id="@+id/password_check_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="16sp"
-            android:layout_marginTop="36dp"
-            android:textColor="@color/black2"
-            android:text="닉네임"/>
-        <in.hangang.core.view.edittext.PasswordEditTextWithRegex
-            android:id="@+id/nickname_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
+
+
+
     </LinearLayout>
+
 
 </layout>
