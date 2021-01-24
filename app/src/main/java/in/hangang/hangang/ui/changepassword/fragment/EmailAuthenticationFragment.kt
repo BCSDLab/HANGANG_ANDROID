@@ -42,6 +42,18 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
                     binding.editTextEmailAuthNumber.isEditTextEnabled = false
                 }
             }
+            sendAuthNumberResponse.observe(viewLifecycleOwner) {
+
+            }
+            resendAuthNumberResponse.observe(viewLifecycleOwner) {
+                showResentEmailAuthNumberDialog()
+            }
+            finishEmailAuthResponse.observe(viewLifecycleOwner) {
+                nextPage()
+            }
+            throwable.observe(viewLifecycleOwner) {
+                showEmailAuthFailedDialog()
+            }
         }
     }
 
@@ -49,29 +61,19 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
         with(binding) {
             editTextEmail.addTextChangedListener {
                 binding.buttonSendAuthNumber.isEnabled = it?.isNotEmpty() ?: false
-                emailAuthenticationFragmentViewModel.portalAccount.postValue(it.toString())
             }
             editTextEmailAuthNumber.addTextChangedListener {
                 binding.buttonFinishEmailAuth.isEnabled = it?.isNotEmpty() ?: false
             }
             buttonSendAuthNumber.setOnClickListener {
                 emailAuthenticationFragmentViewModel.sendAuthNumber(
-                        portalAccount = "${editTextEmail.text}@koreatech.ac.kr",
-                        onSuccess = {
-                            if (emailAuthenticationFragmentViewModel.sentEmailAuth.value == true)
-                                showResentEmailAuthNumberDialog()
-                        },
-                        onError = {
-                            showEmailAuthFailedDialog()
-                        }
+                        portalAccount = "${editTextEmail.text}@koreatech.ac.kr"
                 )
             }
             buttonFinishEmailAuth.setOnClickListener {
                 emailAuthenticationFragmentViewModel.finishEmailAuth(
                         portalAccount = "${editTextEmail.text}@koreatech.ac.kr",
-                        secret = editTextEmailAuthNumber.text.toString(),
-                        onSuccess = { nextPage() },
-                        onError = { showEmailAuthFailedDialog() }
+                        secret = editTextEmailAuthNumber.text.toString()
                 )
             }
         }

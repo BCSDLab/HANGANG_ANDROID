@@ -31,6 +31,16 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
         super.onViewCreated(view, savedInstanceState)
 
         initEvent()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        with(changePasswordFragmentViewModel) {
+            changePasswordResponse.observe(viewLifecycleOwner) {
+                (activity as ChangePasswordActivity).finishChangePassword()
+                showResetPasswordFinishedDialog()
+            }
+        }
     }
 
     private fun initEvent() {
@@ -47,34 +57,30 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
                         (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
                                 binding.editTextConfirmNewPassword.text.isNotEmpty()
             }
-
             buttonFinishChangePassword.setOnClickListener {
                 changePasswordFragmentViewModel.applyNewPassword(
                         portalAccount = "${emailAuthenticationFragmentViewModel.portalAccount.value}@koreatech.ac.kr",
-                        password = editTextNewPassword.text.toString(),
-                        onSuccess = {
-                            (activity as ChangePasswordActivity).finishChangePassword()
-                            showResetPasswordFinishedDialog()
-                        }
+                        password = editTextNewPassword.text.toString()
                 )
             }
         }
     }
 
-    private fun generatePasswordRegexErrorString(): String = with(binding.editTextNewPassword) {
-        when {
-            errorCode == PasswordEditTextWithRegex.NO_ERR ->
-                ""
-            isErrorIncluded(MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS) ->
-                getString(R.string.reset_password_regex_error_included_not_supported_characters)
-            isErrorIncluded(MASK_ERR_NO_INPUT) ->
-                getString(R.string.reset_password_regex_error_no_inputs)
-            isErrorIncluded(MASK_ERR_LENGTH) ->
-                generatePasswordRegexLengthErrorString(errorCode)
-            else ->
-                generatePasswordRegexNotIncludedSomeCharactersError(errorCode)
-        }
-    }
+    private fun generatePasswordRegexErrorString(): String =
+            with(binding.editTextNewPassword) {
+                when {
+                    errorCode == PasswordEditTextWithRegex.NO_ERR ->
+                        ""
+                    isErrorIncluded(MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS) ->
+                        getString(R.string.reset_password_regex_error_included_not_supported_characters)
+                    isErrorIncluded(MASK_ERR_NO_INPUT) ->
+                        getString(R.string.reset_password_regex_error_no_inputs)
+                    isErrorIncluded(MASK_ERR_LENGTH) ->
+                        generatePasswordRegexLengthErrorString(errorCode)
+                    else ->
+                        generatePasswordRegexNotIncludedSomeCharactersError(errorCode)
+                }
+            }
 
     private fun generatePasswordRegexLengthErrorString(errorCode: Int) =
             when (errorCode and MASK_ERR_LENGTH) {
