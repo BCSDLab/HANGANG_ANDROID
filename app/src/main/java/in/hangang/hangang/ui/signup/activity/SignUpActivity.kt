@@ -5,27 +5,28 @@ import `in`.hangang.core.view.edittext.EditTextWithError.Companion.CHECK
 import `in`.hangang.core.view.edittext.EditTextWithError.Companion.ERROR
 import `in`.hangang.core.view.edittext.EditTextWithError.Companion.UNDEFINED
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex
+import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS
+import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.MASK_ERR_LENGTH
+import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.MASK_ERR_NO_INPUT
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.NO_ERR
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpBinding
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
-import `in`.hangang.hangang.util.LogUtil
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextWatcher
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.util.concurrent.TimeUnit
+
 
 class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up
-    private val signUpViewModel: SignUpViewModel by viewModel()
+    private val signUpViewModel: SignUpViewModel by viewModel() { parametersOf(intent.extras)}
     private var id: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,9 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     }
 
     private fun init() {
-        id = intent.extras!!.getString("id")
+
+        id = signUpViewModel.id.toString()
+        //id = intent.extras!!.getString("id")
         binding.idEditText.text = id!!.toEditable()
         binding.idEditText.isEditTextEnabled = false //editText를 수정 불가로 설정
         initAppBar()
@@ -43,7 +46,8 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
         initTextWatcher()
 
     }
-    private fun initEvent(){
+
+    private fun initEvent() {
         binding.signUpNextButton.setOnClickListener {
             if (binding.signUpNextButton.isEnabled) {
                 val intent = Intent(this, SignUpMajorActivity::class.java)
@@ -54,16 +58,17 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
             }
         }
     }
+
     private fun handleObserver() {
         Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<String>? ->
-            binding.nicknameEditText.addTextChangedListener{
-                    emitter?.onNext(it.toString())
+            binding.nicknameEditText.addTextChangedListener {
+                emitter?.onNext(it.toString())
             }
 
         })
             .debounce(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
-            .subscribe{ signUpViewModel.checkNickName(it) }
+            .subscribe { signUpViewModel.checkNickName(it) }
 
         signUpViewModel.nickNameCheckText.observe(this, {
             if (it.equals(getString(R.string.available_nickname))) {
@@ -95,16 +100,16 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     }
 
     private fun initTextWatcher() {
-        with(binding){
-           passwordEditText.addTextChangedListener{
+        with(binding) {
+            passwordEditText.addTextChangedListener {
                 passwordErrorText.text =
-                    generatePasswordRegexErrorString(passwordEditText.errorCode)
+                    generatePasswordRegexErrorString()
                 if (passwordEditText.errorCode == NO_ERR) {
                     signUpViewModel.isPasswordAvailable.value = isConditionComplete()
                 } else
                     signUpViewModel.isPasswordAvailable.value = isConditionComplete()
             }
-            passwordCheckEditText.addTextChangedListener{
+            passwordCheckEditText.addTextChangedListener {
                 var currentString = passwordCheckEditText.text.toString()
                 if (passwordEditText.text.toString().equals(currentString)) {
                     passwordCheckEditText.status = CHECK
@@ -116,13 +121,14 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
             }
         }
     }
+
     private fun initAppBar() {
         binding.appBar.title = getString(R.string.join_in)
     }
 
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
     private fun isConditionComplete(): Boolean {
-        with(binding){
+        with(binding) {
             if (passwordEditText.status == CHECK && passwordCheckEditText.status == CHECK && nicknameEditText.status == CHECK)
                 return true
             else
@@ -131,30 +137,40 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
 
     }
 
-    private fun generatePasswordRegexErrorString(errorCode: Int): String {
-        return if (errorCode == PasswordEditTextWithRegex.NO_ERR) {
-            ""
-        } else if (errorCode and PasswordEditTextWithRegex.MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS == PasswordEditTextWithRegex.ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS)
-            getString(R.string.reset_password_regex_error_included_not_supported_characters)
-        else if (errorCode and PasswordEditTextWithRegex.MASK_ERR_NO_INPUT == PasswordEditTextWithRegex.ERR_NO_INPUT)
-            getString(R.string.reset_password_regex_error_no_inputs)
-        else if (errorCode and PasswordEditTextWithRegex.MASK_ERR_LENGTH != PasswordEditTextWithRegex.NO_ERR) {
-            when (errorCode and PasswordEditTextWithRegex.MASK_ERR_LENGTH) {
-                PasswordEditTextWithRegex.ERR_LENGTH_TOO_SHORT -> getString(R.string.reset_password_regex_error_too_short)
-                PasswordEditTextWithRegex.ERR_LENGTH_TOO_LONG -> getString(R.string.reset_password_regex_error_too_long)
-                else -> "."
+    private fun generatePasswordRegexErrorString(): String =
+        with(binding.passwordEditText) {
+            when {
+                errorCode == NO_ERR ->
+                    ""
+                isErrorIncluded(MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS) ->
+                    getString(R.string.reset_password_regex_error_included_not_supported_characters)
+                isErrorIncluded(MASK_ERR_NO_INPUT) ->
+                    getString(R.string.reset_password_regex_error_no_inputs)
+                isErrorIncluded(MASK_ERR_LENGTH) ->
+                    generatePasswordRegexLengthErrorString(errorCode)
+                else ->
+                    generatePasswordRegexNotIncludedSomeCharactersError(errorCode)
             }
-        } else {
-            val stringBuilder = StringBuilder()
-
-            if (errorCode and PasswordEditTextWithRegex.MASK_ERR_NOT_CONTAINS_ENGLISH == PasswordEditTextWithRegex.ERR_NOT_CONTAINS_ENGLISH)
-                stringBuilder.append(getString(R.string.reset_password_regex_error_not_included_reason_english))
-            if (errorCode and PasswordEditTextWithRegex.MASK_ERR_NOT_CONTAINS_NUMBER == PasswordEditTextWithRegex.ERR_NOT_CONTAINS_NUMBER)
-                stringBuilder.append(getString(R.string.reset_password_regex_error_not_included_reason_number))
-            if (errorCode and PasswordEditTextWithRegex.MASK_ERR_NOT_CONTAINS_SPECIAL_CHARACTER == PasswordEditTextWithRegex.ERR_NOT_CONTAINS_SPECIAL_CHARACTER)
-                stringBuilder.append(getString(R.string.reset_password_regex_error_not_included_reason_specials))
-
-            getString(R.string.reset_password_regex_error_not_included, stringBuilder.toString())
         }
+
+    private fun generatePasswordRegexLengthErrorString(errorCode: Int) =
+        when (errorCode and MASK_ERR_LENGTH) {
+            PasswordEditTextWithRegex.ERR_LENGTH_TOO_SHORT -> getString(R.string.reset_password_regex_error_too_short)
+            PasswordEditTextWithRegex.ERR_LENGTH_TOO_LONG -> getString(R.string.reset_password_regex_error_too_long)
+            else -> ""
+        }
+
+    private fun generatePasswordRegexNotIncludedSomeCharactersError(errorCode: Int): String {
+        val stringBuilder = StringBuilder()
+
+        if (errorCode and PasswordEditTextWithRegex.MASK_ERR_NOT_CONTAINS_ENGLISH == PasswordEditTextWithRegex.ERR_NOT_CONTAINS_ENGLISH)
+            stringBuilder.append(getString(R.string.reset_password_regex_error_not_included_reason_english))
+        if (errorCode and PasswordEditTextWithRegex.MASK_ERR_NOT_CONTAINS_NUMBER == PasswordEditTextWithRegex.ERR_NOT_CONTAINS_NUMBER)
+            stringBuilder.append(getString(R.string.reset_password_regex_error_not_included_reason_number))
+        if (errorCode and PasswordEditTextWithRegex.MASK_ERR_NOT_CONTAINS_SPECIAL_CHARACTER == PasswordEditTextWithRegex.ERR_NOT_CONTAINS_SPECIAL_CHARACTER)
+            stringBuilder.append(getString(R.string.reset_password_regex_error_not_included_reason_specials))
+
+        return getString(R.string.reset_password_regex_error_not_included, stringBuilder.toString())
     }
+
 }

@@ -27,23 +27,23 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
         with(binding){
             agreeAllCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                    binding.nextButton.isEnabled = isCheckBoxChecked()
                 } else {
-                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                    binding.nextButton.isEnabled = isCheckBoxChecked()
                 }
             }
             agreeHangangService.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                    binding.nextButton.isEnabled = isCheckBoxChecked()
                 } else {
-                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                    binding.nextButton.isEnabled = isCheckBoxChecked()
                 }
             }
             agreePersonalInfo.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                    binding.nextButton.isEnabled = isCheckBoxChecked()
                 } else {
-                    binding.nextButton.isEnabled = isCheckBoxCheck()
+                    binding.nextButton.isEnabled = isCheckBoxChecked()
                 }
             }
         }
@@ -57,7 +57,7 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
         }
     }
 
-    private fun isCheckBoxCheck(): Boolean {
+    private fun isCheckBoxChecked(): Boolean {
         if (binding.agreePersonalInfo.isChecked && binding.agreeAllCheckbox.isChecked && binding.agreeHangangService.isChecked) {
             return true
         } else {

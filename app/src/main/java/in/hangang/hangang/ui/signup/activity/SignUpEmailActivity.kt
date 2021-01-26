@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.view.button.RoundedCornerButton.Companion.FILLED
+import org.koin.core.parameter.parametersOf
 
 class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up_email
@@ -56,7 +57,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
                 if (isAutnNumable) {
                     if (isAuthNumSend == false) {
                         signUpEmailViewModel.sendEmail(
-                            binding.emailEditText.text.toString().plus("@koreatech.ac.kr")
+                            binding.emailEditText.text.toString().plus("@gmail.com")
                         )
                         resendAvailable()
                         isAuthNumSend = true;
@@ -71,7 +72,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             authCompleteButton.setOnClickListener {
                 if (binding.authCompleteButton.isEnabled)
                     signUpEmailViewModel.sendEmailConfig(
-                        binding.emailEditText.text.toString().plus("@koreatech.ac.kr"),
+                        binding.emailEditText.text.toString().plus("@gmail.com"),
                         binding.authnumEditText.text.toString()
                     )
             }
