@@ -52,9 +52,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dialog_button_margin"
             android:padding="@dimen/dialog_text_margin_small"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/blue_500"
+            android:textSize="14sp"
             tools:text="확인" />
 
         <Button

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="in.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.signup.activity.SignUpEmailActivity">
+
+        <in.hangang.core.view.appbar.ProgressAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="25" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/reset_password_auth_koreatech_email_title"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <in.hangang.core.view.edittext.KoreatechEmailEditText
+            android:id="@+id/email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/write_school_email"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/reset_password_auth_number_title"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+            android:orientation="horizontal">
+
+            <in.hangang.core.view.edittext.SingleLineEditText
+                android:id="@+id/authnum_edit_text"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/send_authnum_school_email"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <in.hangang.core.view.button.RoundedCornerButton
+                android:id="@+id/authnum_send_button"
+                android:layout_width="97dp"
+                android:layout_height="28dp"
+                android:backgroundTint="@color/color_state_button_blue"
+                android:text="@string/reset_password_send_auth_number"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:enabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+            <in.hangang.core.view.button.RoundedCornerButton
+                android:id="@+id/auth_complete_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginHorizontal="16dp"
+                android:backgroundTint="@color/color_state_button_blue"
+                android:text="@string/reset_password_finish_email_auth"
+                android:gravity="center"
+                android:enabled="false"
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

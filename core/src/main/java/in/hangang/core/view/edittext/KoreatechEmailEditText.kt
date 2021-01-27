@@ -35,4 +35,5 @@ class KoreatechEmailEditText @JvmOverloads constructor(
         set(value) {
             super.inputType = EditorInfo.TYPE_CLASS_TEXT
         }
+
 }

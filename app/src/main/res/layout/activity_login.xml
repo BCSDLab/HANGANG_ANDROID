@@ -106,6 +106,7 @@
             android:textColor="@color/gray_500"
             android:textSize="12sp"/>
         <TextView
+            android:id="@+id/search_password_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/login_button"
@@ -128,6 +129,7 @@
             android:textColor="@color/gray_500"
             android:textSize="12sp"/>
         <TextView
+            android:id="@+id/join_in_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/forgot_password_ask"
