@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.LoginActivity">
+        tools:context=".ui.login.LoginActivity">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_left"
@@ -38,6 +38,7 @@
             android:layout_marginBottom="452dp"/>
 
         <EditText
+            android:id="@+id/portal_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
@@ -64,6 +65,7 @@
             app:layout_constraintBottom_toTopOf="@id/underbar_first"/>
 
         <EditText
+            android:id="@+id/portal_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
@@ -106,6 +108,7 @@
             android:textColor="@color/gray_500"
             android:textSize="12sp"/>
         <TextView
+            android:id="@+id/find_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/login_button"
@@ -128,6 +131,7 @@
             android:textColor="@color/gray_500"
             android:textSize="12sp"/>
         <TextView
+            android:id="@+id/sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/forgot_password_ask"

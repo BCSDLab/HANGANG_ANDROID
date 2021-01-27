@@ -4,7 +4,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="vm"
             type="in.hangang.hangang.ui.lecture.LectureReviewFragment" />
     </data>
 
