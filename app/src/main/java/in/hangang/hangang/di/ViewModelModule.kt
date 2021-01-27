@@ -14,8 +14,8 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { DashBoardViewModel(get()) }
     viewModel { SignUpEmailViewModel(get()) }
-    viewModel { (handle: SavedStateHandle) -> SignUpViewModel(get(), handle) }
-    viewModel { SignUpMajorViewModel(get()) }
+    viewModel { (handle: String) -> SignUpViewModel(get(), handle) }
+    viewModel { (portalAccount: String, nickName: String, password: String) -> SignUpMajorViewModel(get(), portalAccount, nickName, password) }
     //Change password activity, fragments
     viewModel { ChangePasswordActivityViewModel() }
     viewModel { ChangePasswordFragmentViewModel(get()) }

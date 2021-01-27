@@ -14,12 +14,11 @@ import androidx.core.content.ContextCompat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.view.button.RoundedCornerButton.Companion.FILLED
+import `in`.hangang.hangang.util.LogUtil
 import org.koin.core.parameter.parametersOf
 
 class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up_email
-    private var isAuthNumSend = false // 한번이라도 인증번호 전송을 눌렀는지 확인
-    private var isAutnNumable = false // 인증번호 전송활성화 여부
     private val signUpEmailViewModel: SignUpEmailViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,18 +29,22 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     private fun init() {
         initAppBar()
         initEmailEditText()
-        initAuthnumEditText()
+        initAuthNumEditText()
         initEvent()
         handleObserver()
     }
 
     private fun handleObserver() {
         signUpEmailViewModel.emailConfigSendText.observe(this, {
-            if (it.equals("OK")) {
-                var intent = Intent(this, SignUpActivity::class.java)
-                intent.putExtra("id", binding.emailEditText.text.toString())
-                startActivity(intent)
-            } else {
+            if (it) {
+                var intent = Intent(this, SignUpActivity::class.java).run {
+                    putExtra("id", binding.emailEditText.text.toString())
+                    startActivity(this)
+                }
+            }
+        })
+        signUpEmailViewModel.errorConfig.observe(this, {
+            if(it){
                 initErrorDialog()
             }
         })
@@ -54,16 +57,16 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     private fun initEvent() {
         with(binding){
             authnumSendButton.setOnClickListener {
-                if (isAutnNumable) {
-                    if (isAuthNumSend == false) {
+                if (signUpEmailViewModel.isAuthNumable) {
+                    if (signUpEmailViewModel.isAuthNumSend == false) {
                         signUpEmailViewModel.sendEmail(
-                            binding.emailEditText.text.toString().plus("@gmail.com")
+                            binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech))
                         )
                         resendAvailable()
-                        isAuthNumSend = true;
+                        signUpEmailViewModel.isAuthNumSend = true;
                     } else {
                         signUpEmailViewModel.sendEmail(
-                            binding.emailEditText.text.toString().plus("@koreatech.ac.kr")
+                            binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech))
                         )
                         initResendDialog()
                     }
@@ -72,7 +75,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             authCompleteButton.setOnClickListener {
                 if (binding.authCompleteButton.isEnabled)
                     signUpEmailViewModel.sendEmailConfig(
-                        binding.emailEditText.text.toString().plus("@gmail.com"),
+                        binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech)),
                         binding.authnumEditText.text.toString()
                     )
             }
@@ -85,25 +88,25 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     private fun initEmailEditText() {
         with(binding){
             emailEditText.addTextChangedListener{
-                if (it?.length!! > 0 && isAuthNumSend == false) {
+                if (it?.length!! > 0 && signUpEmailViewModel.isAuthNumSend == false) {
                     authNumAvailable()
-                    isAutnNumable = true
-                } else if (it?.length!! > 0 && isAuthNumSend) {
+                    signUpEmailViewModel.isAuthNumable = true
+                } else if (it?.length!! > 0 && signUpEmailViewModel.isAuthNumSend) {
                     resendAvailable()
-                    isAutnNumable = true
-                } else if ((it?.length!! <= 0 && isAuthNumSend == false)) {
+                    signUpEmailViewModel.isAuthNumable = true
+                } else if ((it?.length!! <= 0 && signUpEmailViewModel.isAuthNumSend == false)) {
                     authNumDisavailable()
-                    isAutnNumable = false
+                    signUpEmailViewModel.isAuthNumable = false
                 } else {
                     resendDisavaiable()
-                    isAutnNumable = false
+                    signUpEmailViewModel.isAuthNumable = false
                 }
             }
         }
 
     }
 
-    private fun initAuthnumEditText() {
+    private fun initAuthNumEditText() {
         with(binding){
             authnumEditText.addTextChangedListener{
                 if (it?.length!! > 0) {
@@ -123,7 +126,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             positiveButtonOnClickListener = {dialog, _ ->
                 binding.authnumEditText.setText("")
                 authNumAvailable()
-                isAuthNumSend = false
+                signUpEmailViewModel.isAuthNumSend = false
                 dialog?.dismiss()
 
             },

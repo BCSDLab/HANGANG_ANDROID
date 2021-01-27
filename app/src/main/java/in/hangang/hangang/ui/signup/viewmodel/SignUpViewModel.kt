@@ -12,18 +12,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import io.reactivex.rxjava3.kotlin.addTo
 
-class SignUpViewModel(private val userRepository: UserRepository, private val handle: SavedStateHandle) : ViewModelBase() {
+class SignUpViewModel(private val userRepository: UserRepository, private val handle: String) : ViewModelBase() {
     private val _nickNameCheckText = MutableLiveData<String>()
-    val id: LiveData<String> = handle.getLiveData("id")
     val nickNameCheckText: LiveData<String>
         get() = _nickNameCheckText
     val isPasswordAvailable = MutableLiveData<Boolean>()
+    val id = handle
     fun checkNickName(nickName: String) {
         userRepository.checkNickname(nickName)
             .handleHttpException()
             .handleProgress(this)
             .withThread()
-            .doOnSubscribe { _nickNameCheckText.postValue("검색중") }
             .subscribe({ data -> _nickNameCheckText.value = data.message },
                 { error ->
                     error.toCommonResponse().message?.let {
@@ -31,7 +30,5 @@ class SignUpViewModel(private val userRepository: UserRepository, private val ha
                     }
                 }).addTo(compositeDisposable)
     }
-    fun getId(): String?{
-        return handle.get("id")
-    }
+
 }

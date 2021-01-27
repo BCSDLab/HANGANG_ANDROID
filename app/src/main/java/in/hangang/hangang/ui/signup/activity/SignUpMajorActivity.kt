@@ -10,11 +10,20 @@ import android.os.Bundle
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import `in`.hangang.core.base.activity.showSimpleDialog
+import `in`.hangang.core.view.button.checkbox.CheckBox
+import `in`.hangang.hangang.util.LogUtil
+import android.widget.CompoundButton
+import org.koin.core.parameter.parametersOf
+
 class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up_major
-    private val signUpMajorViewModel: SignUpMajorViewModel by viewModel()
-    private var major = emptyArray<String>()
-    private var majorHashMap: HashMap<Int, String> = HashMap<Int, String>()
+    private val signUpMajorViewModel: SignUpMajorViewModel by viewModel(){
+        parametersOf(intent.getStringExtra("portalAccount"),
+            intent.getStringExtra("nickName"),
+            intent.getStringExtra("password"))
+    }
+
+
     private var portalAccount: String? = null
     private var nickName: String? = null
     private var password: String? = null
@@ -26,7 +35,7 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
     private fun showSignUpCompleteDialog(){
         showSimpleDialog(
             title = getString(R.string.sign_up_complete_dialog_title),
-            message = "${nickName}님!\n한기대의 강의평가를 보러 가볼까요?",
+            message = String.format(getString(R.string.sign_up_complete_dialog_message), nickName),
             positiveButtonText = getString(R.string.reset_password_finished_positive_button),
             positiveButtonOnClickListener = {dialog, _ ->
                 dialog.dismiss()
@@ -39,9 +48,12 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
         )
     }
     private fun init() {
-        portalAccount = intent.extras!!.getString("portalAccount").plus("@koreatech.ac.kr")
-        nickName = intent.extras!!.getString("nickName")
-        password = intent.extras!!.getString("password")
+        portalAccount = signUpMajorViewModel.portalAccount.plus(getString(R.string.email_koreatech))
+        nickName = signUpMajorViewModel.nickName
+        password = signUpMajorViewModel.password
+        LogUtil.e(portalAccount)
+        LogUtil.e(password)
+        LogUtil.e(nickName)
         initAppBar()
         initCheckBox()
         initEditText()
@@ -66,8 +78,8 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
     private fun initEvent() {
         binding.majorCompleteButton.setOnClickListener {
             if (binding.majorCompleteButton.isEnabled) {
-                major = ArrayList(majorHashMap.values).toArray(arrayOfNulls(majorHashMap.values.size))
-                signUpMajorViewModel.signUp(major, nickName!!, password!!, portalAccount!!)
+                signUpMajorViewModel.major = ArrayList(signUpMajorViewModel.majorHashMap.values).toArray(arrayOfNulls(signUpMajorViewModel.majorHashMap.values.size))
+                signUpMajorViewModel.signUp(signUpMajorViewModel.major, nickName!!, password!!, portalAccount!!)
             }
         }
     }
@@ -80,64 +92,64 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
         with(binding){
             mechanicalEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    majorHashMap.put(1, getString(R.string.mechanical_engineering))
+                    signUpMajorViewModel.majorHashMap.put(1, getString(R.string.mechanical_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 } else {
-                    majorHashMap.remove(1)
+                    signUpMajorViewModel.majorHashMap.remove(1)
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             designEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    majorHashMap.put(2, getString(R.string.design_engineering))
+                    signUpMajorViewModel.majorHashMap.put(2, getString(R.string.design_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 } else {
-                    majorHashMap.remove(2)
+                    signUpMajorViewModel.majorHashMap.remove(2)
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             mechatronicsEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    majorHashMap.put(3, getString(R.string.mechatronics_engineering))
+                    signUpMajorViewModel.majorHashMap.put(3, getString(R.string.mechatronics_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 } else {
-                    majorHashMap.remove(3)
+                    signUpMajorViewModel.majorHashMap.remove(3)
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             industryManagementCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    majorHashMap.put(4, getString(R.string.industrial_management))
+                    signUpMajorViewModel.majorHashMap.put(4, getString(R.string.industrial_management))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 } else {
-                    majorHashMap.remove(4)
+                    signUpMajorViewModel.majorHashMap.remove(4)
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             energyEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    majorHashMap.put(5, getString(R.string.energy_engineering))
+                    signUpMajorViewModel.majorHashMap.put(5, getString(R.string.energy_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 } else {
-                    majorHashMap.remove(5)
+                    signUpMajorViewModel.majorHashMap.remove(5)
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             electronicEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    majorHashMap.put(6, getString(R.string.electronic_engineering))
+                    signUpMajorViewModel.majorHashMap.put(6, getString(R.string.electronic_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 } else {
-                    majorHashMap.remove(6)
+                    signUpMajorViewModel.majorHashMap.remove(6)
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             computerEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    majorHashMap.put(7, getString(R.string.computer_engineering))
+                    signUpMajorViewModel.majorHashMap.put(7, getString(R.string.computer_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 } else {
-                    majorHashMap.remove(7)
+                    signUpMajorViewModel.majorHashMap.remove(7)
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
@@ -157,4 +169,5 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
             }
         }
     }
+
 }

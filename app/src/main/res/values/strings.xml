@@ -34,6 +34,8 @@
     <string name="available_nickname">사용 가능한 닉네임입니다.</string>
     <string name="select_major">전공 선택</string>
     <string name="sign_up_complete_dialog_title">회원가입이 되었습니다.</string>
+    <string name="email_koreatech">"\@koreatech.ac.kr"</string>
+    <string name="sign_up_complete_dialog_message">%s님!\n한기대의 강의평가를 보러 가볼까요?</string>
 
     <string name="reset_password_app_bar_title">비밀번호 찾기</string>
     <string name="reset_password_auth_koreatech_email_title">학교 이메일 인증</string>

@@ -12,21 +12,24 @@ import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.NO_ER
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpBinding
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
+import `in`.hangang.hangang.util.debounce
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.util.concurrent.TimeUnit
 
 
 class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up
-    private val signUpViewModel: SignUpViewModel by viewModel() { parametersOf(intent.extras)}
+    private val signUpViewModel: SignUpViewModel by viewModel() {
+        parametersOf(
+            intent.getStringExtra(
+                "id"
+            )
+        )
+    }
     private var id: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +63,7 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     }
 
     private fun handleObserver() {
-        Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<String>? ->
-            binding.nicknameEditText.addTextChangedListener {
-                emitter?.onNext(it.toString())
-            }
-
-        })
-            .debounce(500, TimeUnit.MILLISECONDS)
+        binding.nicknameEditText.debounce()
             .subscribeOn(Schedulers.io())
             .subscribe { signUpViewModel.checkNickName(it) }
 
@@ -104,20 +101,26 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
             passwordEditText.addTextChangedListener {
                 passwordErrorText.text =
                     generatePasswordRegexErrorString()
-                if (passwordEditText.errorCode == NO_ERR) {
-                    signUpViewModel.isPasswordAvailable.value = isConditionComplete()
-                } else
-                    signUpViewModel.isPasswordAvailable.value = isConditionComplete()
+                if (passwordEditText.errorCode == NO_ERR)
+                    passwordEditText.status = CHECK
+                else
+                    passwordEditText.status = ERROR
+
+                if (passwordCheckEditText.text.toString().equals(it.toString()))
+                    passwordCheckEditText.status = CHECK
+                else
+                    passwordCheckEditText.status = ERROR
+
+                signUpViewModel.isPasswordAvailable.value = isConditionComplete()
             }
             passwordCheckEditText.addTextChangedListener {
                 var currentString = passwordCheckEditText.text.toString()
-                if (passwordEditText.text.toString().equals(currentString)) {
+                if (passwordEditText.text.toString().equals(currentString))
                     passwordCheckEditText.status = CHECK
-                    signUpViewModel.isPasswordAvailable.value = isConditionComplete()
-                } else {
+                else
                     passwordCheckEditText.status = ERROR
-                    signUpViewModel.isPasswordAvailable.value = isConditionComplete()
-                }
+
+                signUpViewModel.isPasswordAvailable.value = isConditionComplete()
             }
         }
     }
@@ -129,10 +132,7 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
     private fun isConditionComplete(): Boolean {
         with(binding) {
-            if (passwordEditText.status == CHECK && passwordCheckEditText.status == CHECK && nicknameEditText.status == CHECK)
-                return true
-            else
-                return false
+            return passwordEditText.status == CHECK && passwordCheckEditText.status == CHECK && nicknameEditText.status == CHECK
         }
 
     }

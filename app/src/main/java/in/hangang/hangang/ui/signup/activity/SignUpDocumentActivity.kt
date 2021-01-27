@@ -58,10 +58,6 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
     }
 
     private fun isCheckBoxChecked(): Boolean {
-        if (binding.agreePersonalInfo.isChecked && binding.agreeAllCheckbox.isChecked && binding.agreeHangangService.isChecked) {
-            return true
-        } else {
-            return false
-        }
+        return binding.agreePersonalInfo.isChecked && binding.agreeAllCheckbox.isChecked && binding.agreeHangangService.isChecked
     }
 }

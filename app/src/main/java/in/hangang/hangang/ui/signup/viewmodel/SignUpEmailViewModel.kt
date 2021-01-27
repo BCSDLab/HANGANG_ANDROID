@@ -14,16 +14,19 @@ class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewMod
     private val _emailSendText = MutableLiveData<String>()
     val emailSendText: LiveData<String>
         get() = _emailSendText
-    private val _emainConfigSendText = MutableLiveData<String>()
-    val emailConfigSendText: LiveData<String>
+    private val _emainConfigSendText = MutableLiveData<Boolean>()
+    val emailConfigSendText: LiveData<Boolean>
         get() = _emainConfigSendText
-
+    private val _errorConfig = MutableLiveData<Boolean>()
+    val errorConfig: LiveData<Boolean>
+        get() = _errorConfig
+    var isAuthNumSend = false // 한번이라도 인증번호 전송을 눌렀는지 확인
+    var isAuthNumable = false // 인증번호 전송활성화 여부
     fun sendEmail(portalID: String) {
         userRepository.emailCheck(portalID)
             .handleHttpException()
             .handleProgress(this)
             .withThread()
-            .doOnSubscribe { _emailSendText.postValue("전송중") }
             .subscribe({ data -> _emailSendText.value = data.message },
                 { error -> LogUtil.e(error.message) })
             .addTo(compositeDisposable)
@@ -34,9 +37,10 @@ class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewMod
             .handleHttpException()
             .handleProgress(this)
             .withThread()
-            .doOnSubscribe { _emainConfigSendText.postValue("확인중") }
-            .subscribe({ data -> _emainConfigSendText.value = data.httpStatus },
-                { error -> LogUtil.e(error.message) })
+            .subscribe({ data -> _emainConfigSendText.value = data.httpStatus.equals("OK") },
+                { error ->
+                    _errorConfig.value = true
+                })
             .addTo(compositeDisposable)
     }
 }

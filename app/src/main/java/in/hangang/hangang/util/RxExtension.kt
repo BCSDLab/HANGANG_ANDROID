@@ -1,20 +1,22 @@
 package `in`.hangang.hangang.util
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.core.view.edittext.EditTextWithError
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_AUTH
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
+import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.core.SingleTransformer
+import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.core.qualifier.named
 import org.koin.java.KoinJavaComponent.get
 import retrofit2.HttpException
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 
 fun <T> Single<T>.withThread(): Single<T> {
     return this.subscribeOn(Schedulers.io())
@@ -47,6 +49,15 @@ fun <T> Single<T>.handleProgress(viewModel: ViewModelBase): Single<T> {
         .doOnError { viewModel.isLoading.postValue(false) }
         .doOnSuccess { viewModel.isLoading.postValue(false) }
 }
+
+fun EditTextWithError.debounce(time: Long = 500L, timeUnit: TimeUnit = TimeUnit.MILLISECONDS): Observable<String> {
+    return Observable.create { emitter: ObservableEmitter<String>? ->
+        this.addTextChangedListener {
+            emitter?.onNext(it.toString())
+        }
+    }.debounce(time, timeUnit)
+}
+
 
 private fun <T> retryOnNotAuthorized(): SingleTransformer<T, T> {
     return SingleTransformer<T, T> { upstream ->
