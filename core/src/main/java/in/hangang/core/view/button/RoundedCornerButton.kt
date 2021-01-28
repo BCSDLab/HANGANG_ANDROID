@@ -3,6 +3,7 @@ package `in`.hangang.core.view.button
 import `in`.hangang.core.R
 import android.content.Context
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
 
 class RoundedCornerButton @JvmOverloads constructor(
     context: Context,
@@ -20,6 +21,19 @@ class RoundedCornerButton @JvmOverloads constructor(
             when (value) {
                 FILLED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_filled)
                 OUTLINED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_outline)
+            }
+            if(value == FILLED){
+                setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.white
+                    ))
+            }else{
+                setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.blue_500
+                    ))
             }
             field = value
         }

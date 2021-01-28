@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.signup.activity.SignUpMajorActivity">
+
+        <in.hangang.core.view.appbar.ProgressAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="75" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/select_major"
+                android:textColor="@color/black2"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <in.hangang.core.view.button.checkbox.CheckBox
+                    android:id="@+id/mechanical_engineering_checkbox"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/mechanical_engineering"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <in.hangang.core.view.button.checkbox.CheckBox
+                    android:id="@+id/design_engineering_checkbox"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/design_engineering"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <in.hangang.core.view.button.checkbox.CheckBox
+                    android:id="@+id/mechatronics_engineering_checkbox"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/mechatronics_engineering"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <in.hangang.core.view.button.checkbox.CheckBox
+                    android:id="@+id/industry_management_checkbox"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/industrial_management"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <in.hangang.core.view.button.checkbox.CheckBox
+                    android:id="@+id/energy_engineering_checkbox"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/energy_engineering"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <in.hangang.core.view.button.checkbox.CheckBox
+                    android:id="@+id/electronic_engineering_checkbox"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/electronic_engineering"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <in.hangang.core.view.button.checkbox.CheckBox
+                    android:id="@+id/computer_engineering_checkbox"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/computer_engineering"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <in.hangang.core.view.button.RoundedCornerButton
+                    android:id="@+id/major_complete_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:backgroundTint="@color/color_state_button_blue"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:text="@string/next_step"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

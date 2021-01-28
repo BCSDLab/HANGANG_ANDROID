@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.signup.activity.SignUpDocumentActivity">
+
+        <in.hangang.core.view.appbar.ProgressAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="0" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/agree_to_term"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical">
+
+            <in.hangang.core.view.button.checkbox.CheckBox
+                android:id="@+id/agree_all_checkbox"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/agree_to_under_term"
+                android:textColor="@color/black2"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical">
+
+            <in.hangang.core.view.button.checkbox.CheckBox
+                android:id="@+id/agree_personal_info"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/personal_to_term"
+                android:textColor="@color/black2"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/article_one_perpose"
+            android:textColor="@color/black2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:text="@string/article_one_perpose_text_1"
+            android:textColor="@color/black2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:text="@string/article_one_perpose_text_2"
+            android:textColor="@color/black2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:text="@string/article_one_perpose_text_3"
+            android:textColor="@color/black2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical">
+
+            <in.hangang.core.view.button.checkbox.CheckBox
+                android:id="@+id/agree_hangang_service"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/use_to_term"
+                android:textColor="@color/black2"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/community_rule"
+            android:textColor="@color/black2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:text="@string/community_rule_text_1"
+            android:textColor="@color/black2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:text="@string/community_rule_text_2"
+            android:textColor="@color/black2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:text="@string/article_one_perpose_text_3"
+            android:textColor="@color/black2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <in.hangang.core.view.button.RoundedCornerButton
+                android:id="@+id/next_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="@color/color_state_button_blue"
+                android:gravity="center"
+                android:enabled="false"
+                android:text="@string/next_step"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

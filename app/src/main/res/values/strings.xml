@@ -1,6 +1,8 @@
 <resources>
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
+    <string name="next_step">다음</string>
+    <string name="en_ok">OK</string>
 
     <string name="app_name">Hangang</string>
     <string name="title_home">Home</string>
@@ -24,8 +26,16 @@
     <string name="find_password">비밀번호 찾기</string>
     <string name="no_account_ask">아직 계정이 없으신가요?</string>
     <string name="join_in">회원가입</string>
-
-
+    <string name="write_school_email">학교 이메일을 적어주세요.</string>
+    <string name="send_authnum_school_email">학교 이메일로 인증번호가 전송됩니다.</string>
+    <string name="check_authnum_or_email">인증번호나 아우누리 메일을 다시 확인하여 주세요.\n이메일 인증 완료 후 서비스를 이용할 수 있습니다."</string>
+    <string name="id">아이디</string>
+    <string name="nickname">닉네임</string>
+    <string name="available_nickname">사용 가능한 닉네임입니다.</string>
+    <string name="select_major">전공 선택</string>
+    <string name="sign_up_complete_dialog_title">회원가입이 되었습니다.</string>
+    <string name="email_koreatech">"\@koreatech.ac.kr"</string>
+    <string name="sign_up_complete_dialog_message">%s님!\n한기대의 강의평가를 보러 가볼까요?</string>
 
     <string name="reset_password_app_bar_title">비밀번호 찾기</string>
     <string name="reset_password_auth_koreatech_email_title">학교 이메일 인증</string>
@@ -59,4 +69,25 @@
     <string name="reset_password_finished_title">비밀번호가 변경되었습니다</string>
     <string name="reset_password_finished_message">%1$s님!\n한기대의 강의평가를 보러 가볼까요?</string>
     <string name="reset_password_finished_positive_button">로그인하러 가기</string>
+
+    <string name="mechanical_engineering">기계공학부</string>
+    <string name="design_engineering">디자인·건축공학부</string>
+    <string name="mechatronics_engineering">메카트로닉스공학부</string>
+    <string name="industrial_management">산업경영학부</string>
+    <string name="energy_engineering">에너지신소재화학공학부</string>
+    <string name="electronic_engineering">전기전자통신공학부</string>
+    <string name="computer_engineering">컴퓨터공학부</string>
+
+    <string name="agree_to_term">약관 동의</string>
+    <string name="agree_to_under_term">아래 약관에 모두 동의합니다</string>
+    <string name="personal_to_term">개인정보 이용약관(필수)</string>
+    <string name="article_one_perpose">제1조(목적)</string>
+    <string name="article_one_perpose_text_1">한강 서비스 이용약관은 bcsd lab에서 서비스를 제공함에</string>
+    <string name="article_one_perpose_text_2">있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로</string>
+    <string name="article_one_perpose_text_3">합니다.</string>
+    <string name="use_to_term">한강 이용약관(필수)</string>
+    <string name="community_rule">커뮤니티 이용규칙</string>
+    <string name="community_rule_text_1">한강 서비스 이용약관은 bcsd lab에서 서비스를 제공함에</string>
+    <string name="community_rule_text_2">있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로</string>
+
 </resources>
