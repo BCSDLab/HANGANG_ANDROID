@@ -4,10 +4,12 @@
     <string name="next_step">다음</string>
     <string name="en_ok">OK</string>
 
-    <string name="app_name">Hangang</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">한강</string>
+    <string name="title_home">홈</string>
+    <string name="title_evaluation">강의평</string>
+    <string name="title_document">강의자료</string>
+    <string name="title_timetable">시간표</string>
+    <string name="title_mypage">마이페이지</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
