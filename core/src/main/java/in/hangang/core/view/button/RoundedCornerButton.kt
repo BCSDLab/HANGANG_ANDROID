@@ -20,7 +20,7 @@ class RoundedCornerButton @JvmOverloads constructor(
         set(value) {
             when (value) {
                 FILLED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_filled)
-                OUTLINED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_outline)
+                OUTLINED -> setBackgroundResource(R.drawable.rectangle_rounded_corner_outline_24dp)
             }
             if(value == FILLED){
                 setTextColor(
