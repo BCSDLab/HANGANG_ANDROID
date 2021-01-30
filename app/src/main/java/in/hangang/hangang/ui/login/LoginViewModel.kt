@@ -14,15 +14,8 @@ import androidx.lifecycle.MutableLiveData
 class LoginViewModel(private val userRepository: UserRepository) : ViewModelBase() {
 
     private val _loginButtonClickResponse = MutableLiveData<CommonResponse>()
-    private val _findPasswordClickResponse = MutableLiveData<CommonResponse>()
-    private val _signInClickResponse = MutableLiveData<CommonResponse>()
-    private val _throwable = MutableLiveData<Throwable>()
 
     val loginButtonClickResponse : LiveData<CommonResponse>get()  = _loginButtonClickResponse
-    val findPasswordClickResponse : LiveData<CommonResponse>get() = _findPasswordClickResponse
-    val signInClickResponse : LiveData<CommonResponse>get() = _signInClickResponse
-
-    val throwable : LiveData<Throwable> get() = _throwable
 
     fun loginButtonClick(portalID: String, password: String){
         userRepository.login(portalID, password)
@@ -32,10 +25,11 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModelBase
             .subscribe( {
                 _loginButtonClickResponse.value = it
             }, {
-                LogUtil.e("Error in finishing email auth : ${it.toCommonResponse().errorMessage}")
-                _throwable.value = it
+                LogUtil.e("Error in finishing login : ${it.toCommonResponse().errorMessage}")
             })
 
     }
+
+
 
 }
