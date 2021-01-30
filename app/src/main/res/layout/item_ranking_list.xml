@@ -60,6 +60,7 @@
             tools:text="김사랑" />
 
         <View
+            android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000"

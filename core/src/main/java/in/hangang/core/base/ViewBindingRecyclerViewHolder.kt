@@ -4,9 +4,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 open class ViewBindingRecyclerViewHolder<T : ViewDataBinding>(
-    viewDataBinding: T
+        val binding: T
 ) : RecyclerView.ViewHolder(
-    viewDataBinding.root
-) {
-
-}
+    binding.root
+)

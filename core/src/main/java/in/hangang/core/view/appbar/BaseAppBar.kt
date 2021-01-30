@@ -16,6 +16,7 @@ import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.contains
+import androidx.fragment.app.Fragment
 
 open class BaseAppBar @JvmOverloads constructor(
         context: Context,
@@ -90,6 +91,7 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun addViewInLeft(view: View, index: Int = -1) {
+        if(view.layoutParams == null) view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, context.appBarHeight)
         if (index > -1) leftContainer.addView(view, index)
         else leftContainer.addView(view)
 
@@ -99,6 +101,7 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun addViewInRight(view: View, index: Int = -1) {
+        if(view.layoutParams == null) view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, context.appBarHeight)
         if (index > -1) rightContainer.addView(view, index)
         else rightContainer.addView(view)
 
@@ -125,6 +128,21 @@ open class BaseAppBar @JvmOverloads constructor(
 
     fun removeViewInRight(index: Int) {
         rightContainer.removeViewAt(index)
+    }
+
+    inline fun setOnAppBarButtonClickListener(
+            crossinline onclickViewInLeftContainer : (view: View, index: Int) -> (Unit) = {_, _ ->},
+            crossinline onClickViewInRightContainer : (view: View, index: Int) -> (Unit) = {_, _ ->}
+    ) {
+        onAppBarButtonButtonClickListener = object : OnAppBarButtonClickListener {
+            override fun onClickViewInLeftContainer(view: View, index: Int) {
+                onclickViewInLeftContainer(view, index)
+            }
+
+            override fun onClickViewInRightContainer(view: View, index: Int) {
+                onClickViewInRightContainer(view, index)
+            }
+        }
     }
 
     private fun setCenterTitleConstraintSet() {
@@ -162,22 +180,43 @@ private val Context.appBarHeight: Int
         else 0
     }
 
-fun Context.appBarImageButton(drawable: Drawable) = ImageButton(this).apply {
-    layoutParams = ViewGroup.LayoutParams(appBarHeight, appBarHeight)
+fun Context.appBarImageButton(drawable: Drawable, width: Int = appBarHeight, height: Int = appBarHeight) = ImageButton(this).apply {
+    layoutParams = ViewGroup.LayoutParams(width, height)
     background = null
     setImageDrawable(drawable)
 }
 
-fun Context.appBarImageButton(@DrawableRes resId: Int) = ImageButton(this).apply {
-    layoutParams = ViewGroup.LayoutParams(appBarHeight, appBarHeight)
+fun Context.appBarImageButton(@DrawableRes resId: Int, width: Int = appBarHeight, height: Int = appBarHeight) = ImageButton(this).apply {
+    layoutParams = ViewGroup.LayoutParams(width, height)
     background = null
     setImageResource(resId)
 }
 
-fun Context.appBarTextButton(text: CharSequence) = Button(this).apply {
-    layoutParams = ViewGroup.LayoutParams(appBarHeight, appBarHeight)
+fun Context.appBarTextButton(text: CharSequence, width: Int = appBarHeight, height: Int = appBarHeight) = Button(this).apply {
+    layoutParams = ViewGroup.LayoutParams(width, height)
     background = null
     this.text = text
     gravity = Gravity.CENTER
     textSize = 14f
 }
+
+fun Fragment.appBarImageButton(drawable: Drawable,
+                               width: Int = activity?.appBarHeight
+                                       ?: ViewGroup.LayoutParams.WRAP_CONTENT,
+                               height: Int = activity?.appBarHeight
+                                       ?: ViewGroup.LayoutParams.WRAP_CONTENT) =
+        activity!!.appBarImageButton(drawable, width, height)
+
+fun Fragment.appBarImageButton(@DrawableRes resId: Int,
+                               width: Int = activity?.appBarHeight
+                                       ?: ViewGroup.LayoutParams.WRAP_CONTENT,
+                               height: Int = activity?.appBarHeight
+                                       ?: ViewGroup.LayoutParams.WRAP_CONTENT) =
+        activity!!.appBarImageButton(resId, width, height)
+
+fun Fragment.appBarTextButton(text: CharSequence,
+                              width: Int = activity?.appBarHeight
+                                      ?: ViewGroup.LayoutParams.WRAP_CONTENT,
+                              height: Int = activity?.appBarHeight
+                                      ?: ViewGroup.LayoutParams.WRAP_CONTENT) =
+        activity!!.appBarTextButton(text, width, height)

@@ -11,7 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 class RankingListFragment : ViewBindingFragment<FragmentRankingListBinding>() {
     override val layoutId = R.layout.fragment_ranking_list
 
-    val adapter = RankingListAdapter()
+    private val adapter = RankingListAdapter()
+    private lateinit var major: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        major = savedInstanceState?.getString("major") ?: "교양학부"
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,5 +26,13 @@ class RankingListFragment : ViewBindingFragment<FragmentRankingListBinding>() {
 
         binding.recyclerViewRankingList.layoutManager = LinearLayoutManager(activity)
         binding.recyclerViewRankingList.adapter = adapter
+    }
+
+    companion object {
+        fun newInstance(major : String) : RankingListFragment = RankingListFragment().apply {
+            arguments = Bundle().apply {
+                putString("major", major)
+            }
+        }
     }
 }

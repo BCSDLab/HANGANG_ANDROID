@@ -7,5 +7,5 @@
         android:layout_height="310dp"
         tools:context=".ui.home.ranking.fragment.RankingListFragment"
         tools:itemCount="5"
-        tools:listitem="@layout/item_ranking_list"/>
+        tools:listitem="@layout/item_ranking_list" />
 </layout>
