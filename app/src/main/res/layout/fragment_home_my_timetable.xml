@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:text="@string/home_title_my_timetable"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:id="@+id/layout_my_timetable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rectangle_rounded_corner_outline_8dp"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_my_timetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.home.ranking.fragment.RankingListFragment"
+                tools:itemCount="0"
+                tools:listitem="@layout/item_home_my_timetable_list" />
+
+            <include
+                android:id="@+id/recycler_view_empty"
+                layout="@layout/item_home_my_timetable_empty" />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+</layout>

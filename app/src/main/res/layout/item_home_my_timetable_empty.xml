@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/home_no_timetable_message"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="12sp" />
+
+    <in.hangang.core.view.button.RoundedCornerButton
+        android:id="@+id/home_empty_timetable_button_new_timetable"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginTop="6dp"
+        android:backgroundTint="?android:attr/textColorTertiary"
+        android:textColor="?android:attr/textColorPrimary"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/home_new_timetable" />
+
+</LinearLayout>

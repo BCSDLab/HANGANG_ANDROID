@@ -94,5 +94,7 @@
     <string name="home_title_lacture_ranking">강의랭킹</string>
     <string name="home_title_find_by_major">학부별 탐색</string>
     <string name="home_title_my_timetable">내 시간표</string>
+    <string name="home_no_timetable_message">아직 작성한 시간표가 없습니다.</string>
+    <string name="home_new_timetable">작성하러 가기</string>
 
 </resources>
