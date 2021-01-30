@@ -20,22 +20,18 @@
                 app:showBackButton="false"
                 app:showDivider="false" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="16dp"
-                android:text="@string/home_title_lacture_ranking"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="16sp" />
-
             <fragment
                 android:id="@+id/fragment_container_lecture_ranking"
                 android:name="in.hangang.hangang.ui.home.ranking.fragment.RankingFragment"
                 android:layout_width="match_parent"
-                android:layout_height="360dp"
-                android:layout_margin="16dp" />
+                android:layout_height="wrap_content" />
+
+            <fragment
+                android:id="@+id/fragment_container_find_by_major"
+                android:name="in.hangang.hangang.ui.home.findbymajor.fragment.FindByMajorFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

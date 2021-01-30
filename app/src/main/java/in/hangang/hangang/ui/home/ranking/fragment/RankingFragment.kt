@@ -2,14 +2,14 @@ package `in`.hangang.hangang.ui.home.ranking.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.databinding.FragmentRankingBinding
+import `in`.hangang.hangang.databinding.FragmentHomeRankingBinding
 import `in`.hangang.hangang.ui.home.ranking.adapter.RankingPagerAdapter
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.tabs.TabLayoutMediator
 
-class RankingFragment : ViewBindingFragment<FragmentRankingBinding>() {
-    override val layoutId = R.layout.fragment_ranking
+class RankingFragment : ViewBindingFragment<FragmentHomeRankingBinding>() {
+    override val layoutId = R.layout.fragment_home_ranking
 
     private val simpleMajor: Array<String> by lazy {
         requireActivity().resources.getStringArray(R.array.major_simple)

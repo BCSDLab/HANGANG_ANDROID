@@ -2,14 +2,14 @@ package `in`.hangang.hangang.ui.home.ranking.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.databinding.FragmentRankingListBinding
+import `in`.hangang.hangang.databinding.FragmentHomeRankingListBinding
 import `in`.hangang.hangang.ui.home.ranking.adapter.RankingListAdapter
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 
-class RankingListFragment : ViewBindingFragment<FragmentRankingListBinding>() {
-    override val layoutId = R.layout.fragment_ranking_list
+class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>() {
+    override val layoutId = R.layout.fragment_home_ranking_list
 
     private val adapter = RankingListAdapter()
     private lateinit var major: String

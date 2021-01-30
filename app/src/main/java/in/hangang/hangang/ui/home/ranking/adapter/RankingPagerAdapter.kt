@@ -8,12 +8,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class RankingPagerAdapter(fragmentActivity : FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
-    private val fullMajor = fragmentActivity.resources.getStringArray(R.array.major_full)
+    private val fullMajors = fragmentActivity.resources.getStringArray(R.array.major_full)
 
     override fun getItemCount() = 9
 
     override fun createFragment(position: Int): Fragment {
-        return RankingListFragment.newInstance(fullMajor[position])
+        return RankingListFragment.newInstance(fullMajors[position])
     }
 
 }

@@ -92,5 +92,7 @@
     <string name="community_rule_text_1">한강 서비스 이용약관은 bcsd lab에서 서비스를 제공함에</string>
     <string name="community_rule_text_2">있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로</string>
     <string name="home_title_lacture_ranking">강의랭킹</string>
+    <string name="home_title_find_by_major">학부별 탐색</string>
+    <string name="home_title_my_timetable">내 시간표</string>
 
 </resources>

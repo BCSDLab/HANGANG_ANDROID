@@ -22,6 +22,7 @@
             app:labelVisibilityMode="labeled"
             android:foregroundGravity="center"
             app:menu="@menu/bottom_nav_menu"
+            app:elevation="0dp"
             app:itemBackground="@drawable/bottom_navigation_view_item_background"/>
 
         <fragment

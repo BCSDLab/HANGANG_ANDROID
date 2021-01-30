@@ -10,4 +10,5 @@
     <dimen name="design_bottom_navigation_label_padding">0dp</dimen>
     <dimen name="design_bottom_navigation_text_size">11sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size">11sp</dimen>
+    <dimen name="dimen_home_find_by_major_cover_length">87dp</dimen>
 </resources>
