@@ -11,6 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:paddingBottom="32dp"
             tools:context=".ui.home.HomeFragment">
 
             <in.hangang.core.view.appbar.BaseAppBar
@@ -43,6 +44,13 @@
             <fragment
                 android:id="@+id/fragment_container_recommended_lectures"
                 android:name="in.hangang.hangang.ui.home.recommendedlectures.fragment.RecommendedLecturesFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <fragment
+                android:id="@+id/fragment_container_recent_lectures"
+                android:name="in.hangang.hangang.ui.home.recentlectures.fragment.RecentLecturesFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />

@@ -6,6 +6,7 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ItemHomeRecommendedLecturesBinding
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
@@ -30,6 +31,9 @@ class RecommendedLecturesRecyclerViewAdapter() :
         with(holder.binding) {
             imageViewRecommendedLectures.setImageResource(R.drawable.hangang_logo_small)
             textViewRecommendedLectures.text = "문명과 멸망"
+            extraLeftPadding.visibility = if (position == 0) View.VISIBLE else View.GONE
+            extraRightPadding.visibility =
+                    if (position == itemCount - 1) View.VISIBLE else View.GONE
         }
     }
 
