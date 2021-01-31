@@ -37,5 +37,5 @@ class RecommendedLecturesRecyclerViewAdapter() :
         }
     }
 
-    override fun getItemCount(): Int = 0
+    override fun getItemCount(): Int = 8
 }

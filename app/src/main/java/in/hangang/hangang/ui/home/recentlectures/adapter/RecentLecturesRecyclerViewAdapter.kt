@@ -30,7 +30,7 @@ class RecentLecturesRecyclerViewAdapter : OnItemClickRecyclerViewAdapter<RecentL
         if(position == itemCount - 1) holder.binding.divider.visibility = View.GONE
     }
 
-    override fun getItemCount(): Int = 0
+    override fun getItemCount(): Int = 5
 
     class ViewHolder(itemHomeRecentLecturesListBinding: ItemHomeRecentLecturesListBinding) :
         ViewBindingRecyclerViewHolder<ItemHomeRecentLecturesListBinding>(itemHomeRecentLecturesListBinding)

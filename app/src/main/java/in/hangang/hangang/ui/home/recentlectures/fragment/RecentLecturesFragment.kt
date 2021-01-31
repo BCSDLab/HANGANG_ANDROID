@@ -4,6 +4,7 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentHomeRecentLecturesBinding
 import `in`.hangang.hangang.ui.home.mytimetable.adapter.MyTimetableAdapter
+import `in`.hangang.hangang.ui.home.recentlectures.adapter.RecentLecturesRecyclerViewAdapter
 import `in`.hangang.hangang.ui.home.recentlectures.viewmodel.RecentLecturesFragmentViewModel
 import android.os.Bundle
 import android.view.View
@@ -19,7 +20,7 @@ class RecentLecturesFragment : ViewBindingFragment<FragmentHomeRecentLecturesBin
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerViewRecentLectures.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerViewRecentLectures.adapter = MyTimetableAdapter()
+        binding.recyclerViewRecentLectures.adapter = RecentLecturesRecyclerViewAdapter()
 
         recentLecturesFragmentViewModel.timetableCount.observe(viewLifecycleOwner) {
             binding.recyclerViewEmpty.visibility = if(it == 0) View.VISIBLE else View.GONE

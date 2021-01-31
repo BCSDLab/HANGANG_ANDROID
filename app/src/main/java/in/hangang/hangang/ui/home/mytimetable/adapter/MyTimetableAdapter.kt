@@ -29,7 +29,7 @@ class MyTimetableAdapter : OnItemClickRecyclerViewAdapter<MyTimetableAdapter.Vie
         if(position == itemCount - 1) holder.binding.divider.visibility = View.GONE
     }
 
-    override fun getItemCount(): Int = 0
+    override fun getItemCount(): Int = 8
 
     class ViewHolder(itemHomeMyTimetableListBinding: ItemHomeMyTimetableListBinding) :
         ViewBindingRecyclerViewHolder<ItemHomeMyTimetableListBinding>(itemHomeMyTimetableListBinding)
