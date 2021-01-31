@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,17 +15,17 @@
             android:layout_marginTop="22dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="22dp"
-            android:textColor="@color/color_state_button_text"
             android:backgroundTint="@color/color_state_button_blue_gray"
+            android:paddingStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="5dp"
+            android:text="평가완료"
+            android:textColor="@color/color_state_button_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:enabled="false"
-            android:text="평가완료"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"/>
+            tools:enabled="false" />
 
         <TextView
             android:id="@+id/item_my_timetable_title"

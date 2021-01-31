@@ -26,11 +26,11 @@ class MyTimetableAdapter : OnItemClickRecyclerViewAdapter<MyTimetableAdapter.Vie
         holder.binding.itemMyTimetableTitle.text = "사랑의 역사"
         holder.binding.itemMyTimetableProfessor.text = "김사랑"
 
-        if(position == itemCount - 1) holder.binding.divider.visibility = View.GONE
+        if (position == itemCount - 1) holder.binding.divider.visibility = View.GONE
     }
 
-    override fun getItemCount(): Int = 8
+    override fun getItemCount(): Int = 0
 
     class ViewHolder(itemHomeMyTimetableListBinding: ItemHomeMyTimetableListBinding) :
-        ViewBindingRecyclerViewHolder<ItemHomeMyTimetableListBinding>(itemHomeMyTimetableListBinding)
+            ViewBindingRecyclerViewHolder<ItemHomeMyTimetableListBinding>(itemHomeMyTimetableListBinding)
 }

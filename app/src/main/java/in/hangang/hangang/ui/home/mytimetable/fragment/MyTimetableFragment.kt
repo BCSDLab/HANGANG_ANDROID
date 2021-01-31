@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MyTimetableFragment : ViewBindingFragment<FragmentHomeMyTimetableBinding>() {
     override val layoutId = R.layout.fragment_home_my_timetable
 
-    private val myTimetableFragmentViewModel : MyTimetableFragmentViewModel by viewModel()
+    private val myTimetableFragmentViewModel: MyTimetableFragmentViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +22,7 @@ class MyTimetableFragment : ViewBindingFragment<FragmentHomeMyTimetableBinding>(
         binding.recyclerViewMyTimetable.adapter = MyTimetableAdapter()
 
         myTimetableFragmentViewModel.timetableCount.observe(viewLifecycleOwner) {
-            binding.recyclerViewEmpty.visibility = if(it == 0) View.VISIBLE else View.GONE
+            binding.recyclerViewEmpty.visibility = if (it == 0) View.VISIBLE else View.GONE
         }
     }
 }

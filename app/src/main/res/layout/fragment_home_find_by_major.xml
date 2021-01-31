@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,9 +18,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_find_by_major"
-            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_home_find_by_major"/>
+            android:layout_marginTop="4dp"
+            tools:listitem="@layout/item_home_find_by_major" />
     </LinearLayout>
 </layout>

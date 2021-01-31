@@ -29,7 +29,7 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
     }
 
     companion object {
-        fun newInstance(major : String) : RankingListFragment = RankingListFragment().apply {
+        fun newInstance(major: String): RankingListFragment = RankingListFragment().apply {
             arguments = Bundle().apply {
                 putString("major", major)
             }

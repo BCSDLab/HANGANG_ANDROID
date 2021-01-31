@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
 
 class RankingListAdapter : OnItemClickRecyclerViewAdapter<RankingListAdapter.ViewHolder>() {
 
@@ -29,11 +28,11 @@ class RankingListAdapter : OnItemClickRecyclerViewAdapter<RankingListAdapter.Vie
         holder.binding.rankingItemTitle.text = "사랑의 역사"
         holder.binding.rankingItemProfessor.text = "김사랑"
 
-        if(position == itemCount - 1) holder.binding.divider.visibility = View.GONE
+        if (position == itemCount - 1) holder.binding.divider.visibility = View.GONE
     }
 
     override fun getItemCount(): Int = 5
 
     class ViewHolder(itemHomeRankingListBinding: ItemHomeRankingListBinding) :
-        ViewBindingRecyclerViewHolder<ItemHomeRankingListBinding>(itemHomeRankingListBinding)
+            ViewBindingRecyclerViewHolder<ItemHomeRankingListBinding>(itemHomeRankingListBinding)
 }

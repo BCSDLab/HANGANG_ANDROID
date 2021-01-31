@@ -4,26 +4,25 @@ import `in`.hangang.core.base.ViewBindingRecyclerViewHolder
 import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ItemHomeRecommendedLecturesBinding
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
-class RecommendedLecturesRecyclerViewAdapter() :
-    OnItemClickRecyclerViewAdapter<RecommendedLecturesRecyclerViewAdapter.ViewHolder>() {
+class RecommendedLecturesRecyclerViewAdapter :
+        OnItemClickRecyclerViewAdapter<RecommendedLecturesRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(binding: ItemHomeRecommendedLecturesBinding) :
-        ViewBindingRecyclerViewHolder<ItemHomeRecommendedLecturesBinding>(binding)
+            ViewBindingRecyclerViewHolder<ItemHomeRecommendedLecturesBinding>(binding)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_home_recommended_lectures,
-                parent,
-                false
-            )
+                DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.item_home_recommended_lectures,
+                        parent,
+                        false
+                )
         )
     }
 
@@ -37,5 +36,5 @@ class RecommendedLecturesRecyclerViewAdapter() :
         }
     }
 
-    override fun getItemCount(): Int = 8
+    override fun getItemCount(): Int = 0
 }

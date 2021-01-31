@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="160dp"
+    android:background="@drawable/rectangle_rounded_corner_outline_8dp"
+    android:backgroundTint="?android:attr/textColorTertiary"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -19,10 +21,10 @@
         android:layout_height="28dp"
         android:layout_marginTop="6dp"
         android:backgroundTint="?android:attr/textColorTertiary"
-        android:textColor="?android:attr/textColorPrimary"
         android:gravity="center"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="@string/home_new_timetable" />
+        android:text="@string/home_new_timetable"
+        android:textColor="?android:attr/textColorPrimary" />
 
 </LinearLayout>

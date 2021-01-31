@@ -27,11 +27,11 @@ class RecentLecturesRecyclerViewAdapter : OnItemClickRecyclerViewAdapter<RecentL
         holder.binding.recentLecturesItemProfessor.text = "김사랑"
         holder.binding.recentLecturesItemStarNumber.text = "4.2"
 
-        if(position == itemCount - 1) holder.binding.divider.visibility = View.GONE
+        if (position == itemCount - 1) holder.binding.divider.visibility = View.GONE
     }
 
-    override fun getItemCount(): Int = 5
+    override fun getItemCount(): Int = 0
 
     class ViewHolder(itemHomeRecentLecturesListBinding: ItemHomeRecentLecturesListBinding) :
-        ViewBindingRecyclerViewHolder<ItemHomeRecentLecturesListBinding>(itemHomeRecentLecturesListBinding)
+            ViewBindingRecyclerViewHolder<ItemHomeRecentLecturesListBinding>(itemHomeRecentLecturesListBinding)
 }

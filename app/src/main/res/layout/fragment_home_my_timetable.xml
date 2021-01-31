@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/text_view_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
@@ -15,10 +15,14 @@
             android:paddingEnd="16dp"
             android:text="@string/home_title_my_timetable"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/layout_my_timetable"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_my_timetable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -26,23 +30,25 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/rectangle_rounded_corner_outline_8dp"
             android:backgroundTint="?android:attr/textColorTertiary"
-            android:orientation="vertical"
-            android:padding="1dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title"
+            tools:context=".ui.home.ranking.fragment.RankingListFragment"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_home_my_timetable_list" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_my_timetable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:context=".ui.home.ranking.fragment.RankingListFragment"
-                tools:itemCount="0"
-                tools:listitem="@layout/item_home_my_timetable_list" />
-
-            <include
-                android:id="@+id/recycler_view_empty"
-                layout="@layout/item_home_my_timetable_empty" />
-
-        </FrameLayout>
+        <include
+            android:id="@+id/recycler_view_empty"
+            layout="@layout/item_home_my_timetable_empty"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
