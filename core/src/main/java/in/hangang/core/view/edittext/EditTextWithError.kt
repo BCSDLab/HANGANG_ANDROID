@@ -6,6 +6,7 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
 
@@ -27,7 +28,7 @@ open class EditTextWithError @JvmOverloads constructor(
     private val errorIcon = ContextCompat.getDrawable(context, R.drawable.ic_exclamation)
 
     private val statusImageView = ImageView(context).apply {
-        layoutParams = LayoutParams(
+        layoutParams = LinearLayout.LayoutParams(
                 resources.getDimensionPixelOffset(R.dimen.edit_text_right_icon_size),
                 resources.getDimensionPixelOffset(R.dimen.edit_text_right_icon_size))
 
