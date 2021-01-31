@@ -25,7 +25,14 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="@dimen/dimen_home_recommended_lectures_cover_length"
                 android:layout_height="@dimen/dimen_home_recommended_lectures_cover_length"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rectangle_rounded_corner_outline_8dp"
+                    android:backgroundTint="?android:attr/textColorTertiary"/>
 
                 <ImageView
                     android:id="@+id/image_view_recommended_lectures"

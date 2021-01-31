@@ -19,7 +19,8 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
 
             <ImageView
                 android:id="@+id/image_view_find_by_major"
