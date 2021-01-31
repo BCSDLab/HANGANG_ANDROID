@@ -17,15 +17,20 @@ class EmailAuthenticationFragmentViewModel(private val userRepository: UserRepos
     private val _sendAuthNumberResponse = MutableLiveData<CommonResponse>()
     private val _resendAuthNumberResponse = MutableLiveData<CommonResponse>()
     private val _finishEmailAuthResponse = MutableLiveData<CommonResponse>()
-    private val _throwable = MutableLiveData<Throwable>()
+    private val _throwable = MutableLiveData<CommonResponse>()
+    private val _emailErrorMessage = MutableLiveData<String>()
+    private val _emailAuthNumberErrorMessage = MutableLiveData<String>()
 
     val portalAccount : LiveData<String> get() = _portalAccount
     val sentEmailAuth: LiveData<Boolean> get() = _sentEmailAuth
-    val throwable : LiveData<Throwable> get() = _throwable
+    val throwable : LiveData<CommonResponse> get() = _throwable
 
     val sendAuthNumberResponse : LiveData<CommonResponse> get() = _sendAuthNumberResponse
     val resendAuthNumberResponse : LiveData<CommonResponse> get() = _resendAuthNumberResponse
     val finishEmailAuthResponse : LiveData<CommonResponse> get() = _finishEmailAuthResponse
+
+    val emailErrorMessage : LiveData<String> get() = _emailErrorMessage
+    val emailAuthNumberErrorMessage : LiveData<String> get() = _emailAuthNumberErrorMessage
 
     fun sendAuthNumber(portalAccount: String) {
         if (sentEmailAuth.value == true) {
@@ -38,9 +43,14 @@ class EmailAuthenticationFragmentViewModel(private val userRepository: UserRepos
                     .subscribe({
                         _sendAuthNumberResponse.value = it
                         _sentEmailAuth.postValue(true)
+                        _emailErrorMessage.postValue("")
+                        _emailAuthNumberErrorMessage.postValue("")
                     }, {
-                        LogUtil.e("Error in send auth number : ${it.toCommonResponse().errorMessage}")
-                        _throwable.value = it
+                        with(it.toCommonResponse()) {
+                            _emailErrorMessage.postValue(this.errorMessage)
+                            LogUtil.e("Error in send auth number : ${this.errorMessage}")
+                            _throwable.value = this
+                        }
                     })
         }
     }
@@ -52,9 +62,13 @@ class EmailAuthenticationFragmentViewModel(private val userRepository: UserRepos
                 .withThread()
                 .subscribe({
                     _resendAuthNumberResponse.value = it
+                    _emailErrorMessage.postValue("")
+                    _emailAuthNumberErrorMessage.postValue("")
                 }, {
-                    LogUtil.e("Error in resend auth number : ${it.toCommonResponse().errorMessage}")
-                    _throwable.value = it
+                    with(it.toCommonResponse()) {
+                        LogUtil.e("Error in resend auth number : ${this.errorMessage}")
+                        _throwable.value = this
+                    }
                 })
     }
 
@@ -66,8 +80,12 @@ class EmailAuthenticationFragmentViewModel(private val userRepository: UserRepos
                 .subscribe({
                     _finishEmailAuthResponse.value = it
                 }, {
-                    LogUtil.e("Error in finishing email auth : ${it.toCommonResponse().errorMessage}")
-                    _throwable.value = it
+                    with(it.toCommonResponse()) {
+                        _emailAuthNumberErrorMessage.postValue(this.errorMessage)
+                        LogUtil.e("Error in finishing email auth : ${this.errorMessage}")
+                        _throwable.value = this
+                    }
+
                 })
     }
 }

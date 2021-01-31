@@ -13,6 +13,7 @@ import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.MASK_
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.MASK_ERR_NOT_CONTAINS_SPECIAL_CHARACTER
 import `in`.hangang.core.view.edittext.PasswordEditTextWithRegex.Companion.MASK_ERR_NO_INPUT
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.databinding.FragmentNewPasswordBinding
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel

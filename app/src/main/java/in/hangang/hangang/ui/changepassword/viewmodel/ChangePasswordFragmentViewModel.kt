@@ -15,10 +15,10 @@ import androidx.lifecycle.MutableLiveData
 class ChangePasswordFragmentViewModel(private val userRepository: UserRepository) : ViewModelBase() {
     val passwordRegexErrorMessage = MutableLiveData("")
     private val _changePasswordResponse = MutableLiveData<CommonResponse>()
-    private val _throwable = MutableLiveData<Throwable>()
+    private val _throwable = MutableLiveData<CommonResponse>()
 
     val changePasswordResponse : LiveData<CommonResponse> get() = _changePasswordResponse
-    val throwable : LiveData<Throwable> get() = _throwable
+    val throwable : LiveData<CommonResponse> get() = _throwable
 
     fun applyNewPassword(portalAccount: String,
                          password: String) {
@@ -30,7 +30,7 @@ class ChangePasswordFragmentViewModel(private val userRepository: UserRepository
                     _changePasswordResponse.value = it
                 }, {
                     LogUtil.e("Error in changing password : ${it.toCommonResponse().errorMessage}")
-                    _throwable.value = it
+                    _throwable.value = it.toCommonResponse()
                 })
     }
 

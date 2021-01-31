@@ -52,7 +52,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_email_auth_title" />
 
-        <in.hangang.core.view.edittext.SingleLineEditText
+        <TextView
+            android:id="@+id/text_view_email_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:text="@{vm.emailErrorMessage}"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_email_auth_title"
+            app:layout_constraintStart_toEndOf="@+id/text_view_email_auth_title"
+            app:layout_constraintTop_toTopOf="@+id/text_view_email_auth_title"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="가입되지 않은 계정입니다" />
+
+        <TextView
+            android:id="@+id/text_view_email_auth_number_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:text="@{vm.emailAuthNumberErrorMessage}"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_confirm_email_auth_title"
+            app:layout_constraintStart_toEndOf="@+id/text_view_confirm_email_auth_title"
+            app:layout_constraintTop_toTopOf="@+id/text_view_confirm_email_auth_title"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="인증번호가 다릅니다." />
+
+        <in.hangang.core.view.edittext.EditTextWithError
             android:id="@+id/edit_text_email_auth_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -71,7 +99,7 @@
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/color_state_button_blue"
             android:gravity="center"
-            android:textColor="?attr/colorOnPrimary"
+            android:text="@{vm.sentEmailAuth ? @string/reset_password_resend_auth_number : @string/reset_password_send_auth_number}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_confirm_email_auth_title"
             tools:enabled="false" />

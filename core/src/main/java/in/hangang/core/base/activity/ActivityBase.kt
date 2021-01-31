@@ -1,20 +1,22 @@
 package `in`.hangang.core.base.activity
 
+import `in`.hangang.core.progressdialog.IProgressDialog
+import `in`.hangang.core.progressdialog.ProgressDialog
 import `in`.hangang.core.util.DialogUtil
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 
-open class ActivityBase : AppCompatActivity() {
+open class ActivityBase : AppCompatActivity(), IProgressDialog {
     private val compositeDisposable = CompositeDisposable()
+    private var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +54,16 @@ open class ActivityBase : AppCompatActivity() {
         super.onDestroy()
         if (!compositeDisposable.isDisposed)
             compositeDisposable.dispose()
+    }
+
+    override fun showProgressDialog() {
+        progressDialog = ProgressDialog(this, "")
+        progressDialog?.show()
+    }
+
+    override fun hideProgressDialog() {
+        progressDialog?.dismiss()
+        progressDialog = null
     }
 }
 

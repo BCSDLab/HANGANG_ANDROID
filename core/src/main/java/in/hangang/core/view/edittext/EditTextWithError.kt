@@ -19,9 +19,9 @@ open class EditTextWithError @JvmOverloads constructor(
 ) : SingleLineEditText(context, attributeSet, defStyleAttr, defStyleRes) {
 
     companion object {
-        const val UNDEFINED = 0x0
-        const val CHECK = 0x1
-        const val ERROR = 0x2
+        const val UNDEFINED = 0
+        const val CHECK = 1
+        const val ERROR = 2
     }
 
     private val checkIcon = ContextCompat.getDrawable(context, R.drawable.ic_check)
