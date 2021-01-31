@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/extra_left_padding"
+            android:layout_width="12dp"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen_home_recommended_lectures_cover_length"
+                android:layout_height="@dimen/dimen_home_recommended_lectures_cover_length"
+                app:cardCornerRadius="8dp">
+
+                <ImageView
+                    android:id="@+id/image_view_recommended_lectures"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:src="@drawable/cover_image_1" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/text_view_recommended_lectures"
+                android:layout_width="@dimen/dimen_home_recommended_lectures_cover_length"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="4dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="12sp"
+                tools:text="문명과 멸망문명과 멸망" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/extra_right_padding"
+            android:layout_width="12dp"
+            android:layout_height="1dp" />
+
+    </LinearLayout>
+
+</layout>

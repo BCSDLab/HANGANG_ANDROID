@@ -40,6 +40,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />
 
+            <fragment
+                android:id="@+id/fragment_container_recommended_lectures"
+                android:name="in.hangang.hangang.ui.home.recommendedlectures.fragment.RecommendedLecturesFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
