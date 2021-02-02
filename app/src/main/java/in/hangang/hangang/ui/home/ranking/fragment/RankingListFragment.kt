@@ -16,7 +16,8 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        major = savedInstanceState?.getString("major") ?: "교양학부"
+        major = savedInstanceState?.getString("major")
+                ?: requireActivity().resources.getStringArray(R.array.major_full)[0]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
