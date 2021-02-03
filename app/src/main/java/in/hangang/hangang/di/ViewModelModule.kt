@@ -4,10 +4,12 @@ import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityVi
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import `in`.hangang.hangang.ui.dashboard.DashBoardViewModel
+import `in`.hangang.hangang.ui.home.mytimetable.viewmodel.MyTimetableFragmentViewModel
+import `in`.hangang.hangang.ui.home.recentlectures.viewmodel.RecentLecturesFragmentViewModel
+import `in`.hangang.hangang.ui.home.recommendedlectures.viewmodel.RecommendedLecturesFragmentViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
-import androidx.lifecycle.SavedStateHandle
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,4 +22,8 @@ val viewModelModule = module {
     viewModel { ChangePasswordActivityViewModel() }
     viewModel { ChangePasswordFragmentViewModel(get()) }
     viewModel { EmailAuthenticationFragmentViewModel(get()) }
+    //Home
+    viewModel { MyTimetableFragmentViewModel() }
+    viewModel { RecommendedLecturesFragmentViewModel() }
+    viewModel { RecentLecturesFragmentViewModel() }
 }

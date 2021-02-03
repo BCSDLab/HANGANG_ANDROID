@@ -30,14 +30,14 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
         with(emailAuthenticationFragmentViewModel) {
             sentEmailAuth.observe(viewLifecycleOwner) {
                 if (it) {
-                    button_send_auth_number.text = getString(R.string.reset_password_resend_auth_number)
-                    button_send_auth_number.appearence = RoundedCornerButton.OUTLINED
-                    button_send_auth_number.setTextColor(getColorFromAttr(R.attr.colorOnSurface))
+                    binding.buttonSendAuthNumber.text = getString(R.string.reset_password_resend_auth_number)
+                    binding.buttonSendAuthNumber.appearence = RoundedCornerButton.OUTLINED
+                    binding.buttonSendAuthNumber.setTextColor(getColorFromAttr(R.attr.colorOnSurface))
                     binding.editTextEmailAuthNumber.isEditTextEnabled = true
                 } else {
-                    button_send_auth_number.text = getString(R.string.reset_password_send_auth_number)
-                    button_send_auth_number.appearence = RoundedCornerButton.FILLED
-                    button_send_auth_number.setTextColor(getColorFromAttr(R.attr.colorOnPrimary))
+                    binding.buttonSendAuthNumber.text = getString(R.string.reset_password_send_auth_number)
+                    binding.buttonSendAuthNumber.appearence = RoundedCornerButton.FILLED
+                    binding.buttonSendAuthNumber.setTextColor(getColorFromAttr(R.attr.colorOnPrimary))
                     binding.editTextEmailAuthNumber.isEditTextEnabled = false
                 }
             }

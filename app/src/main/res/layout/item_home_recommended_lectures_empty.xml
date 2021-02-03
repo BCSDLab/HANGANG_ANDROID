@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@drawable/rectangle_rounded_corner_outline_8dp"
+    android:backgroundTint="?android:attr/textColorTertiary"
+    android:gravity="center"
+    android:text="@string/home_no_recommended_lectures_message"
+    android:textColor="?android:attr/textColorSecondary"
+    android:textSize="12sp" />
