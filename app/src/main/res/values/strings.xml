@@ -89,5 +89,6 @@
     <string name="community_rule">커뮤니티 이용규칙</string>
     <string name="community_rule_text_1">한강 서비스 이용약관은 bcsd lab에서 서비스를 제공함에</string>
     <string name="community_rule_text_2">있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로</string>
+    <string name="login_error_text">가입하지 않은 아이디거나, 잘못된 비밀번호 입니다.</string>
 
 </resources>

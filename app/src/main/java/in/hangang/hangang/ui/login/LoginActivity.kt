@@ -9,6 +9,7 @@ import `in`.hangang.hangang.ui.main.MainActivity
 import `in`.hangang.hangang.ui.signup.activity.SignUpDocumentActivity
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.isVisible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -20,36 +21,49 @@ class LoginActivity : ViewBindingActivity<ActivityLoginBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding.let {
+            it.vm = loginViewModel
+        }
+
+        handleObserver()
         initEvent()
-        initViewModel()
     }
 
     private fun initEvent() {
         with(binding) {
             loginButton.setOnClickListener {
                 loginViewModel.loginButtonClick(
-                    portalID = (portalId.text.toString()+"@koreatech.ac.kr"),
-                    password = portalPassword.text.toString().toSHA256()
-                )
-                var intent= Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
+                    portalID = portalId.text.toString().plus(getString(R.string.email_koreatech)),
+                    password = portalPassword.text.toString().toSHA256())
             }
             findPassword.setOnClickListener {
-                var intent = Intent(this@LoginActivity, ChangePasswordActivity::class.java)
+                val intent = Intent(this@LoginActivity, ChangePasswordActivity::class.java)
                 startActivity(intent)
             }
             signIn.setOnClickListener {
-                var intent = Intent(this@LoginActivity, SignUpDocumentActivity::class.java)
+                val intent = Intent(this@LoginActivity, SignUpDocumentActivity::class.java)
                 startActivity(intent)
             }
         }
     }
 
-
-    private fun initViewModel() {
+    private fun handleObserver() {
         with(loginViewModel) {
-            loginButtonClickResponse.observe(this@LoginActivity) {
+            isLoginSuccess.observe(this@LoginActivity) {
+                if (it) {
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                }
             }
+            errorConfig.observe(this@LoginActivity, { status ->
+                binding.loginErrorText.isVisible = status
+
+            })
+            isLoading.observe(this@LoginActivity, {
+                when (it) {
+                    true -> showProgressDialog()
+                    false -> hideProgressDialog()
+                }
+            })
         }
 
     }
