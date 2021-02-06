@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/extra_left_padding"
+            android:layout_width="12dp"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/dimen_home_find_by_major_cover_length"
+            android:layout_height="@dimen/dimen_home_find_by_major_cover_length"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/extra_right_padding"
+            app:layout_constraintStart_toEndOf="@id/extra_left_padding"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_view_find_by_major"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/cover_image_1" />
+
+            <TextView
+                android:id="@+id/text_view_find_by_major"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:gravity="center"
+                android:paddingBottom="8dp"
+                android:text="디자인 건축 공학부"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="12sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/extra_right_padding"
+            android:layout_width="12dp"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
