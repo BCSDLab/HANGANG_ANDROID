@@ -54,4 +54,19 @@
     <declare-styleable name="ViewPager">
         <attr name="pagingEnabled" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="TimetableLayout" >
+        <attr name="dividerColor" format="color|reference" />
+        <attr name="layout_weekday" format="enum">
+            <enum name="Mon" value="0" />
+            <enum name="Tue" value="1" />
+            <enum name="Wed" value="2" />
+            <enum name="Thu" value="3" />
+            <enum name="Fri" value="4" />
+        </attr>
+        <attr name="layout_startTime" format="string|reference" />
+        <attr name="layout_endTime" format="string|reference" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+    </declare-styleable>
 </resources>
