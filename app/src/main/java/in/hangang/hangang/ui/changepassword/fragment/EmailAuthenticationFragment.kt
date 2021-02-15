@@ -10,7 +10,6 @@ import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityVi
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import android.os.Bundle
 import android.view.View
-import kotlinx.android.synthetic.main.fragment_email_authentication.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticationBinding>() {
