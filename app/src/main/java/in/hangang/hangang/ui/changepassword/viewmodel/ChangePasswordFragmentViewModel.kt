@@ -14,8 +14,8 @@ class ChangePasswordFragmentViewModel(private val userRepository: UserRepository
     private val _changePasswordResponse = MutableLiveData<CommonResponse>()
     private val _throwable = MutableLiveData<CommonResponse>()
 
-    val changePasswordResponse : LiveData<CommonResponse> get() = _changePasswordResponse
-    val throwable : LiveData<CommonResponse> get() = _throwable
+    val changePasswordResponse: LiveData<CommonResponse> get() = _changePasswordResponse
+    val throwable: LiveData<CommonResponse> get() = _throwable
 
     fun applyNewPassword(portalAccount: String,
                          password: String) {

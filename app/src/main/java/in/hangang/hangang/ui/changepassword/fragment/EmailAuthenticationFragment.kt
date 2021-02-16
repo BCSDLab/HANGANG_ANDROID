@@ -1,6 +1,5 @@
 package `in`.hangang.hangang.ui.changepassword.fragment
 
-import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.base.fragment.getColorFromAttr
@@ -54,13 +53,13 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
             emailErrorMessage.observe(viewLifecycleOwner) {
                 binding.textViewEmailErrorMessage.text = it ?: getString(R.string.unknown_error)
                 binding.editTextEmail.status =
-                    if (it == null || it.isNotEmpty()) EditTextWithError.ERROR else EditTextWithError.UNDEFINED
+                        if (it == null || it.isNotEmpty()) EditTextWithError.ERROR else EditTextWithError.UNDEFINED
             }
             emailAuthNumberErrorMessage.observe(viewLifecycleOwner) {
                 binding.textViewEmailAuthNumberErrorMessage.text =
-                    it ?: getString(R.string.unknown_error)
+                        it ?: getString(R.string.unknown_error)
                 binding.editTextEmailAuthNumber.status =
-                    if (it == null || it.isNotEmpty()) EditTextWithError.ERROR else EditTextWithError.UNDEFINED
+                        if (it == null || it.isNotEmpty()) EditTextWithError.ERROR else EditTextWithError.UNDEFINED
             }
         }
     }
@@ -77,13 +76,13 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
             }
             buttonSendAuthNumber.setOnClickListener {
                 emailAuthenticationFragmentViewModel.sendAuthNumber(
-                    portalAccount = "${editTextEmail.text}@koreatech.ac.kr"
+                        portalAccount = "${editTextEmail.text}@koreatech.ac.kr"
                 )
             }
             buttonFinishEmailAuth.setOnClickListener {
                 emailAuthenticationFragmentViewModel.finishEmailAuth(
-                    portalAccount = "${editTextEmail.text}@koreatech.ac.kr",
-                    secret = editTextEmailAuthNumber.text.toString()
+                        portalAccount = "${editTextEmail.text}@koreatech.ac.kr",
+                        secret = editTextEmailAuthNumber.text.toString()
                 )
             }
             buttonGotoPortal.setOnClickListener {
@@ -94,24 +93,24 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
 
     private fun showResentEmailAuthNumberDialog() {
         activity?.showSimpleDialog(
-            title = getString(R.string.reset_password_dialog_resent_title),
-            message = getString(R.string.reset_password_dialog_check_portal_message),
-            positiveButtonText = getString(R.string.ok),
-            positiveButtonOnClickListener = { dialog, _ ->
-                dialog.dismiss()
-            }
+                title = getString(R.string.reset_password_dialog_resent_title),
+                message = getString(R.string.reset_password_dialog_check_portal_message),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { dialog, _ ->
+                    dialog.dismiss()
+                }
         )
     }
 
     private fun showEmailAuthFailedDialog() {
         activity?.showSimpleDialog(
-            title = getString(R.string.reset_password_error_auth),
-            message = getString(R.string.reset_password_dialog_check_portal_message),
-            positiveButtonText = getString(R.string.reset_password_retry_auth),
-            positiveButtonOnClickListener = { dialog, _ ->
-                binding.editTextEmailAuthNumber.setText("")
-                dialog.dismiss()
-            }
+                title = getString(R.string.reset_password_error_auth),
+                message = getString(R.string.reset_password_dialog_check_portal_message),
+                positiveButtonText = getString(R.string.reset_password_retry_auth),
+                positiveButtonOnClickListener = { dialog, _ ->
+                    binding.editTextEmailAuthNumber.setText("")
+                    dialog.dismiss()
+                }
         )
     }
 }

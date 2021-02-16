@@ -37,12 +37,12 @@ class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>(
         }
         emailAuthenticationFragmentViewModel.isLoading.observe(this) {
             changePasswordActivityViewModel.isLoading.postValue(
-                it || changePasswordFragmentViewModel.isLoading.value == true
+                    it || changePasswordFragmentViewModel.isLoading.value == true
             )
         }
         changePasswordFragmentViewModel.isLoading.observe(this) {
             changePasswordActivityViewModel.isLoading.postValue(
-                it || emailAuthenticationFragmentViewModel.isLoading.value == true
+                    it || emailAuthenticationFragmentViewModel.isLoading.value == true
             )
         }
     }

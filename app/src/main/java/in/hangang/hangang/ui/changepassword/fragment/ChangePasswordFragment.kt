@@ -49,52 +49,52 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
         with(binding) {
             editTextNewPassword.addTextChangedListener {
                 binding.textViewPasswordRegexErrorMessage.text =
-                    generatePasswordRegexErrorString()
+                        generatePasswordRegexErrorString()
                 binding.buttonFinishChangePassword.isEnabled =
-                    (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
-                            binding.editTextConfirmNewPassword.text.isNotEmpty()
+                        (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
+                                binding.editTextConfirmNewPassword.text.isNotEmpty()
             }
             editTextConfirmNewPassword.addTextChangedListener {
                 binding.buttonFinishChangePassword.isEnabled =
-                    (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
-                            binding.editTextConfirmNewPassword.text.isNotEmpty()
+                        (binding.editTextNewPassword.errorCode == PasswordEditTextWithRegex.NO_ERR) and
+                                binding.editTextConfirmNewPassword.text.isNotEmpty()
             }
             buttonFinishChangePassword.setOnClickListener {
                 if (editTextNewPassword.textString() == editTextConfirmNewPassword.textString())
                     changePasswordFragmentViewModel.applyNewPassword(
-                        portalAccount = "${emailAuthenticationFragmentViewModel.portalAccount.value}@koreatech.ac.kr",
-                        password = editTextNewPassword.text.toString()
+                            portalAccount = "${emailAuthenticationFragmentViewModel.portalAccount.value}@koreatech.ac.kr",
+                            password = editTextNewPassword.text.toString()
                     )
                 else {
                     binding.textViewPasswordConfirmErrorMessage.text =
-                        getString(R.string.reset_password_confirm_error)
+                            getString(R.string.reset_password_confirm_error)
                 }
             }
         }
     }
 
     private fun generatePasswordRegexErrorString(): String =
-        with(binding.editTextNewPassword) {
-            when {
-                errorCode == PasswordEditTextWithRegex.NO_ERR ->
-                    ""
-                isErrorIncluded(MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS) ->
-                    getString(R.string.reset_password_regex_error_included_not_supported_characters)
-                isErrorIncluded(MASK_ERR_NO_INPUT) ->
-                    getString(R.string.reset_password_regex_error_no_inputs)
-                isErrorIncluded(MASK_ERR_LENGTH) ->
-                    generatePasswordRegexLengthErrorString(errorCode)
-                else ->
-                    generatePasswordRegexNotIncludedSomeCharactersError(errorCode)
+            with(binding.editTextNewPassword) {
+                when {
+                    errorCode == PasswordEditTextWithRegex.NO_ERR ->
+                        ""
+                    isErrorIncluded(MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS) ->
+                        getString(R.string.reset_password_regex_error_included_not_supported_characters)
+                    isErrorIncluded(MASK_ERR_NO_INPUT) ->
+                        getString(R.string.reset_password_regex_error_no_inputs)
+                    isErrorIncluded(MASK_ERR_LENGTH) ->
+                        generatePasswordRegexLengthErrorString(errorCode)
+                    else ->
+                        generatePasswordRegexNotIncludedSomeCharactersError(errorCode)
+                }
             }
-        }
 
     private fun generatePasswordRegexLengthErrorString(errorCode: Int) =
-        when (errorCode and MASK_ERR_LENGTH) {
-            PasswordEditTextWithRegex.ERR_LENGTH_TOO_SHORT -> getString(R.string.reset_password_regex_error_too_short)
-            PasswordEditTextWithRegex.ERR_LENGTH_TOO_LONG -> getString(R.string.reset_password_regex_error_too_long)
-            else -> ""
-        }
+            when (errorCode and MASK_ERR_LENGTH) {
+                PasswordEditTextWithRegex.ERR_LENGTH_TOO_SHORT -> getString(R.string.reset_password_regex_error_too_short)
+                PasswordEditTextWithRegex.ERR_LENGTH_TOO_LONG -> getString(R.string.reset_password_regex_error_too_long)
+                else -> ""
+            }
 
     private fun generatePasswordRegexNotIncludedSomeCharactersError(errorCode: Int): String {
         val stringBuilder = StringBuilder()
@@ -113,12 +113,12 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
     private fun showResetPasswordFinishedDialog() {
         //TODO : message에 닉네임 표시 추가
         activity?.showSimpleDialog(
-            title = getString(R.string.reset_password_finished_title),
-            message = getString(R.string.reset_password_finished_message),
-            positiveButtonText = getString(R.string.reset_password_finished_positive_button),
-            positiveButtonOnClickListener = { _, _ ->
-                activity?.finish()
-            }
+                title = getString(R.string.reset_password_finished_title),
+                message = getString(R.string.reset_password_finished_message),
+                positiveButtonText = getString(R.string.reset_password_finished_positive_button),
+                positiveButtonOnClickListener = { _, _ ->
+                    activity?.finish()
+                }
         )
     }
 }
