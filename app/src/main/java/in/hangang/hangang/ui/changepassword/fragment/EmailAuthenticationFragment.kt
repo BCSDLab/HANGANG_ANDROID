@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.ui.changepassword.fragment
 
+import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.base.fragment.getColorFromAttr
@@ -9,6 +10,8 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentEmailAuthenticationBinding
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -63,6 +66,8 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
     }
 
     private fun initEvent() {
+        binding.buttonSendAuthNumber.isEnabled = false
+        binding.buttonFinishEmailAuth.isEnabled = false
         with(binding) {
             editTextEmail.addTextChangedListener {
                 binding.buttonSendAuthNumber.isEnabled = it?.isNotEmpty() ?: false
@@ -82,7 +87,7 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
                 )
             }
             buttonGotoPortal.setOnClickListener {
-                
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://portal.koreatech.ac.kr/")))
             }
         }
     }
