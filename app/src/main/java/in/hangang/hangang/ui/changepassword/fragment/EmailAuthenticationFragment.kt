@@ -81,6 +81,9 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
                     secret = editTextEmailAuthNumber.text.toString()
                 )
             }
+            buttonGotoPortal.setOnClickListener {
+                
+            }
         }
     }
 

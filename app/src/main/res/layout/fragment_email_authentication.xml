@@ -103,6 +103,22 @@
             tools:enabled="false" />
 
         <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_goto_portal"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:gravity="center"
+            android:text="@string/string_goto_portal"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toTopOf="@id/button_finish_email_auth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:enabled="false" />
+
+        <in.hangang.core.view.button.RoundedCornerButton
             android:id="@+id/button_finish_email_auth"
             android:layout_width="0dp"
             android:layout_height="40dp"
