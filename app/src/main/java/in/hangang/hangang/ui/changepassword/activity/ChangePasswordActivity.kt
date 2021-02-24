@@ -6,7 +6,11 @@ import `in`.hangang.hangang.databinding.ActivityFindPasswordBinding
 import `in`.hangang.hangang.ui.changepassword.adapter.ChangePasswordPagerAdapter
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
+import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangePasswordActivity : ViewBindingActivity<ActivityFindPasswordBinding>() {

@@ -9,6 +9,9 @@ ext {
     def androidx_recyclerview_version = "1.1.0"
     androidxRecyclerView = "androidx.recyclerview:recyclerview:$androidx_recyclerview_version"
 
+    def androidx_activity_version = "1.2.0"
+    androidxActivity = "androidx.activity:activity-ktx:$androidx_activity_version"
+
     def androidx_fragment_version = "1.2.5"
     androidxFragment = "androidx.fragment:fragment-ktx:$androidx_fragment_version"
 
@@ -73,6 +76,6 @@ ext {
     koinAndoridXExtension = "org.koin:koin-androidx-ext:$koin_version"
 
     def hawk_version = "2.0.1"
-    hawk =  "com.orhanobut:hawk:$hawk_version"
+    hawk = "com.orhanobut:hawk:$hawk_version"
 
 }
