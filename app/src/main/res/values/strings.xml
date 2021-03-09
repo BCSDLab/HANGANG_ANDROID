@@ -105,5 +105,20 @@
     <string name="lecture_list_button_review">강의평</string>
     <string name="lecture_list_add_lecture">담기</string>
     <string name="lecture_list_remove_lecture">빼기</string>
+    <string name="timetable_lecture_filter_message">필터를 적용해 보세요.</string>
+    <string name="timetable_lecture_filter_criteria">기준</string>
+    <string name="timetable_lecture_filter_by_name">교과명</string>
+    <string name="timetable_lecture_filter_by_professor">교수명</string>
+    <string name="timetable_lecture_filter_by_classification">유형</string>
+    <string name="timetable_lecture_filter_by_classification_liberal_required">교양필수</string>
+    <string name="timetable_lecture_filter_by_classification_liberal_choice">교양선택</string>
+    <string name="timetable_lecture_filter_by_classification_major_required">전공필수</string>
+    <string name="timetable_lecture_filter_by_classification_major_choice">전공선택</string>
+    <string name="timetable_lecture_filter_by_classification_msc_required">MSC필수</string>
+    <string name="timetable_lecture_filter_by_classification_msc_choice">MSC선택</string>
+    <string name="timetable_lecture_filter_by_classification_hrd_required">HRD필수</string>
+    <string name="timetable_lecture_filter_by_classification_hrd_choice">HRD선택</string>
+    <string name="timetable_lecture_filter_apply">적용</string>
+    <string name="timetable_lecture_filter_reset">초기화</string>
 
 </resources>

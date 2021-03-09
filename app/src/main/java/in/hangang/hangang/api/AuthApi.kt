@@ -14,7 +14,4 @@ interface AuthApi {
 
     @POST(REFRESH)
     fun refreshToken(): Single<TokenResponse>
-
-    //Timetable API
-    fun getTimetableLectureList : Single
 }
