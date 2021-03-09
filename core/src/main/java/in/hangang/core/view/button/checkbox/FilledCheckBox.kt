@@ -13,7 +13,6 @@ class FilledCheckBox @JvmOverloads constructor(
 ) : androidx.appcompat.widget.AppCompatCheckBox(context, attributeSet, defStyleAttr) {
 
     init {
-        minWidth = resources.getDimensionPixelSize(R.dimen.radio_min_width)
         gravity = Gravity.CENTER
         isClickable = true
         buttonDrawable = null

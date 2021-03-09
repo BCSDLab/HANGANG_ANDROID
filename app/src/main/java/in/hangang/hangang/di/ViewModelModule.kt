@@ -10,6 +10,7 @@ import `in`.hangang.hangang.ui.home.recommendedlectures.viewmodel.RecommendedLec
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
+import `in`.hangang.hangang.ui.timetable.TimetableViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -26,4 +27,6 @@ val viewModelModule = module {
     viewModel { MyTimetableFragmentViewModel() }
     viewModel { RecommendedLecturesFragmentViewModel() }
     viewModel { RecentLecturesFragmentViewModel() }
+    //Timetable
+    viewModel { TimetableViewModel(get()) }
 }

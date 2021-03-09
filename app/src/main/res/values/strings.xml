@@ -100,5 +100,10 @@
     <string name="home_title_recommended_lectures">추천 강의자료</string>
     <string name="home_no_recent_lectures_message">최근에 본 강의평이 없습니다.</string>
     <string name="home_title_recent_lectures">최근 본 강의</string>
+    <string name="timetable_add_manually">직접 추가</string>
+    <string name="timetable_add_lecture_hint">교과명, 교수명, 키워드 검색</string>
+    <string name="lecture_list_button_review">강의평</string>
+    <string name="lecture_list_add_lecture">담기</string>
+    <string name="lecture_list_remove_lecture">빼기</string>
 
 </resources>

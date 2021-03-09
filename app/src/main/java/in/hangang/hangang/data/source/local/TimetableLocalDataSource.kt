@@ -1,11 +1,9 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.data.entity.TimetableItem
+import `in`.hangang.hangang.data.source.TimetableDataSource
 
-class TimetableRepository(
-        private val timetableLocalDataSource: TimetableDataSource,
-        private val timetableRemoteDataSource: TimetableDataSource
-) : TimetableDataSource {
+class TimetableLocalDataSource : TimetableDataSource {
     override fun getTimetable(): List<TimetableItem> {
         TODO("Not yet implemented")
     }

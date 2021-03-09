@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
 
 class SearchAppBar @JvmOverloads constructor(
@@ -19,6 +20,8 @@ class SearchAppBar @JvmOverloads constructor(
 
     var filterable: Filterable? = null
     var filterListener: Filter.FilterListener? = null
+
+    var onBackButtonClickListener : View.OnClickListener? = null
 
     val searchField = findViewById<EditText>(R.id.search_layout_edit_text).apply {
         setOnKeyListener { v, keyCode, event ->
@@ -34,6 +37,17 @@ class SearchAppBar @JvmOverloads constructor(
             search()
         }
     }
+    val backButton = findViewById<ImageButton>(R.id.app_bar_back_button).apply {
+        setOnClickListener {
+            onBackButtonClickListener?.onClick(it)
+        }
+    }
+
+    var showBackButton = true
+        set(value) {
+            backButton.visibility = if(value) View.VISIBLE else View.GONE
+            field = value
+        }
 
     init {
         context.theme.obtainStyledAttributes(
@@ -44,6 +58,7 @@ class SearchAppBar @JvmOverloads constructor(
         ).apply {
             searchField.hint = getString(R.styleable.SearchAppBar_android_hint)
             searchField.setText(getString(R.styleable.SearchAppBar_android_text))
+            showBackButton = getBoolean(R.styleable.SearchAppBar_showBackButton, true)
 
             recycle()
         }

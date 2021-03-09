@@ -86,7 +86,7 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
                 defStyleAttr,
                 0
         ).apply {
-            dividerColor = getColor(R.styleable.TimetableLayout_dividerColor, Color.LTGRAY)
+            dividerColor = getColor(R.styleable.TimetableLayout_dividerColor, Color.parseColor("#eeeeee"))
             textColor = getColor(R.styleable.TimetableLayout_android_textColor, Color.BLACK)
             textSize = getDimensionPixelSize(R.styleable.TimetableLayout_android_textSize, sp2Px(12f)).toFloat()
 

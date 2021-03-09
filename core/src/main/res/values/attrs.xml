@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <attr name="showBackButton" format="boolean" />
+
     <declare-styleable name="RoundedCornerButton">
         <attr name="buttonAppearence" format="enum">
             <enum name="filled" value="0" />
@@ -8,13 +11,14 @@
     </declare-styleable>
 
     <declare-styleable name="BaseAppBar">
-        <attr name="showBackButton" format="boolean" />
+        <attr name="showBackButton"/>
         <attr name="titleText" format="string|reference" />
         <attr name="centerTitle" format="boolean" />
         <attr name="showDivider" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="SearchAppBar">
+        <attr name="showBackButton"/>
         <attr name="android:hint" />
         <attr name="android:text" />
     </declare-styleable>
