@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.signup.activity.SignUpMajorActivity"/>
+        <activity android:name=".ui.timetable.TimetableListActivity"></activity>
+        <activity android:name=".ui.signup.activity.SignUpMajorActivity" />
         <activity android:name=".ui.signup.activity.SignUpActivity" />
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
         <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
@@ -28,8 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity"/>
-
+        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity" />
     </application>
 
 </manifest>
