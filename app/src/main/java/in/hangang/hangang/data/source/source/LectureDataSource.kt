@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.source
 
 interface LectureDataSource {
     fun getLectureRanking(major: String)

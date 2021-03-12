@@ -1,9 +1,9 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.source
 
-import `in`.hangang.hangang.data.entity.TimetableItem
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 
-interface TimetableDataSource {
-    fun getTimetable() : List<TimetableItem>
-    fun addTimeTable(timetableItem: TimetableItem)
-    fun removeTimetable(timetableItem: TimetableItem)
+interface TimeTableDataSource {
+    fun getTimetable() : List<LectureTimeTable>
+    fun addTimeTable(timetableItem: LectureTimeTable)
+    fun removeTimetable(timetableItem: LectureTimeTable)
 }

@@ -3,13 +3,13 @@ package `in`.hangang.hangang.data.source.remote
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.data.entity.TimetableItem
-import `in`.hangang.hangang.data.source.TimetableDataSource
+import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 
-class TimetableRemoteDataSource(
+class TimeTableRemoteDataSource(
     private val noAuthApi: NoAuthApi,
     private val authApi: AuthApi,
     private val refreshApi: AuthApi
-) : TimetableDataSource{
+) : TimeTableDataSource {
     override fun getTimetable(): List<TimetableItem> {
         TODO("Not yet implemented")
     }
