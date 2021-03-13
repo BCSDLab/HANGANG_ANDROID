@@ -24,6 +24,9 @@
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
         <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
         <activity android:name=".ui.main.MainActivity">
+        </activity>
+        <activity android:name=".ui.login.LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

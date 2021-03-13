@@ -7,12 +7,16 @@ import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
+import `in`.hangang.hangang.ui.timetable.activity.TimetableListActivity
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,6 +30,10 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableLectureListContainer) }
     private val timetableLectureAdapter = TimetableLectureAdapter()
+
+    private val timetableListActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+    }
 
     private val appBarOpenTimetableListButton by lazy {
         appBarImageButton(R.drawable.ic_list)
@@ -84,7 +92,12 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             lectures.observe(viewLifecycleOwner) {
                 timetableLectureAdapter.updateItem(it)
             }
+            currentShowingTimeTable.observe(viewLifecycleOwner) {
+                binding.appBar.title = it.name
+            }
         }
+
+        timetableViewModel.getTimetables()
     }
 
     private fun initView() {
@@ -134,7 +147,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 override fun onClickViewInLeftContainer(view: View, index: Int) {
                     when (view) {
                         appBarOpenTimetableListButton -> {
-
+                            openTimetableList()
                         }
                         appBarCloseButton -> {
                             timetableFragmentViewModel.switchToNormalMode()
@@ -158,6 +171,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     //리스트 형태의 시간표 관리 화면 표시
     private fun openTimetableList() {
-
+        timetableListActivityResult.launch(
+            Intent(requireActivity(), TimetableListActivity::class.java)
+        )
     }
 }

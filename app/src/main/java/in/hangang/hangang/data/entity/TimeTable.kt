@@ -1,10 +1,20 @@
 package `in`.hangang.hangang.data.entity
 
 import com.google.gson.annotations.SerializedName
+import kotlin.Int
 
 data class TimeTable(
-        @SerializedName("lecture_id")
-        val lectureId : Int,
-        @SerializedName("user_timetable_id")
-        val userTimetableId : Int
+    val id: Int,
+    @SerializedName("user_id")
+        val userId: Int,
+    @SerializedName("semester_date_id")
+        val semesterDateId: Int,
+    val name: String,
+    @SerializedName("is_deleted")
+        val isDeleted: Boolean,
+    @SerializedName("created_at")
+        val createdAt: String,
+    @SerializedName("updated_at")
+        val updatedAt: String
+
 )

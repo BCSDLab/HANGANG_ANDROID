@@ -2,8 +2,8 @@ package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.request.LecturesParameter
-import `in`.hangang.hangang.data.response.TimeTableResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
 import `in`.hangang.hangang.util.LogUtil
@@ -20,27 +20,40 @@ class TimetableViewModel(
     private val lectureList = mutableListOf<Lecture>()
 
     private val _lectures = MutableLiveData<List<Lecture>>()
-    val lectures : LiveData<List<Lecture>> get() = _lectures
-
-    private val _timetables = MutableLiveData<List<TimeTableResponse>>()
-    val timetables : LiveData<List<TimeTableResponse>> get() = _timetables
+    private val _timetables = MutableLiveData<List<TimeTable>>()
+    private val _currentShowingTimeTable = MutableLiveData<TimeTable>()
 
     private val _isGetLecturesLoading = MutableLiveData<Boolean>()
-    val isGetLecturesLoading : LiveData<Boolean> get() = _isGetLecturesLoading
     private val _isGetLecturesAdditionalLoading = MutableLiveData<Boolean>()
-    val isGetLecturesAdditionalLoading : LiveData<Boolean> get() = _isGetLecturesAdditionalLoading
-    private val _getLecturesErrorMessage = MutableLiveData<String>()
-    val getLecturesErrorMessage : LiveData<String> get() = _getLecturesErrorMessage
 
-    private var lastLecturesParameter : LecturesParameter = LecturesParameter()
+    private val _getLecturesErrorMessage = MutableLiveData<String>()
+
+    val isGetLecturesAdditionalLoading: LiveData<Boolean> get() = _isGetLecturesAdditionalLoading
+    val lectures: LiveData<List<Lecture>> get() = _lectures
+    val timetables: LiveData<List<TimeTable>> get() = _timetables
+    val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
+    val isGetLecturesLoading: LiveData<Boolean> get() = _isGetLecturesLoading
+    val getLecturesErrorMessage: LiveData<String> get() = _getLecturesErrorMessage
+
+    private var lastLecturesParameter: LecturesParameter = LecturesParameter()
 
     fun getTimetables() {
-        timetableRepository.getTimetables()
+        timetableRepository.getTimeTables()
             .handleHttpException()
             .handleProgress(this)
             .withThread()
-            .subscribe({
-                _timetables.postValue(it)
+            .subscribe({ list ->
+                _timetables.postValue(list)
+                timetableRepository.getMainTimeTable().subscribe({ timetableId ->
+                    _currentShowingTimeTable.postValue(
+                        list.find { it.id == timetableId } ?: list[0].also {
+                            timetableRepository.setMainTimeTable(it.id)
+                        })
+                }, {
+                    _currentShowingTimeTable.postValue(list[0].also {
+                        timetableRepository.setMainTimeTable(it.id)
+                    })
+                })
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
             })
@@ -56,7 +69,7 @@ class TimetableViewModel(
         getLecturesAdditional()
     }
 
-    fun getLecturesAdditional() {
+    private fun getLecturesAdditional() {
         _isGetLecturesAdditionalLoading.postValue(true)
         lastLecturesParameter.page += 1
         timetableRepository.getLectures(lastLecturesParameter)

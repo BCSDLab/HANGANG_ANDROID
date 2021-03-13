@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.data.entity
 
 import com.google.gson.annotations.SerializedName
+import kotlin.Int
 
 data class Lecture(
     val id : Int,

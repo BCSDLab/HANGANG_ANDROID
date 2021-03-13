@@ -41,6 +41,5 @@ class TimetableLectureAdapter : RecyclerView.Adapter<TimetableLectureViewHolder>
         this.lectures.addAll(lectures)
 
         diffResult.dispatchUpdatesTo(this)
-        println()
     }
 }

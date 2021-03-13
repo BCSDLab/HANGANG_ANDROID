@@ -1,15 +1,15 @@
 package `in`.hangang.hangang.api
 
+import `in`.hangang.hangang.data.request.TimeTableRequest
+import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.constant.AUTH_TEST
 import `in`.hangang.hangang.constant.REFRESH
 import `in`.hangang.hangang.constant.TIMETABLE
+import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.response.TimeTableResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface AuthApi {
     @GET(AUTH_TEST)
@@ -19,10 +19,22 @@ interface AuthApi {
     fun refreshToken(): Single<TokenResponse>
 
     @GET(TIMETABLE)
-    fun getTimetables(): Single<List<TimeTableResponse>>
+    fun getTimeTables(
+        @Query("semesterDateId") semesterDateId: Long? = null
+    ): Single<List<TimeTable>>
 
-    @GET(TIMETABLE)
-    fun getTimetables(
-        @Query("semesterDateId") semesterDateId: Long
-    ): Single<List<TimeTableResponse>>
+    @POST(TIMETABLE)
+    fun makeTimeTable(
+        @Body userTimeTableRequest: UserTimeTableRequest
+    ): Single<CommonResponse>
+
+    @DELETE(TIMETABLE)
+    fun deleteTimeTable(
+        @Body timeTableRequest: TimeTableRequest
+    ): Single<CommonResponse>
+
+    @PATCH(TIMETABLE)
+    fun modifyTimeTableName(
+        @Body userTimeTableRequest: UserTimeTableRequest
+    ): Single<CommonResponse>
 }

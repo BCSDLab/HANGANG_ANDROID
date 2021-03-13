@@ -1,13 +1,6 @@
 package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.response.TimeTableResponse
-import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.TimeTableRepository
-import `in`.hangang.hangang.util.LogUtil
-import `in`.hangang.hangang.util.handleHttpException
-import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import android.util.Log
 import androidx.lifecycle.LiveData
