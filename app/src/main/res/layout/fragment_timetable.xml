@@ -3,14 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="timetableViewModel"
+            type="in.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/timetable_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.timetable.TimetableFragment">
+            tools:context=".ui.timetable.fragment.TimetableFragment">
 
             <in.hangang.core.view.appbar.BaseAppBar
                 android:id="@+id/app_bar"
@@ -37,25 +44,22 @@
 
             </androidx.core.widget.NestedScrollView>
 
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="48dp"
-                android:backgroundTint="?attr/colorPrimary"
-                android:src="@drawable/ic_edit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="48dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:src="@drawable/ic_edit"
+            android:layout_gravity="end|bottom"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/timetable_lecture_list_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="320dp"
             android:background="@drawable/background_timetable_bottom_sheet"
             android:elevation="8dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -64,11 +68,11 @@
                 android:id="@+id/timetable_lecture_search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="@string/timetable_add_lecture_hint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="16dp"
                 app:showBackButton="false" />
 
             <ImageButton
@@ -94,13 +98,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/timetable_lecture_search_bar">
 
-                <LinearLayout
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_dip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="16dp"
+                        android:paddingStart="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/major_simple_dip"
+                        android:textSize="14sp" />
+
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_0"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="16dp"
@@ -111,7 +128,8 @@
                         android:text="@string/major_simple_0"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_1"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -122,7 +140,8 @@
                         android:text="@string/major_simple_1"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_2"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -133,7 +152,8 @@
                         android:text="@string/major_simple_2"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_3"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -144,7 +164,8 @@
                         android:text="@string/major_simple_3"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_4"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -155,7 +176,8 @@
                         android:text="@string/major_simple_4"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_5"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -166,7 +188,8 @@
                         android:text="@string/major_simple_5"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_6"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -177,7 +200,8 @@
                         android:text="@string/major_simple_6"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_7"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -188,7 +212,8 @@
                         android:text="@string/major_simple_7"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_8"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -199,7 +224,8 @@
                         android:text="@string/major_simple_8"
                         android:textSize="14sp" />
 
-                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                    <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                        android:id="@+id/radio_button_major_9"
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:layout_marginStart="8dp"
@@ -211,17 +237,28 @@
                         android:text="@string/major_simple_9"
                         android:textSize="14sp" />
 
-                </LinearLayout>
+                </RadioGroup>
 
             </HorizontalScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_timetable_lectures"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/scroll_view_majors" />
+
+            <ProgressBar
+                android:id="@+id/recycler_view_timetable_lectures_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintVertical_bias="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scroll_view_majors"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

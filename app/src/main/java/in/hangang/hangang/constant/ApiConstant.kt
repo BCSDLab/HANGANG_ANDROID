@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.constant
 
-const val STAGE_SERVER_BASE_URL = "http://hangang.in"
-const val PRODUCTION_SERVER_BASE_URL = "http://hangang.in"
+const val STAGE_SERVER_BASE_URL = "https://hangang.in"
+const val PRODUCTION_SERVER_BASE_URL = "https://hangang.in"
 
 const val AUTH_TEST = "/user/auth-test"
 const val SIGN_UP = "/user/sign-up"
@@ -14,6 +14,7 @@ const val CONFIG_EMAIL = "/user/email/config"
 const val SEND_PASSWORD_FIND_EMAIL = "/user/email"
 const val SEND_PASSWORD_CONFIG_EMAIL = "/user/email/config"
 
-const val USER_TIMETABLE = "/timetable"
+const val TIMETABLE = "/timetable"
 const val LECTURE_TIMETALBLE = "/timetable/lecture"
 
+const val LECTURES = "/lectures"

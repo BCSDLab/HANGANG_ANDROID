@@ -128,5 +128,10 @@
     <string name="timetable_add_timetable_name_hint">시간표 이름을 입력해주세요.</string>
     <string name="timetable_add_semester_message">이번 연도 시간표만 생성 가능합니다.</string>
     <string name="timetable_add_semester_1">1학기</string>
+    <string name="timetable_add_semester_2">여름학기</string>
+    <string name="timetable_add_semester_3">2학기</string>
+    <string name="timetable_add_semester_4">가을학기</string>
+    <string name="timetable_add_finish">완료</string>
+    <string name="major_simple_dip">찜</string>
 
 </resources>

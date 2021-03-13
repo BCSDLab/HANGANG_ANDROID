@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.timetable.TimetableAddActivity">
+    tools:context=".ui.timetable.activity.TimetableAddActivity">
 
     <in.hangang.core.view.appbar.BaseAppBar
         android:id="@+id/app_bar"
@@ -85,8 +85,6 @@
             android:text="@string/timetable_add_semester_1"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:layout_margin="4dp"
             android:checked="true"
             android:layout_weight="1" />
@@ -95,38 +93,46 @@
             android:id="@+id/radio_button_timetable_semester_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/timetable_add_semester_1"
+            android:text="@string/timetable_add_semester_2"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:layout_margin="4dp"
             android:layout_weight="1" />
         <in.hangang.core.view.button.radiobutton.FilledRadioButton
             android:id="@+id/radio_button_timetable_semester_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/timetable_add_semester_1"
+            android:text="@string/timetable_add_semester_3"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:layout_margin="4dp"
             android:layout_weight="1" />
         <in.hangang.core.view.button.radiobutton.FilledRadioButton
             android:id="@+id/radio_button_timetable_semester_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/timetable_add_semester_1"
+            android:text="@string/timetable_add_semester_4"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:layout_margin="4dp"
             android:layout_weight="1" />
-
-
     </RadioGroup>
+
+    <in.hangang.core.view.button.RoundedCornerButton
+        android:id="@+id/auth_complete_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginHorizontal="16dp"
+        android:backgroundTint="@color/color_state_button_blue"
+        android:text="@string/timetable_add_finish"
+        android:gravity="center"
+        android:enabled="false"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

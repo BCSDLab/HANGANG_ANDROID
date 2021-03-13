@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.ui.timetable
+package `in`.hangang.hangang.ui.timetable.activity
 
 import `in`.hangang.hangang.R
 import androidx.appcompat.app.AppCompatActivity

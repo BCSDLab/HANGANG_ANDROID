@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_timetable"
-        android:name="in.hangang.hangang.ui.timetable.TimetableFragment"
+        android:name="in.hangang.hangang.ui.timetable.fragment.TimetableFragment"
         android:label="@string/title_timetable"
         tools:layout="@layout/fragment_timetable" />
 </navigation>

@@ -13,7 +13,6 @@ class FilledRadioButton @JvmOverloads constructor(
 ) : androidx.appcompat.widget.AppCompatRadioButton(context, attributeSet, defStyleAttr) {
 
     init {
-        minWidth = resources.getDimensionPixelSize(R.dimen.radio_min_width)
         gravity = Gravity.CENTER
         isClickable = true
         buttonDrawable = null

@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RecyclerViewWithEmpty(
+open class RecyclerViewWithEmpty(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
