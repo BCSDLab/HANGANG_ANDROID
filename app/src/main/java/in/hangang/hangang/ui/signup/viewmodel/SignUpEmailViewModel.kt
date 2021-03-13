@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.signup.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.UserRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
@@ -28,7 +29,7 @@ class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewMod
             .handleProgress(this)
             .withThread()
             .subscribe({ data -> _emailSendText.value = data.message },
-                { error -> LogUtil.e(error.message) })
+                { error -> LogUtil.e(error.toCommonResponse().message) })
             .addTo(compositeDisposable)
     }
 

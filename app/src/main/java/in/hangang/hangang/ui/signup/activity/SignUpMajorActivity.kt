@@ -3,16 +3,13 @@ package `in`.hangang.hangang.ui.signup.activity
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpMajorBinding
-import `in`.hangang.hangang.ui.home.LoginActivity
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import `in`.hangang.core.base.activity.showSimpleDialog
-import `in`.hangang.core.view.button.checkbox.CheckBox
+import `in`.hangang.hangang.ui.login.LoginActivity
 import `in`.hangang.hangang.util.LogUtil
-import android.widget.CompoundButton
 import org.koin.core.parameter.parametersOf
 
 class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
