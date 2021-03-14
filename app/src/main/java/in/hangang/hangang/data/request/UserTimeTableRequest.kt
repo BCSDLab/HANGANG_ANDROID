@@ -6,5 +6,5 @@ data class UserTimeTableRequest(
     val id : Int = 0,
     val name : String,
     @SerializedName("semester_date_id")
-    val semesterDateId : Long = 0
+    val semesterDateId : Int = 0
 )

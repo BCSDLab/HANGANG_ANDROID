@@ -5,9 +5,13 @@ import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.ActivityTimetableListBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableTimetablesAdapter
+import `in`.hangang.hangang.ui.timetable.listener.TimetableListRecyclerViewOnItemClickListener
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableListActivityViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +21,7 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
     override val layoutId = R.layout.activity_timetable_list
 
     private val timetableViewModel : TimetableViewModel by viewModel()
+    private val timetableListActivityViewModel : TimetableListActivityViewModel by viewModel()
 
     private val timetableAdapter = TimetableTimetablesAdapter()
 
@@ -24,20 +29,37 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
         super.onCreate(savedInstanceState)
 
         initAppBar()
-        initView()
+        initRecyclerView()
         initViewModel()
     }
 
-    private fun initView() {
+    private fun initRecyclerView() {
         binding.recyclerViewTimetableList.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewTimetableList.adapter = timetableAdapter
+        timetableAdapter.selectedTimeTableId = intent.extras?.getInt("selectedTimeTableId") ?: 0
+        timetableAdapter.timetableListRecyclerViewOnItemClickListener = object : TimetableListRecyclerViewOnItemClickListener {
+            override fun onTimeTableItemClick(timetable: TimeTable) {
+                setResult(1, Intent().putExtra("selectedTimeTableId", timetable.id))
+                finish()
+            }
+        }
     }
 
     private fun initViewModel() {
+        binding.activityViewModel = timetableListActivityViewModel
+
         with(timetableViewModel) {
             timetables.observe(this@TimetableListActivity) {
                 timetableAdapter.updateItem(it)
-                binding.textViewTimetableListLimit.text = "${it.size}/50"
+                timetableListActivityViewModel.updateTimetableSize(it.size)
+            }
+            mainTimeTable.observe(this@TimetableListActivity) {
+                timetableAdapter.mainTimeTableId = it.id
+            }
+        }
+        with(timetableListActivityViewModel) {
+            currentTimetableSize.observe(this@TimetableListActivity) {
+                binding.textViewTimetableListLimit.text = "$it/50"
             }
         }
 
@@ -56,7 +78,6 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
                 override fun onClickViewInRightContainer(view: View, index: Int) {
                     showAddTimetableActivity()
                 }
-
             }
         }
     }

@@ -9,7 +9,9 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.activity.TimetableListActivity
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
+import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.content.Intent
 import android.os.Bundle
@@ -27,12 +29,20 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private val timetableViewModel : TimetableViewModel by viewModel()
     private val timetableFragmentViewModel : TimetableFragmentViewModel by viewModel()
+    private val timetableLectureViewModel : TimetableLectureViewModel by viewModel()
 
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableLectureListContainer) }
     private val timetableLectureAdapter = TimetableLectureAdapter()
 
-    private val timetableListActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
+        it.selectedTimetableId?.let { id ->
+            timetableViewModel.findTimeTableById(id).subscribe({
+                timetableFragmentViewModel.setCurrentShowingTimeTable(it)
+            }, {
 
+            })
+        }
+        if(it.timetableListChanged) timetableViewModel.getTimetables()
     }
 
     private val appBarOpenTimetableListButton by lazy {
@@ -82,18 +92,24 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                     }
                 }
             }
+            currentShowingTimeTable.observe(viewLifecycleOwner) {
+                binding.appBar.title = it.name.toString()
+                //TODO Render timetable
+            }
         }
         with(timetableViewModel) {
+            mainTimeTable.observe(viewLifecycleOwner) {
+                timetableFragmentViewModel.setCurrentShowingTimeTable(it)
+            }
+        }
+        with(timetableLectureViewModel) {
             isGetLecturesLoading.observe(viewLifecycleOwner) {
-                binding.recyclerViewTimetableLecturesProgress.visibleGone(it)
+                binding.recyclerViewTimetableLecturesProgress.visibility = visibleGone(it)
             }
             getLecturesErrorMessage.observe(viewLifecycleOwner) {
             }
             lectures.observe(viewLifecycleOwner) {
                 timetableLectureAdapter.updateItem(it)
-            }
-            currentShowingTimeTable.observe(viewLifecycleOwner) {
-                binding.appBar.title = it.name
             }
         }
 
@@ -133,7 +149,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
         binding.recyclerViewTimetableLectures.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTimetableLectures.adapter = timetableLectureAdapter
-        timetableViewModel.getLectures()
+        timetableLectureViewModel.getLectures()
     }
 
     private fun initAppBar() {
@@ -172,7 +188,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     //리스트 형태의 시간표 관리 화면 표시
     private fun openTimetableList() {
         timetableListActivityResult.launch(
-            Intent(requireActivity(), TimetableListActivity::class.java)
+            timetableFragmentViewModel.currentShowingTimeTable.value?.id ?: 0
         )
     }
 }

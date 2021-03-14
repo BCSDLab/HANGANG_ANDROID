@@ -1,9 +1,7 @@
 package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.request.LecturesParameter
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
 import `in`.hangang.hangang.util.LogUtil
@@ -12,79 +10,75 @@ import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.core.Single
 
 class TimetableViewModel(
-    private val timetableRepository: TimeTableRepository
+        private val timetableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
-    private val lectureList = mutableListOf<Lecture>()
 
-    private val _lectures = MutableLiveData<List<Lecture>>()
     private val _timetables = MutableLiveData<List<TimeTable>>()
-    private val _currentShowingTimeTable = MutableLiveData<TimeTable>()
+    private val _mainTimeTable = MutableLiveData<TimeTable>()
 
-    private val _isGetLecturesLoading = MutableLiveData<Boolean>()
-    private val _isGetLecturesAdditionalLoading = MutableLiveData<Boolean>()
-
-    private val _getLecturesErrorMessage = MutableLiveData<String>()
-
-    val isGetLecturesAdditionalLoading: LiveData<Boolean> get() = _isGetLecturesAdditionalLoading
-    val lectures: LiveData<List<Lecture>> get() = _lectures
     val timetables: LiveData<List<TimeTable>> get() = _timetables
-    val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
-    val isGetLecturesLoading: LiveData<Boolean> get() = _isGetLecturesLoading
-    val getLecturesErrorMessage: LiveData<String> get() = _getLecturesErrorMessage
-
-    private var lastLecturesParameter: LecturesParameter = LecturesParameter()
+    val mainTimeTable: LiveData<TimeTable> get() = _mainTimeTable
 
     fun getTimetables() {
         timetableRepository.getTimeTables()
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({ list ->
-                _timetables.postValue(list)
-                timetableRepository.getMainTimeTable().subscribe({ timetableId ->
-                    _currentShowingTimeTable.postValue(
-                        list.find { it.id == timetableId } ?: list[0].also {
-                            timetableRepository.setMainTimeTable(it.id)
-                        })
+                .handleHttpException()
+                .handleProgress(this)
+                .withThread()
+                .subscribe({ list ->
+                    _timetables.value = list
+                    getMainTimeTable()
                 }, {
-                    _currentShowingTimeTable.postValue(list[0].also {
-                        timetableRepository.setMainTimeTable(it.id)
-                    })
+                    LogUtil.e(it.toCommonResponse().errorMessage)
                 })
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
     }
 
-    fun getLectures(lecturesParameter: LecturesParameter? = null) {
-        _isGetLecturesLoading.postValue(true)
-        _getLecturesErrorMessage.postValue("")
-        lastLecturesParameter = lecturesParameter ?: LecturesParameter()
-        lastLecturesParameter.page = 0
-        lectureList.clear()
-        _lectures.postValue(lectureList)
-        getLecturesAdditional()
+    fun getMainTimeTable() {
+        if (_timetables.value == null || _timetables.value!!.isEmpty()) {
+            LogUtil.e("Please call getTimetables before calling this")
+        } else {
+            with(_timetables.value!!) {
+                timetableRepository.getMainTimeTable().subscribe({ timetableId ->
+                    findTimeTableById(timetableId).withThread().subscribe({
+                        _mainTimeTable.postValue(it)
+                    }, {
+                        setMainTimeTable(this[0])
+                    })
+                }, {
+                    setMainTimeTable(this[0])
+                })
+            }
+        }
     }
 
-    private fun getLecturesAdditional() {
-        _isGetLecturesAdditionalLoading.postValue(true)
-        lastLecturesParameter.page += 1
-        timetableRepository.getLectures(lastLecturesParameter)
-            .handleHttpException()
-            .withThread()
-            .subscribe({
-                _isGetLecturesAdditionalLoading.postValue(false)
-                _isGetLecturesLoading.postValue(false)
-                lectureList.addAll(it)
-                _lectures.postValue(lectureList)
+    fun setMainTimeTable(timetable: TimeTable) {
+        timetableRepository.setMainTimeTable(timetable.id).subscribe({
+            findTimeTableById(timetable.id).withThread().subscribe({
+                _mainTimeTable.postValue(it)
             }, {
-                _isGetLecturesAdditionalLoading.postValue(false)
-                _isGetLecturesLoading.postValue(false)
-                _getLecturesErrorMessage.postValue(it.toCommonResponse().errorMessage)
-                LogUtil.e(it.toCommonResponse().errorMessage)
+
             })
+        }, {
+            LogUtil.e(it.message)
+        })
+    }
+
+    fun findTimeTableById(timetableId: Int): Single<TimeTable> {
+        return Single.create { subscriber ->
+            if (_timetables.value == null || _timetables.value!!.isEmpty())
+                subscriber.onError(Exception("Please call getTimetables before calling this"))
+
+            with(_timetables.value) {
+                val timetable = this?.find { it.id == timetableId }
+
+                if (timetable == null)
+                    subscriber.onError(Exception("No matches timetableId in timetable list"))
+
+                subscriber.onSuccess(timetable!!)
+            }
+        }
     }
 }

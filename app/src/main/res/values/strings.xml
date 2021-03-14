@@ -134,5 +134,10 @@
     <string name="timetable_add_semester_4">가을학기</string>
     <string name="timetable_add_finish">완료</string>
     <string name="major_simple_dip">찜</string>
+    <string name="semester_20191">2019년 1학기</string>
+    <string name="semester_20192">2019년 2학기</string>
+    <string name="semester_20201">2020년 1학기</string>
+    <string name="semester_20202">2020년 2학기</string>
+    <string name="semester_20211">2021년 1학기</string>
 
 </resources>

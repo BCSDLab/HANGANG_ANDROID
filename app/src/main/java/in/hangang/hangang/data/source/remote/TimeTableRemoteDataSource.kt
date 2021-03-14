@@ -9,6 +9,7 @@ import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.request.LecturesParameter
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
+import `in`.hangang.hangang.util.SemesterUtil
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRemoteDataSource(
@@ -23,7 +24,7 @@ class TimeTableRemoteDataSource(
                     makeTimeTable(
                         UserTimeTableRequest(
                             name = "2021년 1학기 (1)",
-                            semesterDateId = 1
+                            semesterDateId = SemesterUtil.currentSemester
                         )
                     ).subscribe({
                         authApi.getTimeTables().subscribe({ list2 ->

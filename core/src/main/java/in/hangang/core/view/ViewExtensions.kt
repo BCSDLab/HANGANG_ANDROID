@@ -11,34 +11,26 @@ fun View.sp2Px(sp: Float): Int {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.displayMetrics).roundToInt()
 }
 
-fun View.visibleGone(boolean: Boolean) {
-    visibility = if(boolean) {
-        View.VISIBLE
-    } else {
-        View.GONE
-    }
+fun visibleGone(boolean: Boolean) = if (boolean) {
+    View.VISIBLE
+} else {
+    View.GONE
 }
 
-fun View.visibleInvisible(boolean: Boolean) {
-    visibility = if(boolean) {
-        View.VISIBLE
-    } else {
-        View.INVISIBLE
-    }
+fun visibleInvisible(boolean: Boolean) = if (boolean) {
+    View.VISIBLE
+} else {
+    View.INVISIBLE
 }
 
-fun View.goneVisible(boolean: Boolean) {
-    visibility = if(boolean) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
+fun goneVisible(boolean: Boolean) = if (boolean) {
+    View.GONE
+} else {
+    View.VISIBLE
 }
 
-fun View.invisibleVisible(boolean: Boolean) {
-    visibility = if(boolean) {
-        View.INVISIBLE
-    } else {
-        View.VISIBLE
-    }
+fun invisibleVisible(boolean: Boolean) = if (boolean) {
+    View.INVISIBLE
+} else {
+    View.VISIBLE
 }
