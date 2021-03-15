@@ -2,19 +2,15 @@ package `in`.hangang.hangang.ui.timetable.adapter
 
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.Lecture
-import `in`.hangang.hangang.ui.timetable.adapter.viewholder.TimetableLectureViewHolder
+import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
 import `in`.hangang.hangang.util.diffutil.LectureDiffCallback
-import `in`.hangang.hangang.util.withThread
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.rxjava3.core.Single
 
-class TimetableLectureAdapter : RecyclerView.Adapter<TimetableLectureViewHolder>() {
+class TimetableLectureAdapter : RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
 
     private val lectures = mutableListOf<Lecture>()
 
@@ -41,5 +37,12 @@ class TimetableLectureAdapter : RecyclerView.Adapter<TimetableLectureViewHolder>
         this.lectures.addAll(lectures)
 
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    inner class TimetableLectureViewHolder(private val binding : ItemTimetableLectureBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item : Lecture) {
+            binding.lecture = item
+            binding.executePendingBindings()
+        }
     }
 }

@@ -1,12 +1,59 @@
 package `in`.hangang.hangang.ui.timetable.activity
 
+import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
-import androidx.appcompat.app.AppCompatActivity
+import `in`.hangang.hangang.databinding.ActivityTimetableAddBinding
+import `in`.hangang.hangang.ui.timetable.contract.TimeTableAddActivityContract
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableAddActivityViewModel
+import `in`.hangang.hangang.util.*
+import android.content.Intent
 import android.os.Bundle
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class TimetableAddActivity : AppCompatActivity() {
+class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() {
+    override val layoutId = R.layout.activity_timetable_add
+
+    private val timetableAddActivityViewModel: TimetableAddActivityViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_timetable_add)
+
+        initView()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        with(timetableAddActivityViewModel) {
+            addingAvailable.observe(this@TimetableAddActivity) {
+                binding.buttonAddTimetable.isEnabled = it
+            }
+            added.observe(this@TimetableAddActivity) {
+                if (it) {
+                    setResult(1, Intent().apply {
+                        putExtra(TimeTableAddActivityContract.TIMETABLE_ADDED, true)
+                    })
+                    finish()
+                }
+            }
+        }
+    }
+
+    private fun initView() {
+        binding.buttonAddTimetable.setOnClickListener {
+            timetableAddActivityViewModel.addTimeTable(
+                    semester = getSemester(),
+                    name = binding.editTextTimetableName.text.toString())
+        }
+        binding.editTextTimetableName.addTextChangedListener {
+            timetableAddActivityViewModel.checkAddingAvailability(it.toString())
+        }
+    }
+
+    private fun getSemester() = when(binding.radioGroupSemester.checkedRadioButtonId) {
+        R.id.radio_button_timetable_semester_1 -> SEMESTER_1
+        R.id.radio_button_timetable_semester_2 -> SEMESTER_SUMMER
+        R.id.radio_button_timetable_semester_3 -> SEMESTER_2
+        R.id.radio_button_timetable_semester_4 -> SEMESTER_WINTER
+        else -> 0
     }
 }

@@ -11,10 +11,7 @@ import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
-import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableListActivityViewModel
-import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
-import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureViewModel
-import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
+import `in`.hangang.hangang.ui.timetable.viewmodel.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -37,4 +34,5 @@ val viewModelModule = module {
     viewModel { TimetableFragmentViewModel() }
     viewModel { TimetableListActivityViewModel() }
     viewModel { TimetableLectureViewModel(get()) }
+    viewModel { TimetableAddActivityViewModel(get()) }
 }

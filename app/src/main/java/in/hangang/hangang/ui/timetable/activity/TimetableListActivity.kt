@@ -8,6 +8,8 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.ActivityTimetableListBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableTimetablesAdapter
+import `in`.hangang.hangang.ui.timetable.contract.TimeTableAddActivityContract
+import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.listener.TimetableListRecyclerViewOnItemClickListener
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableListActivityViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
@@ -22,6 +24,10 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
 
     private val timetableViewModel : TimetableViewModel by viewModel()
     private val timetableListActivityViewModel : TimetableListActivityViewModel by viewModel()
+
+    private val timetableAddActivityResult = registerForActivityResult(TimeTableAddActivityContract()) {
+        if(it) timetableViewModel.getTimetables()
+    }
 
     private val timetableAdapter = TimetableTimetablesAdapter()
 
@@ -83,6 +89,6 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
     }
 
     private fun showAddTimetableActivity() {
-        TODO("Not yet implemented")
+        timetableAddActivityResult.launch(null)
     }
 }

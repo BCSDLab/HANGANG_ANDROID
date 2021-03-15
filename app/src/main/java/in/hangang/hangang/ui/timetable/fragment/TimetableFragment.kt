@@ -37,6 +37,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
         it.selectedTimetableId?.let { id ->
             timetableViewModel.findTimeTableById(id).subscribe({
+                //TODO 추가한 시간표 클릭 시 팅김, 리스트와 fragment간 시간표 동기화 X
                 timetableFragmentViewModel.setCurrentShowingTimeTable(it)
             }, {
 
