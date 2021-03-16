@@ -7,20 +7,15 @@ import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
-import `in`.hangang.hangang.ui.timetable.activity.TimetableListActivity
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
-import android.content.Intent
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,13 +32,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableLectureAdapter = TimetableLectureAdapter()
 
     private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
-        it.selectedTimetableId?.let { id ->
-            timetableViewModel.findTimeTableById(id).subscribe({
-                //TODO 추가한 시간표 클릭 시 팅김, 리스트와 fragment간 시간표 동기화 X
-                timetableFragmentViewModel.setCurrentShowingTimeTable(it)
-            }, {
-
-            })
+        it.selectedTimetable?.let { timetable ->
+            timetableFragmentViewModel.setCurrentShowingTimeTable(timetable)
         }
         if(it.timetableListChanged) timetableViewModel.getTimetables()
     }
@@ -189,12 +179,17 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     }
 
     private fun showTimetablePopupMenu(v : View) {
-        val context = ContextThemeWrapper(requireContext(), R.style.HangangPopupMenu)
-        val popupMenu = PopupMenu(context, v)
+        val popupMenu = PopupMenu(requireContext(), v)
         popupMenu.menuInflater.inflate(R.menu.menu_timetable, popupMenu.menu)
         popupMenu.show()
 
         popupMenu.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.menu_item_set_main_timetable -> {
+                    timetableFragmentViewModel.currentShowingTimeTable.value?.let { it1 -> timetableViewModel.setMainTimeTable(it1) }
+
+                }
+            }
             true
         }
     }
@@ -202,7 +197,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     //리스트 형태의 시간표 관리 화면 표시
     private fun openTimetableList() {
         timetableListActivityResult.launch(
-            timetableFragmentViewModel.currentShowingTimeTable.value?.id ?: 0
+            timetableFragmentViewModel.currentShowingTimeTable.value
         )
     }
 }

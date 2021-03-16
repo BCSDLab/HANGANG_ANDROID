@@ -1,7 +1,10 @@
 package `in`.hangang.hangang.data.entity
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class TimeTable(
     val id: Int,
     @SerializedName("user_id")
@@ -15,4 +18,4 @@ data class TimeTable(
         val createdAt: String?,
     @SerializedName("updated_at")
         val updatedAt: String?
-)
+) : Parcelable

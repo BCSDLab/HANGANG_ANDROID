@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSurface</item>
         <item name="android:popupMenuStyle">@style/HangangPopupMenu</item>
+        <item name="popupMenuStyle">@style/HangangPopupMenu</item>
     </style>
 
     <style name="Theme.Hangang" parent="Theme.Hangang.Base">

@@ -42,10 +42,10 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
     private fun initRecyclerView() {
         binding.recyclerViewTimetableList.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewTimetableList.adapter = timetableAdapter
-        timetableAdapter.selectedTimeTableId = intent.extras?.getInt("selectedTimeTableId") ?: 0
+        timetableAdapter.selectedTimeTableId = intent.extras?.getParcelable<TimeTable>(TimetableListActivityContract.SELECTED_TIMETABLE)?.id ?: 0
         timetableAdapter.timetableListRecyclerViewOnItemClickListener = object : TimetableListRecyclerViewOnItemClickListener {
             override fun onTimeTableItemClick(timetable: TimeTable) {
-                setResult(1, Intent().putExtra("selectedTimeTableId", timetable.id))
+                setResult(1, Intent().putExtra(TimetableListActivityContract.SELECTED_TIMETABLE, timetable))
                 finish()
             }
         }

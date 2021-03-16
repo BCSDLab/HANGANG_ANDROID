@@ -31,7 +31,6 @@ class TimetableFragmentViewModel(
         _mode.postValue(Mode.MODE_NORMAL)
     }
 
-
     fun setCurrentShowingTimeTable(timetable: TimeTable) {
         _currentShowingTimeTable.postValue(timetable)
     }
