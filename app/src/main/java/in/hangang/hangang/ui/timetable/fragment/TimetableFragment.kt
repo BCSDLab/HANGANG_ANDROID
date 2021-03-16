@@ -15,8 +15,10 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.content.Intent
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -178,11 +180,22 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
                         }
                         appBarMoreMenuButton -> {
-
+                            showTimetablePopupMenu(appBarMoreMenuButton)
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun showTimetablePopupMenu(v : View) {
+        val context = ContextThemeWrapper(requireContext(), R.style.HangangPopupMenu)
+        val popupMenu = PopupMenu(context, v)
+        popupMenu.menuInflater.inflate(R.menu.menu_timetable, popupMenu.menu)
+        popupMenu.show()
+
+        popupMenu.setOnMenuItemClickListener {
+            true
         }
     }
 
