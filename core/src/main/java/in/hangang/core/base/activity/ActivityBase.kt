@@ -4,12 +4,13 @@ import `in`.hangang.core.R
 import `in`.hangang.core.progressdialog.IProgressDialog
 import `in`.hangang.core.progressdialog.ProgressDialog
 import `in`.hangang.core.util.DialogUtil
+import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,11 @@ import io.reactivex.rxjava3.disposables.Disposable
 open class ActivityBase : AppCompatActivity(), IProgressDialog {
     private val compositeDisposable = CompositeDisposable()
     var progressDialog: ProgressDialog? = null
+
+    private var writeStorageActivityResultFunc : (() -> Unit)? = null
+    private val writeStoragePermissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if(it) writeStorageActivityResultFunc?.invoke()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +73,11 @@ open class ActivityBase : AppCompatActivity(), IProgressDialog {
     override fun hideProgressDialog() {
         progressDialog?.dismiss()
         progressDialog = null
+    }
+
+    fun requireWriteStorage(result: () -> Unit) {
+        writeStorageActivityResultFunc = result
+        writeStoragePermissionRequest.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 }
 

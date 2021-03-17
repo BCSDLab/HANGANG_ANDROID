@@ -1,9 +1,6 @@
 package `in`.hangang.hangang
 
-import `in`.hangang.hangang.di.dataSourceModule
-import `in`.hangang.hangang.di.netWorkModule
-import `in`.hangang.hangang.di.repositoryModule
-import `in`.hangang.hangang.di.viewModelModule
+import `in`.hangang.hangang.di.*
 import `in`.hangang.hangang.util.LogUtil
 import android.app.Application
 import android.content.Context
@@ -29,6 +26,7 @@ class HangangApplication : Application() {
             modules(dataSourceModule)
             modules(repositoryModule)
             modules(viewModelModule)
+            modules(fileModule)
         }
     }
 

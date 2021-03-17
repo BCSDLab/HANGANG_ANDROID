@@ -1,5 +1,6 @@
 package `in`.hangang.core.base.fragment
 
+import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.getColorFromAttr
 import android.content.Context
 import android.graphics.Color
@@ -9,6 +10,7 @@ import androidx.annotation.ColorInt
 import androidx.fragment.app.Fragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import java.lang.Exception
 
 open class FragmentBase : Fragment() {
 
@@ -23,6 +25,12 @@ open class FragmentBase : Fragment() {
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.dispose()
         }
+    }
+
+    inline fun requireWriteStorage(crossinline result: () -> Unit) = try {
+        (requireActivity() as ActivityBase).requireWriteStorage { result() }
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
 }
 

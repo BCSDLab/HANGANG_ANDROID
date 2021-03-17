@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.ui.timetable.adapter
 
+import `in`.hangang.core.view.dp2Px
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.TimeTable
@@ -67,6 +68,9 @@ class TimetableTimetablesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = list[position]
+        if(item === list.last()) with(holder.itemView) {
+            setPadding(paddingLeft, paddingTop, paddingRight, dp2Px(16f))
+        }
         when (item.first) {
             TYPE_SEMESTER -> ((holder as SemesterViewHolder).itemView as TextView).apply {
                 text = SemesterUtil.getSemesterText(context, item.second as Int)

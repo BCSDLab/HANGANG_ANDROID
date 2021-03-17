@@ -12,21 +12,28 @@ import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
+import `in`.hangang.hangang.util.LogUtil
+import `in`.hangang.hangang.util.file.FileUtil
+import `in`.hangang.hangang.util.handleProgress
+import `in`.hangang.hangang.util.withThread
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     override val layoutId = R.layout.fragment_timetable
 
-    private val timetableViewModel : TimetableViewModel by viewModel()
-    private val timetableFragmentViewModel : TimetableFragmentViewModel by viewModel()
-    private val timetableLectureViewModel : TimetableLectureViewModel by viewModel()
+    private val timetableViewModel: TimetableViewModel by viewModel()
+    private val timetableFragmentViewModel: TimetableFragmentViewModel by viewModel()
+    private val timetableLectureViewModel: TimetableLectureViewModel by viewModel()
+
+    private val fileUtil: FileUtil by inject()
 
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableLectureListContainer) }
     private val timetableLectureAdapter = TimetableLectureAdapter()
@@ -35,7 +42,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         it.selectedTimetable?.let { timetable ->
             timetableFragmentViewModel.setCurrentShowingTimeTable(timetable)
         }
-        if(it.timetableListChanged) timetableViewModel.getTimetables()
+        if (it.timetableListChanged) timetableViewModel.getTimetables()
     }
 
     private val appBarOpenTimetableListButton by lazy {
@@ -68,7 +75,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun initViewModel() {
         with(timetableFragmentViewModel) {
             mode.observe(viewLifecycleOwner) {
-                when(it) {
+                when (it) {
                     TimetableFragmentViewModel.Mode.MODE_NORMAL -> {
                         behavior.state = BottomSheetBehavior.STATE_HIDDEN
                         appBarOpenTimetableListButton.visibility = View.VISIBLE
@@ -88,6 +95,21 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             currentShowingTimeTable.observe(viewLifecycleOwner) {
                 binding.appBar.title = it.name.toString()
                 //TODO Render timetable
+            }
+            captured.observe(viewLifecycleOwner) { bitmap ->
+                requireWriteStorage {
+                    fileUtil.saveImageToPictures(
+                            bitmap = bitmap,
+                            fileName = "${currentShowingTimeTable.value?.name ?: "Unknown"}.jpg"
+                    )
+                            .withThread()
+                            .handleProgress(timetableFragmentViewModel)
+                            .subscribe({
+                                LogUtil.d(it.path)
+                            }, {
+                                it.printStackTrace()
+                            })
+                }
             }
         }
         with(timetableViewModel) {
@@ -123,7 +145,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         behavior.isFitToContents = true
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
+                when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED, BottomSheetBehavior.STATE_HIDDEN -> {
                         timetableFragmentViewModel.switchToNormalMode()
                     }
@@ -135,7 +157,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 binding.timetableContainer.setPadding(0, 0, 0,
-                    (bottomSheet.height * (slideOffset + 1)).toInt()
+                        (bottomSheet.height * (slideOffset + 1)).toInt()
                 )
             }
         })
@@ -165,7 +187,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 }
 
                 override fun onClickViewInRightContainer(view: View, index: Int) {
-                    when(view) {
+                    when (view) {
                         appBarAddManuallyButton -> {
 
                         }
@@ -178,16 +200,18 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         }
     }
 
-    private fun showTimetablePopupMenu(v : View) {
+    private fun showTimetablePopupMenu(v: View) {
         val popupMenu = PopupMenu(requireContext(), v)
         popupMenu.menuInflater.inflate(R.menu.menu_timetable, popupMenu.menu)
         popupMenu.show()
 
         popupMenu.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.menu_item_set_main_timetable -> {
                     timetableFragmentViewModel.currentShowingTimeTable.value?.let { it1 -> timetableViewModel.setMainTimeTable(it1) }
-
+                }
+                R.id.menu_item_save_image -> {
+                    timetableFragmentViewModel.saveToBitmap(binding.timetableLayout)
                 }
             }
             true
@@ -197,7 +221,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     //리스트 형태의 시간표 관리 화면 표시
     private fun openTimetableList() {
         timetableListActivityResult.launch(
-            timetableFragmentViewModel.currentShowingTimeTable.value
+                timetableFragmentViewModel.currentShowingTimeTable.value
         )
     }
 }
