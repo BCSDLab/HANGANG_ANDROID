@@ -58,18 +58,44 @@
         <attr name="pagingEnabled" format="boolean" />
     </declare-styleable>
 
+    <attr name="dividerColor" format="color|reference" />
+    <attr name="columnCount" format="integer"/>
+    <attr name="rowCount" format="integer"/>
+    <attr name="columnWidth" format="dimension" >
+        <enum name="fit" value="-1" />
+    </attr>
+    <attr name="rowHeight" format="dimension" >
+        <enum name="fit" value="-1" />
+    </attr>
+    <attr name="textArray" format="reference" />
+
     <declare-styleable name="TimetableLayout" >
-        <attr name="dividerColor" format="color|reference" />
-        <attr name="layout_weekday" format="enum">
-            <enum name="Mon" value="0" />
-            <enum name="Tue" value="1" />
-            <enum name="Wed" value="2" />
-            <enum name="Thu" value="3" />
-            <enum name="Fri" value="4" />
-        </attr>
-        <attr name="layout_startTime" format="string|reference" />
-        <attr name="layout_endTime" format="string|reference" />
+        <attr name="dividerColor" />
+        <attr name="columnCount" />
+        <attr name="columnWidth" />
+        <attr name="rowCount" />
+        <attr name="rowHeight" />
+        <attr name="layout_rowStart" format="float" />
+        <attr name="layout_rowEnd" format="float" />
+        <attr name="layout_columnStart" format="float" />
+        <attr name="layout_columnEnd" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="TimetableColumnHeader" >
+        <attr name="dividerColor" />
+        <attr name="columnCount" />
+        <attr name="columnWidth" />
         <attr name="android:textColor" />
         <attr name="android:textSize" />
+        <attr name="textArray" />
+    </declare-styleable>
+
+    <declare-styleable name="TimetableRowHeader" >
+        <attr name="dividerColor" />
+        <attr name="rowCount" />
+        <attr name="rowHeight" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="textArray" />
     </declare-styleable>
 </resources>

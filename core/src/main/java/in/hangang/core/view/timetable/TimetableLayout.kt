@@ -2,7 +2,6 @@ package `in`.hangang.core.view.timetable
 
 import `in`.hangang.core.R
 import `in`.hangang.core.view.dp2Px
-import `in`.hangang.core.view.sp2Px
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -17,16 +16,7 @@ import kotlin.math.roundToInt
 class TimetableLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
         ViewGroup(context, attrs, defStyleAttr) {
 
-    companion object {
-        const val MON = 0
-        const val TUE = 1
-        const val WED = 2
-        const val THU = 3
-        const val FRI = 4
-    }
-
     private val topBarHeight: Int by lazy { dp2Px(26f) }
-    private val timeHeight: Int by lazy { dp2Px(54f) }
 
     private val bound = Rect()
 
@@ -35,15 +25,12 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             strokeWidth = dp2Px(1f).toFloat()
         }
     }
-    private val weekdayTextPaint: Paint by lazy {
-        Paint()
-    }
-    private val timeTextPaint: Paint by lazy {
-        Paint()
-    }
 
-    val startTime = 9   //09:00~
-    val endTime = 17    //~18:00
+    var rowCount = 9
+    var columnCount = 5
+
+    var rowHeight = 0
+    var columnWidth = 0
 
     @ColorInt
     var dividerColor: Int = Color.LTGRAY
@@ -53,31 +40,7 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             invalidate()
         }
 
-    @ColorInt
-    var textColor: Int = Color.BLACK
-        set(value) {
-            field = value
-            timeTextPaint.color = textColor
-            weekdayTextPaint.color = textColor
-            invalidate()
-        }
-
-    var textSize: Float = 12f
-        set(value) {
-            field = value
-            timeTextPaint.textSize = value
-            weekdayTextPaint.textSize = value
-            invalidate()
-        }
-
     init {
-        /*
-        <attr name="dividerColor" format="color|reference" />
-        <attr name="startTime" format="integer|reference" />
-        <attr name="endTime" format="integer|reference" />
-        <attr name="dayOfWeeks" format="reference" />
-         */
-
         setWillNotDraw(false)
 
         context.theme.obtainStyledAttributes(
@@ -87,8 +50,10 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
                 0
         ).apply {
             dividerColor = getColor(R.styleable.TimetableLayout_dividerColor, Color.parseColor("#eeeeee"))
-            textColor = getColor(R.styleable.TimetableLayout_android_textColor, Color.BLACK)
-            textSize = getDimensionPixelSize(R.styleable.TimetableLayout_android_textSize, sp2Px(12f)).toFloat()
+            rowCount = getInteger(R.styleable.TimetableLayout_rowCount, 9)
+            columnCount = getInteger(R.styleable.TimetableLayout_columnCount, 5)
+            rowHeight = getDimensionPixelSize(R.styleable.TimetableLayout_rowHeight, dp2Px(54f))
+            columnWidth = getDimensionPixelSize(R.styleable.TimetableLayout_rowHeight, dp2Px(64f))
 
             recycle()
         }
@@ -98,19 +63,35 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         val defaultWidth = getDefaultSize(suggestedMinimumWidth, widthMeasureSpec)
         val defaultHeight = getDefaultSize(suggestedMinimumHeight, heightMeasureSpec)
 
-        val maxHeight = (endTime - startTime + 1) * timeHeight + topBarHeight
+        val maxHeight = rowCount * rowHeight
+        val maxWidth = columnCount * columnWidth
 
         val width =
                 when (MeasureSpec.getMode(widthMeasureSpec)) {
-                    MeasureSpec.UNSPECIFIED -> defaultWidth
-                    MeasureSpec.AT_MOST -> defaultWidth
-                    MeasureSpec.EXACTLY -> MeasureSpec.getSize(widthMeasureSpec)
+                    MeasureSpec.UNSPECIFIED -> {
+                        if (columnWidth < 0) {
+                            defaultWidth
+                        } else {
+                            maxWidth
+                        }
+                    }
+                    MeasureSpec.AT_MOST -> {
+                        if (maxWidth > defaultWidth) defaultWidth
+                        else maxWidth
+                    }
+                    MeasureSpec.EXACTLY -> defaultWidth
                     else -> defaultWidth
                 }
 
         val height =
                 when (MeasureSpec.getMode(heightMeasureSpec)) {
-                    MeasureSpec.UNSPECIFIED -> maxHeight
+                    MeasureSpec.UNSPECIFIED -> {
+                        if (rowHeight < 0) {
+                            defaultHeight
+                        } else {
+                            maxHeight
+                        }
+                    }
                     MeasureSpec.AT_MOST -> {
                         if (maxHeight > defaultHeight) defaultHeight
                         else maxHeight
@@ -119,17 +100,28 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
                     else -> defaultHeight
                 }
 
-        val childDesiredWidth = (width / 11.0 * 2).roundToInt()
+        val childDesiredWidthUnit = if (columnWidth < 0) {
+            width / columnCount
+        } else {
+            columnWidth
+        }
+
+        val childDesiredHeightUnit = if (rowHeight < 0) {
+            height / rowHeight
+        } else {
+            rowHeight
+        }
 
         for (i in 0 until childCount) {
             val child = getChildAt(i)
             val lp = child.layoutParams as LayoutParams
 
-            val desiredHeight = ((lp.endTime - lp.startTime) * timeHeight).roundToInt()
+            val desiredWidth = childDesiredWidthUnit * (lp.columnEnd - lp.columnStart)
+            val desiredHeight = childDesiredHeightUnit * (lp.rowEnd - lp.rowStart)
 
             child.measure(
-                    MeasureSpec.makeMeasureSpec(childDesiredWidth, MeasureSpec.EXACTLY),
-                    MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY)
+                    MeasureSpec.makeMeasureSpec(desiredWidth.toInt(), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(desiredHeight.toInt(), MeasureSpec.EXACTLY)
             )
         }
 
@@ -164,7 +156,7 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
                 it.drawLine(cellWidth.toFloat(), (topBarHeight + timeHeight * i).toFloat(), measuredWidth.toFloat(), (topBarHeight + timeHeight * i).toFloat(), linePaint)
             }
             for (i in 0 until 5) {
-                val text = when(i) {
+                val text = when (i) {
                     MON -> context.getString(R.string.timetable_mon)
                     TUE -> context.getString(R.string.timetable_tue)
                     WED -> context.getString(R.string.timetable_wed)
@@ -196,15 +188,21 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     inner class LayoutParams(context: Context, attrs: AttributeSet? = null) : MarginLayoutParams(context, attrs) {
+        var rowStart: Float = 0f
+        var rowEnd: Float = 0f
+        var columnStart: Float = 0f
+        var columnEnd: Float = 0f
 
-        var weekday: Int = MON
-        var startTime: Float = 9f
-        var endTime: Float = 11f
-
-        constructor(context: Context, weekday: Int, startTime: Float, endTime: Float) : this(context, null) {
-            this.weekday = weekday
-            this.startTime = startTime
-            this.endTime = endTime
+        constructor(
+                rowStart: Float,
+                rowEnd: Float,
+                columnStart: Float,
+                columnEnd: Float,
+        ) : this(context, null) {
+            this.rowStart = rowStart
+            this.rowEnd = rowEnd
+            this.columnStart = columnStart
+            this.columnEnd = columnEnd
         }
 
         init {
@@ -214,15 +212,13 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
                     0,
                     0
             ).apply {
-                weekday = getInt(R.styleable.TimetableLayout_layout_weekday, MON)
-                startTime = (getString(R.styleable.TimetableLayout_layout_startTime)
-                        ?: "9").toFloat()
-                endTime = (getString(R.styleable.TimetableLayout_layout_endTime) ?: "11").toFloat()
+                rowStart = getFloat(R.styleable.TimetableLayout_layout_rowStart, 0f)
+                rowEnd = getFloat(R.styleable.TimetableLayout_layout_rowEnd, 0f)
+                columnStart = getFloat(R.styleable.TimetableLayout_layout_columnStart, 0f)
+                columnEnd = getFloat(R.styleable.TimetableLayout_layout_columnEnd, 0f)
 
                 recycle()
             }
         }
-
     }
-
 }

@@ -41,7 +41,10 @@
                 <in.hangang.core.view.timetable.TimetableLayout
                     android:id="@+id/timetable_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorSurface"
+                    app:dividerColor="?android:attr/textColorTertiary"
+                    android:textColor="?android:attr/textColorPrimary"/>
 
             </androidx.core.widget.NestedScrollView>
 
