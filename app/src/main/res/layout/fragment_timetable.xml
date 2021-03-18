@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="timetableViewModel"
             type="in.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel" />
@@ -23,28 +24,192 @@
                 android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:centerTitle="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:showBackButton="false"
-                app:showDivider="false"
-                app:centerTitle="false"/>
+                app:showDivider="false" />
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <LinearLayout
+                android:id="@+id/timetable_column"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginStart="34dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/app_bar">
 
-                <in.hangang.core.view.timetable.TimetableLayout
-                    android:id="@+id/timetable_layout"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/timetable_mon"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/timetable_tue"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/timetable_wed"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/timetable_thu"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/timetable_fri"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/timetable_row_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000"
+                android:backgroundTint="?android:attr/textColorTertiary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timetable_column" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timetable_row_divider">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorSurface"
-                    app:dividerColor="?android:attr/textColorTertiary"
-                    android:textColor="?android:attr/textColorPrimary"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="34dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_09"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_10"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_11"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_12"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_13"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_14"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_15"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_16"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="top|right"
+                            android:paddingRight="6dp"
+                            android:text="@string/time_17"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <in.hangang.core.view.timetable.TimetableLayout
+                        android:id="@+id/timetable_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/colorSurface"
+                        android:textColor="?android:attr/textColorPrimary"
+                        app:dividerColor="?android:attr/textColorTertiary" />
+
+                </LinearLayout>
+
 
             </androidx.core.widget.NestedScrollView>
 
@@ -54,11 +219,11 @@
             android:id="@+id/fab_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="48dp"
             android:backgroundTint="?attr/colorPrimary"
-            android:src="@drawable/ic_edit"
-            android:layout_gravity="end|bottom"/>
+            android:src="@drawable/ic_edit" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/timetable_lecture_list_container"
@@ -258,11 +423,11 @@
                 android:id="@+id/recycler_view_timetable_lectures_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintVertical_bias="0.02"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scroll_view_majors"/>
+                app:layout_constraintTop_toBottomOf="@id/scroll_view_majors"
+                app:layout_constraintVertical_bias="0.02" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

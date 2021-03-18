@@ -61,12 +61,8 @@
     <attr name="dividerColor" format="color|reference" />
     <attr name="columnCount" format="integer"/>
     <attr name="rowCount" format="integer"/>
-    <attr name="columnWidth" format="dimension" >
-        <enum name="fit" value="-1" />
-    </attr>
-    <attr name="rowHeight" format="dimension" >
-        <enum name="fit" value="-1" />
-    </attr>
+    <attr name="columnWidth" format="dimension" />
+    <attr name="rowHeight" format="dimension" />
     <attr name="textArray" format="reference" />
 
     <declare-styleable name="TimetableLayout" >
@@ -88,6 +84,8 @@
         <attr name="android:textColor" />
         <attr name="android:textSize" />
         <attr name="textArray" />
+        <attr name="android:gravity" />
+        <attr name="android:entries" />
     </declare-styleable>
 
     <declare-styleable name="TimetableRowHeader" >
@@ -97,5 +95,7 @@
         <attr name="android:textColor" />
         <attr name="android:textSize" />
         <attr name="textArray" />
+        <attr name="android:gravity" />
+        <attr name="android:entries" />
     </declare-styleable>
 </resources>
