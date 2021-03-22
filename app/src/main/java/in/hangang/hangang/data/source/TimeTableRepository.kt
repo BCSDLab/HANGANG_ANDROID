@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.request.LecturesParameter
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -41,5 +42,9 @@ class TimeTableRepository(
 
     override fun getMainTimeTable(): Single<Int> {
         return timeTableLocalDataSource.getMainTimeTable()
+    }
+
+    override fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>> {
+        return timeTableRemoteDataSource.getLectureList(timetableId)
     }
 }

@@ -166,13 +166,17 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         return p is LayoutParams
     }
 
-    inner class LayoutParams(context: Context, attrs: AttributeSet? = null) : MarginLayoutParams(context, attrs) {
+    class LayoutParams(context: Context, attrs: AttributeSet? = null) : MarginLayoutParams(
+            WRAP_CONTENT, WRAP_CONTENT
+    ) {
         var rowStart: Float = 0f
         var rowEnd: Float = 0f
         var columnStart: Float = 0f
         var columnEnd: Float = 0f
 
         constructor(
+                context: Context,
+                attrs: AttributeSet? = null,
                 rowStart: Float,
                 rowEnd: Float,
                 columnStart: Float,

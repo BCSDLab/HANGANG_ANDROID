@@ -5,6 +5,7 @@ import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.request.LecturesParameter
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -78,5 +79,9 @@ class TimeTableRemoteDataSource(
 
     override fun getMainTimeTable(): Single<Int> {
         return Single.never()
+    }
+
+    override fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>> {
+        return authApi.getLectureListFromTimeTable(timetableId)
     }
 }

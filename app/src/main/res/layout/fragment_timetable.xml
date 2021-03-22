@@ -191,19 +191,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="?android:attr/textColorPrimary"
-                        app:dividerColor="?android:attr/textColorTertiary" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_rowStart="0"
-                            app:layout_rowEnd="2"
-                            app:layout_columnStart="0"
-                            app:layout_columnEnd="1"
-                            android:background="?attr/colorPrimary"
-                            android:text="test"/>
-
-                    </in.hangang.core.view.timetable.TimetableLayout>
+                        app:dividerColor="?android:attr/textColorTertiary" />
 
                 </LinearLayout>
 

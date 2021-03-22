@@ -44,4 +44,10 @@
         <item name="android:popupBackground">@drawable/background_popup_menu</item>
         <item name="android:popupElevation">8dp</item>
     </style>
+
+    <style name="HangangTimetableItem">
+        <item name="android:textColor">?attr/colorSurface</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:padding">4dp</item>
+    </style>
 </resources>

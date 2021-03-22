@@ -1,17 +1,21 @@
 package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.util.handleProgress
-import `in`.hangang.hangang.util.withThread
+import `in`.hangang.hangang.data.response.toCommonResponse
+import `in`.hangang.hangang.data.source.TimeTableRepository
+import `in`.hangang.hangang.util.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.core.Single
 
 class TimetableFragmentViewModel(
+        private val timeTableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
     enum class Mode {
@@ -23,11 +27,13 @@ class TimetableFragmentViewModel(
     private val _currentShowingTimeTable = MutableLiveData<TimeTable>()
     private val _captured = MutableLiveData<Bitmap>()
     private val _captureError = MutableLiveData<Throwable>()
+    private val _lectureTimetables = MutableLiveData<List<View>>()
 
     val mode: LiveData<Mode> get() = _mode
     val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
     val captured: LiveData<Bitmap> get() = _captured
     val captureError: LiveData<Throwable> get() = _captureError
+    val lectureTimetables : LiveData<List<View>> get() = _lectureTimetables
 
     fun switchToEditMode() {
         if (_mode.value != Mode.MODE_EDIT)
@@ -60,6 +66,25 @@ class TimetableFragmentViewModel(
                            _captured.postValue(it)
                 }, {
                     _captureError.postValue(it)
+                })
+    }
+
+    fun renderTimeTable(timetableRenderer: TimetableRenderer, timetable: TimeTable) {
+        timeTableRepository.getLectureList(timetable.id).
+        withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    timetableRenderer.render(it)
+                            .withThread()
+                            .handleProgress(this)
+                            .subscribe({ views ->
+                                _lectureTimetables.postValue(views)
+                            }, {
+                                LogUtil.e(it.message)
+                            })
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
                 })
     }
 }

@@ -1,11 +1,11 @@
 package `in`.hangang.hangang.api
 
+import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
-import `in`.hangang.hangang.constant.AUTH_TEST
-import `in`.hangang.hangang.constant.REFRESH
-import `in`.hangang.hangang.constant.TIMETABLE
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
@@ -37,4 +37,14 @@ interface AuthApi {
     fun modifyTimeTableName(
         @Body userTimeTableRequest: UserTimeTableRequest
     ): Single<CommonResponse>
+
+    @POST(TIMETABLE_CUSTOM_LECTURE)
+    fun addCustomLectureInTimeTable(
+            @Body timeTableCustomLectureRequest: TimeTableCustomLectureRequest
+    ): Single<CommonResponse>
+
+    @GET(TIMETABLE_LECTURE)
+    fun getLectureListFromTimeTable(
+            @Query("timeTableId") timetableId: Int
+    ): Single<List<LectureTimeTable>>
 }

@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.di
 
+import `in`.hangang.hangang.util.TimetableRenderer
 import `in`.hangang.hangang.util.file.FileUtil
 import `in`.hangang.hangang.util.file.FileUtilLegacyImpl
 import `in`.hangang.hangang.util.file.FileUtilNewImpl
@@ -14,4 +15,6 @@ val fileModule = module {
             FileUtilLegacyImpl(get())
         }
     }
+
+    single { TimetableRenderer(get()) }
 }

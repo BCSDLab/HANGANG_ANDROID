@@ -58,6 +58,7 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
     private fun initView() {
         binding.buttonAddTimetable.setOnClickListener {
             timetableAddActivityViewModel.addTimeTable(
+                    year = 2021,
                     semester = getSemester(),
                     name = binding.editTextTimetableName.text.toString())
         }

@@ -9,6 +9,8 @@ import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.core.view.edittext.SingleLineEditText
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
@@ -17,6 +19,7 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import `in`.hangang.hangang.util.LogUtil
+import `in`.hangang.hangang.util.TimetableRenderer
 import `in`.hangang.hangang.util.file.FileUtil
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
@@ -39,6 +42,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableLectureViewModel: TimetableLectureViewModel by viewModel()
 
     private val fileUtil: FileUtil by inject()
+    private val timetableRenderer : TimetableRenderer by inject()
 
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableLectureListContainer) }
     private val timetableLectureAdapter = TimetableLectureAdapter()
@@ -102,6 +106,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             currentShowingTimeTable.observe(viewLifecycleOwner, this@TimetableFragment::updateTimeTable)
 
             captured.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
+
+            lectureTimetables.observe(viewLifecycleOwner, this@TimetableFragment::showLectureTimeTable)
         }
         with(timetableViewModel) {
 
@@ -241,7 +247,14 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun updateTimeTable(timetable: TimeTable) {
         binding.appBar.title = timetable.name.toString()
-        //TODO Render timetable
+        timetableFragmentViewModel.renderTimeTable(timetableRenderer, timetable)
+    }
+
+    private fun showLectureTimeTable(lectureTimeTableViews: List<View>) {
+        binding.timetableLayout.removeAllViews()
+        lectureTimeTableViews.forEach {
+            binding.timetableLayout.addView(it)
+        }
     }
 
     private fun saveImageToFile(bitmap: Bitmap) {
