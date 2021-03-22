@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.timetable.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
@@ -82,7 +83,11 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
                 }
 
                 override fun onClickViewInRightContainer(view: View, index: Int) {
-                    showAddTimetableActivity()
+                    if((timetableListActivityViewModel.currentTimetableSize.value ?: 0) >= 50) {
+                        showTimetableLimitErrorDialog()
+                    } else {
+                        showAddTimetableActivity()
+                    }
                 }
             }
         }
@@ -90,5 +95,15 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
 
     private fun showAddTimetableActivity() {
         timetableAddActivityResult.launch(null)
+    }
+
+    private fun showTimetableLimitErrorDialog() {
+        DialogUtil.makeSimpleDialog(
+                context = this,
+                title = getString(R.string.timetable_exceed_title),
+                message = getString(R.string.timetable_exceed_message),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { dialog, _ -> dialog.dismiss() }
+        ).show()
     }
 }

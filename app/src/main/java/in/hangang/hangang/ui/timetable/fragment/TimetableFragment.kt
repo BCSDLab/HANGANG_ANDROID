@@ -163,7 +163,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                binding.timetableContainer.setPadding(0, 0, 0,
+                binding.timetableScrollView.setPadding(0, 0, 0,
                         (bottomSheet.height * (slideOffset + 1)).toInt()
                 )
             }

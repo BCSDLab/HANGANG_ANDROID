@@ -1,6 +1,8 @@
 package `in`.hangang.hangang.ui.timetable.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.livedata.EventObserver
+import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityTimetableAddBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableAddActivityContract
@@ -27,15 +29,30 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
             addingAvailable.observe(this@TimetableAddActivity) {
                 binding.buttonAddTimetable.isEnabled = it
             }
-            added.observe(this@TimetableAddActivity) {
+            added.observe(this@TimetableAddActivity, EventObserver {
                 if (it) {
                     setResult(1, Intent().apply {
                         putExtra(TimeTableAddActivityContract.TIMETABLE_ADDED, true)
                     })
                     finish()
                 }
-            }
+            })
+            error.observe(this@TimetableAddActivity, EventObserver {
+                when (it.code) {
+                    24 -> showTimetableSemesterLimitErrorDialog()
+                }
+            })
         }
+    }
+
+    private fun showTimetableSemesterLimitErrorDialog() {
+        DialogUtil.makeSimpleDialog(
+                context = this,
+                title = getString(R.string.timetable_exceed_title),
+                message = getString(R.string.timetable_exceed_message_semester),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { dialog, _ -> dialog.dismiss() }
+        ).show()
     }
 
     private fun initView() {
@@ -49,7 +66,7 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
         }
     }
 
-    private fun getSemester() = when(binding.radioGroupSemester.checkedRadioButtonId) {
+    private fun getSemester() = when (binding.radioGroupSemester.checkedRadioButtonId) {
         R.id.radio_button_timetable_semester_1 -> SEMESTER_1
         R.id.radio_button_timetable_semester_2 -> SEMESTER_SUMMER
         R.id.radio_button_timetable_semester_3 -> SEMESTER_2

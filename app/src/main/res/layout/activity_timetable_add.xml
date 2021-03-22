@@ -50,7 +50,7 @@
             android:paddingTop="32dp"
             android:paddingEnd="16dp"
             android:paddingBottom="8dp"
-            android:text="@string/timetable_add_timetable_name"
+            android:text="@string/timetable_add_timetable_semester"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
