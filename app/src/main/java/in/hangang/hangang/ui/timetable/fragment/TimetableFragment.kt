@@ -211,7 +211,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                     timetableFragmentViewModel.currentShowingTimeTable.value?.let { it1 -> timetableViewModel.setMainTimeTable(it1) }
                 }
                 R.id.menu_item_save_image -> {
-                    timetableFragmentViewModel.saveToBitmap(binding.timetableLayout)
+                    timetableFragmentViewModel.saveToBitmap(binding.timetableContainer)
                 }
             }
             true

@@ -14,11 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/timetable_container"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.timetable.fragment.TimetableFragment">
+            android:layout_height="?attr/actionBarSize"
+            app:elevation="0dp">
 
             <in.hangang.core.view.appbar.BaseAppBar
                 android:id="@+id/app_bar"
@@ -31,6 +30,16 @@
                 app:showBackButton="false"
                 app:showDivider="false" />
 
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/timetable_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:layout_marginTop="?attr/actionBarSize"
+            tools:context=".ui.timetable.fragment.TimetableFragment">
+
             <LinearLayout
                 android:id="@+id/timetable_column"
                 android:layout_width="match_parent"
@@ -39,7 +48,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/app_bar">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="0dp"
@@ -100,7 +109,7 @@
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="-1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -204,9 +213,20 @@
                         android:id="@+id/timetable_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/colorSurface"
                         android:textColor="?android:attr/textColorPrimary"
-                        app:dividerColor="?android:attr/textColorTertiary" />
+                        app:dividerColor="?android:attr/textColorTertiary" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_rowStart="0"
+                            app:layout_rowEnd="2"
+                            app:layout_columnStart="0"
+                            app:layout_columnEnd="1"
+                            android:background="?attr/colorPrimary"
+                            android:text="test"/>
+
+                    </in.hangang.core.view.timetable.TimetableLayout>
 
                 </LinearLayout>
 

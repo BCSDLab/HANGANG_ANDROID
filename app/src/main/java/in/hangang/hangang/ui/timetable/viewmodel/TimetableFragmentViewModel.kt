@@ -1,17 +1,15 @@
 package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.core.view.timetable.TimetableLayout
 import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.util.file.FileUtil
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.core.Single
-import org.koin.android.ext.android.inject
 
 class TimetableFragmentViewModel(
 ) : ViewModelBase() {
@@ -45,12 +43,12 @@ class TimetableFragmentViewModel(
         _currentShowingTimeTable.postValue(timetable)
     }
 
-    fun saveToBitmap(timetableLayout: TimetableLayout) {
+    fun saveToBitmap(viewGroup: ViewGroup) {
         Single.create<Bitmap> { subscriber ->
             try {
-                val bitmap = Bitmap.createBitmap(timetableLayout.measuredWidth, timetableLayout.measuredHeight, Bitmap.Config.ARGB_8888)
+                val bitmap = Bitmap.createBitmap(viewGroup.measuredWidth, viewGroup.measuredHeight, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(bitmap)
-                timetableLayout.draw(canvas)
+                viewGroup.draw(canvas)
                 subscriber.onSuccess(bitmap)
             } catch (e: Exception) {
                 subscriber.onError(e)
