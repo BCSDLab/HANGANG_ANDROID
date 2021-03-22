@@ -28,12 +28,12 @@ interface AuthApi {
         @Body userTimeTableRequest: UserTimeTableRequest
     ): Single<CommonResponse>
 
-    @DELETE(TIMETABLE)
+    @HTTP(method = "DELETE", path = TIMETABLE, hasBody = true)
     fun deleteTimeTable(
         @Body timeTableRequest: TimeTableRequest
     ): Single<CommonResponse>
 
-    @PATCH(TIMETABLE)
+    @HTTP(method = "PATCH", path = TIMETABLE, hasBody = true)
     fun modifyTimeTableName(
         @Body userTimeTableRequest: UserTimeTableRequest
     ): Single<CommonResponse>

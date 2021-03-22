@@ -41,6 +41,7 @@ class TimeTableLocalDataSource : TimeTableDataSource {
                 subscriber.onError(t)
             }
         }
+        //return Single.never()
     }
 
     override fun getMainTimeTable(): Single<Int> {
@@ -51,5 +52,6 @@ class TimeTableLocalDataSource : TimeTableDataSource {
                 subscriber.onError(t)
             }
         }
+        //return Single.never()
     }
 }

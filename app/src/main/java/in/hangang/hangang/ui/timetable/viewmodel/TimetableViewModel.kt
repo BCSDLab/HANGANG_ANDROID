@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
@@ -16,12 +17,15 @@ class TimetableViewModel(
         private val timetableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
-
     private val _timetables = MutableLiveData<List<TimeTable>>()
     private val _mainTimeTable = MutableLiveData<TimeTable>()
+    private val _setMainTimeTable = MutableLiveData<Event<TimeTable>>()
+    private val _timetableNameModified = MutableLiveData<Event<String>>()
 
     val timetables: LiveData<List<TimeTable>> get() = _timetables
     val mainTimeTable: LiveData<TimeTable> get() = _mainTimeTable
+    val setMainTimeTable: LiveData<Event<TimeTable>> get() = _setMainTimeTable
+    val timetableNameModified: LiveData<Event<String>> get() = _timetableNameModified
 
     fun getTimetables() {
         timetableRepository.getTimeTables()
@@ -56,28 +60,53 @@ class TimetableViewModel(
 
     fun setMainTimeTable(timetable: TimeTable) {
         timetableRepository.setMainTimeTable(timetable.id).subscribe({
-            findTimeTableById(timetable.id).withThread().subscribe({
-                _mainTimeTable.postValue(it)
-            }, {
+            findTimeTableById(timetable.id)
+                    .withThread()
+                    .handleProgress(this)
+                    .subscribe({
+                        _setMainTimeTable.postValue(Event(it))
+                    }, {
 
-            })
+                    })
         }, {
             LogUtil.e(it.message)
         })
+    }
+
+    fun modifyTimeTableName(timetable: TimeTable, name: String) {
+        timetableRepository.modifyTimeTableName(timetable.id, name)
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    _timetableNameModified.postValue(Event(name))
+                }, {
+
+                })
+    }
+
+    fun removeTimetable(timetable: TimeTable) {
+        timetableRepository.removeTimeTable(timetableId = timetable.id)
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    getTimetables()
+                }, {
+
+                })
     }
 
     fun findTimeTableById(timetableId: Int): Single<TimeTable> {
         return Single.create { subscriber ->
             if (_timetables.value == null || _timetables.value!!.isEmpty())
                 subscriber.onError(Exception("Please call getTimetables before calling this"))
-
-            with(_timetables.value) {
+            else with(_timetables.value) {
                 val timetable = this?.find { it.id == timetableId }
 
                 if (timetable == null)
                     subscriber.onError(Exception("No matches timetableId in timetable list"))
-
-                subscriber.onSuccess(timetable!!)
+                else subscriber.onSuccess(timetable!!)
             }
         }
     }

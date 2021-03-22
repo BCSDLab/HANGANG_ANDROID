@@ -1,11 +1,15 @@
 package `in`.hangang.hangang.ui.timetable.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
+import `in`.hangang.core.livedata.EventObserver
+import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
+import `in`.hangang.core.view.edittext.SingleLineEditText
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
@@ -16,6 +20,7 @@ import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.file.FileUtil
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -74,6 +79,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun initViewModel() {
         with(timetableFragmentViewModel) {
+
             mode.observe(viewLifecycleOwner) {
                 when (it) {
                     TimetableFragmentViewModel.Mode.MODE_NORMAL -> {
@@ -92,40 +98,41 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                     }
                 }
             }
-            currentShowingTimeTable.observe(viewLifecycleOwner) {
-                binding.appBar.title = it.name.toString()
-                //TODO Render timetable
-            }
-            captured.observe(viewLifecycleOwner) { bitmap ->
-                requireWriteStorage {
-                    fileUtil.saveImageToPictures(
-                            bitmap = bitmap,
-                            fileName = "${currentShowingTimeTable.value?.name ?: "Unknown"}.jpg"
-                    )
-                            .withThread()
-                            .handleProgress(timetableFragmentViewModel)
-                            .subscribe({
-                                LogUtil.d(it.path)
-                            }, {
-                                it.printStackTrace()
-                            })
-                }
-            }
+
+            currentShowingTimeTable.observe(viewLifecycleOwner, this@TimetableFragment::updateTimeTable)
+
+            captured.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
         }
         with(timetableViewModel) {
+
             mainTimeTable.observe(viewLifecycleOwner) {
                 timetableFragmentViewModel.setCurrentShowingTimeTable(it)
             }
+
+            setMainTimeTable.observe(viewLifecycleOwner, EventObserver {
+                timetableFragmentViewModel.setCurrentShowingTimeTable(it)
+                showMainTimetableSetDialog()
+            })
+
+            timetableNameModified.observe(viewLifecycleOwner, EventObserver {
+                timetableFragmentViewModel.setCurrentShowingTimeTable(
+                        timetableFragmentViewModel.currentShowingTimeTable.value!!.copy(name = it)
+                )
+            })
         }
         with(timetableLectureViewModel) {
+
             isGetLecturesLoading.observe(viewLifecycleOwner) {
                 binding.recyclerViewTimetableLecturesProgress.visibility = visibleGone(it)
             }
+
             getLecturesErrorMessage.observe(viewLifecycleOwner) {
             }
+
             lectures.observe(viewLifecycleOwner) {
                 timetableLectureAdapter.updateItem(it)
             }
+
         }
 
         timetableViewModel.getTimetables()
@@ -213,15 +220,96 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 R.id.menu_item_save_image -> {
                     timetableFragmentViewModel.saveToBitmap(binding.timetableContainer)
                 }
+                R.id.menu_item_edit_timetable_name -> {
+                    showEditTimeTableNameDialog()
+                }
+                R.id.menu_item_remove_timetable -> {
+                    showRemoveTimeTableDialog()
+                }
             }
             true
         }
     }
+
 
     //리스트 형태의 시간표 관리 화면 표시
     private fun openTimetableList() {
         timetableListActivityResult.launch(
                 timetableFragmentViewModel.currentShowingTimeTable.value
         )
+    }
+
+    private fun updateTimeTable(timetable: TimeTable) {
+        binding.appBar.title = timetable.name.toString()
+        //TODO Render timetable
+    }
+
+    private fun saveImageToFile(bitmap: Bitmap) {
+        requireWriteStorage {
+            fileUtil.saveImageToPictures(
+                    bitmap = bitmap,
+                    fileName = "${timetableFragmentViewModel.currentShowingTimeTable.value?.name ?: "Unknown"}.jpg"
+            )
+                    .withThread()
+                    .handleProgress(timetableFragmentViewModel)
+                    .subscribe({
+                        LogUtil.d(it.path)
+                    }, {
+                        it.printStackTrace()
+                    })
+        }
+    }
+
+    private fun showMainTimetableSetDialog() {
+        DialogUtil.makeSimpleDialog(requireContext(),
+                title = getString(R.string.timetable_dialog_finish_main_timetable_title),
+                message = getString(R.string.timetable_dialog_finish_main_timetable_message),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { dialog, _ ->
+                    dialog.dismiss()
+                },
+                cancelable = true
+        ).show()
+    }
+
+    private fun showEditTimeTableNameDialog() {
+        if (timetableFragmentViewModel.currentShowingTimeTable.value != null) {
+            val editText = SingleLineEditText(requireContext()).apply {
+                editText.hint = timetableFragmentViewModel.currentShowingTimeTable.value!!.name
+            }
+
+            DialogUtil.makeViewDialog(requireContext(),
+                    title = getString(R.string.timetable_dialog_edit_timetable_name_title),
+                    view = editText,
+                    cancelable = true,
+                    positiveButtonText = getString(R.string.ok),
+                    negativeButtonText = getString(R.string.cancel),
+                    positiveButtonOnClickListener = { dialog, _ ->
+                        timetableViewModel.modifyTimeTableName(timetableFragmentViewModel.currentShowingTimeTable.value!!, editText.text.toString())
+                        dialog.dismiss()
+                    },
+                    negativeButtonOnClickListener = { dialog, _ ->
+                        dialog.dismiss()
+                    }).show()
+        }
+    }
+
+    private fun showRemoveTimeTableDialog() {
+        if (timetableFragmentViewModel.currentShowingTimeTable.value != null) {
+            DialogUtil.makeSimpleDialog(requireContext(),
+                    title = getString(R.string.timetable_dialog_remove_timetable_title),
+                    message = "",
+                    positiveButtonText = getString(R.string.ok),
+                    negativeButtonText = getString(R.string.close),
+                    negativeButtonOnClickListener = { dialog, _ ->
+                        dialog.dismiss()
+                    },
+                    positiveButtonOnClickListener = { dialog, _ ->
+                        timetableViewModel.removeTimetable(timetableFragmentViewModel.currentShowingTimeTable.value!!)
+                        dialog.dismiss()
+                    },
+                    cancelable = true
+            ).show()
+        }
     }
 }
