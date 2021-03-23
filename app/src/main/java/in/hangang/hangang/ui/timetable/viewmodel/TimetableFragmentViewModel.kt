@@ -1,8 +1,10 @@
 package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
 import `in`.hangang.hangang.util.*
@@ -30,12 +32,17 @@ class TimetableFragmentViewModel(
     private val _lectureTimetableViews = MutableLiveData<List<View>>()
     private val _lectureTimetables = MutableLiveData<List<LectureTimeTable>>()
 
+    private val _timetableLectureAdded = MutableLiveData<Event<CommonResponse>>()
+    private val _timetableLectureRemoved = MutableLiveData<Event<CommonResponse>>()
+
     val mode: LiveData<Mode> get() = _mode
     val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
     val captured: LiveData<Bitmap> get() = _captured
     val captureError: LiveData<Throwable> get() = _captureError
     val lectureTimetableViews : LiveData<List<View>> get() = _lectureTimetableViews
     val lectureTimeTables : LiveData<List<LectureTimeTable>> get() = _lectureTimetables
+    val timetableLectureAdded :MutableLiveData<Event<CommonResponse>> get() = _timetableLectureAdded
+    val timetableLectureRemoved : MutableLiveData<Event<CommonResponse>> get() = _timetableLectureRemoved
 
     fun switchToEditMode() {
         if (_mode.value != Mode.MODE_EDIT)
@@ -89,5 +96,33 @@ class TimetableFragmentViewModel(
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
                 })
+    }
+
+    fun addTimeTableLecture(lectureId: Int) {
+        timeTableRepository.addLectureInTimeTable(
+            lectureId = lectureId,
+            timetableId = currentShowingTimeTable.value?.id ?: 0
+        ).withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _timetableLectureAdded.postValue(Event(it))
+            }, {
+                _timetableLectureAdded.postValue(Event(it.toCommonResponse()))
+            })
+    }
+
+    fun removeTimeTableLecture(lectureId: Int) {
+        timeTableRepository.addLectureInTimeTable(
+            lectureId = lectureId,
+            timetableId = currentShowingTimeTable.value?.id ?: 0
+        ).withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _timetableLectureAdded.postValue(Event(it))
+            }, {
+                _timetableLectureAdded.postValue(Event(it.toCommonResponse()))
+            })
     }
 }

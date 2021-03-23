@@ -45,4 +45,15 @@ class TimeTableRepository(
     override fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>> {
         return timeTableRemoteDataSource.getLectureList(timetableId)
     }
+
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+        return timeTableRemoteDataSource.addLectureInTimeTable(lectureId, timetableId)
+    }
+
+    override fun removeLectureInTimeTable(
+        lectureId: Int,
+        timetableId: Int
+    ): Single<CommonResponse> {
+        return timeTableRemoteDataSource.removeLectureInTimeTable(lectureId, timetableId)
+    }
 }

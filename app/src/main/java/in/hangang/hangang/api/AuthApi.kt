@@ -43,6 +43,16 @@ interface AuthApi {
             @Body timeTableCustomLectureRequest: TimeTableCustomLectureRequest
     ): Single<CommonResponse>
 
+    @POST(TIMETABLE_LECTURE)
+    fun addLectureInTimeTable(
+        @Body timeTableRequest: TimeTableRequest
+    ): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = TIMETABLE_LECTURE, hasBody = true)
+    fun removeLectureInTimeTable(
+        @Body timeTableRequest: TimeTableRequest
+    ): Single<CommonResponse>
+
     @GET(TIMETABLE_LECTURE)
     fun getLectureListFromTimeTable(
             @Query("timeTableId") timetableId: Int
