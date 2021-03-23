@@ -1,9 +1,12 @@
 package `in`.hangang.hangang.ui.timetable.adapter
 
+import `in`.hangang.core.view.goneVisible
+import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
+import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
 import `in`.hangang.hangang.util.TimetableUtil
 import `in`.hangang.hangang.util.diffutil.LectureDiffCallback
 import `in`.hangang.hangang.util.diffutil.LectureTimeTableDiffCallback
@@ -17,6 +20,10 @@ import androidx.recyclerview.widget.RecyclerView
 class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
 
     private val lectures = mutableListOf<LectureTimeTable>()
+    private val selectedLectures = mutableListOf<LectureTimeTable>()
+    var currentSelectedPosition = -1
+
+    var timetableLectureListener : TimetableLectureListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimetableLectureViewHolder {
         return TimetableLectureViewHolder(
@@ -29,6 +36,31 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: TimetableLectureViewHolder, position: Int) {
         holder.bind(lectures[position])
+
+        holder.itemView.isSelected = position == currentSelectedPosition
+        holder.setSelected(selectedLectures.contains(lectures[position]))
+
+        holder.itemView.setOnClickListener {
+            val beforeSelectedPosition = currentSelectedPosition
+            currentSelectedPosition = position
+
+            notifyItemChanged(beforeSelectedPosition)
+            notifyItemChanged(currentSelectedPosition)
+
+            timetableLectureListener?.onCheckedChange(position, lectures[position])
+        }
+
+        holder.binding.buttonAddLecture.setOnClickListener {
+            if(timetableLectureListener?.onAddButtonClicked(position, lectures[position]) == true)
+                holder.setSelected(true)
+        }
+        holder.binding.buttonRemoveLecture.setOnClickListener {
+            if(timetableLectureListener?.onRemoveButtonClicked(position, lectures[position]) == true)
+                holder.setSelected(false)
+        }
+        holder.binding.buttonLectureReview.setOnClickListener {
+            timetableLectureListener?.onReviewButtonClicked(position, lectures[position])
+        }
     }
 
     override fun getItemCount(): Int = lectures.size
@@ -43,11 +75,31 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
         diffResult.dispatchUpdatesTo(this)
     }
 
-    inner class TimetableLectureViewHolder(private val binding: ItemTimetableLectureBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun updateSelectedLectures(selectedLectures: List<LectureTimeTable>) {
+        val diffCallback = LectureTimeTableDiffCallback(this.selectedLectures, selectedLectures)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        this.selectedLectures.clear()
+        this.selectedLectures.addAll(selectedLectures)
+
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    inner class TimetableLectureViewHolder(val binding: ItemTimetableLectureBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LectureTimeTable) {
-            binding.lecture = item
+            binding.textViewLectureTitle.text = item.name
+            binding.textViewLectureCode.text = item.code
+            binding.textViewLectureStar.text = String.format("%1.1f", item.rating)
+            binding.textViewLectureProfessor.text = "${item.professor} (${item.classNumber})"
+            binding.textViewLectureCredit.text = context.getString(R.string.credit, item.designScore)
+            binding.textViewLectureGrade.text = context.getString(R.string.grade, item.grades)
+            binding.textViewLectureClassification.text = item.classification
             binding.textViewLectureTime.text = TimetableUtil.toString(context, item.classTime ?: "[]")
-            binding.executePendingBindings()
+        }
+
+        fun setSelected(isSelected: Boolean) {
+            binding.buttonAddLecture.visibility = goneVisible(isSelected)
+            binding.buttonRemoveLecture.visibility = visibleGone(isSelected)
         }
     }
 }

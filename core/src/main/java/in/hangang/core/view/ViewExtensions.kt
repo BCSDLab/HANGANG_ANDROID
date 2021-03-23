@@ -1,7 +1,12 @@
 package `in`.hangang.core.view
 
+import android.graphics.Rect
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.widget.ScrollView
+import androidx.core.widget.NestedScrollView
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 
@@ -33,4 +38,15 @@ fun invisibleVisible(boolean: Boolean) = if (boolean) {
     View.INVISIBLE
 } else {
     View.VISIBLE
+}
+
+fun calculateRectOnScreen(view: View): Rect {
+    val location = IntArray(2)
+    view.getLocationOnScreen(location)
+    return Rect(
+        location[0],
+        location[1],
+        location[0] + view.measuredWidth,
+        location[1] + view.measuredHeight
+    )
 }

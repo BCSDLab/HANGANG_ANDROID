@@ -78,7 +78,7 @@ class TimetableFragmentViewModel(
                 .handleProgress(this)
                 .subscribe({
                     _lectureTimetables.postValue(it)
-                    timetableUtil.render(it)
+                    timetableUtil.getTimetableView(it)
                             .withThread()
                             .handleProgress(this)
                             .subscribe({ views ->

@@ -4,8 +4,8 @@
     <string name="next_step">다음</string>
     <string name="en_ok">OK</string>
     
-    <string name="credit">%1$d학점</string>
-    <string name="grade">%1$d학년</string>
+    <string name="credit">%1$s학점</string>
+    <string name="grade">%1$s학년</string>
 
     <string name="app_name">한강</string>
     <string name="title_home">홈</string>

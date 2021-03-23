@@ -87,7 +87,7 @@
                 android:background="#000"
                 android:backgroundTint="?android:attr/textColorTertiary" />
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:id="@+id/timetable_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
 
                 </LinearLayout>
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
 

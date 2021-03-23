@@ -6,13 +6,16 @@ import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
+import `in`.hangang.core.view.calculateRectOnScreen
 import `in`.hangang.core.view.edittext.SingleLineEditText
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
+import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
@@ -28,6 +31,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,15 +39,17 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     override val layoutId = R.layout.fragment_timetable
 
+    private val lectureTimetableDummyViews = arrayListOf<View>()
+
     private val timetableViewModel: TimetableViewModel by viewModel()
     private val timetableFragmentViewModel: TimetableFragmentViewModel by viewModel()
     private val timetableLectureViewModel: TimetableLectureViewModel by viewModel()
 
     private val fileUtil: FileUtil by inject()
-    private val timetableUtil : TimetableUtil by inject()
+    private val timetableUtil: TimetableUtil by inject()
 
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableLectureListContainer) }
-    private val timetableLectureAdapter = TimetableLectureAdapter(requireContext())
+    private val timetableLectureAdapter: TimetableLectureAdapter by lazy { TimetableLectureAdapter(requireContext()) }
 
     private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
         it.selectedTimetable?.let { timetable ->
@@ -143,13 +149,11 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             timetableFragmentViewModel.switchToEditMode()
         }
         binding.radioGroupDepartment.setOnCheckedChangeListener { group, checkedId ->
-            when(checkedId) {
-                R.id.radio
-            }
-
+            //TODO department 정확한 학부 명칭 안 뒤 파라미터로 추가
             timetableLectureViewModel.getLectures(
                     init = true,
-
+                    semesterDateId = timetableFragmentViewModel.currentShowingTimeTable.value?.semesterDateId
+                            ?: 5
             )
         }
     }
@@ -181,6 +185,36 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
         binding.recyclerViewTimetableLectures.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTimetableLectures.adapter = timetableLectureAdapter
+        timetableLectureAdapter.timetableLectureListener = object : TimetableLectureListener {
+            override fun onCheckedChange(position: Int, lectureTimeTable: LectureTimeTable) {
+                timetableUtil.getTimetableDummyView(listOf(lectureTimeTable)).withThread().subscribe(
+                    this@TimetableFragment::setLectureTimetableDummyViews
+                ) {}
+            }
+
+            override fun onAddButtonClicked(
+                position: Int,
+                lectureTimeTable: LectureTimeTable
+            ): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onRemoveButtonClicked(
+                position: Int,
+                lectureTimeTable: LectureTimeTable
+            ): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onReviewButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDipButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
+                TODO("Not yet implemented")
+            }
+
+        }
     }
 
     private fun initAppBar() {
@@ -256,6 +290,17 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun showLectureTimeTable(lectureTimeTableViews: List<View>) {
         binding.timetableLayout.removeAllViews()
         lectureTimeTableViews.forEach {
+            binding.timetableLayout.addView(it)
+        }
+    }
+
+    private fun setLectureTimetableDummyViews(lectureTimeTableViews: List<View>) {
+        lectureTimetableDummyViews.forEach {
+            binding.timetableLayout.removeView(it)
+        }
+        lectureTimetableDummyViews.clear()
+        lectureTimetableDummyViews.addAll(lectureTimeTableViews)
+        lectureTimetableDummyViews.forEach {
             binding.timetableLayout.addView(it)
         }
     }

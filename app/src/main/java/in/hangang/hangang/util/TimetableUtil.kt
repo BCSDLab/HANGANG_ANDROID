@@ -88,7 +88,7 @@ class TimetableUtil(private val context: Context) {
                 }
     }
 
-    fun render(lectureTimeTables: List<LectureTimeTable>) : Single<List<View>> {
+    fun getTimetableView(lectureTimeTables: List<LectureTimeTable>) : Single<List<View>> {
         return Single.create { subscriber ->
             try {
                 val views = mutableListOf<View>()
@@ -119,38 +119,44 @@ class TimetableUtil(private val context: Context) {
         }
     }
 
-    private fun convertToTimes(exp : String) : List<RC> {
-        val rcs = mutableListOf<RC>()
-        val stack = Stack<Int>()
-        exp.substring(1, exp.length - 1)
-                .splitToSequence(", ")
-                .filter { it.isNotEmpty() }
-                .map { it.toInt() }
-                .sorted()
-                .forEach {
-                    if (stack.empty())
-                        stack.push(it)
-                    else {
-                        if(it - stack.peek() >= 2) {
-                            rcs.add(RC(
-                                    columnStart = getWeek(stack.peek()),
-                                    columnEnd = getWeek(stack.peek()) + 1,
-                                    rowStart = getTime(stack.firstElement()),
-                                    rowEnd = getTime(stack.peek() + 1)
-                            ))
-                            stack.clear()
-                            stack.push(it)
-                        } else {
-                            stack.push(it)
-                        }
+    fun getTimetableDummyView(lectureTimeTables: List<LectureTimeTable>) : Single<List<View>> {
+        return Single.create { subscriber ->
+            try {
+                val views = mutableListOf<View>()
+
+                lectureTimeTables.forEachIndexed { i, lectureTimeTable ->
+                    convertToTimes(lectureTimeTable.classTime ?: "[]").forEach { rc ->
+                        views.add(
+                            View(ContextThemeWrapper(context, R.style.HangangTimetableItem)).apply {
+                                setBackgroundResource(R.drawable.background_timetable_outline)
+                                layoutParams = TimetableLayout.LayoutParams(
+                                    context, null,
+                                    rc.rowStart,
+                                    rc.rowEnd,
+                                    rc.columnStart,
+                                    rc.columnEnd
+                                )
+                            }
+                        )
                     }
                 }
-        if(stack.isNotEmpty()) {
+
+                subscriber.onSuccess(views)
+
+            } catch (e: Exception) {
+                subscriber.onError(e)
+            }
+        }
+    }
+
+    private fun convertToTimes(exp : String) : List<RC> {
+        val rcs = mutableListOf<RC>()
+        convert(exp) { f, l ->
             rcs.add(RC(
-                    columnStart = getWeek(stack.peek()),
-                    columnEnd = getWeek(stack.peek()) + 1,
-                    rowStart = getTime(stack.firstElement()),
-                    rowEnd = getTime(stack.peek() + 1)
+                columnStart = getWeek(l),
+                columnEnd = getWeek(l) + 1,
+                rowStart = getTime(f),
+                rowEnd = getTime(l + 1)
             ))
         }
         return rcs
