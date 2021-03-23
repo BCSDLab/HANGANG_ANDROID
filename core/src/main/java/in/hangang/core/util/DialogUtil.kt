@@ -50,7 +50,7 @@ object DialogUtil {
         else {
             buttonNegative.text = negativeButtonText
             buttonNegative.setOnClickListener {
-                positiveButtonOnClickListener.onClick(dialog, BUTTON_NEGATIVE)
+                negativeButtonOnClickListener.onClick(dialog, BUTTON_NEGATIVE)
             }
         }
 

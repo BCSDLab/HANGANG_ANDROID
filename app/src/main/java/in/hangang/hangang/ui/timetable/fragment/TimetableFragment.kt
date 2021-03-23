@@ -30,6 +30,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
@@ -151,7 +152,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         binding.radioGroupDepartment.setOnCheckedChangeListener { group, checkedId ->
             //TODO department 정확한 학부 명칭 안 뒤 파라미터로 추가
             timetableLectureViewModel.getLectures(
-                    init = true,
                     semesterDateId = timetableFragmentViewModel.currentShowingTimeTable.value?.semesterDateId
                             ?: 5
             )
@@ -185,6 +185,14 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
         binding.recyclerViewTimetableLectures.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTimetableLectures.adapter = timetableLectureAdapter
+        binding.recyclerViewTimetableLectures.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if(!recyclerView.canScrollVertically(1)) {
+                    timetableLectureViewModel.getLectures()
+                }
+            }
+        })
         timetableLectureAdapter.timetableLectureListener = object : TimetableLectureListener {
             override fun onCheckedChange(position: Int, lectureTimeTable: LectureTimeTable) {
                 timetableUtil.getTimetableDummyView(listOf(lectureTimeTable)).withThread().subscribe(
