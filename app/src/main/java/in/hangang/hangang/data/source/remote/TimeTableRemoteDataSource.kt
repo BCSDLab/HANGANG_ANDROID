@@ -44,15 +44,9 @@ class TimeTableRemoteDataSource(
         }
     }
 
-    override fun getLectures(lecturesParameter: LecturesParameter): Single<List<Lecture>> {
-        return noAuthApi.getLectures(
-            lecturesParameter.classification,
-            lecturesParameter.department,
-            lecturesParameter.hashTag,
-            lecturesParameter.keyword,
-            lecturesParameter.limit,
-            lecturesParameter.page,
-            lecturesParameter.sort
+    override fun getLectureTimetableList(classification: List<String>?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {
+        return noAuthApi.getTimetableLectureList(
+                classification, department, keyword, limit, page, semesterDateId
         )
     }
 

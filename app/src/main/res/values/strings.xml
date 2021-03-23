@@ -3,6 +3,9 @@
     <string name="cancel">취소</string>
     <string name="next_step">다음</string>
     <string name="en_ok">OK</string>
+    
+    <string name="credit">%1$d학점</string>
+    <string name="grade">%1$d학년</string>
 
     <string name="app_name">한강</string>
     <string name="title_home">홈</string>
@@ -162,5 +165,7 @@
     <string name="timetable_exceed_title">시간표가 초과되었습니다.</string>
     <string name="timetable_exceed_message_semester">한 학기 당 최대 5개까지 시간표를 추가할 수 있습니다.</string>
     <string name="timetable_exceed_message">총 50개까지 시간표를 추가할 수 있습니다.</string>
+    <string name="timetable_sat">토</string>
+    <string name="timetable_sun">일</string>
 
 </resources>

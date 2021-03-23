@@ -10,7 +10,14 @@ import io.reactivex.rxjava3.core.Single
 
 interface TimeTableDataSource {
     fun getTimeTables(): Single<List<TimeTable>>
-    fun getLectures(lecturesParameter: LecturesParameter): Single<List<Lecture>>
+    fun getLectureTimetableList(
+            classification: List<String>? = null,
+            department: String? = null,
+            keyword: String? = null,
+            limit: Int = 10,
+            page: Int = 1,
+            semesterDateId: Int
+    ): Single<List<LectureTimeTable>>
     fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse>
     fun removeTimeTable(timetableId: Int): Single<CommonResponse>
     fun modifyTimeTableName(timetableId: Int, name: String): Single<CommonResponse>

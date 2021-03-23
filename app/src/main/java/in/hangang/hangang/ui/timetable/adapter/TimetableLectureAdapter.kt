@@ -2,24 +2,28 @@ package `in`.hangang.hangang.ui.timetable.adapter
 
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
+import `in`.hangang.hangang.util.TimetableUtil
 import `in`.hangang.hangang.util.diffutil.LectureDiffCallback
+import `in`.hangang.hangang.util.diffutil.LectureTimeTableDiffCallback
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class TimetableLectureAdapter : RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
+class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
 
-    private val lectures = mutableListOf<Lecture>()
+    private val lectures = mutableListOf<LectureTimeTable>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimetableLectureViewHolder {
         return TimetableLectureViewHolder(
-            DataBindingUtil.bind(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_timetable_lecture, parent, false)
-            )!!
+                DataBindingUtil.bind(
+                        LayoutInflater.from(parent.context)
+                                .inflate(R.layout.item_timetable_lecture, parent, false)
+                )!!
         )
     }
 
@@ -29,8 +33,8 @@ class TimetableLectureAdapter : RecyclerView.Adapter<TimetableLectureAdapter.Tim
 
     override fun getItemCount(): Int = lectures.size
 
-    fun updateItem(lectures: List<Lecture>) {
-        val diffCallback = LectureDiffCallback(this.lectures, lectures)
+    fun updateItem(lectures: List<LectureTimeTable>) {
+        val diffCallback = LectureTimeTableDiffCallback(this.lectures, lectures)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         this.lectures.clear()
@@ -39,9 +43,10 @@ class TimetableLectureAdapter : RecyclerView.Adapter<TimetableLectureAdapter.Tim
         diffResult.dispatchUpdatesTo(this)
     }
 
-    inner class TimetableLectureViewHolder(private val binding : ItemTimetableLectureBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item : Lecture) {
+    inner class TimetableLectureViewHolder(private val binding: ItemTimetableLectureBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: LectureTimeTable) {
             binding.lecture = item
+            binding.textViewLectureTime.text = TimetableUtil.toString(context, item.classTime ?: "[]")
             binding.executePendingBindings()
         }
     }

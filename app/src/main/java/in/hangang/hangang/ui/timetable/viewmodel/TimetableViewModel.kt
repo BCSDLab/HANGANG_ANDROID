@@ -106,7 +106,7 @@ class TimetableViewModel(
 
                 if (timetable == null)
                     subscriber.onError(Exception("No matches timetableId in timetable list"))
-                else subscriber.onSuccess(timetable!!)
+                else subscriber.onSuccess(timetable)
             }
         }
     }

@@ -1,14 +1,11 @@
 package `in`.hangang.hangang.data.source.local
 
-import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.constant.MAIN_TIMETABLE
-import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.request.LecturesParameter
+import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
-import `in`.hangang.hangang.util.LogUtil
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Single
 
@@ -17,7 +14,7 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         return Single.never()
     }
 
-    override fun getLectures(lecturesParameter: LecturesParameter): Single<List<Lecture>> {
+    override fun getLectureTimetableList(classification: List<String>?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {
         return Single.never()
     }
 

@@ -1,24 +1,22 @@
 package `in`.hangang.hangang.data.source
 
-import `in`.hangang.hangang.data.request.UserTimeTableRequest
-import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.request.LecturesParameter
+import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRepository(
-    private val timeTableLocalDataSource: TimeTableDataSource,
-    private val timeTableRemoteDataSource: TimeTableDataSource
+        private val timeTableLocalDataSource: TimeTableDataSource,
+        private val timeTableRemoteDataSource: TimeTableDataSource
 ) : TimeTableDataSource {
     override fun getTimeTables(): Single<List<TimeTable>> {
         return timeTableRemoteDataSource.getTimeTables()
     }
 
-    override fun getLectures(lecturesParameter: LecturesParameter): Single<List<Lecture>> {
-        return timeTableRemoteDataSource.getLectures(lecturesParameter)
+    override fun getLectureTimetableList(classification: List<String>?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {
+        return timeTableRemoteDataSource.getLectureTimetableList(classification, department, keyword, limit, page, semesterDateId)
     }
 
     override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
@@ -30,8 +28,8 @@ class TimeTableRepository(
     }
 
     override fun modifyTimeTableName(
-        timetableId: Int,
-        name: String
+            timetableId: Int,
+            name: String
     ): Single<CommonResponse> {
         return timeTableRemoteDataSource.modifyTimeTableName(timetableId, name)
     }

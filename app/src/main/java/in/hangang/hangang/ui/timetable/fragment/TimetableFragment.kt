@@ -9,8 +9,6 @@ import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.core.view.edittext.SingleLineEditText
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.Lecture
-import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
@@ -19,7 +17,7 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import `in`.hangang.hangang.util.LogUtil
-import `in`.hangang.hangang.util.TimetableRenderer
+import `in`.hangang.hangang.util.TimetableUtil
 import `in`.hangang.hangang.util.file.FileUtil
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
@@ -42,10 +40,10 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableLectureViewModel: TimetableLectureViewModel by viewModel()
 
     private val fileUtil: FileUtil by inject()
-    private val timetableRenderer : TimetableRenderer by inject()
+    private val timetableUtil : TimetableUtil by inject()
 
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableLectureListContainer) }
-    private val timetableLectureAdapter = TimetableLectureAdapter()
+    private val timetableLectureAdapter = TimetableLectureAdapter(requireContext())
 
     private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
         it.selectedTimetable?.let { timetable ->
@@ -107,7 +105,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
             captured.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
 
-            lectureTimetables.observe(viewLifecycleOwner, this@TimetableFragment::showLectureTimeTable)
+            lectureTimetableViews.observe(viewLifecycleOwner, this@TimetableFragment::showLectureTimeTable)
         }
         with(timetableViewModel) {
 
@@ -131,10 +129,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             isGetLecturesLoading.observe(viewLifecycleOwner) {
                 binding.recyclerViewTimetableLecturesProgress.visibility = visibleGone(it)
             }
-
-            getLecturesErrorMessage.observe(viewLifecycleOwner) {
-            }
-
             lectures.observe(viewLifecycleOwner) {
                 timetableLectureAdapter.updateItem(it)
             }
@@ -147,6 +141,16 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun initView() {
         binding.fabEdit.setOnClickListener {
             timetableFragmentViewModel.switchToEditMode()
+        }
+        binding.radioGroupDepartment.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId) {
+                R.id.radio
+            }
+
+            timetableLectureViewModel.getLectures(
+                    init = true,
+
+            )
         }
     }
 
@@ -177,7 +181,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
         binding.recyclerViewTimetableLectures.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTimetableLectures.adapter = timetableLectureAdapter
-        timetableLectureViewModel.getLectures()
     }
 
     private fun initAppBar() {
@@ -247,7 +250,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun updateTimeTable(timetable: TimeTable) {
         binding.appBar.title = timetable.name.toString()
-        timetableFragmentViewModel.renderTimeTable(timetableRenderer, timetable)
+        timetableFragmentViewModel.renderTimeTable(timetableUtil, timetable)
     }
 
     private fun showLectureTimeTable(lectureTimeTableViews: List<View>) {

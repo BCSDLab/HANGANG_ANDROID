@@ -30,5 +30,6 @@ data class LectureTimeTable(
         @SerializedName("created_at")
         val createdAt : String?,
         @SerializedName("updated_at")
-        val updatedAt : String?
+        val updatedAt : String?,
+        val rating : Double
 )

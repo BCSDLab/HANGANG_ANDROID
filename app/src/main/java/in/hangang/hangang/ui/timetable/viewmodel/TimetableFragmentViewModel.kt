@@ -27,13 +27,15 @@ class TimetableFragmentViewModel(
     private val _currentShowingTimeTable = MutableLiveData<TimeTable>()
     private val _captured = MutableLiveData<Bitmap>()
     private val _captureError = MutableLiveData<Throwable>()
-    private val _lectureTimetables = MutableLiveData<List<View>>()
+    private val _lectureTimetableViews = MutableLiveData<List<View>>()
+    private val _lectureTimetables = MutableLiveData<List<LectureTimeTable>>()
 
     val mode: LiveData<Mode> get() = _mode
     val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
     val captured: LiveData<Bitmap> get() = _captured
     val captureError: LiveData<Throwable> get() = _captureError
-    val lectureTimetables : LiveData<List<View>> get() = _lectureTimetables
+    val lectureTimetableViews : LiveData<List<View>> get() = _lectureTimetableViews
+    val lectureTimeTables : LiveData<List<LectureTimeTable>> get() = _lectureTimetables
 
     fun switchToEditMode() {
         if (_mode.value != Mode.MODE_EDIT)
@@ -69,17 +71,18 @@ class TimetableFragmentViewModel(
                 })
     }
 
-    fun renderTimeTable(timetableRenderer: TimetableRenderer, timetable: TimeTable) {
+    fun renderTimeTable(timetableUtil: TimetableUtil, timetable: TimeTable) {
         timeTableRepository.getLectureList(timetable.id).
         withThread()
                 .handleHttpException()
                 .handleProgress(this)
                 .subscribe({
-                    timetableRenderer.render(it)
+                    _lectureTimetables.postValue(it)
+                    timetableUtil.render(it)
                             .withThread()
                             .handleProgress(this)
                             .subscribe({ views ->
-                                _lectureTimetables.postValue(views)
+                                _lectureTimetableViews.postValue(views)
                             }, {
                                 LogUtil.e(it.message)
                             })

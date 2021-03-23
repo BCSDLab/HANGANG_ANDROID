@@ -17,5 +17,6 @@ const val SEND_PASSWORD_CONFIG_EMAIL = "/user/email/config"
 const val TIMETABLE = "/timetable"
 const val TIMETABLE_LECTURE = "/timetable/lecture"
 const val TIMETABLE_CUSTOM_LECTURE = "/timetable/custom/lecture"
+const val TIMETABLE_LECTURE_LIST = "/timetable/lecture/list"
 
 const val LECTURES = "/lectures"
