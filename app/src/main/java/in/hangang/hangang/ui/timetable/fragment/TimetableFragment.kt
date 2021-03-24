@@ -6,8 +6,8 @@ import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
-import `in`.hangang.core.view.calculateRectOnScreen
 import `in`.hangang.core.view.edittext.SingleLineEditText
+import `in`.hangang.core.view.goneVisible
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.LectureTimeTable
@@ -32,7 +32,6 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -97,6 +96,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarMoreMenuButton.visibility = View.VISIBLE
                         appBarAddManuallyButton.visibility = View.GONE
                         appBarCloseButton.visibility = View.GONE
+                        hideLectureTimetableDummyViews()
                     }
                     TimetableFragmentViewModel.Mode.MODE_EDIT -> {
                         behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -104,6 +104,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarMoreMenuButton.visibility = View.GONE
                         appBarAddManuallyButton.visibility = View.VISIBLE
                         appBarCloseButton.visibility = View.VISIBLE
+                        showLectureTimetableDummyViews()
                     }
                 }
             }
@@ -113,6 +114,9 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             captured.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
 
             lectureTimetableViews.observe(viewLifecycleOwner, this@TimetableFragment::showLectureTimeTable)
+            lectureTimeTables.observe(viewLifecycleOwner) {
+                timetableLectureAdapter.updateSelectedLectures(it)
+            }
         }
         with(timetableViewModel) {
 
@@ -139,6 +143,16 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             lectures.observe(viewLifecycleOwner) {
                 timetableLectureAdapter.updateItem(it)
             }
+            timetableLectureAdded.observe(viewLifecycleOwner, EventObserver {
+                timetableFragmentViewModel.currentShowingTimeTable.value?.let { timeTable ->
+                    timetableFragmentViewModel.renderTimeTable(timetableUtil, timeTable)
+                }
+            })
+            timetableLectureRemoved.observe(viewLifecycleOwner, EventObserver {
+                timetableFragmentViewModel.currentShowingTimeTable.value?.let { timeTable ->
+                    timetableFragmentViewModel.renderTimeTable(timetableUtil, timeTable)
+                }
+            })
 
         }
 
@@ -188,30 +202,49 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         binding.recyclerViewTimetableLectures.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if(!recyclerView.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(1)) {
                     timetableLectureViewModel.getLectures()
                 }
             }
         })
         timetableLectureAdapter.timetableLectureListener = object : TimetableLectureListener {
             override fun onCheckedChange(position: Int, lectureTimeTable: LectureTimeTable) {
-                timetableUtil.getTimetableDummyView(listOf(lectureTimeTable)).withThread().subscribe(
-                    this@TimetableFragment::setLectureTimetableDummyViews
-                ) {}
+                if (position == -1) {
+                    hideLectureTimetableDummyViews()
+                } else
+                    timetableUtil.getTimetableDummyView(listOf(lectureTimeTable)).withThread().subscribe(
+                            this@TimetableFragment::setLectureTimetableDummyViews
+                    ) {}
             }
 
             override fun onAddButtonClicked(
-                position: Int,
-                lectureTimeTable: LectureTimeTable
+                    position: Int,
+                    lectureTimeTable: LectureTimeTable
             ): Boolean {
-                TODO("Not yet implemented")
+                with(timetableFragmentViewModel.checkLectureDuplication(lectureTimeTable)) {
+                    if (this == null)
+                        timetableLectureViewModel.addTimeTableLecture(
+                                timetableId = timetableFragmentViewModel.currentShowingTimeTable.value?.id
+                                        ?: 0,
+                                lectureId = lectureTimeTable.id
+                        )
+                    else {
+                        showTimetableDuplicatedDialog(this)
+                    }
+                }
+                return false
             }
 
             override fun onRemoveButtonClicked(
-                position: Int,
-                lectureTimeTable: LectureTimeTable
+                    position: Int,
+                    lectureTimeTable: LectureTimeTable
             ): Boolean {
-                TODO("Not yet implemented")
+                timetableLectureViewModel.removeTimeTableLecture(
+                        timetableId = timetableFragmentViewModel.currentShowingTimeTable.value?.id
+                                ?: 0,
+                        lectureId = lectureTimeTable.id
+                )
+                return false
             }
 
             override fun onReviewButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
@@ -313,6 +346,18 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         }
     }
 
+    private fun hideLectureTimetableDummyViews() {
+        lectureTimetableDummyViews.forEach {
+            it.visibility = goneVisible(true)
+        }
+    }
+
+    private fun showLectureTimetableDummyViews() {
+        lectureTimetableDummyViews.forEach {
+            it.visibility = goneVisible(false)
+        }
+    }
+
     private fun saveImageToFile(bitmap: Bitmap) {
         requireWriteStorage {
             fileUtil.saveImageToPictures(
@@ -380,5 +425,18 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                     cancelable = true
             ).show()
         }
+    }
+
+    private fun showTimetableDuplicatedDialog(lectureTimeTable: LectureTimeTable) {
+        DialogUtil.makeSimpleDialog(
+                requireContext(),
+                title = getString(R.string.timetable_duplicated_title),
+                message = getString(R.string.timetable_duplicated_message, lectureTimeTable.name),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { dialog, _ ->
+                    dialog.dismiss()
+                },
+                cancelable = true
+        ).show()
     }
 }

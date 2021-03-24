@@ -42,6 +42,23 @@ class TimetableUtil(private val context: Context) {
             return stringBuilder.toString()
         }
 
+        fun isLectureTimetableTimeDuplicate(item1: LectureTimeTable, item2: LectureTimeTable): Boolean {
+            val time1 = item1.classTime ?: "[]"
+            val time2 = item2.classTime ?: "[]"
+            val time2List = time2.substring(1, time2.length - 1)
+                    .splitToSequence(", ")
+                    .filter { it.isNotEmpty() }
+                    .map { it.toInt() }
+                    .toList()
+            return time1.substring(1, time1.length - 1)
+                    .splitToSequence(", ")
+                    .filter { it.isNotEmpty() }
+                    .map { it.toInt() }
+                    .any {
+                        time2List.contains(it)
+                    }
+        }
+
         private fun convert(exp: String, func: (Int, Int) -> Unit) {
             val stack = Stack<Int>()
             exp.substring(1, exp.length - 1)
@@ -98,6 +115,7 @@ class TimetableUtil(private val context: Context) {
                         views.add(
                                 TextView(ContextThemeWrapper(context, R.style.HangangTimetableItem)).apply {
                                     setBackgroundColor(timetableColors[i % timetableColors.size])
+                                    setTextColor(ContextCompat.getColor(context, R.color.text_color_timetable_item))
                                     text = "${lectureTimeTable.name?: ""}\n${lectureTimeTable.classNumber ?: ""}${lectureTimeTable.professor?: ""}"
                                     layoutParams = TimetableLayout.LayoutParams(
                                             context, null,

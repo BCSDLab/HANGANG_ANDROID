@@ -12,6 +12,7 @@ import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableViewModel(
         private val timetableRepository: TimeTableRepository
@@ -38,6 +39,7 @@ class TimetableViewModel(
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
                 })
+                .addTo(compositeDisposable)
     }
 
     fun getMainTimeTable() {
@@ -71,6 +73,7 @@ class TimetableViewModel(
         }, {
             LogUtil.e(it.message)
         })
+                .addTo(compositeDisposable)
     }
 
     fun modifyTimeTableName(timetable: TimeTable, name: String) {
@@ -83,6 +86,7 @@ class TimetableViewModel(
                 }, {
 
                 })
+                .addTo(compositeDisposable)
     }
 
     fun removeTimetable(timetable: TimeTable) {
@@ -95,6 +99,7 @@ class TimetableViewModel(
                 }, {
 
                 })
+                .addTo(compositeDisposable)
     }
 
     fun findTimeTableById(timetableId: Int): Single<TimeTable> {

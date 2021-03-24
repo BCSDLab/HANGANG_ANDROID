@@ -42,12 +42,17 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
 
         holder.itemView.setOnClickListener {
             val beforeSelectedPosition = currentSelectedPosition
-            currentSelectedPosition = position
+
+            if(currentSelectedPosition == position) {
+                timetableLectureListener?.onCheckedChange(-1, lectures[position])
+                currentSelectedPosition = -1
+            } else {
+                timetableLectureListener?.onCheckedChange(position, lectures[position])
+                currentSelectedPosition = position
+            }
 
             notifyItemChanged(beforeSelectedPosition)
             notifyItemChanged(currentSelectedPosition)
-
-            timetableLectureListener?.onCheckedChange(position, lectures[position])
         }
 
         holder.binding.buttonAddLecture.setOnClickListener {
@@ -76,13 +81,10 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
     }
 
     fun updateSelectedLectures(selectedLectures: List<LectureTimeTable>) {
-        val diffCallback = LectureTimeTableDiffCallback(this.selectedLectures, selectedLectures)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
         this.selectedLectures.clear()
         this.selectedLectures.addAll(selectedLectures)
 
-        diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
     inner class TimetableLectureViewHolder(val binding: ItemTimetableLectureBinding) : RecyclerView.ViewHolder(binding.root) {

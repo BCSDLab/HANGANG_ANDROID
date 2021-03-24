@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableFragmentViewModel(
         private val timeTableRepository: TimeTableRepository
@@ -32,17 +33,12 @@ class TimetableFragmentViewModel(
     private val _lectureTimetableViews = MutableLiveData<List<View>>()
     private val _lectureTimetables = MutableLiveData<List<LectureTimeTable>>()
 
-    private val _timetableLectureAdded = MutableLiveData<Event<CommonResponse>>()
-    private val _timetableLectureRemoved = MutableLiveData<Event<CommonResponse>>()
-
     val mode: LiveData<Mode> get() = _mode
     val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
     val captured: LiveData<Bitmap> get() = _captured
     val captureError: LiveData<Throwable> get() = _captureError
     val lectureTimetableViews : LiveData<List<View>> get() = _lectureTimetableViews
     val lectureTimeTables : LiveData<List<LectureTimeTable>> get() = _lectureTimetables
-    val timetableLectureAdded :MutableLiveData<Event<CommonResponse>> get() = _timetableLectureAdded
-    val timetableLectureRemoved : MutableLiveData<Event<CommonResponse>> get() = _timetableLectureRemoved
 
     fun switchToEditMode() {
         if (_mode.value != Mode.MODE_EDIT)
@@ -76,6 +72,7 @@ class TimetableFragmentViewModel(
                 }, {
                     _captureError.postValue(it)
                 })
+                .addTo(compositeDisposable)
     }
 
     fun renderTimeTable(timetableUtil: TimetableUtil, timetable: TimeTable) {
@@ -96,33 +93,14 @@ class TimetableFragmentViewModel(
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
                 })
+                .addTo(compositeDisposable)
     }
 
-    fun addTimeTableLecture(lectureId: Int) {
-        timeTableRepository.addLectureInTimeTable(
-            lectureId = lectureId,
-            timetableId = currentShowingTimeTable.value?.id ?: 0
-        ).withThread()
-            .handleHttpException()
-            .handleProgress(this)
-            .subscribe({
-                _timetableLectureAdded.postValue(Event(it))
-            }, {
-                _timetableLectureAdded.postValue(Event(it.toCommonResponse()))
-            })
-    }
-
-    fun removeTimeTableLecture(lectureId: Int) {
-        timeTableRepository.addLectureInTimeTable(
-            lectureId = lectureId,
-            timetableId = currentShowingTimeTable.value?.id ?: 0
-        ).withThread()
-            .handleHttpException()
-            .handleProgress(this)
-            .subscribe({
-                _timetableLectureAdded.postValue(Event(it))
-            }, {
-                _timetableLectureAdded.postValue(Event(it.toCommonResponse()))
-            })
+    fun checkLectureDuplication(lectureTimeTable: LectureTimeTable): LectureTimeTable? {
+        _lectureTimetables.value?.forEach {
+            if (TimetableUtil.isLectureTimetableTimeDuplicate(it, lectureTimeTable))
+                return it
+        }
+        return null
     }
 }

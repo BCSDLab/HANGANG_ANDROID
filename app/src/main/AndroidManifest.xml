@@ -10,6 +10,7 @@
         android:value="true" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".HangangApplication"
         android:allowBackup="true"
@@ -19,16 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.timetable.activity.TimetableAddActivity"></activity>
+        <activity android:name=".ui.timetable.activity.TimetableLectureFilterActivity"></activity>
+        <activity android:name=".ui.timetable.activity.TimetableAddActivity" />
         <activity android:name=".ui.timetable.activity.TimetableListActivity" />
         <activity android:name=".ui.signup.activity.SignUpMajorActivity" />
         <activity android:name=".ui.signup.activity.SignUpActivity" />
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
         <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
-        <activity android:name=".ui.main.MainActivity">
-        </activity>
+        <activity android:name=".ui.main.MainActivity"></activity>
         <activity android:name=".ui.login.LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

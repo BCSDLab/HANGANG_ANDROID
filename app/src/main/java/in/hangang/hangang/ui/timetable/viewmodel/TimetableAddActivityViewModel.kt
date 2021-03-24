@@ -12,6 +12,7 @@ import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRepository) : ViewModelBase() {
     private val _added = MutableLiveData(Event(false))
@@ -33,6 +34,7 @@ class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRe
                 }, {
                     _error.postValue(Event(it.toCommonResponse()))
                 })
+                .addTo(compositeDisposable)
     }
 
     fun checkAddingAvailability(name : String) {
