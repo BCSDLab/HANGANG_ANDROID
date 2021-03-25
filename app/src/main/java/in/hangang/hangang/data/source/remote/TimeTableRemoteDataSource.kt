@@ -4,13 +4,12 @@ import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
-import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.request.LecturesParameter
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import `in`.hangang.hangang.util.SemesterUtil
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRemoteDataSource(
@@ -92,5 +91,17 @@ class TimeTableRemoteDataSource(
         return authApi.removeLectureInTimeTable(
             TimeTableRequest(lectureId, timetableId)
         )
+    }
+
+    override fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return Single.never()
+    }
+
+    override fun removeDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return Single.never()
+    }
+
+    override fun getDipLectures(): Single<Set<LectureTimeTable>> {
+        return Single.never()
     }
 }

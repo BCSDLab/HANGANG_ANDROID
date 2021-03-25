@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ScrollView
 import androidx.core.widget.NestedScrollView
 import kotlin.math.abs
@@ -49,4 +50,12 @@ fun calculateRectOnScreen(view: View): Rect {
         location[0] + view.measuredWidth,
         location[1] + view.measuredHeight
     )
+}
+
+fun ViewGroup.childViews(): List<View> {
+    val list = mutableListOf<View>()
+    for(i in 0 until childCount) {
+        list.add(getChildAt(i))
+    }
+    return list
 }

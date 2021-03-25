@@ -104,10 +104,13 @@
             app:layout_constraintTop_toBottomOf="@+id/text_view_lecture_professor"
             tools:text="월 1A~3B" />
 
-        <in.hangang.core.view.button.checkbox.VCheckBox
+        <ImageButton
             android:id="@+id/check_box_dip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_check_v_unselected"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="@id/button_lecture_review"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/button_lecture_review" />
@@ -117,7 +120,6 @@
             android:id="@+id/button_lecture_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="?android:attr/textColorSecondary"
             android:paddingStart="8dp"

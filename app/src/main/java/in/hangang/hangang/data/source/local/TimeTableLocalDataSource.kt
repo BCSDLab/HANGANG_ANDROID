@@ -1,12 +1,14 @@
 package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.constant.MAIN_TIMETABLE
+import `in`.hangang.hangang.constant.TIMETABLE_LECTURE_DIPS
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import com.orhanobut.hawk.Hawk
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableLocalDataSource : TimeTableDataSource {
@@ -62,9 +64,58 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun removeLectureInTimeTable(
-        lectureId: Int,
-        timetableId: Int
+            lectureId: Int,
+            timetableId: Int
     ): Single<CommonResponse> {
         return Single.never()
+    }
+
+    override fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return Single.create { subscriber ->
+            try {
+                val dips = getDips()
+                dips.add(lectureTimeTable)
+                Hawk.put(TIMETABLE_LECTURE_DIPS, dips)
+
+                subscriber.onSuccess(lectureTimeTable)
+
+            } catch (e: Exception) {
+                subscriber.onError(e)
+            }
+        }
+    }
+
+    override fun removeDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return Single.create { subscriber ->
+            try {
+                val dips = getDips()
+                dips.remove(lectureTimeTable)
+                Hawk.put(TIMETABLE_LECTURE_DIPS, dips)
+
+                subscriber.onSuccess(lectureTimeTable)
+
+            } catch (e: Exception) {
+                subscriber.onError(e)
+            }
+        }
+    }
+
+    override fun getDipLectures(): Single<Set<LectureTimeTable>> {
+        return Single.create { subscriber ->
+            try {
+                val dips = getDips()
+                subscriber.onSuccess(dips)
+            } catch (e: Exception) {
+                subscriber.onError(e)
+            }
+
+        }
+    }
+
+    private fun getDips(): MutableSet<LectureTimeTable> {
+        return if (Hawk.contains(TIMETABLE_LECTURE_DIPS))
+            Hawk.get(TIMETABLE_LECTURE_DIPS)
+        else
+            mutableSetOf()
     }
 }

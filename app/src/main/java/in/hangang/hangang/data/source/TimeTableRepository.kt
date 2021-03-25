@@ -5,6 +5,7 @@ import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRepository(
@@ -55,5 +56,17 @@ class TimeTableRepository(
         timetableId: Int
     ): Single<CommonResponse> {
         return timeTableRemoteDataSource.removeLectureInTimeTable(lectureId, timetableId)
+    }
+
+    override fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return timeTableLocalDataSource.addDipLecture(lectureTimeTable)
+    }
+
+    override fun removeDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return timeTableLocalDataSource.removeDipLecture(lectureTimeTable)
+    }
+
+    override fun getDipLectures(): Single<Set<LectureTimeTable>> {
+        return timeTableLocalDataSource.getDipLectures()
     }
 }

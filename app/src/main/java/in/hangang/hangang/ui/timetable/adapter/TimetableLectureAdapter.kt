@@ -3,16 +3,15 @@ package `in`.hangang.hangang.ui.timetable.adapter
 import `in`.hangang.core.view.goneVisible
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
 import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
 import `in`.hangang.hangang.util.TimetableUtil
-import `in`.hangang.hangang.util.diffutil.LectureDiffCallback
 import `in`.hangang.hangang.util.diffutil.LectureTimeTableDiffCallback
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +20,10 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
 
     private val lectures = mutableListOf<LectureTimeTable>()
     private val selectedLectures = mutableListOf<LectureTimeTable>()
+    private val dips = mutableListOf<LectureTimeTable>()
     var currentSelectedPosition = -1
 
-    var timetableLectureListener : TimetableLectureListener? = null
+    var timetableLectureListener: TimetableLectureListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimetableLectureViewHolder {
         return TimetableLectureViewHolder(
@@ -35,19 +35,21 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: TimetableLectureViewHolder, position: Int) {
-        holder.bind(lectures[position])
+        val item = lectures[position]
+        holder.bind(item)
 
         holder.itemView.isSelected = position == currentSelectedPosition
-        holder.setSelected(selectedLectures.contains(lectures[position]))
+        holder.setSelected(selectedLectures.contains(item))
+        holder.setDipButton(dips.contains(item))
 
         holder.itemView.setOnClickListener {
             val beforeSelectedPosition = currentSelectedPosition
 
-            if(currentSelectedPosition == position) {
-                timetableLectureListener?.onCheckedChange(-1, lectures[position])
+            if (currentSelectedPosition == position) {
+                timetableLectureListener?.onCheckedChange(-1, item)
                 currentSelectedPosition = -1
             } else {
-                timetableLectureListener?.onCheckedChange(position, lectures[position])
+                timetableLectureListener?.onCheckedChange(position, item)
                 currentSelectedPosition = position
             }
 
@@ -56,22 +58,25 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
         }
 
         holder.binding.buttonAddLecture.setOnClickListener {
-            if(timetableLectureListener?.onAddButtonClicked(position, lectures[position]) == true)
+            if (timetableLectureListener?.onAddButtonClicked(position, item) == true)
                 holder.setSelected(true)
         }
         holder.binding.buttonRemoveLecture.setOnClickListener {
-            if(timetableLectureListener?.onRemoveButtonClicked(position, lectures[position]) == true)
+            if (timetableLectureListener?.onRemoveButtonClicked(position, item) == true)
                 holder.setSelected(false)
         }
         holder.binding.buttonLectureReview.setOnClickListener {
-            timetableLectureListener?.onReviewButtonClicked(position, lectures[position])
+            timetableLectureListener?.onReviewButtonClicked(position, item)
+        }
+        holder.binding.checkBoxDip.setOnClickListener {
+            timetableLectureListener?.onDipButtonClicked(position, item)
         }
     }
 
     override fun getItemCount(): Int = lectures.size
 
-    fun updateItem(lectures: List<LectureTimeTable>) {
-        val diffCallback = LectureTimeTableDiffCallback(this.lectures, lectures)
+    fun updateItem(lectures: Collection<LectureTimeTable>) {
+        val diffCallback = LectureTimeTableDiffCallback(this.lectures, lectures.toList())
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         this.lectures.clear()
@@ -80,9 +85,16 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
         diffResult.dispatchUpdatesTo(this)
     }
 
-    fun updateSelectedLectures(selectedLectures: List<LectureTimeTable>) {
+    fun updateSelectedLectures(selectedLectures: Collection<LectureTimeTable>) {
         this.selectedLectures.clear()
         this.selectedLectures.addAll(selectedLectures)
+
+        notifyDataSetChanged()
+    }
+
+    fun updateDips(dips: Collection<LectureTimeTable>) {
+        this.dips.clear()
+        this.dips.addAll(dips)
 
         notifyDataSetChanged()
     }
@@ -96,12 +108,22 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
             binding.textViewLectureCredit.text = context.getString(R.string.credit, item.designScore)
             binding.textViewLectureGrade.text = context.getString(R.string.grade, item.grades)
             binding.textViewLectureClassification.text = item.classification
-            binding.textViewLectureTime.text = TimetableUtil.toString(context, item.classTime ?: "[]")
+            binding.textViewLectureTime.text = TimetableUtil.toString(context, item.classTime
+                    ?: "[]")
         }
 
         fun setSelected(isSelected: Boolean) {
             binding.buttonAddLecture.visibility = goneVisible(isSelected)
             binding.buttonRemoveLecture.visibility = visibleGone(isSelected)
+        }
+
+        fun setDipButton(isSelected: Boolean) {
+            binding.checkBoxDip.setImageDrawable(
+                    ContextCompat.getDrawable(context,
+                            if (isSelected) R.drawable.ic_check_v_selected
+                            else R.drawable.ic_check_v_unselected
+                    )
+            )
         }
     }
 }
