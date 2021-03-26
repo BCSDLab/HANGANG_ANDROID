@@ -8,7 +8,6 @@ import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import com.orhanobut.hawk.Hawk
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableLocalDataSource : TimeTableDataSource {
@@ -100,11 +99,21 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         }
     }
 
-    override fun getDipLectures(): Single<Set<LectureTimeTable>> {
+    override fun getDipLectures(classification: List<String>?, department: String?, keyword: String?): Single<Set<LectureTimeTable>> {
         return Single.create { subscriber ->
             try {
                 val dips = getDips()
-                subscriber.onSuccess(dips)
+                subscriber.onSuccess(dips.filter {
+                    if(classification == null || classification.isEmpty()) true
+                    else classification.contains(it.classification)
+                }.filter {
+                    if(department != null) department == it.department
+                    else true
+                }.filter {
+                    if(keyword != null)
+                        it.contains(keyword)
+                    else true
+                }.toSet())
             } catch (e: Exception) {
                 subscriber.onError(e)
             }

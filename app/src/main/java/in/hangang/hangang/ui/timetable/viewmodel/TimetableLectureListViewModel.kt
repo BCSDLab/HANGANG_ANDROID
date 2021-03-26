@@ -7,19 +7,20 @@ import `in`.hangang.hangang.data.request.LecturesParameter
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
-import `in`.hangang.hangang.util.*
+import `in`.hangang.hangang.util.LogUtil
+import `in`.hangang.hangang.util.handleHttpException
+import `in`.hangang.hangang.util.handleProgress
+import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.addTo
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class TimetableLectureListViewModel(
         private val timetableRepository: TimeTableRepository
 ) : ViewModelBase() {
     private val lectureList = mutableListOf<LectureTimeTable>()
 
-    private val _enableEndlessScroll = MutableLiveData<Boolean>()
+    private val _isDip = MutableLiveData<Boolean>()
 
     private val _lectures = MutableLiveData<Collection<LectureTimeTable>>()
     private val _dips = MutableLiveData<Collection<LectureTimeTable>>()
@@ -32,8 +33,8 @@ class TimetableLectureListViewModel(
     val lectures: LiveData<Collection<LectureTimeTable>> get() = _lectures
     val isGetLecturesLoading: LiveData<Boolean> get() = _isGetLecturesLoading
     val timetableLectureChanged: MutableLiveData<Event<CommonResponse>> get() = _timetableLectureChanged
-    val dips : LiveData<Collection<LectureTimeTable>> get() = _dips
-    val enableEndlessScroll : LiveData<Boolean> get() = _enableEndlessScroll
+    val dips: LiveData<Collection<LectureTimeTable>> get() = _dips
+    val isDip: LiveData<Boolean> get() = _isDip
 
     private var lastLecturesParameter: LecturesParameter = LecturesParameter()
 
@@ -49,7 +50,7 @@ class TimetableLectureListViewModel(
             keyword: String? = null,
             semesterDateId: Int
     ) {
-        _enableEndlessScroll.postValue(true)
+        setShowingDip(false)
         page = 0
         this.classification = classification
         this.department = department
@@ -117,7 +118,7 @@ class TimetableLectureListViewModel(
 
     fun toggleDipLecture(lectureTimeTable: LectureTimeTable) {
         val dips = dips.value ?: setOf()
-        if(dips.contains(lectureTimeTable)) {
+        if (dips.contains(lectureTimeTable)) {
             removeDipLecture(lectureTimeTable)
         } else {
             addDipLecture(lectureTimeTable)
@@ -146,16 +147,24 @@ class TimetableLectureListViewModel(
                 })
     }
 
-    fun getDipLectures(switchLecturesList : Boolean) {
-        if(switchLecturesList) _enableEndlessScroll.postValue(false)
-        timetableRepository.getDipLectures()
+    fun getDipLectures(
+            switchLecturesList: Boolean,
+            classification: List<String>? = null,
+            department: String? = null,
+            keyword: String? = null) {
+        if (switchLecturesList) setShowingDip(true)
+        timetableRepository.getDipLectures(classification, department, keyword)
                 .withThread()
                 .handleProgress(this)
                 .subscribe({
                     _dips.postValue(it)
-                    if(switchLecturesList) _lectures.postValue(it)
+                    if (switchLecturesList) _lectures.postValue(it)
                 }, {
 
                 })
+    }
+
+    fun setShowingDip(value: Boolean) {
+        _isDip.postValue(value)
     }
 }

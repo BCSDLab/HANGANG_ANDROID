@@ -18,10 +18,15 @@ class SearchAppBar @JvmOverloads constructor(
 ) : LinearLayout(context, attributeSet, defStyleAttr, defStyleRes) {
     private val view = LayoutInflater.from(context).inflate(R.layout.layout_app_bar_search, this, true)
 
+    interface SearchListener {
+        fun onSearch(keyword: String)
+    }
+
     var filterable: Filterable? = null
     var filterListener: Filter.FilterListener? = null
+    var searchListener: SearchListener? = null
 
-    var onBackButtonClickListener : View.OnClickListener? = null
+    var onBackButtonClickListener: View.OnClickListener? = null
 
     val searchField = findViewById<EditText>(R.id.search_layout_edit_text).apply {
         setOnKeyListener { v, keyCode, event ->
@@ -45,7 +50,7 @@ class SearchAppBar @JvmOverloads constructor(
 
     var showBackButton = true
         set(value) {
-            backButton.visibility = if(value) View.VISIBLE else View.GONE
+            backButton.visibility = if (value) View.VISIBLE else View.GONE
             field = value
         }
 
@@ -65,7 +70,18 @@ class SearchAppBar @JvmOverloads constructor(
     }
 
     fun search() {
-        filterable?.filter?.filter(searchField.text.toString(), filterListener)
+        if (searchListener != null)
+            searchListener!!.onSearch(searchField.text.toString())
+        else
+            filterable?.filter?.filter(searchField.text.toString(), filterListener)
+    }
+
+    inline fun setSearchListener(crossinline searchListener: (String) -> Unit) {
+        this.searchListener = object : SearchListener {
+            override fun onSearch(keyword: String) {
+                searchListener(keyword)
+            }
+        }
     }
 
     //This is editText methods

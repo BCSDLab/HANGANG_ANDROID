@@ -9,7 +9,6 @@ import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import `in`.hangang.hangang.util.SemesterUtil
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRemoteDataSource(
@@ -101,7 +100,7 @@ class TimeTableRemoteDataSource(
         return Single.never()
     }
 
-    override fun getDipLectures(): Single<Set<LectureTimeTable>> {
+    override fun getDipLectures(classification: List<String>?, department: String?, keyword: String?): Single<Set<LectureTimeTable>> {
         return Single.never()
     }
 }

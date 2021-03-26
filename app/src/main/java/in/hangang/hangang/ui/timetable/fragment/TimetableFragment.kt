@@ -18,6 +18,7 @@ import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
+import `in`.hangang.hangang.ui.timetable.contract.TimeTableLectureFilterActivityContract
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
@@ -33,6 +34,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -55,13 +57,21 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableLectureListContainer) }
     private val timetableLectureAdapter: TimetableLectureAdapter by lazy { TimetableLectureAdapter(requireContext()) }
 
-    private var lectureFilter: LectureFilter? = null
+    private var keyword = MutableLiveData<String?>(null)
+    private var lectureFilter = MutableLiveData<LectureFilter?>(null)
+    var department = MutableLiveData<String?>(null)
 
     private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
         it.selectedTimetable?.let { timetable ->
             timetableFragmentViewModel.setCurrentShowingTimeTable(timetable)
         }
         if (it.timetableListChanged) timetableViewModel.getTimetables()
+    }
+
+    private val timetableLectureFilterActivityResult = registerForActivityResult(TimeTableLectureFilterActivityContract()) {
+        if (it.apply) {
+            lectureFilter.postValue(it.lectureFilter)
+        }
     }
 
     private val appBarOpenTimetableListButton by lazy {
@@ -158,6 +168,16 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             }
         }
 
+        keyword.observe(viewLifecycleOwner) {
+            updateLectureList()
+        }
+        lectureFilter.observe(viewLifecycleOwner) {
+            updateLectureList()
+        }
+        department.observe(viewLifecycleOwner) {
+            updateLectureList()
+        }
+
         timetableViewModel.getTimetables()
     }
 
@@ -168,41 +188,37 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         binding.radioGroupDepartment.childViews().forEach {
             (it as FilledCheckBox).setOnClickListener { _ ->
                 if (!it.isChecked) {
-                    timetableLectureListViewModel.getLectures(
-                            semesterDateId = timetableFragmentViewModel.currentShowingTimeTable.value?.semesterDateId
-                                    ?: 5
-                    )
+                    timetableLectureListViewModel.setShowingDip(false)
+                    department.postValue(null)
                 } else {
                     binding.radioGroupDepartment.childViews().forEach { child ->
                         (child as FilledCheckBox).isChecked = false
                     }
                     it.isChecked = true
-                    if (it.id == R.id.radio_button_major_dip) {
-                        timetableLectureListViewModel.getDipLectures(true)
-                    } else {
-                        val department = when (it.id) {
-                            R.id.radio_button_major_0 -> DEPARTMENT_LIBERAL
-                            R.id.radio_button_major_1 -> DEPARTMENT_HRD
-                            R.id.radio_button_major_2 -> DEPARTMENT_MECHANICAL
-                            R.id.radio_button_major_3 -> DEPARTMENT_DESIGN
-                            R.id.radio_button_major_4 -> DEPARTMENT_MECHATRONICS
-                            R.id.radio_button_major_5 -> DEPARTMENT_INDUSTRIAL
-                            R.id.radio_button_major_6 -> DEPARTMENT_ENERGY
-                            R.id.radio_button_major_7 -> DEPARTMENT_CONVERGENCE
-                            R.id.radio_button_major_8 -> DEPARTMENT_ELECTRONIC
-                            R.id.radio_button_major_9 -> DEPARTMENT_COMPUTER
-                            else -> DEPARTMENT_LIBERAL
-                        }
-                        timetableLectureListViewModel.getLectures(
-                                semesterDateId = timetableFragmentViewModel.currentShowingTimeTable.value?.semesterDateId
-                                        ?: 5,
-                                department = department
-                        )
-                    }
+                    timetableLectureListViewModel.setShowingDip(it.id == R.id.radio_button_major_dip)
+                    department.postValue(when (it.id) {
+                        R.id.radio_button_major_0 -> DEPARTMENT_LIBERAL
+                        R.id.radio_button_major_1 -> DEPARTMENT_HRD
+                        R.id.radio_button_major_2 -> DEPARTMENT_MECHANICAL
+                        R.id.radio_button_major_3 -> DEPARTMENT_DESIGN
+                        R.id.radio_button_major_4 -> DEPARTMENT_MECHATRONICS
+                        R.id.radio_button_major_5 -> DEPARTMENT_INDUSTRIAL
+                        R.id.radio_button_major_6 -> DEPARTMENT_ENERGY
+                        R.id.radio_button_major_7 -> DEPARTMENT_CONVERGENCE
+                        R.id.radio_button_major_8 -> DEPARTMENT_ELECTRONIC
+                        R.id.radio_button_major_9 -> DEPARTMENT_COMPUTER
+                        else -> null
+                    })
+
                 }
             }
         }
-
+        binding.timetableLectureSearchBar.setSearchListener {
+            this.keyword.postValue(it)
+        }
+        binding.buttonTimetableLectureFilter.setOnClickListener {
+            timetableLectureFilterActivityResult.launch(lectureFilter.value)
+        }
     }
 
     private fun initBottomSheet() {
@@ -292,10 +308,9 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     }
 
     private fun recyclerViewMoreScroll() {
-        if (timetableLectureListViewModel.enableEndlessScroll.value == true) {
+        if (timetableLectureListViewModel.isDip.value == false) {
             timetableLectureListViewModel.getLectures()
         }
-
     }
 
     private fun initAppBar() {
@@ -409,7 +424,25 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         binding.radioGroupDepartment.childViews().forEach {
             (it as FilledCheckBox).isChecked = false
         }
-        lectureFilter = null
+        lectureFilter.postValue(null)
+    }
+
+    private fun updateLectureList() {
+        if (timetableLectureListViewModel.isDip.value == true) {
+            timetableLectureListViewModel.getDipLectures(true,
+                    classification = lectureFilter.value?.classifications,
+                    keyword = keyword.value,
+                    department = department.value
+            )
+        } else {
+            timetableLectureListViewModel.getLectures(
+                    classification = lectureFilter.value?.classifications,
+                    semesterDateId = timetableFragmentViewModel.currentShowingTimeTable.value?.semesterDateId
+                            ?: 5,
+                    department = department.value,
+                    keyword = keyword.value
+            )
+        }
     }
 
     private fun saveImageToFile(bitmap: Bitmap) {

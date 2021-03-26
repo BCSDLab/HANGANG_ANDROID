@@ -5,7 +5,6 @@ import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRepository(
@@ -66,7 +65,7 @@ class TimeTableRepository(
         return timeTableLocalDataSource.removeDipLecture(lectureTimeTable)
     }
 
-    override fun getDipLectures(): Single<Set<LectureTimeTable>> {
-        return timeTableLocalDataSource.getDipLectures()
+    override fun getDipLectures(classification: List<String>?, department: String?, keyword: String?): Single<Set<LectureTimeTable>> {
+        return timeTableLocalDataSource.getDipLectures(classification, department, keyword)
     }
 }
