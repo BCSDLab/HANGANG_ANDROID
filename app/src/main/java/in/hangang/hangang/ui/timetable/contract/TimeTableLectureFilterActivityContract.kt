@@ -11,7 +11,7 @@ class TimeTableLectureFilterActivityContract : ActivityResultContract<LectureFil
 
     data class Result(
             val apply: Boolean,
-            val lectureFilter: LectureFilter?
+            val lectureFilter: LectureFilter
     )
 
     companion object {
@@ -27,7 +27,7 @@ class TimeTableLectureFilterActivityContract : ActivityResultContract<LectureFil
     override fun parseResult(resultCode: Int, intent: Intent?): Result {
         return Result(
                 resultCode == RESULT_OK,
-                intent?.extras?.getParcelable(TIMETABLE_LECTURE_FILTER)
+                intent?.extras?.getParcelable(TIMETABLE_LECTURE_FILTER)!!
         )
     }
 }

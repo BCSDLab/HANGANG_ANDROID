@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="timetable_picker_weeks">
+        <item>@string/timetable_mon</item>
+        <item>@string/timetable_tue</item>
+        <item>@string/timetable_wed</item>
+        <item>@string/timetable_thu</item>
+        <item>@string/timetable_fri</item>
+    </string-array>
+
+    <string-array name="timetable_picker_hours">
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+    </string-array>
+
+    <string-array name="timetable_picker_minutes">
+        <item>00</item>
+        <item>30</item>
+    </string-array>
+</resources>

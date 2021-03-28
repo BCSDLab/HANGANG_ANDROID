@@ -4,13 +4,11 @@ import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
 import `in`.hangang.hangang.util.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,36 +16,33 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableFragmentViewModel(
-        private val timeTableRepository: TimeTableRepository
+        private val timetableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
     enum class Mode {
         MODE_NORMAL,
-        MODE_EDIT
+        MODE_LECTURE_LIST,
+        MODE_CUSTOM_LECTURE,
+        MODE_LECTURE_DETAIL
     }
 
     private val _mode = MutableLiveData(Mode.MODE_NORMAL)
     private val _currentShowingTimeTable = MutableLiveData<TimeTable>()
     private val _captured = MutableLiveData<Bitmap>()
-    private val _captureError = MutableLiveData<Throwable>()
-    private val _lectureTimetableViews = MutableLiveData<List<View>>()
     private val _lectureTimetables = MutableLiveData<List<LectureTimeTable>>()
+    private val _selectedTimetable = MutableLiveData<LectureTimeTable?>()
+    private val _dummyTimeTable = MutableLiveData<LectureTimeTable?>()
 
     val mode: LiveData<Mode> get() = _mode
     val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
     val captured: LiveData<Bitmap> get() = _captured
-    val captureError: LiveData<Throwable> get() = _captureError
-    val lectureTimetableViews : LiveData<List<View>> get() = _lectureTimetableViews
     val lectureTimeTables : LiveData<List<LectureTimeTable>> get() = _lectureTimetables
+    val selectedTimeTable : LiveData<LectureTimeTable?> get() = _selectedTimetable
+    val dummyTimeTable : LiveData<LectureTimeTable?> get() = _dummyTimeTable
 
-    fun switchToEditMode() {
-        if (_mode.value != Mode.MODE_EDIT)
-            _mode.postValue(Mode.MODE_EDIT)
-    }
-
-    fun switchToNormalMode() {
-        if (_mode.value != Mode.MODE_NORMAL)
-            _mode.postValue(Mode.MODE_NORMAL)
+    fun setMode(mode: Mode) {
+        if (_mode.value != mode)
+            _mode.postValue(mode)
     }
 
     fun setCurrentShowingTimeTable(timetable: TimeTable) {
@@ -70,26 +65,17 @@ class TimetableFragmentViewModel(
                 .subscribe({
                            _captured.postValue(it)
                 }, {
-                    _captureError.postValue(it)
                 })
                 .addTo(compositeDisposable)
     }
 
-    fun renderTimeTable(timetableUtil: TimetableUtil, timetable: TimeTable) {
-        timeTableRepository.getLectureList(timetable.id).
+    fun getAddedLectureTimeTables(timetable: TimeTable) {
+        timetableRepository.getLectureList(timetable.id).
         withThread()
                 .handleHttpException()
                 .handleProgress(this)
                 .subscribe({
                     _lectureTimetables.postValue(it)
-                    timetableUtil.getTimetableView(it)
-                            .withThread()
-                            .handleProgress(this)
-                            .subscribe({ views ->
-                                _lectureTimetableViews.postValue(views)
-                            }, {
-                                LogUtil.e(it.message)
-                            })
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
                 })
@@ -103,4 +89,43 @@ class TimetableFragmentViewModel(
         }
         return null
     }
+
+    fun addTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
+        timetableRepository.addLectureInTimeTable(
+                lectureId = lectureTimeTable.id,
+                timetableId = timetable.id
+        ).withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    getAddedLectureTimeTables(timetable)
+                }, {
+
+                })
+                .addTo(compositeDisposable)
+    }
+
+    fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
+        timetableRepository.removeLectureInTimeTable(
+                lectureId = lectureTimeTable.lectureId,
+                timetableId = timetable.id
+        ).withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    getAddedLectureTimeTables(timetable)
+                }, {
+
+                })
+                .addTo(compositeDisposable)
+    }
+
+    fun selectLectureTimeTable(lectureTimeTable: LectureTimeTable?) {
+        _selectedTimetable.postValue(lectureTimeTable)
+    }
+
+    fun setDummyLectureTimeTable(lectureTimeTable: LectureTimeTable?) {
+        _dummyTimeTable.postValue(lectureTimeTable)
+    }
+
 }

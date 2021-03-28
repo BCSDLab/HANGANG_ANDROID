@@ -7,7 +7,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class LectureFilter(
     val criteria: Int,
-    val classifications : List<String>
+    val classifications : List<String>,
+    val department: String?,
+    val keyword: String?
 ) : Parcelable {
     companion object {
         const val CRITERIA_NONE = 0x00

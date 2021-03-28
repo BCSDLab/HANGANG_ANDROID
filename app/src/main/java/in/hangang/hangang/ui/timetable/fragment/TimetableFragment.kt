@@ -6,21 +6,14 @@ import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
-import `in`.hangang.core.view.button.checkbox.FilledCheckBox
-import `in`.hangang.core.view.childViews
 import `in`.hangang.core.view.edittext.SingleLineEditText
 import `in`.hangang.core.view.goneVisible
-import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.LectureFilter
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
-import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
-import `in`.hangang.hangang.ui.timetable.contract.TimeTableLectureFilterActivityContract
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
-import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
@@ -34,12 +27,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
@@ -47,31 +38,27 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private val lectureTimetableDummyViews = arrayListOf<View>()
 
-    private val timetableViewModel: TimetableViewModel by viewModel()
-    private val timetableFragmentViewModel: TimetableFragmentViewModel by viewModel()
-    private val timetableLectureListViewModel: TimetableLectureListViewModel by viewModel()
+    private val timetableViewModel: TimetableViewModel by sharedViewModel()
+    private val timetableFragmentViewModel: TimetableFragmentViewModel by sharedViewModel()
+    private val timetableLectureListViewModel: TimetableLectureListViewModel by sharedViewModel()
+
+    private val timetableLectureListFragment : TimetableLectureListFragment by lazy {
+        TimetableLectureListFragment()
+    }
+    private val timetableCustomLectureFragment : TimetableCustomLectureFragment by lazy {
+        TimetableCustomLectureFragment()
+    }
 
     private val fileUtil: FileUtil by inject()
     private val timetableUtil: TimetableUtil by inject()
 
-    private val behavior by lazy { BottomSheetBehavior.from(binding.timetableLectureListContainer) }
-    private val timetableLectureAdapter: TimetableLectureAdapter by lazy { TimetableLectureAdapter(requireContext()) }
-
-    private var keyword = MutableLiveData<String?>(null)
-    private var lectureFilter = MutableLiveData<LectureFilter?>(null)
-    var department = MutableLiveData<String?>(null)
+    private val behavior by lazy { BottomSheetBehavior.from(binding.timetableBottomSheetContainer) }
 
     private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
         it.selectedTimetable?.let { timetable ->
             timetableFragmentViewModel.setCurrentShowingTimeTable(timetable)
         }
         if (it.timetableListChanged) timetableViewModel.getTimetables()
-    }
-
-    private val timetableLectureFilterActivityResult = registerForActivityResult(TimeTableLectureFilterActivityContract()) {
-        if (it.apply) {
-            lectureFilter.postValue(it.lectureFilter)
-        }
     }
 
     private val appBarOpenTimetableListButton by lazy {
@@ -107,6 +94,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             mode.observe(viewLifecycleOwner) {
                 when (it) {
                     TimetableFragmentViewModel.Mode.MODE_NORMAL -> {
+                        changeBottomSheetFragment(timetableLectureListFragment)
                         behavior.state = BottomSheetBehavior.STATE_HIDDEN
                         appBarOpenTimetableListButton.visibility = View.VISIBLE
                         appBarMoreMenuButton.visibility = View.VISIBLE
@@ -114,7 +102,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarCloseButton.visibility = View.GONE
                         hideLectureTimetableDummyViews()
                     }
-                    TimetableFragmentViewModel.Mode.MODE_EDIT -> {
+                    TimetableFragmentViewModel.Mode.MODE_LECTURE_LIST -> {
+                        changeBottomSheetFragment(timetableLectureListFragment)
                         behavior.state = BottomSheetBehavior.STATE_EXPANDED
                         appBarOpenTimetableListButton.visibility = View.GONE
                         appBarMoreMenuButton.visibility = View.GONE
@@ -122,6 +111,16 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarCloseButton.visibility = View.VISIBLE
                         showLectureTimetableDummyViews()
                     }
+                    TimetableFragmentViewModel.Mode.MODE_CUSTOM_LECTURE -> {
+                        changeBottomSheetFragment(timetableCustomLectureFragment, true)
+                        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                        appBarOpenTimetableListButton.visibility = View.GONE
+                        appBarMoreMenuButton.visibility = View.GONE
+                        appBarAddManuallyButton.visibility = View.VISIBLE
+                        appBarCloseButton.visibility = View.VISIBLE
+                        showLectureTimetableDummyViews()
+                    }
+                    TimetableFragmentViewModel.Mode.MODE_LECTURE_DETAIL -> {}
                 }
             }
 
@@ -129,13 +128,23 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
             captured.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
 
-            lectureTimetableViews.observe(viewLifecycleOwner, this@TimetableFragment::showLectureTimeTable)
             lectureTimeTables.observe(viewLifecycleOwner) {
-                timetableLectureAdapter.updateSelectedLectures(it)
+                timetableUtil.getTimetableView(it)
+                        .withThread()
+                        .subscribe(this@TimetableFragment::showLectureTimeTable, {})
+            }
+
+            selectedTimeTable.observe(viewLifecycleOwner) {
+
+            }
+
+            dummyTimeTable.observe(viewLifecycleOwner) {
+                    timetableUtil.getTimetableDummyView(if(it == null) listOf() else listOf(it))
+                        .withThread()
+                        .subscribe(this@TimetableFragment::showLectureDummyTimetable)
             }
         }
         with(timetableViewModel) {
-
             mainTimeTable.observe(viewLifecycleOwner) {
                 timetableFragmentViewModel.setCurrentShowingTimeTable(it)
             }
@@ -151,73 +160,13 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 )
             })
         }
-        with(timetableLectureListViewModel) {
-            isGetLecturesLoading.observe(viewLifecycleOwner) {
-                binding.recyclerViewTimetableLecturesProgress.visibility = visibleGone(it)
-            }
-            lectures.observe(viewLifecycleOwner) {
-                timetableLectureAdapter.updateItem(it)
-            }
-            timetableLectureChanged.observe(viewLifecycleOwner, EventObserver {
-                timetableFragmentViewModel.currentShowingTimeTable.value?.let { timeTable ->
-                    timetableFragmentViewModel.renderTimeTable(timetableUtil, timeTable)
-                }
-            })
-            dips.observe(viewLifecycleOwner) {
-                timetableLectureAdapter.updateDips(it)
-            }
-        }
-
-        keyword.observe(viewLifecycleOwner) {
-            updateLectureList()
-        }
-        lectureFilter.observe(viewLifecycleOwner) {
-            updateLectureList()
-        }
-        department.observe(viewLifecycleOwner) {
-            updateLectureList()
-        }
 
         timetableViewModel.getTimetables()
     }
 
     private fun initView() {
         binding.fabEdit.setOnClickListener {
-            timetableFragmentViewModel.switchToEditMode()
-        }
-        binding.radioGroupDepartment.childViews().forEach {
-            (it as FilledCheckBox).setOnClickListener { _ ->
-                if (!it.isChecked) {
-                    timetableLectureListViewModel.setShowingDip(false)
-                    department.postValue(null)
-                } else {
-                    binding.radioGroupDepartment.childViews().forEach { child ->
-                        (child as FilledCheckBox).isChecked = false
-                    }
-                    it.isChecked = true
-                    timetableLectureListViewModel.setShowingDip(it.id == R.id.radio_button_major_dip)
-                    department.postValue(when (it.id) {
-                        R.id.radio_button_major_0 -> DEPARTMENT_LIBERAL
-                        R.id.radio_button_major_1 -> DEPARTMENT_HRD
-                        R.id.radio_button_major_2 -> DEPARTMENT_MECHANICAL
-                        R.id.radio_button_major_3 -> DEPARTMENT_DESIGN
-                        R.id.radio_button_major_4 -> DEPARTMENT_MECHATRONICS
-                        R.id.radio_button_major_5 -> DEPARTMENT_INDUSTRIAL
-                        R.id.radio_button_major_6 -> DEPARTMENT_ENERGY
-                        R.id.radio_button_major_7 -> DEPARTMENT_CONVERGENCE
-                        R.id.radio_button_major_8 -> DEPARTMENT_ELECTRONIC
-                        R.id.radio_button_major_9 -> DEPARTMENT_COMPUTER
-                        else -> null
-                    })
-
-                }
-            }
-        }
-        binding.timetableLectureSearchBar.setSearchListener {
-            this.keyword.postValue(it)
-        }
-        binding.buttonTimetableLectureFilter.setOnClickListener {
-            timetableLectureFilterActivityResult.launch(lectureFilter.value)
+            timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_LECTURE_LIST)
         }
     }
 
@@ -231,10 +180,10 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED, BottomSheetBehavior.STATE_HIDDEN -> {
-                        timetableFragmentViewModel.switchToNormalMode()
+                        timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_NORMAL)
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED, BottomSheetBehavior.STATE_EXPANDED -> {
-                        timetableFragmentViewModel.switchToEditMode()
+                        timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_LECTURE_LIST)
                     }
                 }
             }
@@ -246,71 +195,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             }
         })
 
-        binding.recyclerViewTimetableLectures.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewTimetableLectures.adapter = timetableLectureAdapter
-        binding.recyclerViewTimetableLectures.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-                    recyclerViewMoreScroll()
-                }
-            }
-        })
-        timetableLectureAdapter.timetableLectureListener = object : TimetableLectureListener {
-            override fun onCheckedChange(position: Int, lectureTimeTable: LectureTimeTable) {
-                if (position == -1) {
-                    hideLectureTimetableDummyViews()
-                } else
-                    timetableUtil.getTimetableDummyView(listOf(lectureTimeTable)).withThread().subscribe(
-                            this@TimetableFragment::setLectureTimetableDummyViews
-                    ) {}
-            }
-
-            override fun onAddButtonClicked(
-                    position: Int,
-                    lectureTimeTable: LectureTimeTable
-            ): Boolean {
-                with(timetableFragmentViewModel.checkLectureDuplication(lectureTimeTable)) {
-                    if (this == null)
-                        timetableLectureListViewModel.addTimeTableLecture(
-                                timetableId = timetableFragmentViewModel.currentShowingTimeTable.value?.id
-                                        ?: 0,
-                                lectureId = lectureTimeTable.id
-                        )
-                    else {
-                        showTimetableDuplicatedDialog(this)
-                    }
-                }
-                return false
-            }
-
-            override fun onRemoveButtonClicked(
-                    position: Int,
-                    lectureTimeTable: LectureTimeTable
-            ): Boolean {
-                timetableLectureListViewModel.removeTimeTableLecture(
-                        timetableId = timetableFragmentViewModel.currentShowingTimeTable.value?.id
-                                ?: 0,
-                        lectureId = lectureTimeTable.id
-                )
-                return false
-            }
-
-            override fun onReviewButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
-                //TODO goto review activity
-            }
-
-            override fun onDipButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
-                timetableLectureListViewModel.toggleDipLecture(lectureTimeTable)
-            }
-
-        }
-    }
-
-    private fun recyclerViewMoreScroll() {
-        if (timetableLectureListViewModel.isDip.value == false) {
-            timetableLectureListViewModel.getLectures()
-        }
     }
 
     private fun initAppBar() {
@@ -327,7 +211,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                             openTimetableList()
                         }
                         appBarCloseButton -> {
-                            timetableFragmentViewModel.switchToNormalMode()
+                            timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_NORMAL)
                         }
                     }
                 }
@@ -335,7 +219,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 override fun onClickViewInRightContainer(view: View, index: Int) {
                     when (view) {
                         appBarAddManuallyButton -> {
-
+                            timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_CUSTOM_LECTURE)
                         }
                         appBarMoreMenuButton -> {
                             showTimetablePopupMenu(appBarMoreMenuButton)
@@ -380,18 +264,25 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun updateTimeTable(timetable: TimeTable) {
         binding.appBar.title = timetable.name.toString()
-        resetFilter()
         timetableLectureListViewModel.getDipLectures(false)
-        timetableLectureListViewModel.getLectures(
-                semesterDateId = timetableFragmentViewModel.currentShowingTimeTable.value?.semesterDateId
-                        ?: 5
-        )
-        timetableFragmentViewModel.renderTimeTable(timetableUtil, timetable)
+        timetableFragmentViewModel.getAddedLectureTimeTables(timetable)
+        timetableLectureListViewModel.resetLectureFilter()
     }
 
     private fun showLectureTimeTable(lectureTimeTableViews: List<View>) {
         binding.timetableLayout.removeAllViews()
         lectureTimeTableViews.forEach {
+            binding.timetableLayout.addView(it)
+        }
+    }
+
+    private fun showLectureDummyTimetable(lectureTimeTableViews: List<View>) {
+        lectureTimetableDummyViews.forEach {
+            binding.timetableLayout.removeView(it)
+        }
+        lectureTimetableDummyViews.clear()
+        lectureTimetableDummyViews.addAll(lectureTimeTableViews)
+        lectureTimetableDummyViews.forEach {
             binding.timetableLayout.addView(it)
         }
     }
@@ -416,32 +307,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun showLectureTimetableDummyViews() {
         lectureTimetableDummyViews.forEach {
             it.visibility = goneVisible(false)
-        }
-    }
-
-    private fun resetFilter() {
-        binding.timetableLectureSearchBar.searchField.setText("")
-        binding.radioGroupDepartment.childViews().forEach {
-            (it as FilledCheckBox).isChecked = false
-        }
-        lectureFilter.postValue(null)
-    }
-
-    private fun updateLectureList() {
-        if (timetableLectureListViewModel.isDip.value == true) {
-            timetableLectureListViewModel.getDipLectures(true,
-                    classification = lectureFilter.value?.classifications,
-                    keyword = keyword.value,
-                    department = department.value
-            )
-        } else {
-            timetableLectureListViewModel.getLectures(
-                    classification = lectureFilter.value?.classifications,
-                    semesterDateId = timetableFragmentViewModel.currentShowingTimeTable.value?.semesterDateId
-                            ?: 5,
-                    department = department.value,
-                    keyword = keyword.value
-            )
         }
     }
 
@@ -514,16 +379,12 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         }
     }
 
-    private fun showTimetableDuplicatedDialog(lectureTimeTable: LectureTimeTable) {
-        DialogUtil.makeSimpleDialog(
-                requireContext(),
-                title = getString(R.string.timetable_duplicated_title),
-                message = getString(R.string.timetable_duplicated_message, lectureTimeTable.name),
-                positiveButtonText = getString(R.string.ok),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
-                },
-                cancelable = true
-        ).show()
+    private fun changeBottomSheetFragment(fragment: Fragment, addtoBackStack: Boolean = false) {
+        requireActivity().supportFragmentManager.beginTransaction().apply {
+            replace(R.id.timetable_bottom_sheet_container, fragment)
+            if(addtoBackStack) addToBackStack(null)
+            commit()
+        }
     }
+
 }

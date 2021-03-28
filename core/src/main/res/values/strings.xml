@@ -1,6 +1,9 @@
 <resources>
     <string name="loading">로딩중</string>
 
+    <string name="ok">확인</string>
+    <string name="close">닫기</string>
+
     <string name="timetable_mon">월</string>
     <string name="timetable_tue">화</string>
     <string name="timetable_wed">수</string>

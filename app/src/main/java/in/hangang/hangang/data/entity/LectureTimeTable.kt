@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class LectureTimeTable(
         val id: Int,
+        @SerializedName("lecture_id")
+        val lectureId: Int,
         @SerializedName("is_custom")
         val isCustom: Boolean,
         @SerializedName("semester_date")
@@ -32,7 +34,15 @@ data class LectureTimeTable(
         val updatedAt: String?,
         val rating: Double
 ) {
-    fun contains(keyword: CharSequence): Boolean =
+        override fun equals(other: Any?): Boolean {
+                return this.lectureId == ((other as? LectureTimeTable)?.lectureId ?: -1)
+        }
+
+        override fun hashCode(): Int {
+                return lectureId.hashCode()
+        }
+
+        fun contains(keyword: CharSequence): Boolean =
             (semesterDate?.contains(keyword, true) ?: false) ||
                     (code?.contains(keyword, true) ?: false) ||
                     (name?.contains(keyword, true) ?: false) ||

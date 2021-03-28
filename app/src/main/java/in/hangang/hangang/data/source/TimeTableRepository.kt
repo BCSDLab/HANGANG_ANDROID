@@ -68,4 +68,15 @@ class TimeTableRepository(
     override fun getDipLectures(classification: List<String>?, department: String?, keyword: String?): Single<Set<LectureTimeTable>> {
         return timeTableLocalDataSource.getDipLectures(classification, department, keyword)
     }
+
+    override fun addCustomLectureInTimetable(
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
+    ): Single<CommonResponse> {
+        return timeTableRemoteDataSource.addCustomLectureInTimetable(
+            classTime, name, professor, userTimetableId
+        )
+    }
 }

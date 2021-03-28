@@ -1,21 +1,22 @@
 package `in`.hangang.hangang.data.source.source
 
-import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
 
 interface TimeTableDataSource {
     fun getTimeTables(): Single<List<TimeTable>>
     fun getLectureTimetableList(
-            classification: List<String>? = null,
-            department: String? = null,
-            keyword: String? = null,
-            limit: Int = 10,
-            page: Int = 1,
-            semesterDateId: Int
+        classification: List<String>? = null,
+        department: String? = null,
+        keyword: String? = null,
+        limit: Int = 10,
+        page: Int = 1,
+        semesterDateId: Int
     ): Single<List<LectureTimeTable>>
+
     fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse>
     fun removeTimeTable(timetableId: Int): Single<CommonResponse>
     fun modifyTimeTableName(timetableId: Int, name: String): Single<CommonResponse>
@@ -27,8 +28,15 @@ interface TimeTableDataSource {
     fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun removeDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun getDipLectures(
-            classification: List<String>? = null,
-            department: String? = null,
-            keyword: String? = null
+        classification: List<String>? = null,
+        department: String? = null,
+        keyword: String? = null
     ): Single<Set<LectureTimeTable>>
+
+    fun addCustomLectureInTimetable(
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
+    ): Single<CommonResponse>
 }

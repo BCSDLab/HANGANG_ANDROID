@@ -57,4 +57,9 @@ interface AuthApi {
     fun getLectureListFromTimeTable(
             @Query("timeTableId") timetableId: Int
     ): Single<List<LectureTimeTable>>
+
+    @POST(TIMETABLE_CUSTOM_LECTURE)
+    fun addCustomLectureInTimetable(
+        @Body timeTableCustomLectureRequest: TimeTableCustomLectureRequest
+    ): Single<CommonResponse>
 }

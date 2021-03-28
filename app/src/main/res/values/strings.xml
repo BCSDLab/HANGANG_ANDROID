@@ -170,5 +170,10 @@
     <string name="timetable_duplicated_title">시간표가 중복되었습니다.</string>
     <string name="timetable_duplicated_message">%1$s\n과목과 수업시간이 겹칩니다.</string>
     <string name="timetable_filter_message">필터를 적용해 보세요.</string>
+    <string name="timetable_custom_lecture_add_title">직접 추가</string>
+    <string name="timetable_custom_lecture_name_hint">수업명을 입력해 주세요.</string>
+    <string name="timetable_custom_lecture_professor_hint">교수명을 입력해 주세요.</string>
+    <string name="timetable_custom_lecture_add_timestamp">+ 시간 추가하기</string>
+    <string name="remove">삭제</string>
 
 </resources>

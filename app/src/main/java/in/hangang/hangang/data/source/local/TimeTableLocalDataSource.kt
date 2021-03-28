@@ -121,6 +121,15 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         }
     }
 
+    override fun addCustomLectureInTimetable(
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
+    ): Single<CommonResponse> {
+        return Single.never()
+    }
+
     private fun getDips(): MutableSet<LectureTimeTable> {
         return if (Hawk.contains(TIMETABLE_LECTURE_DIPS))
             Hawk.get(TIMETABLE_LECTURE_DIPS)

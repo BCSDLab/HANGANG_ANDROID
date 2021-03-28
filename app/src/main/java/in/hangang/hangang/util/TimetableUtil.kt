@@ -2,6 +2,7 @@ package `in`.hangang.hangang.util
 
 import `in`.hangang.core.view.timetable.TimetableLayout
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import android.content.Context
 import android.view.ContextThemeWrapper
@@ -15,7 +16,7 @@ import java.util.*
 
 class TimetableUtil(private val context: Context) {
 
-    val timetableColors = arrayOf(
+    private val timetableColors = arrayOf(
             ContextCompat.getColor(context, R.color.timetable_color_1),
             ContextCompat.getColor(context, R.color.timetable_color_2),
             ContextCompat.getColor(context, R.color.timetable_color_3),
@@ -26,6 +27,23 @@ class TimetableUtil(private val context: Context) {
     )
 
     companion object {
+        fun toExp(context: Context, timestamps: List<CustomTimetableTimestamp>) : String{
+            val set = mutableSetOf<Int>()
+            timestamps.forEach {
+                val startTime = (it.startTime.first - 9) * 2 + if(it.startTime.second < 30) 1 else 0
+                val endTime = (it.endTime.first - 9) * 2 + if(it.endTime.second < 30) 1 else 0
+
+                for(i in startTime until endTime) {
+                    set.add(it.week * 100 + i)
+                }
+            }
+            return set.toList().sorted().joinToString(
+                prefix = "[",
+                postfix = "]",
+                separator = ", "
+            )
+        }
+
         fun toString(context: Context, exp: String): String {
             val stringBuilder = StringBuilder()
             convert(exp) { f, l ->

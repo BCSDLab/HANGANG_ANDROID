@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
 
     private val lectures = mutableListOf<LectureTimeTable>()
-    private val selectedLectures = mutableListOf<LectureTimeTable>()
+    private val addedLectures = mutableSetOf<LectureTimeTable>()
     private val dips = mutableListOf<LectureTimeTable>()
     var currentSelectedPosition = -1
 
@@ -39,7 +39,10 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
         holder.bind(item)
 
         holder.itemView.isSelected = position == currentSelectedPosition
-        holder.setSelected(selectedLectures.contains(item))
+        if(addedLectures.contains(item))
+            holder.setSelected(true)
+        else
+            holder.setSelected(false)
         holder.setDipButton(dips.contains(item))
 
         holder.itemView.setOnClickListener {
@@ -86,8 +89,8 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
     }
 
     fun updateSelectedLectures(selectedLectures: Collection<LectureTimeTable>) {
-        this.selectedLectures.clear()
-        this.selectedLectures.addAll(selectedLectures)
+        this.addedLectures.clear()
+        this.addedLectures.addAll(selectedLectures)
 
         notifyDataSetChanged()
     }

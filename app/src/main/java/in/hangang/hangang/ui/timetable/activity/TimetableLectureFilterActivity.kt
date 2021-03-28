@@ -12,6 +12,14 @@ import android.os.Bundle
 class TimetableLectureFilterActivity :
         ViewBindingActivity<ActivityTimetableLectureFilterBinding>() {
     override val layoutId: Int = R.layout.activity_timetable_lecture_filter
+    val lectureFilter : LectureFilter by lazy {
+        intent.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter(
+            classifications = listOf(),
+            department = null,
+            criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
+            keyword = null
+        )
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,8 +40,7 @@ class TimetableLectureFilterActivity :
     }
 
     private fun initView() {
-        with(intent.extras?.getParcelable<LectureFilter>(TIMETABLE_LECTURE_FILTER)) {
-            if (this != null) {
+        with(lectureFilter) {
                 binding.checkBoxFilterByName.isChecked = criteria and 0x10 == 0x10
                 binding.checkBoxFilterByProfessor.isChecked = criteria and 0x01 == 0x01
 
@@ -45,7 +52,6 @@ class TimetableLectureFilterActivity :
                 binding.checkBoxFilterByClassificationMscChoice.isChecked = classifications.contains(CLASSIFICATION_MSC_CHOICE)
                 binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_REQUIRED)
                 binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_CHOICE)
-            }
         }
 
     }
@@ -77,11 +83,14 @@ class TimetableLectureFilterActivity :
             classifications.add(CLASSIFICATION_HRD_CHOICE)
 
         val criteria =
-                (if (binding.checkBoxFilterByName.isChecked) 1 else 0) shl 2 +
-                        (if (binding.checkBoxFilterByProfessor.isChecked) 1 else 0)
+                (if (binding.checkBoxFilterByName.isChecked) LectureFilter.CRITERIA_NAME else 0x00) or
+                        (if (binding.checkBoxFilterByProfessor.isChecked) LectureFilter.CRITERIA_PROFESSOR else 0x00)
 
         setResult(RESULT_OK, Intent().apply {
-            putExtra(TIMETABLE_LECTURE_FILTER, LectureFilter(criteria, classifications))
+            putExtra(TIMETABLE_LECTURE_FILTER, lectureFilter.copy(
+                criteria = criteria,
+                classifications = classifications
+            ))
         })
         finish()
     }

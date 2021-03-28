@@ -77,25 +77,7 @@
         <attr name="layout_columnEnd" format="float" />
     </declare-styleable>
 
-    <declare-styleable name="TimetableColumnHeader" >
-        <attr name="dividerColor" />
-        <attr name="columnCount" />
-        <attr name="columnWidth" />
-        <attr name="android:textColor" />
-        <attr name="android:textSize" />
-        <attr name="textArray" />
-        <attr name="android:gravity" />
-        <attr name="android:entries" />
-    </declare-styleable>
-
-    <declare-styleable name="TimetableRowHeader" >
-        <attr name="dividerColor" />
-        <attr name="rowCount" />
-        <attr name="rowHeight" />
-        <attr name="android:textColor" />
-        <attr name="android:textSize" />
-        <attr name="textArray" />
-        <attr name="android:gravity" />
+    <declare-styleable name="PickerView">
         <attr name="android:entries" />
     </declare-styleable>
 </resources>
