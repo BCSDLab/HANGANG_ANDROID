@@ -1,7 +1,6 @@
 package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.response.toCommonResponse
@@ -106,7 +105,7 @@ class TimetableFragmentViewModel(
     }
 
     fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
-        timetableRepository.removeLectureInTimeTable(
+        timetableRepository.removeLectureFromTimeTable(
                 lectureId = lectureTimeTable.lectureId,
                 timetableId = timetable.id
         ).withThread()

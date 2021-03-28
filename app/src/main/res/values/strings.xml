@@ -175,5 +175,7 @@
     <string name="timetable_custom_lecture_professor_hint">교수명을 입력해 주세요.</string>
     <string name="timetable_custom_lecture_add_timestamp">+ 시간 추가하기</string>
     <string name="remove">삭제</string>
+    <string name="save">저장</string>
+    <string name="timetable_lecture_detail_memo_hint">메모를 추가해주세요.</string>
 
 </resources>

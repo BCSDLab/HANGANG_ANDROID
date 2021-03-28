@@ -123,27 +123,25 @@ class TimetableUtil(private val context: Context) {
                 }
     }
 
-    fun getTimetableView(lectureTimeTables: List<LectureTimeTable>) : Single<List<View>> {
+    fun getTimetableView(lectureTimeTables: List<LectureTimeTable>) : Single<Map<View, LectureTimeTable>> {
         return Single.create { subscriber ->
             try {
-                val views = mutableListOf<View>()
+                val views = hashMapOf<View, LectureTimeTable>()
 
                 lectureTimeTables.forEachIndexed { i, lectureTimeTable ->
                     convertToTimes(lectureTimeTable.classTime ?: "[]").forEach { rc ->
-                        views.add(
-                                TextView(ContextThemeWrapper(context, R.style.HangangTimetableItem)).apply {
-                                    setBackgroundColor(timetableColors[i % timetableColors.size])
-                                    setTextColor(ContextCompat.getColor(context, R.color.text_color_timetable_item))
-                                    text = "${lectureTimeTable.name?: ""}\n${lectureTimeTable.classNumber ?: ""}${lectureTimeTable.professor?: ""}"
-                                    layoutParams = TimetableLayout.LayoutParams(
-                                            context, null,
-                                            rc.rowStart,
-                                            rc.rowEnd,
-                                            rc.columnStart,
-                                            rc.columnEnd
-                                    )
-                                }
-                        )
+                        views[TextView(ContextThemeWrapper(context, R.style.HangangTimetableItem)).apply {
+                            setBackgroundColor(timetableColors[i % timetableColors.size])
+                            setTextColor(ContextCompat.getColor(context, R.color.text_color_timetable_item))
+                            text = "${lectureTimeTable.name?: ""}\n${lectureTimeTable.classNumber ?: ""}${lectureTimeTable.professor?: ""}"
+                            layoutParams = TimetableLayout.LayoutParams(
+                                    context, null,
+                                    rc.rowStart,
+                                    rc.rowEnd,
+                                    rc.columnStart,
+                                    rc.columnEnd
+                            )
+                        }] = lectureTimeTable
                     }
                 }
 

@@ -24,7 +24,7 @@ interface TimeTableDataSource {
     fun getMainTimeTable(): Single<Int>
     fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>>
     fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
-    fun removeLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
+    fun removeLectureFromTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
     fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun removeDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun getDipLectures(

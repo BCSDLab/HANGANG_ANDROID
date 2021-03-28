@@ -15,6 +15,7 @@ import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import `in`.hangang.hangang.util.LogUtil
@@ -41,12 +42,16 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableViewModel: TimetableViewModel by sharedViewModel()
     private val timetableFragmentViewModel: TimetableFragmentViewModel by sharedViewModel()
     private val timetableLectureListViewModel: TimetableLectureListViewModel by sharedViewModel()
+    private val timetableLectureDetailViewModel: TimetableLectureDetailViewModel by sharedViewModel()
 
     private val timetableLectureListFragment : TimetableLectureListFragment by lazy {
         TimetableLectureListFragment()
     }
     private val timetableCustomLectureFragment : TimetableCustomLectureFragment by lazy {
         TimetableCustomLectureFragment()
+    }
+    private val timetableLectureDetailFragment : TimetableLectureDetailFragment by lazy {
+        TimetableLectureDetailFragment()
     }
 
     private val fileUtil: FileUtil by inject()
@@ -90,7 +95,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun initViewModel() {
         with(timetableFragmentViewModel) {
-
             mode.observe(viewLifecycleOwner) {
                 when (it) {
                     TimetableFragmentViewModel.Mode.MODE_NORMAL -> {
@@ -120,7 +124,15 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarCloseButton.visibility = View.VISIBLE
                         showLectureTimetableDummyViews()
                     }
-                    TimetableFragmentViewModel.Mode.MODE_LECTURE_DETAIL -> {}
+                    TimetableFragmentViewModel.Mode.MODE_LECTURE_DETAIL -> {
+                        changeBottomSheetFragment(timetableLectureDetailFragment, true)
+                        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                        appBarOpenTimetableListButton.visibility = View.VISIBLE
+                        appBarMoreMenuButton.visibility = View.VISIBLE
+                        appBarAddManuallyButton.visibility = View.GONE
+                        appBarCloseButton.visibility = View.GONE
+                        hideLectureTimetableDummyViews()
+                    }
                 }
             }
 
@@ -132,6 +144,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 timetableUtil.getTimetableView(it)
                         .withThread()
                         .subscribe(this@TimetableFragment::showLectureTimeTable, {})
+                if(timetableFragmentViewModel.mode.value == TimetableFragmentViewModel.Mode.MODE_LECTURE_DETAIL)
+                    timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_NORMAL)
             }
 
             selectedTimeTable.observe(viewLifecycleOwner) {
@@ -181,9 +195,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED, BottomSheetBehavior.STATE_HIDDEN -> {
                         timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_NORMAL)
-                    }
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                        timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_LECTURE_LIST)
                     }
                 }
             }
@@ -269,10 +280,14 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         timetableLectureListViewModel.resetLectureFilter()
     }
 
-    private fun showLectureTimeTable(lectureTimeTableViews: List<View>) {
+    private fun showLectureTimeTable(lectureTimeTableViews: Map<View, LectureTimeTable>) {
         binding.timetableLayout.removeAllViews()
-        lectureTimeTableViews.forEach {
-            binding.timetableLayout.addView(it)
+        lectureTimeTableViews.keys.forEach { view ->
+            view.setOnClickListener {
+                timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_LECTURE_DETAIL)
+                lectureTimeTableViews[view]?.let { lectureTimeTable -> timetableLectureDetailViewModel.setLectureTimetable(lectureTimeTable) }
+            }
+            binding.timetableLayout.addView(view)
         }
     }
 

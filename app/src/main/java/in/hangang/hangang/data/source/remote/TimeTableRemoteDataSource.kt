@@ -87,7 +87,7 @@ class TimeTableRemoteDataSource(
         )
     }
 
-    override fun removeLectureInTimeTable(
+    override fun removeLectureFromTimeTable(
         lectureId: Int,
         timetableId: Int
     ): Single<CommonResponse> {

@@ -61,7 +61,7 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         return Single.never()
     }
 
-    override fun removeLectureInTimeTable(
+    override fun removeLectureFromTimeTable(
             lectureId: Int,
             timetableId: Int
     ): Single<CommonResponse> {

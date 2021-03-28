@@ -50,11 +50,11 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.addLectureInTimeTable(lectureId, timetableId)
     }
 
-    override fun removeLectureInTimeTable(
+    override fun removeLectureFromTimeTable(
         lectureId: Int,
         timetableId: Int
     ): Single<CommonResponse> {
-        return timeTableRemoteDataSource.removeLectureInTimeTable(lectureId, timetableId)
+        return timeTableRemoteDataSource.removeLectureFromTimeTable(lectureId, timetableId)
     }
 
     override fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {

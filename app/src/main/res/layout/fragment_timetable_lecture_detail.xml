@@ -1,6 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name="lecture"
+            type="in.hangang.hangang.data.entity.LectureTimeTable" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_view_timetable_lecture_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="16dp"
+            tools:text="사랑의 역사"
+            android:text="@{lecture.name}"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_button_goto_review"
+            android:layout_width="24dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_chevron_right"
+            android:tint="?attr/colorPrimary"
+            android:background="@null"
+            app:layout_constraintStart_toEndOf="@id/text_view_timetable_lecture_detail_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_button_remove_lecture"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_trash"
+            android:tint="?android:attr/textColorSecondary"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_timetable_lecture_detail_professor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingTop="4dp"
+            tools:text="김사랑"
+            android:text="@{lecture.professor}"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/text_view_timetable_lecture_detail_name"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/text_view_timetable_lecture_detail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            tools:text="월 1A~3B"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="11sp"
+            android:gravity="center_vertical"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_timetable_lecture_detail_professor"
+            app:layout_constraintStart_toEndOf="@id/text_view_timetable_lecture_detail_professor"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_timetable_lecture_detail_professor"
+            android:layout_marginTop="16dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary" />
+
+        <EditText
+            android:id="@+id/edit_text_memo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="start|top"
+            android:padding="16dp"
+            android:background="@null"
+            android:textSize="14sp"
+            android:hint="@string/timetable_lecture_detail_memo_hint"
+            app:layout_constraintBottom_toTopOf="@+id/timetable_lecture_detail_save_memo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timetable_lecture_detail_save_memo"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:text="@string/save"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            app:buttonAppearence="outlined"
+            android:backgroundTint="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
