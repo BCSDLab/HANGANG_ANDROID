@@ -56,6 +56,7 @@ class TimetableViewModel(
                 }, {
                     setMainTimeTable(this[0])
                 })
+                    .addTo(compositeDisposable)
             }
         }
     }

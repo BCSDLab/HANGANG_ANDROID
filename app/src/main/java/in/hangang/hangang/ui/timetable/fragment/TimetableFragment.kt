@@ -182,7 +182,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                     BottomSheetBehavior.STATE_COLLAPSED, BottomSheetBehavior.STATE_HIDDEN -> {
                         timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_NORMAL)
                     }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED, BottomSheetBehavior.STATE_EXPANDED -> {
+                    BottomSheetBehavior.STATE_EXPANDED -> {
                         timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_LECTURE_LIST)
                     }
                 }

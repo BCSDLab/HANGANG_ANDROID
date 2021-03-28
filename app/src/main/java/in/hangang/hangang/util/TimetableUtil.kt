@@ -27,11 +27,11 @@ class TimetableUtil(private val context: Context) {
     )
 
     companion object {
-        fun toExp(context: Context, timestamps: List<CustomTimetableTimestamp>) : String{
+        fun toExp(timestamps: List<CustomTimetableTimestamp>) : String{
             val set = mutableSetOf<Int>()
             timestamps.forEach {
-                val startTime = (it.startTime.first - 9) * 2 + if(it.startTime.second < 30) 1 else 0
-                val endTime = (it.endTime.first - 9) * 2 + if(it.endTime.second < 30) 1 else 0
+                val startTime = (it.startTime.first - 9) * 2 + if(it.startTime.second < 30) 0 else 1
+                val endTime = (it.endTime.first - 9) * 2 + if(it.endTime.second < 30) 0 else 1
 
                 for(i in startTime until endTime) {
                     set.add(it.week * 100 + i)

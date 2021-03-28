@@ -1,6 +1,5 @@
 package `in`.hangang.hangang.data.source.local
 
-import `in`.hangang.hangang.constant.MAIN_TIMETABLE
 import `in`.hangang.hangang.constant.TIMETABLE_LECTURE_DIPS
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
@@ -31,27 +30,27 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         return Single.never()
     }
 
-    override fun setMainTimeTable(timetableId: Int): Single<Int> {
-        return Single.create { subscriber ->
+    override fun setMainTimeTable(timetableId: Int): Single<CommonResponse> {
+        /*return Single.create { subscriber ->
             try {
                 Hawk.put(MAIN_TIMETABLE, timetableId)
                 subscriber.onSuccess(timetableId)
             } catch (t: Throwable) {
                 subscriber.onError(t)
             }
-        }
-        //return Single.never()
+        }*/
+        return Single.never()
     }
 
     override fun getMainTimeTable(): Single<Int> {
-        return Single.create { subscriber ->
+        /*return Single.create { subscriber ->
             try {
                 subscriber.onSuccess(Hawk.get(MAIN_TIMETABLE))
             } catch (t: Throwable) {
                 subscriber.onError(t)
             }
-        }
-        //return Single.never()
+        }*/
+        return Single.never()
     }
 
     override fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>> {

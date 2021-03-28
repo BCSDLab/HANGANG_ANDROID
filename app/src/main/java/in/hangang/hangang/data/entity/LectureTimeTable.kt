@@ -3,36 +3,36 @@ package `in`.hangang.hangang.data.entity
 import com.google.gson.annotations.SerializedName
 
 data class LectureTimeTable(
-        val id: Int,
+        val id: Int = 0,
         @SerializedName("lecture_id")
-        val lectureId: Int,
+        val lectureId: Int = 0,
         @SerializedName("is_custom")
-        val isCustom: Boolean,
+        val isCustom: Boolean = false,
         @SerializedName("semester_date")
-        val semesterDate: String?,
-        val code: String?,
-        val name: String?,
-        val classification: String?,
-        val grades: String?,
-        val classNumber: String?,
+        val semesterDate: String? = null,
+        val code: String? = null,
+        val name: String? = null,
+        val classification: String? = null,
+        val grades: String? = null,
+        val classNumber: String? = null,
         @SerializedName("regular_number")
-        val regularNumber: String?,
-        val department: String?,
-        val target: String?,
-        val professor: String?,
+        val regularNumber: String? = null,
+        val department: String? = null,
+        val target: String? = null,
+        val professor: String? = null,
         @SerializedName("is_english")
-        val isEnglish: String?,
+        val isEnglish: String? = null,
         @SerializedName("design_score")
-        val designScore: String?,
+        val designScore: String? = null,
         @SerializedName("is_elearning")
-        val isElearning: String?,
+        val isElearning: String? = null,
         @SerializedName("class_time")
-        val classTime: String?,
+        val classTime: String? = null,
         @SerializedName("created_at")
-        val createdAt: String?,
+        val createdAt: String? = null,
         @SerializedName("updated_at")
-        val updatedAt: String?,
-        val rating: Double
+        val updatedAt: String? = null,
+        val rating: Double = 0.0
 ) {
         override fun equals(other: Any?): Boolean {
                 return this.lectureId == ((other as? LectureTimeTable)?.lectureId ?: -1)

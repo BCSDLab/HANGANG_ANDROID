@@ -63,14 +63,4 @@ interface NoAuthApi {
             @Query("page") page: Int = 1,
             @Query("sort") sort: String? = null
     ): Single<List<Lecture>>
-
-    @GET(TIMETABLE_LECTURE_LIST)
-    fun getTimetableLectureList(
-            @Query("classification") classification: List<String>? = null,
-            @Query("department") department: String? = null,
-            @Query("keyword") keyword: String? = null,
-            @Query("limit") limit: Int = 10,
-            @Query("page") page: Int = 1,
-            @Query("semesterDateId") semesterDateId: Int
-    ): Single<List<LectureTimeTable>>
 }

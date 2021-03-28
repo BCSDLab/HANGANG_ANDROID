@@ -4,7 +4,6 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import `in`.hangang.hangang.databinding.ItemTimetableCustomLectureTimestampBinding
 import `in`.hangang.hangang.util.diffutil.CustomTimetableTimestampDiffCallback
-import `in`.hangang.hangang.util.diffutil.LectureTimeTableDiffCallback
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -16,17 +15,18 @@ import androidx.recyclerview.widget.RecyclerView
 class TimetableCustomLectureTimeAdapter(private val context: Context) :
     RecyclerView.Adapter<TimetableCustomLectureTimeAdapter.ViewHolder>() {
 
-    val list = mutableListOf<CustomTimetableTimestamp>()
-    val weekdaysText: Array<CharSequence> by lazy { context.resources.getTextArray(R.array.timetable_picker_weeks) }
+    private val list = mutableListOf<CustomTimetableTimestamp>()
+    private val weekdaysText: Array<CharSequence> by lazy { context.resources.getTextArray(R.array.timetable_picker_weeks) }
 
     var onItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
         fun onItemClick(view: View, position: Int)
+        fun onDeleteButtonClick(view: View, position: Int)
     }
 
     class ViewHolder(
-        private val binding: ItemTimetableCustomLectureTimestampBinding,
+        val binding: ItemTimetableCustomLectureTimestampBinding,
         private val weekdaysText: Array<CharSequence>
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(customTimetableTimestamp: CustomTimetableTimestamp) {
@@ -60,6 +60,12 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.onItemClick(holder.itemView, position)
+        }
+        holder.binding.textViewRemove.setOnClickListener {
+            onItemClickListener?.onDeleteButtonClick(holder.binding.textViewRemove, position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -76,12 +82,18 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
         diffResult.dispatchUpdatesTo(this)
     }
 
-    inline fun setOnItemClickListener(crossinline listener: (view: View, position: Int) -> Unit) {
+    inline fun setOnItemClickListener(
+        crossinline onItemClick: (view: View, position: Int) -> Unit,
+        crossinline onDeleteButtonClick: (view: View, position: Int) -> Unit,
+    ) {
         onItemClickListener = object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
-                listener(view, position)
+                onItemClick(view, position)
             }
 
+            override fun onDeleteButtonClick(view: View, position: Int) {
+                onDeleteButtonClick(view, position)
+            }
         }
     }
 }

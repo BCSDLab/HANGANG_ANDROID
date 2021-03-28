@@ -19,7 +19,8 @@ class TimeTableRemoteDataSource(
 ) : TimeTableDataSource {
     override fun getTimeTables(): Single<List<TimeTable>> {
         return Single.create { subscriber ->
-            authApi.getTimeTables().subscribe({ list1 ->
+            authApi.getTimeTables()
+                .subscribe({ list1 ->
                 if(list1.isEmpty()) {
                     makeTimeTable(
                         UserTimeTableRequest(
@@ -44,9 +45,9 @@ class TimeTableRemoteDataSource(
     }
 
     override fun getLectureTimetableList(classification: List<String>?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {
-        return noAuthApi.getTimetableLectureList(
+        return authApi.getTimetableLectureList(
                 classification, department, keyword, limit, page, semesterDateId
-        )
+        ).map { it.map { item -> item.copy(lectureId = item.id) }.toList() }
     }
 
     override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
@@ -66,12 +67,14 @@ class TimeTableRemoteDataSource(
         )
     }
 
-    override fun setMainTimeTable(timetableId: Int): Single<Int> {
-        return Single.never()
+    override fun setMainTimeTable(timetableId: Int): Single<CommonResponse> {
+        return authApi.setMainTimeTable(
+            TimeTableRequest(userTimeTableId = timetableId)
+        )
     }
 
     override fun getMainTimeTable(): Single<Int> {
-        return Single.never()
+        return authApi.getMainTimeTable().map { it.id }
     }
 
     override fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>> {

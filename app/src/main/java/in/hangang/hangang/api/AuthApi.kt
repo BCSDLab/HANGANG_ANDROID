@@ -2,6 +2,7 @@ package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.LectureTimeTable
+import `in`.hangang.hangang.data.entity.MainTimeTable
 import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.entity.TimeTable
@@ -38,11 +39,6 @@ interface AuthApi {
         @Body userTimeTableRequest: UserTimeTableRequest
     ): Single<CommonResponse>
 
-    @POST(TIMETABLE_CUSTOM_LECTURE)
-    fun addCustomLectureInTimeTable(
-            @Body timeTableCustomLectureRequest: TimeTableCustomLectureRequest
-    ): Single<CommonResponse>
-
     @POST(TIMETABLE_LECTURE)
     fun addLectureInTimeTable(
         @Body timeTableRequest: TimeTableRequest
@@ -61,5 +57,23 @@ interface AuthApi {
     @POST(TIMETABLE_CUSTOM_LECTURE)
     fun addCustomLectureInTimetable(
         @Body timeTableCustomLectureRequest: TimeTableCustomLectureRequest
+    ): Single<CommonResponse>
+
+    @GET(TIMETABLE_LECTURE_LIST)
+    fun getTimetableLectureList(
+        @Query("classification") classification: List<String>? = null,
+        @Query("department") department: String? = null,
+        @Query("keyword") keyword: String? = null,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("semesterDateId") semesterDateId: Int
+    ): Single<List<LectureTimeTable>>
+
+    @GET(TIMETABLE_MAIN)
+    fun getMainTimeTable() : Single<MainTimeTable>
+
+    @HTTP(method = "PATCH", path = TIMETABLE_MAIN, hasBody = true)
+    fun setMainTimeTable(
+        @Body timeTableRequest: TimeTableRequest
     ): Single<CommonResponse>
 }

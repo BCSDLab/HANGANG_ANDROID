@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/timetable_custom_lecture_add_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:padding="16dp"
             android:text="@string/timetable_custom_lecture_add_title"
             android:textColor="?android:attr/textColorPrimary"
@@ -18,14 +18,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <Button
             android:id="@+id/button_timetable_custom_lecture_add"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:background="@null"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:layout_height="56dp"
             android:text="@string/timetable_add_finish"
-            android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/edit_text_custom_lecture_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +52,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_custom_lecture_professor">
+            app:layout_constraintTop_toBottomOf="@id/edit_text_custom_lecture_professor"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"

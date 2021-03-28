@@ -34,12 +34,12 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.modifyTimeTableName(timetableId, name)
     }
 
-    override fun setMainTimeTable(timetableId: Int): Single<Int> {
-        return timeTableLocalDataSource.setMainTimeTable(timetableId)
+    override fun setMainTimeTable(timetableId: Int): Single<CommonResponse> {
+        return timeTableRemoteDataSource.setMainTimeTable(timetableId)
     }
 
     override fun getMainTimeTable(): Single<Int> {
-        return timeTableLocalDataSource.getMainTimeTable()
+        return timeTableRemoteDataSource.getMainTimeTable()
     }
 
     override fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>> {
