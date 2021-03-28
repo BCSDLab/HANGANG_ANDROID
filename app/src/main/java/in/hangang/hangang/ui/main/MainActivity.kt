@@ -4,6 +4,7 @@ import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityMainBinding
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableCustomLectureViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
@@ -20,6 +21,7 @@ class MainActivity : ViewBindingActivity<ActivityMainBinding>() {
     private val timetableViewModel: TimetableViewModel by viewModel()
     private val timetableFragmentViewModel: TimetableFragmentViewModel by viewModel()
     private val timetableLectureListViewModel: TimetableLectureListViewModel by viewModel()
+    private val timetableCustomLectureViewModel: TimetableCustomLectureViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

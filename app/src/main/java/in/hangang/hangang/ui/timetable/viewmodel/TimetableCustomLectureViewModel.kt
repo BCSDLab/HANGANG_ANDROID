@@ -38,4 +38,14 @@ class TimetableCustomLectureViewModel(
             classTime, name, professor, userTimetableId
         )
     }
+
+    fun init() {
+         times.clear()
+        times.add(CustomTimetableTimestamp(
+            week = 0,
+            startTime = Pair(9, 0),
+            endTime = Pair(10, 0)
+        ))
+        _timestamp.postValue(times)
+    }
 }

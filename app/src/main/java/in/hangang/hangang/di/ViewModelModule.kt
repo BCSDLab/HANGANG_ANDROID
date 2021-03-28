@@ -35,4 +35,5 @@ val viewModelModule = module {
     viewModel { TimetableListActivityViewModel() }
     viewModel { TimetableLectureListViewModel(get()) }
     viewModel { TimetableAddActivityViewModel(get()) }
+    viewModel { TimetableCustomLectureViewModel(get()) }
 }
