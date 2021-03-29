@@ -22,27 +22,25 @@ class TimetableLectureDetailViewModel(
     val memo: LiveData<Event<String>> get() = _memo
 
     private fun setLectureTimetable(lectureTimeTable: LectureTimeTable) {
-        _lectureTimetable.postValue(lectureTimeTable)
+        _lectureTimetable.value = lectureTimeTable
     }
 
     fun initWithLectureTimetable(lectureTimeTable: LectureTimeTable) {
         setLectureTimetable(lectureTimeTable)
-        getMemo()
+        getMemo(lectureTimeTable)
     }
 
-    fun getMemo() {
-        _lectureTimetable.value?.id?.let { id ->
-            timeTableRepository.getMemo(id)
+    fun getMemo(lectureTimeTable: LectureTimeTable) {
+            timeTableRepository.getMemo(lectureTimeTable.id)
                     .withThread()
                     .handleHttpException()
                     .handleProgress(this)
                     .subscribe({
                         _memo.postValue(Event(it.memo ?: ""))
                     }, {
-
+                        _memo.postValue(Event(""))
                     })
                     .addTo(compositeDisposable)
-        }
     }
 
     fun updateMemo(memo: String) {
@@ -62,7 +60,7 @@ class TimetableLectureDetailViewModel(
                         .handleProgress(this)
             })
                     .subscribe({
-                        getMemo()
+                        getMemo(_lectureTimetable.value!!)
                     }, {
 
                     })
