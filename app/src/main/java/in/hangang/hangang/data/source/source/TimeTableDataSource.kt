@@ -2,6 +2,8 @@ package `in`.hangang.hangang.data.source.source
 
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
@@ -38,5 +40,23 @@ interface TimeTableDataSource {
         name: String?,
         professor: String?,
         userTimetableId: Int
+    ): Single<CommonResponse>
+
+    fun getMemo(
+            timetableLectureId: Int
+    ): Single<TimetableMemo>
+
+    fun addMemo(
+            timetableLectureId: Int,
+            memo: String
+    ): Single<CommonResponse>
+
+    fun modifyMemo(
+            timetableLectureId: Int,
+            memo: String
+    ): Single<CommonResponse>
+
+    fun removeMemo(
+            timetableLectureId: Int
     ): Single<CommonResponse>
 }

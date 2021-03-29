@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.timetable.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
+import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentTimetableLectureDetailBinding
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
@@ -8,6 +9,7 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewMod
 import `in`.hangang.hangang.util.TimetableUtil
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLectureDetailBinding>() {
@@ -31,6 +33,12 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
                 }
             }
         }
+        binding.buttonTimetableLectureDetailSaveMemo.setOnClickListener {
+            timetableLectureDetailViewModel.updateMemo(binding.editTextMemo.text.toString())
+        }
+        binding.imageButtonGotoReview.setOnClickListener {
+            //TODO 강의평 이동
+        }
     }
 
     private fun initViewModel() {
@@ -40,6 +48,9 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
                 binding.executePendingBindings()
                 binding.textViewTimetableLectureDetailTime.text = TimetableUtil.toString(requireContext(), it.classTime ?: "[]")
             }
+            memo.observe(viewLifecycleOwner, EventObserver{
+                binding.editTextMemo.setText(it)
+            })
         }
     }
 }

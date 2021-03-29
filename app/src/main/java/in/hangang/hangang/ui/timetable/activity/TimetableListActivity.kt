@@ -46,7 +46,7 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
         timetableAdapter.selectedTimeTableId = intent.extras?.getParcelable<TimeTable>(TimetableListActivityContract.SELECTED_TIMETABLE)?.id ?: 0
         timetableAdapter.timetableListRecyclerViewOnItemClickListener = object : TimetableListRecyclerViewOnItemClickListener {
             override fun onTimeTableItemClick(timetable: TimeTable) {
-                setResult(1, Intent().putExtra(TimetableListActivityContract.SELECTED_TIMETABLE, timetable))
+                setResult(RESULT_OK, Intent().putExtra(TimetableListActivityContract.SELECTED_TIMETABLE, timetable))
                 finish()
             }
         }

@@ -6,7 +6,9 @@ import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
+import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import `in`.hangang.hangang.util.SemesterUtil
@@ -119,5 +121,28 @@ class TimeTableRemoteDataSource(
                 classTime, name, professor, userTimetableId
             )
         )
+    }
+
+    override fun getMemo(timetableLectureId: Int): Single<TimetableMemo> {
+        return authApi.getTimetableMemo(timetableLectureId)
+    }
+
+    override fun addMemo(timetableLectureId: Int, memo: String): Single<CommonResponse> {
+        return authApi.addTimetableMemo(TimetableMemoRequest(
+                timetableLectureId, memo
+        ))
+    }
+
+    override fun modifyMemo(timetableLectureId: Int, memo: String): Single<CommonResponse> {
+        return authApi.modifyTimetableMemo(TimetableMemoRequest(
+                timetableLectureId, memo
+        ))
+    }
+
+    override fun removeMemo(timetableLectureId: Int): Single<CommonResponse> {
+        return authApi.removeTimetableMemo(TimetableMemoRequest(
+            timetableLectureId = timetableLectureId,
+            memo = null
+        ))
     }
 }

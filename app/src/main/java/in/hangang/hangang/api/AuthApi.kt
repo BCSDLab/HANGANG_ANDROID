@@ -6,7 +6,9 @@ import `in`.hangang.hangang.data.entity.MainTimeTable
 import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
+import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
@@ -75,5 +77,25 @@ interface AuthApi {
     @HTTP(method = "PATCH", path = TIMETABLE_MAIN, hasBody = true)
     fun setMainTimeTable(
         @Body timeTableRequest: TimeTableRequest
+    ): Single<CommonResponse>
+
+    @GET(TIMETABLE_MEMO)
+    fun getTimetableMemo(
+            @Query("timeTableId") timetableId: Int
+    ): Single<TimetableMemo>
+
+    @POST(TIMETABLE_MEMO)
+    fun addTimetableMemo(
+            @Body timetableMemoRequest: TimetableMemoRequest
+    ): Single<CommonResponse>
+
+    @HTTP(method = "PATCH", path = TIMETABLE_MEMO, hasBody = true)
+    fun modifyTimetableMemo(
+            @Body timetableMemoRequest: TimetableMemoRequest
+    ): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = TIMETABLE_MEMO, hasBody = true)
+    fun removeTimetableMemo(
+            @Body timetableMemoRequest: TimetableMemoRequest
     ): Single<CommonResponse>
 }

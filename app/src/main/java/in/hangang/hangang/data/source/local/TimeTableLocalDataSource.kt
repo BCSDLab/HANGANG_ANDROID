@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source.local
 import `in`.hangang.hangang.constant.TIMETABLE_LECTURE_DIPS
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
@@ -126,6 +127,22 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         professor: String?,
         userTimetableId: Int
     ): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun getMemo(timetableLectureId: Int): Single<TimetableMemo> {
+        return Single.never()
+    }
+
+    override fun addMemo(timetableLectureId: Int, memo: String): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun modifyMemo(timetableLectureId: Int, memo: String): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun removeMemo(timetableLectureId: Int): Single<CommonResponse> {
         return Single.never()
     }
 

@@ -23,6 +23,7 @@ import `in`.hangang.hangang.util.TimetableUtil
 import `in`.hangang.hangang.util.file.FileUtil
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
+import android.app.Activity.RESULT_OK
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
@@ -60,10 +61,13 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableBottomSheetContainer) }
 
     private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
-        it.selectedTimetable?.let { timetable ->
-            timetableFragmentViewModel.setCurrentShowingTimeTable(timetable)
+        if(it.resultCode == RESULT_OK) {
+            it.selectedTimetable?.let { timetable ->
+                timetableFragmentViewModel.setCurrentShowingTimeTable(timetable)
+            }
+            if (it.timetableListChanged) timetableViewModel.getTimetables()
+            timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_NORMAL)
         }
-        if (it.timetableListChanged) timetableViewModel.getTimetables()
     }
 
     private val appBarOpenTimetableListButton by lazy {
@@ -285,24 +289,13 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         lectureTimeTableViews.keys.forEach { view ->
             view.setOnClickListener {
                 timetableFragmentViewModel.setMode(TimetableFragmentViewModel.Mode.MODE_LECTURE_DETAIL)
-                lectureTimeTableViews[view]?.let { lectureTimeTable -> timetableLectureDetailViewModel.setLectureTimetable(lectureTimeTable) }
+                lectureTimeTableViews[view]?.let { lectureTimeTable -> timetableLectureDetailViewModel.initWithLectureTimetable(lectureTimeTable) }
             }
             binding.timetableLayout.addView(view)
         }
     }
 
     private fun showLectureDummyTimetable(lectureTimeTableViews: List<View>) {
-        lectureTimetableDummyViews.forEach {
-            binding.timetableLayout.removeView(it)
-        }
-        lectureTimetableDummyViews.clear()
-        lectureTimetableDummyViews.addAll(lectureTimeTableViews)
-        lectureTimetableDummyViews.forEach {
-            binding.timetableLayout.addView(it)
-        }
-    }
-
-    private fun setLectureTimetableDummyViews(lectureTimeTableViews: List<View>) {
         lectureTimetableDummyViews.forEach {
             binding.timetableLayout.removeView(it)
         }

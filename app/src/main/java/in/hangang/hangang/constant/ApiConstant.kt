@@ -19,5 +19,6 @@ const val TIMETABLE_LECTURE = "/timetable/lecture"
 const val TIMETABLE_CUSTOM_LECTURE = "/timetable/custom/lecture"
 const val TIMETABLE_LECTURE_LIST = "/timetable/lecture/list"
 const val TIMETABLE_MAIN = "/timetable/main/lecture"
+const val TIMETABLE_MEMO = "/memo"
 
 const val LECTURES = "/lectures"

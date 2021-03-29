@@ -2,8 +2,10 @@ package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
 
@@ -78,5 +80,42 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.addCustomLectureInTimetable(
             classTime, name, professor, userTimetableId
         )
+    }
+
+    override fun getMemo(timetableLectureId: Int): Single<TimetableMemo> {
+        return timeTableRemoteDataSource.getMemo(timetableLectureId)
+    }
+
+    override fun addMemo(timetableLectureId: Int, memo: String): Single<CommonResponse> {
+        return timeTableRemoteDataSource.addMemo(timetableLectureId, memo)
+    }
+
+    override fun modifyMemo(timetableLectureId: Int, memo: String): Single<CommonResponse> {
+        return Single.create { subscriber ->
+            timeTableRemoteDataSource.getMemo(timetableLectureId)
+                    .subscribe({
+                               timeTableRemoteDataSource.addMemo(timetableLectureId, memo)
+                                       .subscribe({
+                                           subscriber.onSuccess(it)
+                                       }, {
+                                           subscriber.onError(it)
+                                       })
+                    }, { t ->
+                        if(t.toCommonResponse().code == 30) {
+                            timeTableRemoteDataSource.addMemo(timetableLectureId, memo)
+                                    .subscribe({
+                                        subscriber.onSuccess(it)
+                                    }, {
+                                        subscriber.onError(it)
+                                    })
+                        } else {
+                            subscriber.onError(t)
+                        }
+                    })
+        }
+    }
+
+    override fun removeMemo(timetableLectureId: Int): Single<CommonResponse> {
+        return timeTableRemoteDataSource.removeMemo(timetableLectureId)
     }
 }

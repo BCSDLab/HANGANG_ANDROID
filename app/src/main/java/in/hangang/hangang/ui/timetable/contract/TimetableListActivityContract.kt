@@ -13,7 +13,8 @@ class TimetableListActivityContract : ActivityResultContract<TimeTable, Timetabl
         const val TIMETABLE_LIST_CHANGED = "TIMETABLE_LIST_CHANGED"
     }
 
-    inner class Result(
+    class Result(
+            val resultCode: Int,
         val selectedTimetable : TimeTable?,
         val timetableListChanged : Boolean = false
     )
@@ -26,6 +27,7 @@ class TimetableListActivityContract : ActivityResultContract<TimeTable, Timetabl
 
     override fun parseResult(resultCode: Int, intent: Intent?): Result {
         return Result(
+                resultCode = resultCode,
                 selectedTimetable = intent?.extras?.getParcelable(SELECTED_TIMETABLE),
                 timetableListChanged = intent?.extras?.getBoolean(TIMETABLE_LIST_CHANGED) ?: false
         )
