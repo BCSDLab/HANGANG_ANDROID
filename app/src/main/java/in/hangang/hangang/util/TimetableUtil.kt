@@ -60,15 +60,13 @@ class TimetableUtil(private val context: Context) {
             return stringBuilder.toString()
         }
 
-        fun isLectureTimetableTimeDuplicate(item1: LectureTimeTable, item2: LectureTimeTable): Boolean {
-            val time1 = item1.classTime ?: "[]"
-            val time2 = item2.classTime ?: "[]"
-            val time2List = time2.substring(1, time2.length - 1)
+        fun isLectureTimetableTimeDuplicate(classTime1: String, classTime2: String): Boolean {
+            val time2List = classTime2.substring(1, classTime2.length - 1)
                     .splitToSequence(", ")
                     .filter { it.isNotEmpty() }
                     .map { it.toInt() }
                     .toList()
-            return time1.substring(1, time1.length - 1)
+            return classTime1.substring(1, classTime1.length - 1)
                     .splitToSequence(", ")
                     .filter { it.isNotEmpty() }
                     .map { it.toInt() }

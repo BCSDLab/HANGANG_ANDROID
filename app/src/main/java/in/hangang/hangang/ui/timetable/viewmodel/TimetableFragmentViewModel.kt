@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.response.toCommonResponse
@@ -31,6 +32,7 @@ class TimetableFragmentViewModel(
     private val _lectureTimetables = MutableLiveData<List<LectureTimeTable>>()
     private val _selectedTimetable = MutableLiveData<LectureTimeTable?>()
     private val _dummyTimeTable = MutableLiveData<LectureTimeTable?>()
+    private val _duplicatedLectureTimetable = MutableLiveData<Event<LectureTimeTable?>>()
 
     val mode: LiveData<Mode> get() = _mode
     val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
@@ -38,6 +40,7 @@ class TimetableFragmentViewModel(
     val lectureTimeTables : LiveData<List<LectureTimeTable>> get() = _lectureTimetables
     val selectedTimeTable : LiveData<LectureTimeTable?> get() = _selectedTimetable
     val dummyTimeTable : LiveData<LectureTimeTable?> get() = _dummyTimeTable
+    val duplicatedLectureTimeTable: LiveData<Event<LectureTimeTable?>> get() = _duplicatedLectureTimetable
 
     fun setMode(mode: Mode) {
         if (_mode.value != mode)
@@ -81,11 +84,14 @@ class TimetableFragmentViewModel(
                 .addTo(compositeDisposable)
     }
 
-    fun checkLectureDuplication(lectureTimeTable: LectureTimeTable): LectureTimeTable? {
+    fun checkLectureDuplication(classTime: String): LectureTimeTable? {
         _lectureTimetables.value?.forEach {
-            if (TimetableUtil.isLectureTimetableTimeDuplicate(it, lectureTimeTable))
+            if (TimetableUtil.isLectureTimetableTimeDuplicate(it.classTime ?: "[]", classTime)){
+                _duplicatedLectureTimetable.postValue(Event(it))
                 return it
+            }
         }
+        _duplicatedLectureTimetable.postValue(Event(null))
         return null
     }
 

@@ -103,12 +103,16 @@ class TimetableCustomLectureFragment :
             )
         }
         binding.buttonTimetableCustomLectureAdd.setOnClickListener {
-            timetableCustomLectureViewModel.addCustomLecture(
-                name = binding.editTextCustomLectureName.text.toString(),
-                professor = binding.editTextCustomLectureProfessor.text.toString(),
-                classTime = TimetableUtil.toExp(timetableCustomLectureViewModel.timestamp.value!!),
-                userTimetableId = timetableFragmentViewModel.currentShowingTimeTable.value?.id ?: 5
-            )
+            with(TimetableUtil.toExp(timetableCustomLectureViewModel.timestamp.value!!)) {
+                if(timetableFragmentViewModel.checkLectureDuplication(this) == null) {
+                    timetableCustomLectureViewModel.addCustomLecture(
+                            name = binding.editTextCustomLectureName.text.toString(),
+                            professor = binding.editTextCustomLectureProfessor.text.toString(),
+                            classTime = TimetableUtil.toExp(timetableCustomLectureViewModel.timestamp.value!!),
+                            userTimetableId = timetableFragmentViewModel.currentShowingTimeTable.value?.id ?: 5
+                    )
+                }
+            }
         }
     }
 }
