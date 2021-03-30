@@ -121,7 +121,7 @@ class TimetableUtil(private val context: Context) {
                 }
     }
 
-    fun getTimetableView(lectureTimeTables: List<LectureTimeTable>) : Single<Map<View, LectureTimeTable>> {
+    fun getTimetableTextView(lectureTimeTables: List<LectureTimeTable>) : Single<Map<View, LectureTimeTable>> {
         return Single.create { subscriber ->
             try {
                 val views = hashMapOf<View, LectureTimeTable>()

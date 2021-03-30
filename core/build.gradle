@@ -107,4 +107,5 @@ dependencies {
     /* Dependency - Hawk */
     api project.hawk
 
+    api project.prettyLogger
 }

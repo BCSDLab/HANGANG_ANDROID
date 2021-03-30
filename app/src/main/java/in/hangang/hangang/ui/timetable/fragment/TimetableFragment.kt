@@ -25,7 +25,6 @@ import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import android.app.Activity.RESULT_OK
 import android.graphics.Bitmap
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -50,15 +49,9 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableLectureListViewModel: TimetableLectureListViewModel by sharedViewModel()
     private val timetableLectureDetailViewModel: TimetableLectureDetailViewModel by sharedViewModel()
 
-    private val timetableLectureListFragment: TimetableLectureListFragment by lazy {
-        TimetableLectureListFragment()
-    }
-    private val timetableCustomLectureFragment: TimetableCustomLectureFragment by lazy {
-        TimetableCustomLectureFragment()
-    }
-    private val timetableLectureDetailFragment: TimetableLectureDetailFragment by lazy {
-        TimetableLectureDetailFragment()
-    }
+    private val timetableLectureListFragment: TimetableLectureListFragment = TimetableLectureListFragment()
+    private val timetableCustomLectureFragment: TimetableCustomLectureFragment = TimetableCustomLectureFragment()
+    private val timetableLectureDetailFragment: TimetableLectureDetailFragment = TimetableLectureDetailFragment()
 
     private val fileUtil: FileUtil by inject()
     private val timetableUtil: TimetableUtil by inject()
@@ -150,7 +143,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             captured.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
 
             lectureTimeTables.observe(viewLifecycleOwner) {
-                timetableUtil.getTimetableView(it)
+                timetableUtil.getTimetableTextView(it)
                         .withThread()
                         .subscribe(this@TimetableFragment::showLectureTimeTable, {})
                 if (timetableFragmentViewModel.mode.value == TimetableFragmentViewModel.Mode.MODE_LECTURE_DETAIL)

@@ -16,7 +16,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableFragmentViewModel(
-        private val timetableRepository: TimeTableRepository
+    private val timetableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
     enum class Mode {
@@ -37,9 +37,9 @@ class TimetableFragmentViewModel(
     val mode: LiveData<Mode> get() = _mode
     val currentShowingTimeTable: LiveData<TimeTable> get() = _currentShowingTimeTable
     val captured: LiveData<Bitmap> get() = _captured
-    val lectureTimeTables : LiveData<List<LectureTimeTable>> get() = _lectureTimetables
-    val selectedTimeTable : LiveData<LectureTimeTable?> get() = _selectedTimetable
-    val dummyTimeTable : LiveData<LectureTimeTable?> get() = _dummyTimeTable
+    val lectureTimeTables: LiveData<List<LectureTimeTable>> get() = _lectureTimetables
+    val selectedTimeTable: LiveData<LectureTimeTable?> get() = _selectedTimetable
+    val dummyTimeTable: LiveData<LectureTimeTable?> get() = _dummyTimeTable
     val duplicatedLectureTimeTable: LiveData<Event<LectureTimeTable?>> get() = _duplicatedLectureTimetable
 
     fun setMode(mode: Mode) {
@@ -54,7 +54,11 @@ class TimetableFragmentViewModel(
     fun saveToBitmap(viewGroup: ViewGroup) {
         Single.create<Bitmap> { subscriber ->
             try {
-                val bitmap = Bitmap.createBitmap(viewGroup.measuredWidth, viewGroup.measuredHeight, Bitmap.Config.ARGB_8888)
+                val bitmap = Bitmap.createBitmap(
+                    viewGroup.measuredWidth,
+                    viewGroup.measuredHeight,
+                    Bitmap.Config.ARGB_8888
+                )
                 val canvas = Canvas(bitmap)
                 viewGroup.draw(canvas)
                 subscriber.onSuccess(bitmap)
@@ -62,31 +66,32 @@ class TimetableFragmentViewModel(
                 subscriber.onError(e)
             }
         }
-                .withThread()
-                .handleProgress(this)
-                .subscribe({
-                           _captured.postValue(it)
-                }, {
-                })
-                .addTo(compositeDisposable)
+            .withThread()
+            .handleProgress(this)
+            .subscribe({
+                _captured.postValue(it)
+            }, {
+            })
+            .addTo(compositeDisposable)
     }
 
     fun getAddedLectureTimeTables(timetable: TimeTable) {
-        timetableRepository.getLectureList(timetable.id).
-        withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    _lectureTimetables.postValue(it)
-                }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                })
-                .addTo(compositeDisposable)
+        timetableRepository.getLectureList(timetable.id)
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lectureTimetables.postValue(it)
+            }, {
+                //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
+                LogUtil.e(it.toCommonResponse().errorMessage)
+            })
+            .addTo(compositeDisposable)
     }
 
     fun checkLectureDuplication(classTime: String): LectureTimeTable? {
         _lectureTimetables.value?.forEach {
-            if (TimetableUtil.isLectureTimetableTimeDuplicate(it.classTime ?: "[]", classTime)){
+            if (TimetableUtil.isLectureTimetableTimeDuplicate(it.classTime ?: "[]", classTime)) {
                 _duplicatedLectureTimetable.postValue(Event(it))
                 return it
             }
@@ -97,32 +102,38 @@ class TimetableFragmentViewModel(
 
     fun addTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
         timetableRepository.addLectureInTimeTable(
-                lectureId = lectureTimeTable.id,
-                timetableId = timetable.id
-        ).withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    getAddedLectureTimeTables(timetable)
-                }, {
-
-                })
-                .addTo(compositeDisposable)
+            lectureId = lectureTimeTable.id,
+            timetableId = timetable.id
+        ).flatMap {
+            timetableRepository.getLectureList(timetable.id)
+        }
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lectureTimetables.postValue(it)
+            }, {
+                //TODO 시간표에 강의 추가 중 에러 발생시
+            })
+            .addTo(compositeDisposable)
     }
 
     fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
         timetableRepository.removeLectureFromTimeTable(
-                lectureId = lectureTimeTable.lectureId,
-                timetableId = timetable.id
-        ).withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    getAddedLectureTimeTables(timetable)
-                }, {
-
-                })
-                .addTo(compositeDisposable)
+            lectureId = lectureTimeTable.id,
+            timetableId = timetable.id
+        ).flatMap {
+            timetableRepository.getLectureList(timetable.id)
+        }
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lectureTimetables.postValue(it)
+            }, {
+                //TODO 시간표에 강의 삭제 중 에러 발생시
+            })
+            .addTo(compositeDisposable)
     }
 
     fun selectLectureTimeTable(lectureTimeTable: LectureTimeTable?) {
