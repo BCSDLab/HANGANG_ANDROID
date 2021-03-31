@@ -14,7 +14,7 @@ import java.lang.Exception
 
 open class FragmentBase : Fragment() {
 
-    private val compositeDisposable = CompositeDisposable()
+    protected val compositeDisposable = CompositeDisposable()
 
     fun addDisposable(vararg disposables: Disposable) {
         compositeDisposable.addAll(*disposables)

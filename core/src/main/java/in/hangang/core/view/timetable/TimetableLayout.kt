@@ -6,16 +6,21 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
-import android.icu.util.Measure
 import android.util.AttributeSet
+import android.util.TypedValue.COMPLEX_UNIT_SP
+import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
+import android.widget.TextView
 import androidx.annotation.ColorInt
-import kotlin.math.roundToInt
+import androidx.core.content.ContextCompat
 
-class TimetableLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-        ViewGroup(context, attrs, defStyleAttr) {
+class TimetableLayout @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) :
+    ViewGroup(context, attrs, defStyleAttr) {
 
     private val topBarHeight: Int by lazy { dp2Px(26f) }
 
@@ -26,14 +31,14 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         }
     }
 
-    private var cellWidth : Int = 0
-    private var cellHeight : Int = 0
+    private var cellWidth: Int = 0
+    private var cellHeight: Int = 0
 
     var rowCount = 9
-    set(value) {
-        field = value
-        postInvalidate()
-    }
+        set(value) {
+            field = value
+            postInvalidate()
+        }
     var columnCount = 5
         set(value) {
             field = value
@@ -63,12 +68,13 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         setWillNotDraw(false)
 
         context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.TimetableLayout,
-                defStyleAttr,
-                0
+            attrs,
+            R.styleable.TimetableLayout,
+            defStyleAttr,
+            0
         ).apply {
-            dividerColor = getColor(R.styleable.TimetableLayout_dividerColor, Color.parseColor("#eeeeee"))
+            dividerColor =
+                getColor(R.styleable.TimetableLayout_dividerColor, Color.parseColor("#eeeeee"))
             rowCount = getInteger(R.styleable.TimetableLayout_rowCount, 9)
             columnCount = getInteger(R.styleable.TimetableLayout_columnCount, 5)
             rowHeight = getDimensionPixelSize(R.styleable.TimetableLayout_rowHeight, dp2Px(54f))
@@ -83,16 +89,16 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         val defaultHeight = MeasureSpec.getSize(heightMeasureSpec)
 
         val width =
-                when (MeasureSpec.getMode(widthMeasureSpec)) {
-                    MeasureSpec.EXACTLY -> defaultWidth
-                    else -> columnCount * columnWidth
-                }
+            when (MeasureSpec.getMode(widthMeasureSpec)) {
+                MeasureSpec.EXACTLY -> defaultWidth
+                else -> columnCount * columnWidth
+            }
 
         val height =
-                when (MeasureSpec.getMode(heightMeasureSpec)) {
-                    MeasureSpec.EXACTLY -> defaultHeight
-                    else -> rowCount * rowHeight
-                }
+            when (MeasureSpec.getMode(heightMeasureSpec)) {
+                MeasureSpec.EXACTLY -> defaultHeight
+                else -> rowCount * rowHeight
+            }
 
         cellWidth = width / columnCount
         cellHeight = height / rowCount
@@ -105,8 +111,8 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             val desiredHeight = cellHeight * (lp.rowEnd - lp.rowStart)
 
             child.measure(
-                    MeasureSpec.makeMeasureSpec(desiredWidth.toInt(), MeasureSpec.EXACTLY),
-                    MeasureSpec.makeMeasureSpec(desiredHeight.toInt(), MeasureSpec.EXACTLY)
+                MeasureSpec.makeMeasureSpec(desiredWidth.toInt(), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(desiredHeight.toInt(), MeasureSpec.EXACTLY)
             )
         }
 
@@ -129,22 +135,22 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.let {
-            for(i in 0..columnCount) {
+            for (i in 0..columnCount) {
                 it.drawLine(
-                        (cellWidth * i).toFloat(),
-                        0f,
-                        (cellWidth * i).toFloat(),
-                        measuredHeight.toFloat(),
-                        linePaint
+                    (cellWidth * i).toFloat(),
+                    0f,
+                    (cellWidth * i).toFloat(),
+                    measuredHeight.toFloat(),
+                    linePaint
                 )
             }
-            for(i in 0..rowCount) {
+            for (i in 0..rowCount) {
                 it.drawLine(
-                        0f,
-                        (cellHeight * i).toFloat(),
-                        measuredWidth.toFloat(),
-                        (cellHeight * i).toFloat(),
-                        linePaint
+                    0f,
+                    (cellHeight * i).toFloat(),
+                    measuredWidth.toFloat(),
+                    (cellHeight * i).toFloat(),
+                    linePaint
                 )
             }
         }
@@ -166,8 +172,15 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         return p is LayoutParams
     }
 
+    data class RC(
+        val rowStart: Float,
+        val rowEnd: Float,
+        val columnStart: Float,
+        val columnEnd: Float
+    )
+
     class LayoutParams(context: Context, attrs: AttributeSet? = null) : MarginLayoutParams(
-            WRAP_CONTENT, WRAP_CONTENT
+        WRAP_CONTENT, WRAP_CONTENT
     ) {
         var rowStart: Float = 0f
         var rowEnd: Float = 0f
@@ -175,12 +188,12 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         var columnEnd: Float = 0f
 
         constructor(
-                context: Context,
-                attrs: AttributeSet? = null,
-                rowStart: Float,
-                rowEnd: Float,
-                columnStart: Float,
-                columnEnd: Float,
+            context: Context,
+            attrs: AttributeSet? = null,
+            rowStart: Float,
+            rowEnd: Float,
+            columnStart: Float,
+            columnEnd: Float,
         ) : this(context, null) {
             this.rowStart = rowStart
             this.rowEnd = rowEnd
@@ -190,10 +203,10 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
         init {
             context.theme.obtainStyledAttributes(
-                    attrs,
-                    R.styleable.TimetableLayout,
-                    0,
-                    0
+                attrs,
+                R.styleable.TimetableLayout,
+                0,
+                0
             ).apply {
                 rowStart = getFloat(R.styleable.TimetableLayout_layout_rowStart, 0f)
                 rowEnd = getFloat(R.styleable.TimetableLayout_layout_rowEnd, 0f)
@@ -201,6 +214,52 @@ class TimetableLayout @JvmOverloads constructor(context: Context, attrs: Attribu
                 columnEnd = getFloat(R.styleable.TimetableLayout_layout_columnEnd, 0f)
 
                 recycle()
+            }
+        }
+    }
+
+    companion object {
+        fun generateTimetableTextView(
+            context: Context,
+            text: CharSequence,
+            rowColumn: RC,
+            @ColorInt backgroundColor: Int = ContextCompat.getColor(context, R.color.blue_500),
+            @ColorInt textColor: Int = ContextCompat.getColor(context, R.color.white)
+        ): View {
+            return TextView(context).apply {
+                setBackgroundColor(backgroundColor)
+                setTextColor(textColor)
+                setText(text)
+                setTextSize(COMPLEX_UNIT_SP, 10f)
+                setPadding(
+                    dp2Px(4f),
+                    dp2Px(4f),
+                    dp2Px(4f),
+                    dp2Px(4f)
+                )
+                layoutParams = LayoutParams(
+                    context, null,
+                    rowColumn.rowStart,
+                    rowColumn.rowEnd,
+                    rowColumn.columnStart,
+                    rowColumn.columnEnd
+                )
+            }
+        }
+
+        fun generateTimetableDummyView(
+            context: Context,
+            rowColumn: RC
+        ): View {
+            return View(context).apply {
+                setBackgroundResource(R.drawable.background_timetable_outline)
+                layoutParams = LayoutParams(
+                    context, null,
+                    rowColumn.rowStart,
+                    rowColumn.rowEnd,
+                    rowColumn.columnStart,
+                    rowColumn.columnEnd
+                )
             }
         }
     }

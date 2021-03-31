@@ -32,20 +32,6 @@ class TimetableViewModel(
     val setMainTimeTable: LiveData<Event<TimeTable>> get() = _setMainTimeTable
     val timetableNameModified: LiveData<Event<String>> get() = _timetableNameModified
 
-    /*fun getTimetables() {
-        timetableRepository.getTimeTables()
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({ list ->
-                _timetables.value = list
-                getMainTimeTable()
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
-            .addTo(compositeDisposable)
-    }*/
-
     fun getTimetables() {
         Single.zip(
             timetableRepository.getTimeTables(),
@@ -72,6 +58,7 @@ class TimetableViewModel(
             .subscribe({
                 _mainTimeTable.postValue(it)
             }, {
+                //TODO 시간표 리스트를 가져오지 못했을 때 에러
                 Logger.e(it.toCommonResponse().errorMessage ?: "Unknown error")
             })
     }

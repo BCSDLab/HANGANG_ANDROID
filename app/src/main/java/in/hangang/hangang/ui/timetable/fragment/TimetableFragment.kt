@@ -32,6 +32,7 @@ import android.view.ViewTreeObserver
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import io.reactivex.rxjava3.kotlin.addTo
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -54,7 +55,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableLectureDetailFragment: TimetableLectureDetailFragment = TimetableLectureDetailFragment()
 
     private val fileUtil: FileUtil by inject()
-    private val timetableUtil: TimetableUtil by inject()
 
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableBottomSheetContainer) }
 
@@ -143,7 +143,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             captured.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
 
             lectureTimeTables.observe(viewLifecycleOwner) {
-                timetableUtil.getTimetableTextView(it)
+                TimetableUtil.getTimetableTextView(requireContext(), it)
                         .withThread()
                         .subscribe(this@TimetableFragment::showLectureTimeTable, {})
                 if (timetableFragmentViewModel.mode.value == TimetableFragmentViewModel.Mode.MODE_LECTURE_DETAIL)
@@ -155,9 +155,11 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             }
 
             dummyTimeTable.observe(viewLifecycleOwner) {
-                timetableUtil.getTimetableDummyView(if (it == null) listOf() else listOf(it))
+                TimetableUtil.getTimetableDummyView(requireContext(),
+                    if (it == null) listOf() else listOf(it))
                         .withThread()
                         .subscribe(this@TimetableFragment::showLectureDummyTimetable)
+                    .addTo(compositeDisposable)
             }
 
             duplicatedLectureTimeTable.observe(viewLifecycleOwner, EventObserver {

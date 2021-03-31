@@ -8,13 +8,11 @@ import android.os.Build
 import org.koin.dsl.module
 
 val fileModule = module {
-    single<FileUtil> {
+    single {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             FileUtilNewImpl(get())
         } else {
             FileUtilLegacyImpl(get())
         }
     }
-
-    single { TimetableUtil(get()) }
 }

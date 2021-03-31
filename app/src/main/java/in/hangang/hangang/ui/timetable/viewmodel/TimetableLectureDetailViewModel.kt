@@ -47,18 +47,15 @@ class TimetableLectureDetailViewModel(
         _lectureTimetable.value?.id?.let { id ->
             (if (memo.isBlank()) {
                 timeTableRepository.removeMemo(id)
-                        .withThread()
-                        .handleHttpException()
-                        .handleProgress(this)
             } else {
                 timeTableRepository.modifyMemo(
                         timetableLectureId = id,
                         memo = memo
                 )
-                        .withThread()
-                        .handleHttpException()
-                        .handleProgress(this)
             })
+                    .withThread()
+                    .handleHttpException()
+                    .handleProgress(this)
                     .subscribe({
                         getMemo(_lectureTimetable.value!!)
                     }, {

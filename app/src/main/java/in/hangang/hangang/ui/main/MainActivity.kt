@@ -45,16 +45,16 @@ class MainActivity : ViewBindingActivity<ActivityMainBinding>() {
         /*timetableViewModel.isLoading.observe(this) {
             loadingMap[timetableViewModel] = it
             isLoading.value = loadingMap
-        }*/
+        }
         timetableFragmentViewModel.isLoading.observe(this) {
             loadingMap[timetableFragmentViewModel] = it
             isLoading.value = loadingMap
-        }
-        /*timetableLectureListViewModel.isLoading.observe(this) {
+        }*/
+        timetableLectureListViewModel.isLoading.observe(this) {
             loadingMap[timetableLectureListViewModel] = it
             isLoading.value = loadingMap
         }
-        timetableCustomLectureViewModel.isLoading.observe(this) {
+        /*timetableCustomLectureViewModel.isLoading.observe(this) {
             loadingMap[timetableCustomLectureViewModel] = it
             isLoading.value = loadingMap
         }

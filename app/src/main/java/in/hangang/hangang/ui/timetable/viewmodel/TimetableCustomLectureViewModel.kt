@@ -8,6 +8,7 @@ import `in`.hangang.hangang.data.source.TimeTableRepository
 import `in`.hangang.hangang.util.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableCustomLectureViewModel(
     val timeTableRepository: TimeTableRepository
@@ -61,6 +62,7 @@ class TimetableCustomLectureViewModel(
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
             })
+                .addTo(compositeDisposable)
     }
 
     fun init() {
