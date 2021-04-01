@@ -140,7 +140,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
             timetableBitmapImage.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
 
-            lectureTimeTables.observe(viewLifecycleOwner) {
+            lectureTimetablesInTimetable.observe(viewLifecycleOwner) {
                 TimetableUtil.getTimetableTextView(requireContext(), it)
                         .withThread()
                         .subscribe(this@TimetableFragment::showLectureTimeTable, {})
