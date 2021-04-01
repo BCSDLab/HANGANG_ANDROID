@@ -13,8 +13,8 @@ import `in`.hangang.hangang.databinding.FragmentTimetableLectureListBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableLectureFilterActivityContract
 import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
-import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +31,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
             keyword = null
     )
 
-    private val timetableFragmentViewModel: TimetableFragmentViewModel by sharedViewModel()
+    private val timetableViewModel: TimetableViewModel by sharedViewModel()
     private val timetableLectureListViewModel: TimetableLectureListViewModel by sharedViewModel()
 
     private val timetableLectureAdapter: TimetableLectureAdapter by lazy {
@@ -113,23 +113,21 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
         timetableLectureAdapter.timetableLectureListener = object : TimetableLectureListener {
             override fun onCheckedChange(position: Int, lectureTimeTable: LectureTimeTable) {
                 if (position == -1) {
-                    timetableFragmentViewModel.setDummyLectureTimeTable(null)
+                    timetableViewModel.setDummyLectureTimeTable(null)
                 } else
-                    timetableFragmentViewModel.setDummyLectureTimeTable(lectureTimeTable)
+                    timetableViewModel.setDummyLectureTimeTable(lectureTimeTable)
             }
 
             override fun onAddButtonClicked(
                     position: Int,
                     lectureTimeTable: LectureTimeTable
             ): Boolean {
-                if (timetableFragmentViewModel.checkLectureDuplication(
-                                lectureTimeTable.classTime ?: "[]") == null)
-                    timetableFragmentViewModel.currentShowingTimeTable.value?.let {
-                        timetableFragmentViewModel.addTimeTableLecture(
-                                timetable = it,
-                                lectureTimeTable = lectureTimeTable
-                        )
-                    }
+                timetableViewModel.displayingTimeTable.value?.let {
+                    timetableViewModel.addTimeTableLecture(
+                            timetable = it,
+                            lectureTimeTable = lectureTimeTable
+                    )
+                }
                 return false
             }
 
@@ -137,8 +135,8 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                     position: Int,
                     lectureTimeTable: LectureTimeTable
             ): Boolean {
-                timetableFragmentViewModel.currentShowingTimeTable.value?.let {
-                    timetableFragmentViewModel.removeTimeTableLecture(
+                timetableViewModel.displayingTimeTable.value?.let {
+                    timetableViewModel.removeTimeTableLecture(
                             timetable = it,
                             lectureTimeTable = lectureTimeTable
                     )
@@ -158,8 +156,8 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
     }
 
     private fun initViewModel() {
-        with(timetableFragmentViewModel) {
-            lectureTimeTables.observe(viewLifecycleOwner) {
+        with(timetableViewModel) {
+            lectureTimetablesInTimetable.observe(viewLifecycleOwner) {
                 timetableLectureAdapter.updateSelectedLectures(it)
             }
         }
@@ -171,8 +169,8 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                 timetableLectureAdapter.updateItem(it)
             }
             timetableLectureChanged.observe(viewLifecycleOwner, EventObserver {
-                timetableFragmentViewModel.currentShowingTimeTable.value?.let { timeTable ->
-                    timetableFragmentViewModel.getAddedLectureTimeTables(timeTable)
+                timetableViewModel.displayingTimeTable.value?.let { timeTable ->
+                    timetableViewModel.getLectureTimeTablesInTimeTable(timeTable)
                 }
             })
             dips.observe(viewLifecycleOwner) {
@@ -195,7 +193,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
             timetableLectureListViewModel.getDipLectures(true)
         } else {
             timetableLectureListViewModel.getLectures(
-                    semesterDateId = timetableFragmentViewModel.currentShowingTimeTable.value?.semesterDateId
+                    semesterDateId = timetableViewModel.displayingTimeTable.value?.semesterDateId
                             ?: 5
             )
         }

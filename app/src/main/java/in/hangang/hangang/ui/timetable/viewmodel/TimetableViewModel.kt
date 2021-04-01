@@ -2,135 +2,353 @@ package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
-import `in`.hangang.core.util.init
+import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
-import `in`.hangang.hangang.util.LogUtil
-import `in`.hangang.hangang.util.handleHttpException
-import `in`.hangang.hangang.util.handleProgress
-import `in`.hangang.hangang.util.withThread
+import `in`.hangang.hangang.util.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.util.Log
+import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
+import java.io.EOFException
 
 class TimetableViewModel(
-    private val timetableRepository: TimeTableRepository
+        private val timeTableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
-    private val timetableList = mutableListOf<TimeTable>()
+    enum class Mode {
+        MODE_NORMAL,
+        MODE_LECTURE_LIST,
+        MODE_CUSTOM_LECTURE,
+        MODE_LECTURE_DETAIL
+    }
+
+    private val listTimetables = mutableListOf<TimeTable>()
+
+    private val times = mutableListOf<CustomTimetableTimestamp>()
 
     private val _timetables = MutableLiveData<List<TimeTable>>()
-    private val _mainTimeTable = MutableLiveData<TimeTable>()
-    private val _setMainTimeTable = MutableLiveData<Event<TimeTable>>()
-    private val _timetableNameModified = MutableLiveData<Event<String>>()
+    private val _mainTimetableEvent = MutableLiveData<Event<TimeTable>>()
+    private val _setMainTimetableEvent = MutableLiveData<Event<CommonResponse>>()
+    private val _timetableNameModifiedEvent = MutableLiveData<Event<String>>()
+    private val _timetableBitmapImage = MutableLiveData<Bitmap>()
+
+    private val _mode = MutableLiveData(Mode.MODE_NORMAL)
+    private val _displayingTimeTable = MutableLiveData<TimeTable>()
+    private val _lectureTimetablesInTimetable = MutableLiveData<List<LectureTimeTable>>()
+    private val _selectedTimetable = MutableLiveData<LectureTimeTable?>()
+    private val _dummyTimeTable = MutableLiveData<LectureTimeTable?>()
+    private val _duplicatedLectureTimetable = MutableLiveData<Event<LectureTimeTable?>>()
+    private val _customLectureAdded = MutableLiveData<Event<Boolean>>()
+    private val _availableAddingCustomTimetable = MutableLiveData<Boolean>()
+
+    private val _timestamp = MutableLiveData<List<CustomTimetableTimestamp>>()
 
     val timetables: LiveData<List<TimeTable>> get() = _timetables
-    val mainTimeTable: LiveData<TimeTable> get() = _mainTimeTable
-    val setMainTimeTable: LiveData<Event<TimeTable>> get() = _setMainTimeTable
-    val timetableNameModified: LiveData<Event<String>> get() = _timetableNameModified
+    val mainTimetableEvent: LiveData<Event<TimeTable>> get() = _mainTimetableEvent
+    val setMainTimetableEvent: LiveData<Event<CommonResponse>> get() = _setMainTimetableEvent
+    val timetableNameModifiedEvent: LiveData<Event<String>> get() = _timetableNameModifiedEvent
+    val timetableBitmapImage: LiveData<Bitmap> get() = _timetableBitmapImage
+    val mode: LiveData<Mode> get() = _mode
+    val displayingTimeTable: LiveData<TimeTable> get() = _displayingTimeTable
+    val lectureTimetablesInTimetable: LiveData<List<LectureTimeTable>> get() = _lectureTimetablesInTimetable
+    val selectedTimetable: LiveData<LectureTimeTable?> get() = _selectedTimetable
+    val dummyTimeTable: LiveData<LectureTimeTable?> get() = _dummyTimeTable
+    val duplicatedLectureTimetable: LiveData<Event<LectureTimeTable?>> get() = _duplicatedLectureTimetable
+    val timestamp: LiveData<List<CustomTimetableTimestamp>> get() = _timestamp
+    val customLectureAdded: LiveData<Event<Boolean>> get() = _customLectureAdded
+    val availableAddingCustomTimetable :LiveData<Boolean> get() = _availableAddingCustomTimetable
+
+    fun setMode(mode: Mode) {
+        if (_mode.value != mode)
+            _mode.postValue(mode)
+    }
 
     fun getTimetables() {
-        Single.zip(
-            timetableRepository.getTimeTables(),
-            timetableRepository.getMainTimeTable()
-        ) { timetables, mainTimetableId ->
-            timetableList.init(timetables)
-            _timetables.postValue(timetables)
-            findTimeTableById(mainTimetableId)?.let {
-                _mainTimeTable.postValue(it)
-                it
-            }
-        }.flatMap { timetable ->
-            if (timetable == null) {
-                timetableRepository.setMainTimeTable(timetableList[0].id)
-                    .flatMap {
-                        Single.just(timetableList[0])
-                    }
-            } else
-                Single.just(timetable)
-        }
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({
-                _mainTimeTable.postValue(it)
-            }, {
-                //TODO 시간표 리스트를 가져오지 못했을 때 에러
-                Logger.e(it.toCommonResponse().errorMessage ?: "Unknown error")
-            })
+        timeTableRepository.getTimeTables()
+                .withThread()
+                .handleProgress(this)
+                .handleHttpException()
+                .subscribe({
+                    listTimetables.clear()
+                    listTimetables.addAll(it)
+                    _timetables.postValue(it)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                    // TODO 시간표 목록 가져오기 중 오류
+                })
     }
 
     fun getMainTimeTable() {
-        timetableRepository.getMainTimeTable()
-            .flatMap { //시간표 id를 가지고 시간표 객체를 얻어옴
-                if (timetableList.isEmpty())
-                    Single.error(NoSuchElementException("You must call getTimetables before call getMainTimeTable"))
-                else {
-                    findTimeTableById(it)?.let { timetable ->
-                        Single.just(timetable)
-                    }
-                }
-            }
-            .flatMap { //메인 시간표가 설정이 안되어 있을 경우 리스트의 0번 아이템을 메인 시간표로 설정
-                if (it == null) {
-                    timetableRepository.setMainTimeTable(timetableList[0].id)
-                        .flatMap {
-                            Single.just(timetableList[0])
-                        }
-                } else
-                    Single.just(it)
-            }
-            .subscribe({
-                _mainTimeTable.postValue(it)
-            }, {
-                //TODO 메인 시간표를 가져오는 중 오류
-            })
+        getMainTimeTableRx()
+                .withThread()
+                .handleProgress(this)
+                .handleHttpException()
+                .subscribe({
+                    _mainTimetableEvent.value = Event(it)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                    //TODO 메인 시간표 가져오는 중 오류
+                })
     }
 
-    fun setMainTimeTable(timetable: TimeTable) {
-        timetableRepository.setMainTimeTable(timetable.id)
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({
-                _setMainTimeTable.postValue(Event(timetable))
-            }, {
-                //TODO 메인 시간표 설정 중 오류
-                LogUtil.e(it.message)
-            })
-            .addTo(compositeDisposable)
-    }
-
-    fun modifyTimeTableName(timetable: TimeTable, name: String) {
-        timetableRepository.modifyTimeTableName(timetable.id, name)
-            .withThread()
-            .handleHttpException()
-            .handleProgress(this)
-            .subscribe({
-                _timetableNameModified.postValue(Event(name))
-            }, {
-
-            })
-            .addTo(compositeDisposable)
+    fun setMainTimetable(timetableId: Int) {
+        timeTableRepository.setMainTimeTable(timetableId)
+                .withThread()
+                .handleProgress(this)
+                .handleHttpException()
+                .subscribe({
+                    _setMainTimetableEvent.value = Event(it)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                    //TODO 메인 시간표 설정 중 오류
+                })
     }
 
     fun removeTimetable(timetable: TimeTable) {
-        timetableRepository.removeTimeTable(timetableId = timetable.id)
-            .withThread()
-            .handleHttpException()
-            .handleProgress(this)
-            .subscribe({
-                getTimetables()
-            }, {
+        timeTableRepository.removeTimeTable(timetableId = timetable.id)
+                .flatMap {
+                    getTimetablesRx()
+                }.flatMap {
+                    getMainTimeTableRx()
+                }
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                           _displayingTimeTable.postValue(it)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                    //TODO 시간표 삭제 중 오류
+                })
+    }
 
-            })
-            .addTo(compositeDisposable)
+    fun modifyTimeTableName(timetable: TimeTable, name: String) {
+        timeTableRepository.modifyTimeTableName(timetable.id, name)
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    _timetableNameModifiedEvent.postValue(Event(name))
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                    //TODO 시간표 이름 수정 중 오류
+                })
+                .addTo(compositeDisposable)
+    }
+
+    fun getTimetableBitmapImage(viewGroup: ViewGroup) {
+        Single.create<Bitmap> { subscriber ->
+            try {
+                val bitmap = Bitmap.createBitmap(
+                        viewGroup.measuredWidth,
+                        viewGroup.measuredHeight,
+                        Bitmap.Config.ARGB_8888
+                )
+                val canvas = Canvas(bitmap)
+                viewGroup.draw(canvas)
+                subscriber.onSuccess(bitmap)
+            } catch (e: Exception) {
+                subscriber.onError(e)
+            }
+        }
+                .withThread()
+                .handleProgress(this)
+                .subscribe({
+                    _timetableBitmapImage.postValue(it)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                    //TODO 시간표 이미지 만드는 중 오류
+                })
+                .addTo(compositeDisposable)
+    }
+
+    fun setDisplayingTimeTable(timetable: TimeTable) {
+        _displayingTimeTable.value = timetable
+    }
+
+    fun getLectureTimeTablesInTimeTable(timetable: TimeTable) {
+        timeTableRepository.getLectureList(timetable.id)
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    _lectureTimetablesInTimetable.postValue(it)
+                }, {
+                    //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
+                .addTo(compositeDisposable)
+    }
+
+    private fun checkLectureDuplication(classTime: String): LectureTimeTable? {
+        _lectureTimetablesInTimetable.value?.forEach {
+            if (TimetableUtil.isLectureTimetableTimeDuplicate(it.classTime ?: "[]", classTime)) {
+                _duplicatedLectureTimetable.postValue(Event(it))
+                return it
+            }
+        }
+        _duplicatedLectureTimetable.postValue(Event(null))
+        return null
+    }
+
+    fun addTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
+        if (checkLectureDuplication(lectureTimeTable.classTime ?: "[]") == null) {
+            timeTableRepository.addLectureInTimeTable(
+                    lectureId = lectureTimeTable.id,
+                    timetableId = timetable.id
+            ).flatMap {
+                timeTableRepository.getLectureList(timetable.id)
+            }
+                    .withThread()
+                    .handleHttpException()
+                    .handleProgress(this)
+                    .subscribe({
+                        _lectureTimetablesInTimetable.postValue(it)
+                    }, {
+                        LogUtil.e(it.toCommonResponse().errorMessage)
+                        //TODO 시간표에 강의 추가 중 에러 발생시
+                    })
+                    .addTo(compositeDisposable)
+        }
+    }
+
+    fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
+        timeTableRepository.removeLectureFromTimeTable(
+                lectureId = lectureTimeTable.lectureId,
+                timetableId = timetable.id
+        ).flatMap {
+            timeTableRepository.getLectureList(timetable.id)
+        }
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    _lectureTimetablesInTimetable.postValue(it)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                    //TODO 시간표에 강의 삭제 중 에러 발생시
+                })
+                .addTo(compositeDisposable)
+    }
+
+    fun selectLectureTimeTable(lectureTimeTable: LectureTimeTable?) {
+        _selectedTimetable.postValue(lectureTimeTable)
+    }
+
+    fun setDummyLectureTimeTable(lectureTimeTable: LectureTimeTable?) {
+        _dummyTimeTable.postValue(lectureTimeTable)
+    }
+
+    fun addTimestamp(customTimetableTimestamp: CustomTimetableTimestamp) {
+        times.add(customTimetableTimestamp)
+        _timestamp.postValue(times)
+    }
+
+    fun removeTimestamp(position: Int) {
+        times.removeAt(position)
+        _timestamp.postValue(times)
+    }
+
+    fun modifyTimestamp(position: Int, customTimetableTimestamp: CustomTimetableTimestamp) {
+        times[position] = customTimetableTimestamp
+        _timestamp.postValue(times)
+    }
+
+    fun checkValidation(name: String, professor: String) {
+        _availableAddingCustomTimetable.postValue(
+                name.isNotEmpty() &&
+                        professor.isNotEmpty() &&
+                        TimetableUtil.toExp(times) != "[]"
+        )
+    }
+
+    fun addCustomLecture(
+            name: String,
+            professor: String,
+            classTime: String,
+            timetableId: Int
+    ) {
+        if (checkLectureDuplication(classTime) == null) {
+            timeTableRepository.addCustomLectureInTimetable(
+                    classTime, name, professor, timetableId
+            )
+                    .flatMap {
+                        timeTableRepository.getLectureList(timetableId)
+                    }
+                    .withThread()
+                    .handleProgress(this)
+                    .handleHttpException()
+                    .subscribe({
+                        _customLectureAdded.postValue(Event(true))
+                        _lectureTimetablesInTimetable.postValue(it)
+                    }, {
+                        LogUtil.e(it.toCommonResponse().errorMessage)
+                    })
+        }
+
+    }
+
+    fun initCustomLectureValue() {
+        times.clear()
+        times.add(
+                CustomTimetableTimestamp(
+                        week = 0,
+                        startTime = Pair(9, 0),
+                        endTime = Pair(10, 0)
+                )
+        )
+        _timestamp.postValue(times)
     }
 
     private fun findTimeTableById(timetableId: Int): TimeTable? {
-        return timetableList.find { it.id == timetableId }
+        return listTimetables.find { it.id == timetableId }
     }
+
+    private fun getTimetablesRx() : Single<List<TimeTable>> {
+        return timeTableRepository.getTimeTables().doOnSuccess {
+            listTimetables.clear()
+            listTimetables.addAll(it)
+            _timetables.postValue(it)
+        }
+    }
+
+    private fun getMainTimeTableRx(): Single<TimeTable> {
+        return if(listTimetables.isEmpty()) {
+            getTimetablesRx()
+                    .flatMap {
+                        getMainTimeTableRx()
+                    }
+        } else {
+            timeTableRepository.getMainTimeTable()
+                    .flatMap { id ->
+                        findTimeTableByIdRx(id)
+                    }
+                    .onErrorResumeNext {
+                        if(it is EOFException) {
+                            timeTableRepository.setMainTimeTable(listTimetables[0].id)
+                                    .flatMap { getMainTimeTableRx() }
+                        } else
+                            Single.error(it)
+                    }
+        }
+    }
+
+    private fun findTimeTableByIdRx(timetableId: Int): Single<TimeTable> {
+        return with(findTimeTableById(timetableId)) {
+            if (this == null) {
+                timeTableRepository.setMainTimeTable(listTimetables[0].id).flatMap {
+                    Single.just(listTimetables[0])
+                }
+            } else Single.just(this)
+        }
+    }
+
 }

@@ -4,18 +4,17 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentTimetableLectureDetailBinding
-import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableFragmentViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import `in`.hangang.hangang.util.TimetableUtil
 import android.os.Bundle
 import android.view.View
-import androidx.core.widget.addTextChangedListener
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLectureDetailBinding>() {
     override val layoutId = R.layout.fragment_timetable_lecture_detail
 
-    private val timetableFragmentViewModel: TimetableFragmentViewModel by sharedViewModel()
+    private val timetableViewModel: TimetableViewModel by sharedViewModel()
     private val timetableLectureDetailViewModel: TimetableLectureDetailViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,9 +26,12 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
 
     private fun initView() {
         binding.imageButtonRemoveLecture.setOnClickListener {
-            timetableFragmentViewModel.currentShowingTimeTable.value?.let { timetable ->
+            timetableViewModel.displayingTimeTable.value?.let { timetable ->
                 timetableLectureDetailViewModel.lectureTimetable.value?.let { lectureTimeTable ->
-                    timetableFragmentViewModel.removeTimeTableLecture(timetable, lectureTimeTable)
+                    timetableViewModel.removeTimeTableLecture(
+                        timetable = timetable,
+                        lectureTimeTable = lectureTimeTable
+                    )
                 }
             }
         }

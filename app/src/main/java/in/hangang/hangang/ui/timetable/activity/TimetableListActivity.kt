@@ -1,6 +1,8 @@
 package `in`.hangang.hangang.ui.timetable.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.livedata.EventObserver
+import `in`.hangang.core.progressdialog.progressState
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
@@ -12,7 +14,6 @@ import `in`.hangang.hangang.ui.timetable.adapter.TimetableTimetablesAdapter
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableAddActivityContract
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.listener.TimetableListRecyclerViewOnItemClickListener
-import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableListActivityViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.content.Intent
 import android.os.Bundle
@@ -24,7 +25,6 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
     override val layoutId = R.layout.activity_timetable_list
 
     private val timetableViewModel : TimetableViewModel by viewModel()
-    private val timetableListActivityViewModel : TimetableListActivityViewModel by viewModel()
 
     private val timetableAddActivityResult = registerForActivityResult(TimeTableAddActivityContract()) {
         if(it) timetableViewModel.getTimetables()
@@ -53,24 +53,20 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
     }
 
     private fun initViewModel() {
-        binding.activityViewModel = timetableListActivityViewModel
-
         with(timetableViewModel) {
+            isLoading.observe(this@TimetableListActivity) {
+                progressState(it)
+            }
             timetables.observe(this@TimetableListActivity) {
                 timetableAdapter.updateItem(it)
-                timetableListActivityViewModel.updateTimetableSize(it.size)
+                binding.textViewTimetableListLimit.text = "${it.size}/50"
             }
-            mainTimeTable.observe(this@TimetableListActivity) {
+            mainTimetableEvent.observe(this@TimetableListActivity , EventObserver {
                 timetableAdapter.mainTimeTableId = it.id
-            }
-        }
-        with(timetableListActivityViewModel) {
-            currentTimetableSize.observe(this@TimetableListActivity) {
-                binding.textViewTimetableListLimit.text = "$it/50"
-            }
+            })
         }
 
-        timetableViewModel.getTimetables()
+        timetableViewModel.getMainTimeTable()
     }
 
     private fun initAppBar() {
@@ -83,7 +79,7 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
                 }
 
                 override fun onClickViewInRightContainer(view: View, index: Int) {
-                    if((timetableListActivityViewModel.currentTimetableSize.value ?: 0) >= 50) {
+                    if((timetableViewModel.timetables.value?.size ?: 0) >= 50) {
                         showTimetableLimitErrorDialog()
                     } else {
                         showAddTimetableActivity()

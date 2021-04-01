@@ -8,6 +8,7 @@ import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
+import java.io.EOFException
 
 class TimeTableRepository(
         private val timeTableLocalDataSource: TimeTableDataSource,

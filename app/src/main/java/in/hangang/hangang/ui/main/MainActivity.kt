@@ -17,16 +17,18 @@ class MainActivity : ViewBindingActivity<ActivityMainBinding>() {
     private val loadingMap = mutableMapOf<ViewModelBase, Boolean>()
     private val isLoading = MutableLiveData<Map<ViewModelBase, Boolean>>()
 
-    private val timetableViewModel: TimetableViewModel by viewModel()
-    private val timetableFragmentViewModel: TimetableFragmentViewModel by viewModel()
     private val timetableLectureListViewModel: TimetableLectureListViewModel by viewModel()
-    private val timetableCustomLectureViewModel: TimetableCustomLectureViewModel by viewModel()
     private val timetableLectureDetailViewModel: TimetableLectureDetailViewModel by viewModel()
+    private val timetableViewModel : TimetableViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initLoading()
+        timetableViewModel.isLoading.observe(this) {
+            if(it) showProgressDialog()
+            else hideProgressDialog()
+        }
 
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(binding.navView, navController)
@@ -35,32 +37,11 @@ class MainActivity : ViewBindingActivity<ActivityMainBinding>() {
 
     private fun initLoading() {
         isLoading.observe(this) {
-            if(it.values.contains(true)) {
+            if (it.values.contains(true)) {
                 showProgressDialog()
             } else {
                 hideProgressDialog()
             }
         }
-
-        /*timetableViewModel.isLoading.observe(this) {
-            loadingMap[timetableViewModel] = it
-            isLoading.value = loadingMap
-        }
-        timetableFragmentViewModel.isLoading.observe(this) {
-            loadingMap[timetableFragmentViewModel] = it
-            isLoading.value = loadingMap
-        }*/
-        timetableLectureListViewModel.isLoading.observe(this) {
-            loadingMap[timetableLectureListViewModel] = it
-            isLoading.value = loadingMap
-        }
-        /*timetableCustomLectureViewModel.isLoading.observe(this) {
-            loadingMap[timetableCustomLectureViewModel] = it
-            isLoading.value = loadingMap
-        }
-        timetableLectureDetailViewModel.isLoading.observe(this) {
-            loadingMap[timetableLectureDetailViewModel] = it
-            isLoading.value = loadingMap
-        }*/
     }
 }
