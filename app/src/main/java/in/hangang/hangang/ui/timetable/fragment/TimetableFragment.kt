@@ -2,6 +2,7 @@ package `in`.hangang.hangang.ui.timetable.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
+import `in`.hangang.core.progressdialog.changeProgressState
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
@@ -95,6 +96,9 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun initViewModel() {
         with(timetableViewModel) {
+            isLoading.observe(viewLifecycleOwner) {
+                changeProgressState(it)
+            }
             mode.observe(viewLifecycleOwner) {
                 when (it) {
                     TimetableViewModel.Mode.MODE_NORMAL -> {

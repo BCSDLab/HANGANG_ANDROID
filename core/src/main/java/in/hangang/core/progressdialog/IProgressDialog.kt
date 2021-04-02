@@ -5,7 +5,7 @@ interface IProgressDialog {
     fun hideProgressDialog()
 }
 
-fun IProgressDialog.progressState(isShowing: Boolean) {
+fun IProgressDialog.changeProgressState(isShowing: Boolean) {
     if(isShowing) showProgressDialog()
     else hideProgressDialog()
 }

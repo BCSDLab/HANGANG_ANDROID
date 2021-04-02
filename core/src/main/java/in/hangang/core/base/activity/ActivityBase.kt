@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 
 open class ActivityBase : AppCompatActivity(), IProgressDialog {
     private val compositeDisposable = CompositeDisposable()
-    var progressDialog: ProgressDialog? = null
+    private val progressDialog : ProgressDialog by lazy { ProgressDialog(this, getString(R.string.loading)) }
 
     private var writeStorageActivityResultFunc : (() -> Unit)? = null
     private val writeStoragePermissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -59,20 +59,18 @@ open class ActivityBase : AppCompatActivity(), IProgressDialog {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        progressDialog.dismiss()
         if (!compositeDisposable.isDisposed)
             compositeDisposable.dispose()
+        super.onDestroy()
     }
 
     override fun showProgressDialog() {
-        progressDialog?.dismiss()
-        progressDialog = ProgressDialog(this, getString(R.string.loading))
-        progressDialog?.show()
+        progressDialog.show()
     }
 
     override fun hideProgressDialog() {
-        progressDialog?.dismiss()
-        progressDialog = null
+        progressDialog.hide()
     }
 
     fun requireWriteStorage(result: () -> Unit) {

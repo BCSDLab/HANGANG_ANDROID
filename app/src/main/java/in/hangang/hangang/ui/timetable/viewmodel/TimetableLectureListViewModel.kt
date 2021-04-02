@@ -13,17 +13,15 @@ import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableLectureListViewModel(
-    private val timetableRepository: TimeTableRepository
+        private val timetableRepository: TimeTableRepository
 ) : ViewModelBase() {
     private val lectureList = mutableListOf<LectureTimeTable>()
 
     private val _isShowingDip = MutableLiveData<Boolean>()
-
-    private val _isGetLecturesLoading = MutableLiveData<Boolean>()
-    private val _isGetLecturesAdditionalLoading = MutableLiveData<Boolean>()
 
     private val _lectures = MutableLiveData<Collection<LectureTimeTable>>()
     private val _dips = MutableLiveData<Collection<LectureTimeTable>>()
@@ -34,50 +32,55 @@ class TimetableLectureListViewModel(
     private val _resetLectureFilter = MutableLiveData<Event<Boolean>>()
 
     val lectures: LiveData<Collection<LectureTimeTable>> get() = _lectures
-    val isGetLecturesLoading: LiveData<Boolean> get() = _isGetLecturesLoading
     val timetableLectureChanged: MutableLiveData<Event<CommonResponse>> get() = _timetableLectureChanged
     val dips: LiveData<Collection<LectureTimeTable>> get() = _dips
     val isShowingDip: LiveData<Boolean> get() = _isShowingDip
     val lectureFilter: LiveData<LectureFilter> get() = _lectureFilter
-    val resetLectureFilter : LiveData<Event<Boolean>> get() = _resetLectureFilter
+    val resetLectureFilter: LiveData<Event<Boolean>> get() = _resetLectureFilter
 
     var page = 0
     var semesterDateId: Int = 5
 
     fun getLectures(
-        semesterDateId: Int
+            semesterDateId: Int
     ) {
         setShowingDip(false)
         page = 0
         this.semesterDateId = semesterDateId
         lectureList.clear()
-        _lectures.postValue(lectureList)
 
-        getLectures()
+        getLecturesRx()
+                .handleProgress(this)
+                .subscribe({
+                    lectureList.addAll(it)
+                    _lectures.postValue(lectureList)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
     }
 
     fun getLectures() {
         page++
-        timetableRepository.getLectureTimetableList(
-            classification = lectureFilter.value?.classifications,
-            department = lectureFilter.value?.department,
-            keyword = lectureFilter.value?.keyword,
-            page = page,
-            semesterDateId = semesterDateId
+        getLecturesRx()
+                .subscribe({
+                    lectureList.addAll(it)
+                    _lectures.postValue(lectureList)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
+                .addTo(compositeDisposable)
+    }
+
+    private fun getLecturesRx(): Single<List<LectureTimeTable>> {
+        return timetableRepository.getLectureTimetableList(
+                classification = lectureFilter.value?.classifications,
+                department = lectureFilter.value?.department,
+                keyword = lectureFilter.value?.keyword,
+                page = page,
+                semesterDateId = semesterDateId
         )
-            .handleHttpException()
-            .withThread()
-            .doFinally {
-                _isGetLecturesAdditionalLoading.postValue(false)
-                _isGetLecturesLoading.postValue(false)
-            }
-            .subscribe({
-                lectureList.addAll(it)
-                _lectures.postValue(lectureList)
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
-            .addTo(compositeDisposable)
+                .handleHttpException()
+                .withThread()
     }
 
     fun toggleDipLecture(lectureTimeTable: LectureTimeTable) {
@@ -91,42 +94,42 @@ class TimetableLectureListViewModel(
 
     private fun addDipLecture(lectureTimeTable: LectureTimeTable) {
         timetableRepository.addDipLecture(lectureTimeTable)
-            .withThread()
-            .handleProgress(this)
-            .subscribe({
-                getDipLectures(false)
-            }, {
+                .withThread()
+                .handleProgress(this)
+                .subscribe({
+                    getDipLectures(false)
+                }, {
 
-            })
+                })
     }
 
     private fun removeDipLecture(lectureTimeTable: LectureTimeTable) {
         timetableRepository.removeDipLecture(lectureTimeTable)
-            .withThread()
-            .handleProgress(this)
-            .subscribe({
-                getDipLectures(false)
-            }, {
+                .withThread()
+                .handleProgress(this)
+                .subscribe({
+                    getDipLectures(false)
+                }, {
 
-            })
+                })
     }
 
     fun getDipLectures(
-        switchLecturesList: Boolean,
-        classification: List<String>? = null,
-        department: String? = null,
-        keyword: String? = null
+            switchLecturesList: Boolean,
+            classification: List<String>? = null,
+            department: String? = null,
+            keyword: String? = null
     ) {
         if (switchLecturesList) setShowingDip(true)
         timetableRepository.getDipLectures(classification, department, keyword)
-            .withThread()
-            .handleProgress(this)
-            .subscribe({
-                _dips.postValue(it)
-                if (switchLecturesList) _lectures.postValue(it)
-            }, {
+                .withThread()
+                .handleProgress(this)
+                .subscribe({
+                    _dips.postValue(it)
+                    if (switchLecturesList) _lectures.postValue(it)
+                }, {
 
-            })
+                })
     }
 
     fun setShowingDip(value: Boolean) {
@@ -140,12 +143,12 @@ class TimetableLectureListViewModel(
     fun resetLectureFilter() {
         _resetLectureFilter.postValue(Event(true))
         _lectureFilter.postValue(
-            LectureFilter(
-                classifications = listOf(),
-                department = null,
-                criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
-                keyword = null
-            )
+                LectureFilter(
+                        classifications = listOf(),
+                        department = null,
+                        criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
+                        keyword = null
+                )
         )
     }
 }

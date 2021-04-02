@@ -4,6 +4,7 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.core.view.button.checkbox.FilledCheckBox
 import `in`.hangang.core.view.childViews
+import `in`.hangang.core.view.goneVisible
 import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
@@ -162,8 +163,9 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
             }
         }
         with(timetableLectureListViewModel) {
-            isGetLecturesLoading.observe(viewLifecycleOwner) {
+            isLoading.observe(viewLifecycleOwner) {
                 binding.recyclerViewTimetableLecturesProgress.visibility = visibleGone(it)
+                binding.recyclerViewTimetableLectures.visibility = goneVisible(it)
             }
             lectures.observe(viewLifecycleOwner) {
                 timetableLectureAdapter.updateItem(it)

@@ -1,7 +1,10 @@
 package `in`.hangang.core.base.fragment
 
+import `in`.hangang.core.R
 import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.getColorFromAttr
+import `in`.hangang.core.progressdialog.IProgressDialog
+import `in`.hangang.core.progressdialog.ProgressDialog
 import android.content.Context
 import android.graphics.Color
 import android.util.TypedValue
@@ -12,25 +15,35 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import java.lang.Exception
 
-open class FragmentBase : Fragment() {
+open class FragmentBase : Fragment(), IProgressDialog {
 
     protected val compositeDisposable = CompositeDisposable()
+    private val progressDialog : ProgressDialog by lazy { ProgressDialog(requireContext(), getString(R.string.loading)) }
 
     fun addDisposable(vararg disposables: Disposable) {
         compositeDisposable.addAll(*disposables)
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        progressDialog.dismiss()
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.dispose()
         }
+        super.onDestroy()
     }
 
     inline fun requireWriteStorage(crossinline result: () -> Unit) = try {
         (requireActivity() as ActivityBase).requireWriteStorage { result() }
     } catch (e: Exception) {
         e.printStackTrace()
+    }
+
+    override fun showProgressDialog() {
+        progressDialog.show()
+    }
+
+    override fun hideProgressDialog() {
+        progressDialog.hide()
     }
 }
 

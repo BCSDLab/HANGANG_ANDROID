@@ -2,7 +2,7 @@ package `in`.hangang.hangang.ui.timetable.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.livedata.EventObserver
-import `in`.hangang.core.progressdialog.progressState
+import `in`.hangang.core.progressdialog.changeProgressState
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
@@ -55,7 +55,7 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
     private fun initViewModel() {
         with(timetableViewModel) {
             isLoading.observe(this@TimetableListActivity) {
-                progressState(it)
+                changeProgressState(it)
             }
             timetables.observe(this@TimetableListActivity) {
                 timetableAdapter.updateItem(it)
