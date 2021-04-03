@@ -11,7 +11,6 @@ import `in`.hangang.hangang.data.source.TimeTableRepository
 import `in`.hangang.hangang.util.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.util.Log
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -64,7 +63,7 @@ class TimetableViewModel(
     val duplicatedLectureTimetable: LiveData<Event<LectureTimeTable?>> get() = _duplicatedLectureTimetable
     val timestamp: LiveData<List<CustomTimetableTimestamp>> get() = _timestamp
     val customLectureAdded: LiveData<Event<Boolean>> get() = _customLectureAdded
-    val availableAddingCustomTimetable :LiveData<Boolean> get() = _availableAddingCustomTimetable
+    val availableAddingCustomTimetable: LiveData<Boolean> get() = _availableAddingCustomTimetable
 
     fun setMode(mode: Mode) {
         if (_mode.value != mode)
@@ -123,7 +122,7 @@ class TimetableViewModel(
                 .handleHttpException()
                 .handleProgress(this)
                 .subscribe({
-                           _displayingTimeTable.postValue(it)
+                    _displayingTimeTable.postValue(it)
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
                     //TODO 시간표 삭제 중 오류
@@ -312,7 +311,7 @@ class TimetableViewModel(
         return listTimetables.find { it.id == timetableId }
     }
 
-    private fun getTimetablesRx() : Single<List<TimeTable>> {
+    private fun getTimetablesRx(): Single<List<TimeTable>> {
         return timeTableRepository.getTimeTables().doOnSuccess {
             listTimetables.clear()
             listTimetables.addAll(it)
@@ -321,7 +320,7 @@ class TimetableViewModel(
     }
 
     private fun getMainTimeTableRx(): Single<TimeTable> {
-        return if(listTimetables.isEmpty()) {
+        return if (listTimetables.isEmpty()) {
             getTimetablesRx()
                     .flatMap {
                         getMainTimeTableRx()
@@ -332,7 +331,7 @@ class TimetableViewModel(
                         findTimeTableByIdRx(id)
                     }
                     .onErrorResumeNext {
-                        if(it is EOFException) {
+                        if (it is EOFException) {
                             timeTableRepository.setMainTimeTable(listTimetables[0].id)
                                     .flatMap { getMainTimeTableRx() }
                         } else

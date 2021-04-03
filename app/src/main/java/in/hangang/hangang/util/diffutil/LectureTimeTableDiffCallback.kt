@@ -1,12 +1,11 @@
 package `in`.hangang.hangang.util.diffutil
 
-import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import androidx.recyclerview.widget.DiffUtil
 
 class LectureTimeTableDiffCallback(
-    private val oldList : List<LectureTimeTable>,
-    private val newList : List<LectureTimeTable>
+        private val oldList: List<LectureTimeTable>,
+        private val newList: List<LectureTimeTable>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 

@@ -12,14 +12,15 @@ import android.os.Bundle
 class TimetableLectureFilterActivity :
         ViewBindingActivity<ActivityTimetableLectureFilterBinding>() {
     override val layoutId: Int = R.layout.activity_timetable_lecture_filter
-    val lectureFilter : LectureFilter by lazy {
+    val lectureFilter: LectureFilter by lazy {
         intent.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter(
-            classifications = listOf(),
-            department = null,
-            criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
-            keyword = null
+                classifications = listOf(),
+                department = null,
+                criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
+                keyword = null
         )
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,17 +42,17 @@ class TimetableLectureFilterActivity :
 
     private fun initView() {
         with(lectureFilter) {
-                binding.checkBoxFilterByName.isChecked = criteria and 0x10 == 0x10
-                binding.checkBoxFilterByProfessor.isChecked = criteria and 0x01 == 0x01
+            binding.checkBoxFilterByName.isChecked = criteria and 0x10 == 0x10
+            binding.checkBoxFilterByProfessor.isChecked = criteria and 0x01 == 0x01
 
-                binding.checkBoxFilterByClassificationLiberalRequired.isChecked = classifications.contains(CLASSIFICATION_LIBERAL_REQUIRED)
-                binding.checkBoxFilterByClassificationLiberalChoice.isChecked = classifications.contains(CLASSIFICATION_LIBERAL_CHOICE)
-                binding.checkBoxFilterByClassificationMajorRequired.isChecked = classifications.contains(CLASSIFICATION_MAJOR_REQUIRED)
-                binding.checkBoxFilterByClassificationMajorChoice.isChecked = classifications.contains(CLASSIFICATION_MAJOR_CHOICE)
-                binding.checkBoxFilterByClassificationMscRequired.isChecked = classifications.contains(CLASSIFICATION_MSC_REQUIRED)
-                binding.checkBoxFilterByClassificationMscChoice.isChecked = classifications.contains(CLASSIFICATION_MSC_CHOICE)
-                binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_REQUIRED)
-                binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_CHOICE)
+            binding.checkBoxFilterByClassificationLiberalRequired.isChecked = classifications.contains(CLASSIFICATION_LIBERAL_REQUIRED)
+            binding.checkBoxFilterByClassificationLiberalChoice.isChecked = classifications.contains(CLASSIFICATION_LIBERAL_CHOICE)
+            binding.checkBoxFilterByClassificationMajorRequired.isChecked = classifications.contains(CLASSIFICATION_MAJOR_REQUIRED)
+            binding.checkBoxFilterByClassificationMajorChoice.isChecked = classifications.contains(CLASSIFICATION_MAJOR_CHOICE)
+            binding.checkBoxFilterByClassificationMscRequired.isChecked = classifications.contains(CLASSIFICATION_MSC_REQUIRED)
+            binding.checkBoxFilterByClassificationMscChoice.isChecked = classifications.contains(CLASSIFICATION_MSC_CHOICE)
+            binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_REQUIRED)
+            binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_CHOICE)
         }
 
     }
@@ -88,8 +89,8 @@ class TimetableLectureFilterActivity :
 
         setResult(RESULT_OK, Intent().apply {
             putExtra(TIMETABLE_LECTURE_FILTER, lectureFilter.copy(
-                criteria = criteria,
-                classifications = classifications
+                    criteria = criteria,
+                    classifications = classifications
             ))
         })
         finish()

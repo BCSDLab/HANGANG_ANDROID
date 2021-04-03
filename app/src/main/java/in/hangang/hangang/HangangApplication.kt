@@ -43,9 +43,9 @@ class HangangApplication : Application() {
      */
     private fun isApplicationDebug(context: Context): Boolean {
         var debuggable = false
-        val pm: PackageManager = context.getPackageManager()
+        val pm: PackageManager = context.packageManager
         try {
-            val appinfo = pm.getApplicationInfo(context.getPackageName(), 0)
+            val appinfo = pm.getApplicationInfo(context.packageName, 0)
             debuggable = 0 != appinfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
         } catch (e: PackageManager.NameNotFoundException) {
         }

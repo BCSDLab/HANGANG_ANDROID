@@ -7,7 +7,6 @@ import `in`.hangang.hangang.data.source.local.TimeTableLocalDataSource
 import `in`.hangang.hangang.data.source.local.UserLocalDataSource
 import `in`.hangang.hangang.data.source.remote.TimeTableRemoteDataSource
 import `in`.hangang.hangang.data.source.remote.UserRemoteDataSource
-import android.os.Build
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 open class RecyclerViewWithEmpty(
-    context: Context,
-    attributeSet: AttributeSet? = null,
-    defStyleAttr: Int = 0
+        context: Context,
+        attributeSet: AttributeSet? = null,
+        defStyleAttr: Int = 0
 ) : RecyclerView(context, attributeSet, defStyleAttr) {
     var emptyView: View? = null
 

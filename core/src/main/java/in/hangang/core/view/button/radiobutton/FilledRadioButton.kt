@@ -7,9 +7,9 @@ import android.view.Gravity
 import androidx.core.content.ContextCompat
 
 class FilledRadioButton @JvmOverloads constructor(
-    context: Context,
-    attributeSet: AttributeSet? = null,
-    defStyleAttr: Int = 0
+        context: Context,
+        attributeSet: AttributeSet? = null,
+        defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatRadioButton(context, attributeSet, defStyleAttr) {
 
     init {
@@ -18,9 +18,9 @@ class FilledRadioButton @JvmOverloads constructor(
         buttonDrawable = null
         setBackgroundResource(R.drawable.rectangle_rounded_corner_filled)
         backgroundTintList =
-            ContextCompat.getColorStateList(context, R.color.color_state_radio_button_blue)
+                ContextCompat.getColorStateList(context, R.color.color_state_radio_button_blue)
         setTextColor(
-            ContextCompat.getColorStateList(context, R.color.color_state_radio_button_text)
+                ContextCompat.getColorStateList(context, R.color.color_state_radio_button_text)
         )
     }
 }

@@ -6,7 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class ViewBindingActivity<T : ViewDataBinding> : ActivityBase() {
-    @get:LayoutRes abstract  val layoutId: Int
+    @get:LayoutRes
+    abstract val layoutId: Int
     private lateinit var _binding: T
     val binding: T
         get() = _binding

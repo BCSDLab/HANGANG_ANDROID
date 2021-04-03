@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class TimeTableCustomLectureRequest(
         @SerializedName("class_time")
-        val classTime : String?,
-        val name : String?,
-        val professor : String?,
+        val classTime: String?,
+        val name: String?,
+        val professor: String?,
         @SerializedName("user_timetable_id")
-        val userTimetableId : Int
+        val userTimetableId: Int
 )

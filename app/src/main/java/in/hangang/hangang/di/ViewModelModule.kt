@@ -11,7 +11,10 @@ import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
-import `in`.hangang.hangang.ui.timetable.viewmodel.*
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableAddActivityViewModel
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
+import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

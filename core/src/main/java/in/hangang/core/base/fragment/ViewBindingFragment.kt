@@ -1,8 +1,5 @@
 package `in`.hangang.core.base.fragment
 
-import `in`.hangang.core.R
-import `in`.hangang.core.progressdialog.IProgressDialog
-import `in`.hangang.core.progressdialog.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,9 +16,9 @@ abstract class ViewBindingFragment<T : ViewDataBinding> : FragmentBase() {
         get() = _binding
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         _binding.lifecycleOwner = this

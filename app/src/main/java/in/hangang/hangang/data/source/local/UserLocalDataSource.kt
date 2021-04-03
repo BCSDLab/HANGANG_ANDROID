@@ -10,10 +10,10 @@ import io.reactivex.rxjava3.core.Single
 
 class UserLocalDataSource : UserDataSource {
     override fun signUp(
-        major: Array<String>,
-        nickName: String,
-        password: String,
-        portalAccount: String
+            major: Array<String>,
+            nickName: String,
+            password: String,
+            portalAccount: String
     ): Single<CommonResponse> {
         return Single.never()
     }
@@ -62,8 +62,8 @@ class UserLocalDataSource : UserDataSource {
     }
 
     override fun emailPasswordConfig(
-        portalAccount: String,
-        secret: String
+            portalAccount: String,
+            secret: String
     ): Single<CommonResponse> {
         return Single.never()
     }

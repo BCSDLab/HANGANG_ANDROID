@@ -68,7 +68,7 @@ class TimetableTimetablesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = list[position]
-        if(item === list.last()) with(holder.itemView) {
+        if (item === list.last()) with(holder.itemView) {
             setPadding(paddingLeft, paddingTop, paddingRight, dp2Px(16f))
         }
         when (item.first) {

@@ -2,7 +2,6 @@ package `in`.hangang.hangang.util
 
 import `in`.hangang.hangang.R
 import android.content.Context
-import java.lang.IllegalArgumentException
 
 const val SEMESTER_1 = 1
 const val SEMESTER_SUMMER = 2
@@ -29,20 +28,20 @@ class SemesterUtil {
          * 3 -> 2학기
          * 4 -> 겨울학기
          */
-        fun getSemesterDateId(year: Int, semester : Int) : Int {
+        fun getSemesterDateId(year: Int, semester: Int): Int {
             val exception = IllegalArgumentException("Cannot resolve SemesterDateId of given values")
-            return when(year) {
-                2019 -> when(semester) {
+            return when (year) {
+                2019 -> when (semester) {
                     1 -> 1
                     3 -> 2
                     else -> throw exception
                 }
-                2020 -> when(semester) {
+                2020 -> when (semester) {
                     1 -> 3
                     3 -> 4
                     else -> throw exception
                 }
-                2021 -> when(semester) {
+                2021 -> when (semester) {
                     1 -> 5
                     else -> throw exception
                 }

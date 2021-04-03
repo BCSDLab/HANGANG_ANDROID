@@ -31,16 +31,16 @@ class TimetableLectureDetailViewModel(
     }
 
     fun getMemo(lectureTimeTable: LectureTimeTable) {
-            timeTableRepository.getMemo(lectureTimeTable.id)
-                    .withThread()
-                    .handleHttpException()
-                    .handleProgress(this)
-                    .subscribe({
-                        _memo.postValue(Event(it.memo ?: ""))
-                    }, {
-                        _memo.postValue(Event(""))
-                    })
-                    .addTo(compositeDisposable)
+        timeTableRepository.getMemo(lectureTimeTable.id)
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    _memo.postValue(Event(it.memo ?: ""))
+                }, {
+                    _memo.postValue(Event(""))
+                })
+                .addTo(compositeDisposable)
     }
 
     fun updateMemo(memo: String) {

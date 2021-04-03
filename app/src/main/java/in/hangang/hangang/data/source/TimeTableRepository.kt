@@ -53,8 +53,8 @@ class TimeTableRepository(
     }
 
     override fun removeLectureFromTimeTable(
-        lectureId: Int,
-        timetableId: Int
+            lectureId: Int,
+            timetableId: Int
     ): Single<CommonResponse> {
         return timeTableRemoteDataSource.removeLectureFromTimeTable(lectureId, timetableId)
     }
@@ -72,13 +72,13 @@ class TimeTableRepository(
     }
 
     override fun addCustomLectureInTimetable(
-        classTime: String?,
-        name: String?,
-        professor: String?,
-        userTimetableId: Int
+            classTime: String?,
+            name: String?,
+            professor: String?,
+            userTimetableId: Int
     ): Single<CommonResponse> {
         return timeTableRemoteDataSource.addCustomLectureInTimetable(
-            classTime, name, professor, userTimetableId
+                classTime, name, professor, userTimetableId
         )
     }
 
@@ -94,14 +94,14 @@ class TimeTableRepository(
         return Single.create { subscriber ->
             timeTableRemoteDataSource.getMemo(timetableLectureId)
                     .subscribe({
-                               timeTableRemoteDataSource.addMemo(timetableLectureId, memo)
-                                       .subscribe({
-                                           subscriber.onSuccess(it)
-                                       }, {
-                                           subscriber.onError(it)
-                                       })
+                        timeTableRemoteDataSource.addMemo(timetableLectureId, memo)
+                                .subscribe({
+                                    subscriber.onSuccess(it)
+                                }, {
+                                    subscriber.onError(it)
+                                })
                     }, { t ->
-                        if(t.toCommonResponse().code == 30) {
+                        if (t.toCommonResponse().code == 30) {
                             timeTableRemoteDataSource.addMemo(timetableLectureId, memo)
                                     .subscribe({
                                         subscriber.onSuccess(it)

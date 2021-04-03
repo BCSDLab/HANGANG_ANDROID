@@ -6,6 +6,6 @@ interface IProgressDialog {
 }
 
 fun IProgressDialog.changeProgressState(isShowing: Boolean) {
-    if(isShowing) showProgressDialog()
+    if (isShowing) showProgressDialog()
     else hideProgressDialog()
 }

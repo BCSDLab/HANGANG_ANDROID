@@ -67,13 +67,13 @@ class TimeTableLocalDataSource : TimeTableDataSource {
             try {
                 val dips = getDips()
                 subscriber.onSuccess(dips.filter {
-                    if(classification == null || classification.isEmpty()) true
+                    if (classification == null || classification.isEmpty()) true
                     else classification.contains(it.classification)
                 }.filter {
-                    if(department != null) department == it.department
+                    if (department != null) department == it.department
                     else true
                 }.filter {
-                    if(keyword != null)
+                    if (keyword != null)
                         it.contains(keyword)
                     else true
                 }.toSet())
@@ -85,10 +85,10 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun addCustomLectureInTimetable(
-        classTime: String?,
-        name: String?,
-        professor: String?,
-        userTimetableId: Int
+            classTime: String?,
+            name: String?,
+            professor: String?,
+            userTimetableId: Int
     ): Single<CommonResponse> {
         return Single.never()
     }

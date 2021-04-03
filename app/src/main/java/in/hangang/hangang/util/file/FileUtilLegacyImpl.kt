@@ -9,12 +9,11 @@ import io.reactivex.rxjava3.core.Single
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.lang.Exception
 
 class FileUtilLegacyImpl(private val context: Context) : FileUtil {
     override fun saveImageToPictures(bitmap: Bitmap, fileName: String, mineType: String, directory: String, mediaContentUri: Uri): Single<Uri> {
-        return Single.create {subscriber ->
-            var outputStream : OutputStream? = null
+        return Single.create { subscriber ->
+            var outputStream: OutputStream? = null
             try {
                 val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
                 val file = File(path, fileName)

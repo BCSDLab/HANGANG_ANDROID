@@ -39,7 +39,7 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
         holder.bind(item)
 
         holder.itemView.isSelected = position == currentSelectedPosition
-        if(addedLectures.contains(item))
+        if (addedLectures.contains(item))
             holder.setSelected(true)
         else
             holder.setSelected(false)

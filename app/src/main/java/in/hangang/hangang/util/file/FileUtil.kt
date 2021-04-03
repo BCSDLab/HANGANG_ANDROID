@@ -9,9 +9,9 @@ import io.reactivex.rxjava3.core.Single
 interface FileUtil {
     fun saveImageToPictures(
             bitmap: Bitmap,
-            fileName : String,
-            mineType : String = "image/jpeg",
-            directory : String = Environment.DIRECTORY_PICTURES,
-            mediaContentUri : Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-    ) : Single<Uri>
+            fileName: String,
+            mineType: String = "image/jpeg",
+            directory: String = Environment.DIRECTORY_PICTURES,
+            mediaContentUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+    ): Single<Uri>
 }

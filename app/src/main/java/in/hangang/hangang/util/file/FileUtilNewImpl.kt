@@ -17,7 +17,7 @@ class FileUtilNewImpl(private val context: Context) : FileUtil {
             mediaContentUri: Uri
     ): Single<Uri> {
         return Single.create { subscriber ->
-            var outputStream : OutputStream? = null
+            var outputStream: OutputStream? = null
             try {
                 val contentValues = ContentValues().apply {
                     put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)

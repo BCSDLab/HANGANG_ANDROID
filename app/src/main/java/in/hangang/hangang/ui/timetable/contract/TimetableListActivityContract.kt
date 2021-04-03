@@ -15,8 +15,8 @@ class TimetableListActivityContract : ActivityResultContract<TimeTable, Timetabl
 
     class Result(
             val resultCode: Int,
-        val selectedTimetable : TimeTable?,
-        val timetableListChanged : Boolean = false
+            val selectedTimetable: TimeTable?,
+            val timetableListChanged: Boolean = false
     )
 
     override fun createIntent(context: Context, input: TimeTable): Intent {

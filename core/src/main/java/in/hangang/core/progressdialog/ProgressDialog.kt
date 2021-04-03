@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.TextView
 
 
@@ -13,6 +12,7 @@ class ProgressDialog(context: Context, message: String) {
     companion object {
         private const val TAG = "CustomProgressDialog"
     }
+
     private val progressDialog: Dialog = AlertDialog.Builder(context, R.style.Theme_Hangang_AlertDialog).apply {
         val view = LayoutInflater.from(context).inflate(R.layout.layout_progressbar, null)
         setCancelable(false)

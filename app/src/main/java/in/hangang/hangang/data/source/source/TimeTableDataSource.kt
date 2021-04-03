@@ -10,12 +10,12 @@ import io.reactivex.rxjava3.core.Single
 interface TimeTableDataSource {
     fun getTimeTables(): Single<List<TimeTable>>
     fun getLectureTimetableList(
-        classification: List<String>? = null,
-        department: String? = null,
-        keyword: String? = null,
-        limit: Int = 10,
-        page: Int = 1,
-        semesterDateId: Int
+            classification: List<String>? = null,
+            department: String? = null,
+            keyword: String? = null,
+            limit: Int = 10,
+            page: Int = 1,
+            semesterDateId: Int
     ): Single<List<LectureTimeTable>>
 
     fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse>
@@ -29,16 +29,16 @@ interface TimeTableDataSource {
     fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun getScrapLectures(
-        classification: List<String>? = null,
-        department: String? = null,
-        keyword: String? = null
+            classification: List<String>? = null,
+            department: String? = null,
+            keyword: String? = null
     ): Single<Collection<LectureTimeTable>>
 
     fun addCustomLectureInTimetable(
-        classTime: String?,
-        name: String?,
-        professor: String?,
-        userTimetableId: Int
+            classTime: String?,
+            name: String?,
+            professor: String?,
+            userTimetableId: Int
     ): Single<CommonResponse>
 
     fun getMemo(

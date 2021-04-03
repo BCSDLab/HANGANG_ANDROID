@@ -2,8 +2,6 @@ package `in`.hangang.core.view.edittext
 
 import `in`.hangang.core.util.Regexps
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 
 
@@ -18,20 +16,20 @@ open class PasswordEditTextWithRegex @JvmOverloads constructor(
         const val PASSWORD_LENGTH_MIN = 8
         const val PASSWORD_LENGTH_MAX = 15
 
-        const val MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS =  0x1f000000
-        const val MASK_ERR_LENGTH =                             0x10f00000
-        const val MASK_ERR_NOT_CONTAINS_ENGLISH =               0x100f0000
-        const val MASK_ERR_NOT_CONTAINS_NUMBER =                0x1000f000
-        const val MASK_ERR_NOT_CONTAINS_SPECIAL_CHARACTER =     0x10000f00
-        const val MASK_ERR_NO_INPUT =                           0x100000f0
+        const val MASK_ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS = 0x1f000000
+        const val MASK_ERR_LENGTH = 0x10f00000
+        const val MASK_ERR_NOT_CONTAINS_ENGLISH = 0x100f0000
+        const val MASK_ERR_NOT_CONTAINS_NUMBER = 0x1000f000
+        const val MASK_ERR_NOT_CONTAINS_SPECIAL_CHARACTER = 0x10000f00
+        const val MASK_ERR_NO_INPUT = 0x100000f0
 
-        const val ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS =       0x11000000
-        const val ERR_LENGTH_TOO_SHORT =                        0x10100000
-        const val ERR_LENGTH_TOO_LONG =                         0x10200000
-        const val ERR_NOT_CONTAINS_ENGLISH =                    0x10010000
-        const val ERR_NOT_CONTAINS_NUMBER =                     0x10001000
-        const val ERR_NOT_CONTAINS_SPECIAL_CHARACTER =          0x10000100
-        const val ERR_NO_INPUT =                                0x10000010
+        const val ERR_CONTAINS_NOT_SUPPORTED_CHARACTERS = 0x11000000
+        const val ERR_LENGTH_TOO_SHORT = 0x10100000
+        const val ERR_LENGTH_TOO_LONG = 0x10200000
+        const val ERR_NOT_CONTAINS_ENGLISH = 0x10010000
+        const val ERR_NOT_CONTAINS_NUMBER = 0x10001000
+        const val ERR_NOT_CONTAINS_SPECIAL_CHARACTER = 0x10000100
+        const val ERR_NO_INPUT = 0x10000010
 
         const val NO_ERR = 0x10000000
 
@@ -64,8 +62,8 @@ open class PasswordEditTextWithRegex @JvmOverloads constructor(
         }
     }
 
-    fun isErrorIncluded(errorCodeMask : Int) = errorCode and errorCodeMask != NO_ERR
-    fun isErrorNotIncluded(errorCodeMask : Int) = !isErrorIncluded(errorCodeMask)
+    fun isErrorIncluded(errorCodeMask: Int) = errorCode and errorCodeMask != NO_ERR
+    fun isErrorNotIncluded(errorCodeMask: Int) = !isErrorIncluded(errorCodeMask)
 
     private fun checkPassword(password: CharSequence) {
         _errorCode = checkPasswordContainsNotSupportedCharacter(password) or

@@ -4,8 +4,6 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.core.view.button.checkbox.FilledCheckBox
 import `in`.hangang.core.view.childViews
-import `in`.hangang.core.view.goneVisible
-import `in`.hangang.core.view.visibleGone
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.LectureFilter

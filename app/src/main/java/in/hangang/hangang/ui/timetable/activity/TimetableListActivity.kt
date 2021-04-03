@@ -24,10 +24,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>() {
     override val layoutId = R.layout.activity_timetable_list
 
-    private val timetableViewModel : TimetableViewModel by viewModel()
+    private val timetableViewModel: TimetableViewModel by viewModel()
 
     private val timetableAddActivityResult = registerForActivityResult(TimeTableAddActivityContract()) {
-        if(it) timetableViewModel.getTimetables()
+        if (it) timetableViewModel.getTimetables()
     }
 
     private val timetableAdapter = TimetableTimetablesAdapter()
@@ -43,7 +43,8 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
     private fun initRecyclerView() {
         binding.recyclerViewTimetableList.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewTimetableList.adapter = timetableAdapter
-        timetableAdapter.selectedTimeTableId = intent.extras?.getParcelable<TimeTable>(TimetableListActivityContract.SELECTED_TIMETABLE)?.id ?: 0
+        timetableAdapter.selectedTimeTableId = intent.extras?.getParcelable<TimeTable>(TimetableListActivityContract.SELECTED_TIMETABLE)?.id
+                ?: 0
         timetableAdapter.timetableListRecyclerViewOnItemClickListener = object : TimetableListRecyclerViewOnItemClickListener {
             override fun onTimeTableItemClick(timetable: TimeTable) {
                 setResult(RESULT_OK, Intent().putExtra(TimetableListActivityContract.SELECTED_TIMETABLE, timetable))
@@ -61,7 +62,7 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
                 timetableAdapter.updateItem(it)
                 binding.textViewTimetableListLimit.text = "${it.size}/50"
             }
-            mainTimetableEvent.observe(this@TimetableListActivity , EventObserver {
+            mainTimetableEvent.observe(this@TimetableListActivity, EventObserver {
                 timetableAdapter.mainTimeTableId = it.id
             })
         }
@@ -79,7 +80,7 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
                 }
 
                 override fun onClickViewInRightContainer(view: View, index: Int) {
-                    if((timetableViewModel.timetables.value?.size ?: 0) >= 50) {
+                    if ((timetableViewModel.timetables.value?.size ?: 0) >= 50) {
                         showTimetableLimitErrorDialog()
                     } else {
                         showAddTimetableActivity()

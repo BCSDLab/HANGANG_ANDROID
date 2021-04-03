@@ -161,10 +161,10 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
             dummyTimeTable.observe(viewLifecycleOwner) {
                 TimetableUtil.getTimetableDummyView(requireContext(),
-                    if (it == null) listOf() else listOf(it))
+                        if (it == null) listOf() else listOf(it))
                         .withThread()
                         .subscribe(this@TimetableFragment::showLectureDummyTimetable)
-                    .addTo(compositeDisposable)
+                        .addTo(compositeDisposable)
             }
 
             duplicatedLectureTimetable.observe(viewLifecycleOwner, EventObserver {

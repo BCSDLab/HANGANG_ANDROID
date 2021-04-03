@@ -19,15 +19,11 @@ import io.reactivex.rxjava3.disposables.Disposable
 
 open class ActivityBase : AppCompatActivity(), IProgressDialog {
     private val compositeDisposable = CompositeDisposable()
-    private val progressDialog : ProgressDialog by lazy { ProgressDialog(this, getString(R.string.loading)) }
+    private val progressDialog: ProgressDialog by lazy { ProgressDialog(this, getString(R.string.loading)) }
 
-    private var writeStorageActivityResultFunc : (() -> Unit)? = null
+    private var writeStorageActivityResultFunc: (() -> Unit)? = null
     private val writeStoragePermissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        if(it) writeStorageActivityResultFunc?.invoke()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        if (it) writeStorageActivityResultFunc?.invoke()
     }
 
     fun addDisposable(vararg disposables: Disposable) {

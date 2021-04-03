@@ -19,7 +19,7 @@ class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRe
     private val _addingAvailable = MutableLiveData(false)
     private val _error = MutableLiveData<Event<CommonResponse>>()
     val added: LiveData<Event<Boolean>> get() = _added
-    val addingAvailable : LiveData<Boolean> get() = _addingAvailable
+    val addingAvailable: LiveData<Boolean> get() = _addingAvailable
     val error: LiveData<Event<CommonResponse>> get() = _error
 
     fun addTimeTable(year: Int = 2020, semester: Int, name: String) {
@@ -37,7 +37,7 @@ class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRe
                 .addTo(compositeDisposable)
     }
 
-    fun checkAddingAvailability(name : String) {
+    fun checkAddingAvailability(name: String) {
         _addingAvailable.postValue(name.isNotEmpty() && name.length <= 20)
     }
 }

@@ -3,8 +3,8 @@ package `in`.hangang.hangang.data.source
 import `in`.hangang.hangang.data.source.source.LectureDataSource
 
 class LectureRepository(
-    private val lectureLocalDataSource: LectureDataSource,
-    private val lectureRemoteDataSource: LectureDataSource
+        private val lectureLocalDataSource: LectureDataSource,
+        private val lectureRemoteDataSource: LectureDataSource
 ) : LectureDataSource {
     override fun getLectureRanking(major: String) {
         TODO("Not yet implemented")

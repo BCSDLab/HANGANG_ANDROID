@@ -3,7 +3,7 @@ package `in`.hangang.hangang.data.entity
 import com.google.gson.annotations.SerializedName
 
 data class TimetableMemo(
-        val id : Int?,
+        val id: Int?,
         @SerializedName("timetable_id")
         val timetableLectureId: Int?,
         val memo: String?,

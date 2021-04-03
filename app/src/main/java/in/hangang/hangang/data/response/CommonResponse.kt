@@ -33,7 +33,7 @@ fun Throwable.toCommonResponse(): CommonResponse {
     return try {
         val errorMessage: CommonResponse = adapter.fromJson(body?.string())
         errorMessage
-    } catch (e : Exception) {
+    } catch (e: Exception) {
         CommonResponse()
     }
 }

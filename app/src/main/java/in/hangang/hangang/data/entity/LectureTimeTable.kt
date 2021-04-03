@@ -34,15 +34,15 @@ data class LectureTimeTable(
         val updatedAt: String? = null,
         val rating: Double = 0.0
 ) {
-        override fun equals(other: Any?): Boolean {
-                return this.lectureId == ((other as? LectureTimeTable)?.lectureId ?: -1)
-        }
+    override fun equals(other: Any?): Boolean {
+        return this.lectureId == ((other as? LectureTimeTable)?.lectureId ?: -1)
+    }
 
-        override fun hashCode(): Int {
-                return lectureId.hashCode()
-        }
+    override fun hashCode(): Int {
+        return lectureId.hashCode()
+    }
 
-        fun contains(keyword: CharSequence): Boolean =
+    fun contains(keyword: CharSequence): Boolean =
             (semesterDate?.contains(keyword, true) ?: false) ||
                     (code?.contains(keyword, true) ?: false) ||
                     (name?.contains(keyword, true) ?: false) ||
