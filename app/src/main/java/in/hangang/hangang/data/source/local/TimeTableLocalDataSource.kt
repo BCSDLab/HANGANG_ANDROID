@@ -32,25 +32,10 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun setMainTimeTable(timetableId: Int): Single<CommonResponse> {
-        /*return Single.create { subscriber ->
-            try {
-                Hawk.put(MAIN_TIMETABLE, timetableId)
-                subscriber.onSuccess(timetableId)
-            } catch (t: Throwable) {
-                subscriber.onError(t)
-            }
-        }*/
         return Single.never()
     }
 
     override fun getMainTimeTable(): Single<Int> {
-        /*return Single.create { subscriber ->
-            try {
-                subscriber.onSuccess(Hawk.get(MAIN_TIMETABLE))
-            } catch (t: Throwable) {
-                subscriber.onError(t)
-            }
-        }*/
         return Single.never()
     }
 
@@ -69,37 +54,15 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         return Single.never()
     }
 
-    override fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
-        return Single.create { subscriber ->
-            try {
-                val dips = getDips()
-                dips.add(lectureTimeTable)
-                Hawk.put(TIMETABLE_LECTURE_DIPS, dips)
-
-                subscriber.onSuccess(lectureTimeTable)
-
-            } catch (e: Exception) {
-                subscriber.onError(e)
-            }
-        }
+    override fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return Single.never()
     }
 
-    override fun removeDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
-        return Single.create { subscriber ->
-            try {
-                val dips = getDips()
-                dips.remove(lectureTimeTable)
-                Hawk.put(TIMETABLE_LECTURE_DIPS, dips)
-
-                subscriber.onSuccess(lectureTimeTable)
-
-            } catch (e: Exception) {
-                subscriber.onError(e)
-            }
-        }
+    override fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return Single.never()
     }
 
-    override fun getDipLectures(classification: List<String>?, department: String?, keyword: String?): Single<Set<LectureTimeTable>> {
+    override fun getScrapLectures(classification: List<String>?, department: String?, keyword: String?): Single<Collection<LectureTimeTable>> {
         return Single.create { subscriber ->
             try {
                 val dips = getDips()

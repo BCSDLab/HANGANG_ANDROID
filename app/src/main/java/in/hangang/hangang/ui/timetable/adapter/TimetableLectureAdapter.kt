@@ -20,7 +20,7 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
 
     private val lectures = mutableListOf<LectureTimeTable>()
     private val addedLectures = mutableSetOf<LectureTimeTable>()
-    private val dips = mutableListOf<LectureTimeTable>()
+    private val scraps = mutableListOf<LectureTimeTable>()
     var currentSelectedPosition = -1
 
     var timetableLectureListener: TimetableLectureListener? = null
@@ -43,7 +43,7 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
             holder.setSelected(true)
         else
             holder.setSelected(false)
-        holder.setDipButton(dips.contains(item))
+        holder.setScrapButton(scraps.contains(item))
 
         holder.itemView.setOnClickListener {
             val beforeSelectedPosition = currentSelectedPosition
@@ -71,8 +71,8 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
         holder.binding.buttonLectureReview.setOnClickListener {
             timetableLectureListener?.onReviewButtonClicked(position, item)
         }
-        holder.binding.checkBoxDip.setOnClickListener {
-            timetableLectureListener?.onDipButtonClicked(position, item)
+        holder.binding.checkBoxScrap.setOnClickListener {
+            timetableLectureListener?.onScrapButtonClicked(position, item)
         }
     }
 
@@ -95,9 +95,9 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
         notifyDataSetChanged()
     }
 
-    fun updateDips(dips: Collection<LectureTimeTable>) {
-        this.dips.clear()
-        this.dips.addAll(dips)
+    fun updateScrapedLecture(scraps: Collection<LectureTimeTable>) {
+        this.scraps.clear()
+        this.scraps.addAll(scraps)
 
         notifyDataSetChanged()
     }
@@ -120,8 +120,8 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
             binding.buttonRemoveLecture.visibility = visibleGone(isSelected)
         }
 
-        fun setDipButton(isSelected: Boolean) {
-            binding.checkBoxDip.setImageDrawable(
+        fun setScrapButton(isSelected: Boolean) {
+            binding.checkBoxScrap.setImageDrawable(
                     ContextCompat.getDrawable(context,
                             if (isSelected) R.drawable.ic_check_v_selected
                             else R.drawable.ic_check_v_unselected

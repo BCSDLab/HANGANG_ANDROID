@@ -3,7 +3,6 @@ package `in`.hangang.hangang.data.source.source
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.entity.TimetableMemo
-import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
@@ -27,13 +26,13 @@ interface TimeTableDataSource {
     fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>>
     fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
     fun removeLectureFromTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
-    fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
-    fun removeDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
-    fun getDipLectures(
+    fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
+    fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
+    fun getScrapLectures(
         classification: List<String>? = null,
         department: String? = null,
         keyword: String? = null
-    ): Single<Set<LectureTimeTable>>
+    ): Single<Collection<LectureTimeTable>>
 
     fun addCustomLectureInTimetable(
         classTime: String?,

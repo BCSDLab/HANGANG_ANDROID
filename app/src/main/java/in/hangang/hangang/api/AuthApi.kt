@@ -98,4 +98,17 @@ interface AuthApi {
     fun removeTimetableMemo(
             @Body timetableMemoRequest: TimetableMemoRequest
     ): Single<CommonResponse>
+
+    @GET(TIMETABLE_SCRAP)
+    fun getScrapLectures(): Single<List<LectureTimeTable>>
+
+    @POST(TIMETABLE_SCRAP)
+    fun scrapLecture(
+            @Body timeTableRequest: TimeTableRequest
+    ): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = TIMETABLE_SCRAP, hasBody = true)
+    fun unscrapLecture(
+            @Body timeTableRequest: TimeTableRequest
+    ): Single<CommonResponse>
 }

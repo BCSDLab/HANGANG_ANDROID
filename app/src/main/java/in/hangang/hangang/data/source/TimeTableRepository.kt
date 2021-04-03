@@ -8,7 +8,6 @@ import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
-import java.io.EOFException
 
 class TimeTableRepository(
         private val timeTableLocalDataSource: TimeTableDataSource,
@@ -60,16 +59,16 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.removeLectureFromTimeTable(lectureId, timetableId)
     }
 
-    override fun addDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
-        return timeTableLocalDataSource.addDipLecture(lectureTimeTable)
+    override fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return timeTableRemoteDataSource.scrapLecture(lectureTimeTable)
     }
 
-    override fun removeDipLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
-        return timeTableLocalDataSource.removeDipLecture(lectureTimeTable)
+    override fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
+        return timeTableRemoteDataSource.unscrapLecture(lectureTimeTable)
     }
 
-    override fun getDipLectures(classification: List<String>?, department: String?, keyword: String?): Single<Set<LectureTimeTable>> {
-        return timeTableLocalDataSource.getDipLectures(classification, department, keyword)
+    override fun getScrapLectures(classification: List<String>?, department: String?, keyword: String?): Single<Collection<LectureTimeTable>> {
+        return timeTableRemoteDataSource.getScrapLectures(classification, department, keyword)
     }
 
     override fun addCustomLectureInTimetable(

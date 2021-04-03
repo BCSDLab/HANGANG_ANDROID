@@ -48,7 +48,7 @@
                 android:orientation="horizontal">
 
                 <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_dip"
+                    android:id="@+id/radio_button_major_scrap"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="16dp"
@@ -184,24 +184,21 @@
 
         </HorizontalScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_timetable_lectures"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/recycler_view_progress"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scroll_view_majors" />
+            app:layout_constraintTop_toBottomOf="@id/scroll_view_majors">
 
-        <ProgressBar
-            android:id="@+id/recycler_view_timetable_lectures_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scroll_view_majors"
-            app:layout_constraintVertical_bias="0.02" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_timetable_lectures"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -55,10 +55,11 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
     }
 
     private fun initView() {
+        binding.recyclerViewProgress.isEnabled = false
         binding.radioGroupDepartment.childViews().forEach {
             (it as FilledCheckBox).setOnClickListener { _ ->
                 if (!it.isChecked) {
-                    timetableLectureListViewModel.setShowingDip(false)
+                    timetableLectureListViewModel.setShowingScrap(false)
                     timetableLectureListViewModel.setLectureFilter(
                             getLectureFilter().copy(department = null)
                     )
@@ -67,7 +68,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                         (child as FilledCheckBox).isChecked = false
                     }
                     it.isChecked = true
-                    timetableLectureListViewModel.setShowingDip(it.id == R.id.radio_button_major_dip)
+                    timetableLectureListViewModel.setShowingScrap(it.id == R.id.radio_button_major_scrap)
                     timetableLectureListViewModel.setLectureFilter(
                             getLectureFilter().copy(
                                     department = when (it.id) {
@@ -149,8 +150,8 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                 //TODO goto review activity
             }
 
-            override fun onDipButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
-                timetableLectureListViewModel.toggleDipLecture(lectureTimeTable)
+            override fun onScrapButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
+                timetableLectureListViewModel.toggleScrapLecture(lectureTimeTable)
             }
 
         }
@@ -164,8 +165,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
         }
         with(timetableLectureListViewModel) {
             isLoading.observe(viewLifecycleOwner) {
-                binding.recyclerViewTimetableLecturesProgress.visibility = visibleGone(it)
-                binding.recyclerViewTimetableLectures.visibility = goneVisible(it)
+                binding.recyclerViewProgress.isRefreshing = it
             }
             lectures.observe(viewLifecycleOwner) {
                 timetableLectureAdapter.updateItem(it)
@@ -175,8 +175,8 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                     timetableViewModel.getLectureTimeTablesInTimeTable(timeTable)
                 }
             })
-            dips.observe(viewLifecycleOwner) {
-                timetableLectureAdapter.updateDips(it)
+            scraps.observe(viewLifecycleOwner) {
+                timetableLectureAdapter.updateScrapedLecture(it)
             }
             lectureFilter.observe(viewLifecycleOwner) {
                 updateLectureList()
@@ -191,8 +191,8 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
     }
 
     private fun updateLectureList() {
-        if (timetableLectureListViewModel.isShowingDip.value == true) {
-            timetableLectureListViewModel.getDipLectures(true)
+        if (timetableLectureListViewModel.isShowingScraps.value == true) {
+            timetableLectureListViewModel.getScrapedLectures(true)
         } else {
             timetableLectureListViewModel.getLectures(
                     semesterDateId = timetableViewModel.displayingTimeTable.value?.semesterDateId
@@ -202,7 +202,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
     }
 
     private fun recyclerViewMoreScroll() {
-        if (timetableLectureListViewModel.isShowingDip.value == false) {
+        if (timetableLectureListViewModel.isShowingScraps.value == false) {
             timetableLectureListViewModel.getLectures()
         }
     }

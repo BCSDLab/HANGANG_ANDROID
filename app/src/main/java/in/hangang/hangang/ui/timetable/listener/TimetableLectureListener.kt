@@ -8,5 +8,5 @@ interface TimetableLectureListener {
     fun onAddButtonClicked(position: Int, lectureTimeTable: LectureTimeTable): Boolean
     fun onRemoveButtonClicked(position: Int, lectureTimeTable: LectureTimeTable): Boolean
     fun onReviewButtonClicked(position: Int, lectureTimeTable: LectureTimeTable)
-    fun onDipButtonClicked(position: Int, lectureTimeTable: LectureTimeTable)
+    fun onScrapButtonClicked(position: Int, lectureTimeTable: LectureTimeTable)
 }

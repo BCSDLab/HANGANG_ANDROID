@@ -76,7 +76,7 @@ class TimetableLectureFilterActivity :
         if (binding.checkBoxFilterByClassificationMscChoice.isChecked)
             classifications.add(CLASSIFICATION_MSC_CHOICE)
 
-        if (binding.checkBoxFilterByClassificationHrdChoice.isChecked)
+        if (binding.checkBoxFilterByClassificationHrdRequired.isChecked)
             classifications.add(CLASSIFICATION_HRD_REQUIRED)
 
         if (binding.checkBoxFilterByClassificationHrdChoice.isChecked)

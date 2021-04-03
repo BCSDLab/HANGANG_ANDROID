@@ -20,11 +20,12 @@ class TimetableLectureListViewModel(
         private val timetableRepository: TimeTableRepository
 ) : ViewModelBase() {
     private val lectureList = mutableListOf<LectureTimeTable>()
+    private val scrapLectures = mutableListOf<LectureTimeTable>()
 
-    private val _isShowingDip = MutableLiveData<Boolean>()
+    private val _isShowingScraps = MutableLiveData<Boolean>()
 
     private val _lectures = MutableLiveData<Collection<LectureTimeTable>>()
-    private val _dips = MutableLiveData<Collection<LectureTimeTable>>()
+    private val _scraps = MutableLiveData<Collection<LectureTimeTable>>()
 
     private val _timetableLectureChanged = MutableLiveData<Event<CommonResponse>>()
 
@@ -33,8 +34,8 @@ class TimetableLectureListViewModel(
 
     val lectures: LiveData<Collection<LectureTimeTable>> get() = _lectures
     val timetableLectureChanged: MutableLiveData<Event<CommonResponse>> get() = _timetableLectureChanged
-    val dips: LiveData<Collection<LectureTimeTable>> get() = _dips
-    val isShowingDip: LiveData<Boolean> get() = _isShowingDip
+    val scraps: LiveData<Collection<LectureTimeTable>> get() = _scraps
+    val isShowingScraps: LiveData<Boolean> get() = _isShowingScraps
     val lectureFilter: LiveData<LectureFilter> get() = _lectureFilter
     val resetLectureFilter: LiveData<Event<Boolean>> get() = _resetLectureFilter
 
@@ -44,7 +45,7 @@ class TimetableLectureListViewModel(
     fun getLectures(
             semesterDateId: Int
     ) {
-        setShowingDip(false)
+        setShowingScrap(false)
         page = 0
         this.semesterDateId = semesterDateId
         lectureList.clear()
@@ -83,57 +84,59 @@ class TimetableLectureListViewModel(
                 .withThread()
     }
 
-    fun toggleDipLecture(lectureTimeTable: LectureTimeTable) {
-        val dips = dips.value ?: setOf()
-        if (dips.contains(lectureTimeTable)) {
-            removeDipLecture(lectureTimeTable)
+    fun toggleScrapLecture(lectureTimeTable: LectureTimeTable) {
+        val scraps = scraps.value ?: setOf()
+        if (scraps.contains(lectureTimeTable)) {
+            unscrapLecture(lectureTimeTable)
         } else {
-            addDipLecture(lectureTimeTable)
+            scrapLecture(lectureTimeTable)
         }
     }
 
-    private fun addDipLecture(lectureTimeTable: LectureTimeTable) {
-        timetableRepository.addDipLecture(lectureTimeTable)
+    private fun scrapLecture(lectureTimeTable: LectureTimeTable) {
+        timetableRepository.scrapLecture(lectureTimeTable)
                 .withThread()
-                .handleProgress(this)
                 .subscribe({
-                    getDipLectures(false)
+                    scrapLectures.add(it)
+                    _scraps.postValue(scrapLectures)
                 }, {
-
+                    LogUtil.e(it.toCommonResponse().errorMessage)
                 })
     }
 
-    private fun removeDipLecture(lectureTimeTable: LectureTimeTable) {
-        timetableRepository.removeDipLecture(lectureTimeTable)
+    private fun unscrapLecture(lectureTimeTable: LectureTimeTable) {
+        timetableRepository.unscrapLecture(lectureTimeTable)
                 .withThread()
-                .handleProgress(this)
                 .subscribe({
-                    getDipLectures(false)
+                    scrapLectures.remove(it)
+                    _scraps.postValue(scrapLectures)
                 }, {
-
+                    LogUtil.e(it.toCommonResponse().errorMessage)
                 })
     }
 
-    fun getDipLectures(
+    fun getScrapedLectures(
             switchLecturesList: Boolean,
             classification: List<String>? = null,
             department: String? = null,
             keyword: String? = null
     ) {
-        if (switchLecturesList) setShowingDip(true)
-        timetableRepository.getDipLectures(classification, department, keyword)
+        if (switchLecturesList) setShowingScrap(true)
+        timetableRepository.getScrapLectures(classification, department, keyword)
                 .withThread()
                 .handleProgress(this)
                 .subscribe({
-                    _dips.postValue(it)
-                    if (switchLecturesList) _lectures.postValue(it)
+                    scrapLectures.clear()
+                    scrapLectures.addAll(it)
+                    _scraps.postValue(scrapLectures)
+                    if (switchLecturesList) _lectures.postValue(scrapLectures)
                 }, {
-
+                    LogUtil.e(it.toCommonResponse().errorMessage)
                 })
     }
 
-    fun setShowingDip(value: Boolean) {
-        _isShowingDip.postValue(value)
+    fun setShowingScrap(value: Boolean) {
+        _isShowingScraps.postValue(value)
     }
 
     fun setLectureFilter(lectureFilter: LectureFilter) {

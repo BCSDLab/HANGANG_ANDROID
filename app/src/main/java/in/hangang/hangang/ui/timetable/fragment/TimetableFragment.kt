@@ -290,7 +290,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun updateTimeTable(timetable: TimeTable) {
         binding.appBar.title = timetable.name.toString()
-        timetableLectureListViewModel.getDipLectures(false)
+        timetableLectureListViewModel.getScrapedLectures(false)
         timetableViewModel.getLectureTimeTablesInTimeTable(timetable)
         timetableLectureListViewModel.resetLectureFilter()
     }

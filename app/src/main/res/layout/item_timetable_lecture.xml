@@ -105,7 +105,7 @@
             tools:text="월 1A~3B" />
 
         <ImageButton
-            android:id="@+id/check_box_dip"
+            android:id="@+id/check_box_scrap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -130,7 +130,7 @@
             android:textColor="?android:attr/textColorSecondary"
             app:buttonAppearence="outlined"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/check_box_dip"
+            app:layout_constraintEnd_toStartOf="@id/check_box_scrap"
             app:layout_constraintTop_toBottomOf="@id/text_view_lecture_classification" />
 
 
