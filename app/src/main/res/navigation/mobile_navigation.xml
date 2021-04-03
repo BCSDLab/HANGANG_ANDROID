@@ -22,4 +22,10 @@
         android:name="in.hangang.hangang.ui.notifications.NotificationsFragment"
         android:label="@string/title_document"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_mypage"
+        android:name="in.hangang.hangang.ui.mypage.MyPageFragment"
+        android:label="@string/title_mypage"
+        tools:layout="@layout/fragment_my_page" />
 </navigation>

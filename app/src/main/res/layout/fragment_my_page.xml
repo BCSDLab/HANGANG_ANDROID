@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_view_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/image_button_goto_settings"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="닉네임" />
+
+        <TextView
+            android:id="@+id/text_view_major"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/image_button_goto_settings"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_nickname"
+            tools:text="컴퓨터공학부" />
+
+        <ImageButton
+            android:id="@+id/image_button_goto_settings"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@null"
+            android:src="@drawable/ic_cog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?android:attr/textColorPrimary" />
+
+        <View
+            android:id="@+id/view_my_point"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/background_my_page_point"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_major" />
+
+        <TextView
+            android:id="@+id/text_view_point"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_my_point"
+            app:layout_constraintEnd_toEndOf="@id/view_my_point"
+            app:layout_constraintStart_toStartOf="@id/view_my_point"
+            app:layout_constraintTop_toTopOf="@id/view_my_point"
+            tools:text="120P" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintBottom_toBottomOf="@id/view_my_point"
+            app:layout_constraintEnd_toEndOf="@id/view_my_point"
+            app:layout_constraintTop_toTopOf="@id/view_my_point"
+            app:tint="?attr/colorOnPrimary" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_review_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/text_view_lecture_bank_count"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_my_point"
+            tools:text="16" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_lecture_review"
+            app:layout_constraintEnd_toStartOf="@id/text_view_lecture_bank_count"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_review"
+            app:layout_constraintTop_toTopOf="@id/text_view_lecture_review_count" />
+
+
+        <TextView
+            android:id="@+id/text_view_lecture_bank_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/text_view_comment_count"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_review_count"
+            app:layout_constraintTop_toBottomOf="@id/view_my_point"
+            tools:text="3" />
+
+
+        <TextView
+            android:id="@+id/text_view_comment_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_bank_count"
+            app:layout_constraintTop_toBottomOf="@id/view_my_point"
+            tools:text="32" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_bank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:text="@string/lecture_bank"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/text_view_lecture_bank_count"
+            app:layout_constraintStart_toStartOf="@id/text_view_lecture_bank_count"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_count" />
+
+
+        <TextView
+            android:id="@+id/text_view_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:text="@string/comment"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/text_view_comment_count"
+            app:layout_constraintStart_toStartOf="@id/text_view_comment_count"
+            app:layout_constraintTop_toBottomOf="@id/text_view_comment_count" />
+
+
+        <TextView
+            android:id="@+id/text_view_lecture_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:text="@string/lecture_review"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/text_view_lecture_review_count"
+            app:layout_constraintStart_toStartOf="@id/text_view_lecture_review_count"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_review_count" />
+
+        <View
+            android:id="@+id/divider_section_1_2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank" />
+
+        <TextView
+            android:id="@+id/text_view_my_scrap"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="@string/my_page_my_scrap"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_section_1_2" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_section_1_2"
+            app:tint="?android:attr/textColorPrimary" />
+
+        <View
+            android:id="@+id/divider_section_2_3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_my_scrap" />
+
+
+        <TextView
+            android:id="@+id/text_view_bought_bank"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:paddingStart="16dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="16dp"
+            android:text="@string/my_page_bought_bank"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_section_2_3" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_section_2_3"
+            app:tint="?android:attr/textColorPrimary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_bought_bank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_bought_bank" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
