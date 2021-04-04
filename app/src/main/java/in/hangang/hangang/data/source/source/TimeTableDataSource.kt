@@ -11,6 +11,7 @@ interface TimeTableDataSource {
     fun getTimeTables(): Single<List<TimeTable>>
     fun getLectureTimetableList(
             classification: List<String>? = null,
+            criteria: String? = null,
             department: String? = null,
             keyword: String? = null,
             limit: Int = 10,

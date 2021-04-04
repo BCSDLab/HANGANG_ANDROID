@@ -64,6 +64,7 @@ interface AuthApi {
     @GET(TIMETABLE_LECTURE_LIST)
     fun getTimetableLectureList(
             @Query("classification") classification: List<String>? = null,
+            @Query("criteria") criteria: String? = null,
             @Query("department") department: String? = null,
             @Query("keyword") keyword: String? = null,
             @Query("limit") limit: Int = 10,

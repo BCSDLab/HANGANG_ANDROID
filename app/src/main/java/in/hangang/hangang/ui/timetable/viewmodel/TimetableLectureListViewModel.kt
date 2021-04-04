@@ -75,6 +75,7 @@ class TimetableLectureListViewModel(
     private fun getLecturesRx(): Single<List<LectureTimeTable>> {
         return timetableRepository.getLectureTimetableList(
                 classification = lectureFilter.value?.classifications,
+                criteria = lectureFilter.value?.criteria,
                 department = lectureFilter.value?.department,
                 keyword = lectureFilter.value?.keyword,
                 page = page,
@@ -116,13 +117,13 @@ class TimetableLectureListViewModel(
     }
 
     fun getScrapedLectures(
-            switchLecturesList: Boolean,
-            classification: List<String>? = null,
-            department: String? = null,
-            keyword: String? = null
+            switchLecturesList: Boolean
     ) {
         if (switchLecturesList) setShowingScrap(true)
-        timetableRepository.getScrapLectures(classification, department, keyword)
+        timetableRepository.getScrapLectures(
+                _lectureFilter.value?.classifications,
+                _lectureFilter.value?.department,
+                _lectureFilter.value?.keyword)
                 .withThread()
                 .handleProgress(this)
                 .subscribe({
@@ -146,12 +147,7 @@ class TimetableLectureListViewModel(
     fun resetLectureFilter() {
         _resetLectureFilter.postValue(Event(true))
         _lectureFilter.postValue(
-                LectureFilter(
-                        classifications = listOf(),
-                        department = null,
-                        criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
-                        keyword = null
-                )
+                LectureFilter()
         )
     }
 }

@@ -23,13 +23,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectureListBinding>() {
     override val layoutId = R.layout.fragment_timetable_lecture_list
 
-    private val initLectureFilter = LectureFilter(
-            classifications = listOf(),
-            department = null,
-            criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
-            keyword = null
-    )
-
     private val timetableViewModel: TimetableViewModel by sharedViewModel()
     private val timetableLectureListViewModel: TimetableLectureListViewModel by sharedViewModel()
 
@@ -206,5 +199,5 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
     }
 
     private fun getLectureFilter(): LectureFilter =
-            timetableLectureListViewModel.lectureFilter.value ?: initLectureFilter
+            timetableLectureListViewModel.lectureFilter.value ?: LectureFilter()
 }

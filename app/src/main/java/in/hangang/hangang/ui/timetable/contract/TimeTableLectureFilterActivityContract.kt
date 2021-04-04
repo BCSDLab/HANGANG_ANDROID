@@ -27,12 +27,7 @@ class TimeTableLectureFilterActivityContract : ActivityResultContract<LectureFil
     override fun parseResult(resultCode: Int, intent: Intent?): Result {
         return Result(
                 resultCode == RESULT_OK,
-                intent?.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter(
-                        criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
-                        classifications = listOf(),
-                        department = null,
-                        keyword = null
-                )
+                intent?.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter()
         )
     }
 }

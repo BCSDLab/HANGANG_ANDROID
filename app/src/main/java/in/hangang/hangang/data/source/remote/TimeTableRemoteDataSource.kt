@@ -46,9 +46,9 @@ class TimeTableRemoteDataSource(
         }
     }
 
-    override fun getLectureTimetableList(classification: List<String>?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {
+    override fun getLectureTimetableList(classification: List<String>?, criteria: String?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {
         return authApi.getTimetableLectureList(
-                classification, department, keyword, limit, page, semesterDateId
+                classification, criteria, department, keyword, limit, page, semesterDateId
         ).map { it.map { item -> item.copy(lectureId = item.id) }.toList() }
     }
 

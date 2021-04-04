@@ -17,8 +17,8 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.getTimeTables()
     }
 
-    override fun getLectureTimetableList(classification: List<String>?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {
-        return timeTableRemoteDataSource.getLectureTimetableList(classification, department, keyword, limit, page, semesterDateId)
+    override fun getLectureTimetableList(classification: List<String>?, criteria: String?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {
+        return timeTableRemoteDataSource.getLectureTimetableList(classification, criteria, department, keyword, limit, page, semesterDateId)
     }
 
     override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
@@ -67,8 +67,8 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.unscrapLecture(lectureTimeTable)
     }
 
-    override fun getScrapLectures(classification: List<String>?, department: String?, keyword: String?): Single<Collection<LectureTimeTable>> {
-        return timeTableRemoteDataSource.getScrapLectures(classification, department, keyword)
+    override fun getScrapLectures(classifications: List<String>?, department: String?, keyword: String?): Single<Collection<LectureTimeTable>> {
+        return timeTableRemoteDataSource.getScrapLectures(classifications, department, keyword)
     }
 
     override fun addCustomLectureInTimetable(

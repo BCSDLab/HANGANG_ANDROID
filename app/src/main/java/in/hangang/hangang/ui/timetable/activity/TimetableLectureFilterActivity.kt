@@ -13,12 +13,7 @@ class TimetableLectureFilterActivity :
         ViewBindingActivity<ActivityTimetableLectureFilterBinding>() {
     override val layoutId: Int = R.layout.activity_timetable_lecture_filter
     val lectureFilter: LectureFilter by lazy {
-        intent.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter(
-                classifications = listOf(),
-                department = null,
-                criteria = LectureFilter.CRITERIA_NAME_PROFESSOR,
-                keyword = null
-        )
+        intent.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +37,13 @@ class TimetableLectureFilterActivity :
 
     private fun initView() {
         with(lectureFilter) {
-            binding.checkBoxFilterByName.isChecked = criteria and 0x10 == 0x10
-            binding.checkBoxFilterByProfessor.isChecked = criteria and 0x01 == 0x01
+            if (criteria == null) {
+                binding.checkBoxFilterByName.isChecked = true
+                binding.checkBoxFilterByProfessor.isChecked = true
+            } else {
+                binding.checkBoxFilterByName.isChecked = criteria == TIMETABLE_CRITERIA_LECTURE_NAME
+                binding.checkBoxFilterByProfessor.isChecked = criteria == TIMETABLE_CRITERIA_PROFESSOR
+            }
 
             binding.checkBoxFilterByClassificationLiberalRequired.isChecked = classifications.contains(CLASSIFICATION_LIBERAL_REQUIRED)
             binding.checkBoxFilterByClassificationLiberalChoice.isChecked = classifications.contains(CLASSIFICATION_LIBERAL_CHOICE)
@@ -54,7 +54,6 @@ class TimetableLectureFilterActivity :
             binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_REQUIRED)
             binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_CHOICE)
         }
-
     }
 
     private fun applyFilterAndFinish() {
@@ -83,9 +82,11 @@ class TimetableLectureFilterActivity :
         if (binding.checkBoxFilterByClassificationHrdChoice.isChecked)
             classifications.add(CLASSIFICATION_HRD_CHOICE)
 
-        val criteria =
-                (if (binding.checkBoxFilterByName.isChecked) LectureFilter.CRITERIA_NAME else 0x00) or
-                        (if (binding.checkBoxFilterByProfessor.isChecked) LectureFilter.CRITERIA_PROFESSOR else 0x00)
+        val criteria = when {
+            binding.checkBoxFilterByName.isChecked -> TIMETABLE_CRITERIA_LECTURE_NAME
+            binding.checkBoxFilterByProfessor.isChecked -> TIMETABLE_CRITERIA_PROFESSOR
+            else -> null
+        }
 
         setResult(RESULT_OK, Intent().apply {
             putExtra(TIMETABLE_LECTURE_FILTER, lectureFilter.copy(
