@@ -4,6 +4,7 @@ import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.databinding.ActivityTimetableAddBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableAddActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableAddActivityViewModel
@@ -56,10 +57,10 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
     }
 
     private fun initView() {
+        initSemesterDateId()
         binding.buttonAddTimetable.setOnClickListener {
             timetableAddActivityViewModel.addTimeTable(
-                    year = 2021,
-                    semester = getSemester(),
+                    semesterDateId = getSemesterDateId(),
                     name = binding.editTextTimetableName.text.toString())
         }
         binding.editTextTimetableName.addTextChangedListener {
@@ -67,11 +68,24 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
         }
     }
 
-    private fun getSemester() = when (binding.radioGroupSemester.checkedRadioButtonId) {
-        R.id.radio_button_timetable_semester_1 -> SEMESTER_1
-        R.id.radio_button_timetable_semester_2 -> SEMESTER_SUMMER
-        R.id.radio_button_timetable_semester_3 -> SEMESTER_2
-        R.id.radio_button_timetable_semester_4 -> SEMESTER_WINTER
+    private fun initSemesterDateId() {
+        binding.radioButtonTimetableSemester1.isChecked = false
+        binding.radioButtonTimetableSemester2.isChecked = false
+        binding.radioButtonTimetableSemester3.isChecked = false
+        binding.radioButtonTimetableSemester4.isChecked = false
+        when(TIMETABLE_DEFAULT_SEMESTER_ID) {
+            TIMETABLE_SEMESTER_1 -> binding.radioButtonTimetableSemester1.isChecked = true
+            TIMETABLE_SEMESTER_SUMMER -> binding.radioButtonTimetableSemester2.isChecked = true
+            TIMETABLE_SEMESTER_2 -> binding.radioButtonTimetableSemester3.isChecked = true
+            TIMETABLE_SEMESTER_WINTER -> binding.radioButtonTimetableSemester4.isChecked = true
+        }
+    }
+
+    private fun getSemesterDateId() = when (binding.radioGroupSemester.checkedRadioButtonId) {
+        R.id.radio_button_timetable_semester_1 -> TIMETABLE_SEMESTER_1
+        R.id.radio_button_timetable_semester_2 -> TIMETABLE_SEMESTER_SUMMER
+        R.id.radio_button_timetable_semester_3 -> TIMETABLE_SEMESTER_2
+        R.id.radio_button_timetable_semester_4 -> TIMETABLE_SEMESTER_WINTER
         else -> 0
     }
 }

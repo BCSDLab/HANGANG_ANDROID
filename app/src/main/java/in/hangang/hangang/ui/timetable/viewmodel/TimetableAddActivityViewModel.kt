@@ -2,11 +2,11 @@ package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
+import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_SEMESTER_ID
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
-import `in`.hangang.hangang.util.SemesterUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
@@ -22,10 +22,11 @@ class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRe
     val addingAvailable: LiveData<Boolean> get() = _addingAvailable
     val error: LiveData<Event<CommonResponse>> get() = _error
 
-    fun addTimeTable(year: Int = 2020, semester: Int, name: String) {
+    fun addTimeTable(semesterDateId: Int = TIMETABLE_DEFAULT_SEMESTER_ID, name: String) {
         timeTableRepository.makeTimeTable(UserTimeTableRequest(
                 name = name,
-                semesterDateId = SemesterUtil.getSemesterDateId(year, semester)))
+                semesterDateId = semesterDateId
+        ))
                 .handleHttpException()
                 .handleProgress(this)
                 .withThread()

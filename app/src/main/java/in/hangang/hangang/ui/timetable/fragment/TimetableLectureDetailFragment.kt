@@ -2,8 +2,7 @@ package `in`.hangang.hangang.ui.timetable.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
-import `in`.hangang.core.view.goneVisible
-import `in`.hangang.core.view.visibleGone
+import `in`.hangang.core.view.setVisibility
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentTimetableLectureDetailBinding
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
@@ -48,8 +47,8 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
     private fun initViewModel() {
         with(timetableLectureDetailViewModel) {
             isLoading.observe(viewLifecycleOwner) {
-                binding.container.visibility = goneVisible(it)
-                binding.progressTimetableLectureDetail.visibility = visibleGone(it)
+                binding.container.setVisibility(!it)
+                binding.progressTimetableLectureDetail.setVisibility(it)
             }
             lectureTimetable.observe(viewLifecycleOwner) {
                 binding.lecture = it

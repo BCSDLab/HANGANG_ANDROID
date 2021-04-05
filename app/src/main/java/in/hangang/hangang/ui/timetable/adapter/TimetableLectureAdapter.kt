@@ -1,7 +1,6 @@
 package `in`.hangang.hangang.ui.timetable.adapter
 
-import `in`.hangang.core.view.goneVisible
-import `in`.hangang.core.view.visibleGone
+import `in`.hangang.core.view.setVisibility
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
@@ -104,20 +103,21 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
 
     inner class TimetableLectureViewHolder(val binding: ItemTimetableLectureBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LectureTimeTable) {
-            binding.textViewLectureTitle.text = item.name
-            binding.textViewLectureCode.text = item.code
-            binding.textViewLectureStar.text = String.format("%1.1f", item.rating)
-            binding.textViewLectureProfessor.text = "${item.professor} (${item.classNumber})"
-            binding.textViewLectureCredit.text = context.getString(R.string.credit, item.designScore)
-            binding.textViewLectureGrade.text = context.getString(R.string.grade, item.grades)
-            binding.textViewLectureClassification.text = item.classification
-            binding.textViewLectureTime.text = TimetableUtil.toString(context, item.classTime
-                    ?: "[]")
+            with(binding) {
+                textViewLectureTitle.text = item.name
+                textViewLectureCode.text = item.code
+                textViewLectureStar.text = String.format("%1.1f", item.rating)
+                textViewLectureProfessor.text = "${item.professor} (${item.classNumber})"
+                textViewLectureCredit.text = context.getString(R.string.credit, item.designScore)
+                textViewLectureGrade.text = context.getString(R.string.grade, item.grades)
+                textViewLectureClassification.text = item.classification
+                textViewLectureTime.text = TimetableUtil.toString(context, item.classTime ?: "[]")
+            }
         }
 
         fun setSelected(isSelected: Boolean) {
-            binding.buttonAddLecture.visibility = goneVisible(isSelected)
-            binding.buttonRemoveLecture.visibility = visibleGone(isSelected)
+            binding.buttonAddLecture.setVisibility(!isSelected)
+            binding.buttonRemoveLecture.setVisibility(isSelected)
         }
 
         fun setScrapButton(isSelected: Boolean) {

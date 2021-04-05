@@ -3,6 +3,7 @@ package `in`.hangang.hangang.ui.timetable.fragment
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.constant.TIMETABLE_INVALID_TIMETABLE_ID
 import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableCustomLectureBinding
@@ -105,7 +106,7 @@ class TimetableCustomLectureFragment :
                     name = binding.editTextCustomLectureName.text.toString(),
                     professor = binding.editTextCustomLectureProfessor.text.toString(),
                     classTime = TimetableUtil.toExp(timetableViewModel.timestamp.value!!),
-                    timetableId = timetableViewModel.displayingTimeTable.value?.id ?: 5
+                    timetableId = timetableViewModel.displayingTimeTable.value?.id ?: TIMETABLE_INVALID_TIMETABLE_ID
             )
         }
     }

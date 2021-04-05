@@ -8,6 +8,7 @@ import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.constant.TIMETABLE_MAX_TIMETABLES
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.ActivityTimetableListBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableTimetablesAdapter
@@ -60,7 +61,7 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
             }
             timetables.observe(this@TimetableListActivity) {
                 timetableAdapter.updateItem(it)
-                binding.textViewTimetableListLimit.text = "${it.size}/50"
+                binding.textViewTimetableListLimit.text = "${it.size}/${TIMETABLE_MAX_TIMETABLES}"
             }
             mainTimetableEvent.observe(this@TimetableListActivity, EventObserver {
                 timetableAdapter.mainTimeTableId = it.id
@@ -80,7 +81,7 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
                 }
 
                 override fun onClickViewInRightContainer(view: View, index: Int) {
-                    if ((timetableViewModel.timetables.value?.size ?: 0) >= 50) {
+                    if ((timetableViewModel.timetables.value?.size ?: 0) >= TIMETABLE_MAX_TIMETABLES) {
                         showTimetableLimitErrorDialog()
                     } else {
                         showAddTimetableActivity()

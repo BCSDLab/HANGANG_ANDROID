@@ -3,6 +3,7 @@ package `in`.hangang.hangang.ui.timetable.adapter
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import `in`.hangang.hangang.databinding.ItemTimetableCustomLectureTimestampBinding
+import `in`.hangang.hangang.ui.timetable.listener.OnItemClickListener
 import `in`.hangang.hangang.util.diffutil.CustomTimetableTimestampDiffCallback
 import android.content.Context
 import android.view.LayoutInflater
@@ -19,11 +20,6 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
     private val weekdaysText: Array<CharSequence> by lazy { context.resources.getTextArray(R.array.timetable_picker_weeks) }
 
     var onItemClickListener: OnItemClickListener? = null
-
-    interface OnItemClickListener {
-        fun onItemClick(view: View, position: Int)
-        fun onDeleteButtonClick(view: View, position: Int)
-    }
 
     class ViewHolder(
             val binding: ItemTimetableCustomLectureTimestampBinding,

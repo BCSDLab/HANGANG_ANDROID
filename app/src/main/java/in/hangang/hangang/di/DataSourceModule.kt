@@ -13,8 +13,6 @@ import org.koin.dsl.module
 val dataSourceModule = module {
     single { UserRemoteDataSource(get(named(NO_AUTH)), get(named(AUTH)), get(named(REFRESH_AUTH))) }
     single { UserLocalDataSource() }
-    single { TimeTableRemoteDataSource(get(named(NO_AUTH)), get(named(AUTH)), get(named(REFRESH_AUTH))) }
+    single { TimeTableRemoteDataSource(get(named(AUTH))) }
     single { TimeTableLocalDataSource() }
-
-
 }

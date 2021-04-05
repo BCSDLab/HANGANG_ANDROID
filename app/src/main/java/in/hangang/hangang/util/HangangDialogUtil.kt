@@ -2,6 +2,7 @@ package `in`.hangang.hangang.util
 
 import `in`.hangang.core.R
 import `in`.hangang.core.util.DialogUtil
+import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import android.app.Dialog
 import android.content.Context
@@ -11,7 +12,6 @@ import android.widget.NumberPicker
 import androidx.core.view.children
 
 object HangangDialogUtil {
-
 
     fun makeTimetableCustomLectureTimePickerDialog(
             context: Context,
@@ -34,21 +34,21 @@ object HangangDialogUtil {
             setFormatter {
                 context.resources.getStringArray(R.array.timetable_picker_weeks)[it]
             }
-            minValue = 0
-            maxValue = 4
+            minValue = TIMETABLE_MON
+            maxValue = TIMETABLE_FRI
             value = customTimetableTimestamp?.week ?: 0
         }
 
         startHourPicker.apply {
-            minValue = 9
-            maxValue = 18
-            value = customTimetableTimestamp?.startTime?.first ?: 9
+            minValue = TIMETABLE_DEFAULT_START_HOUR
+            maxValue = TIMETABLE_DEFAULT_END_HOUR
+            value = customTimetableTimestamp?.startTime?.first ?: TIMETABLE_DEFAULT_START_HOUR
         }
 
         endHourPicker.apply {
-            minValue = 9
-            maxValue = 18
-            value = customTimetableTimestamp?.endTime?.first ?: 10
+            minValue = TIMETABLE_DEFAULT_START_HOUR
+            maxValue = TIMETABLE_DEFAULT_END_HOUR
+            value = customTimetableTimestamp?.endTime?.first ?: TIMETABLE_DEFAULT_START_HOUR + 1
         }
 
         startMinutePicker.apply {
@@ -58,9 +58,9 @@ object HangangDialogUtil {
             setFormatter {
                 context.resources.getStringArray(R.array.timetable_picker_minutes)[it]
             }
-            minValue = 0
-            maxValue = 1
-            value = customTimetableTimestamp?.startTime?.second ?: 0
+            minValue = TIMETABLE_MINUTE_0
+            maxValue = TIMETABLE_MINUTE_30
+            value = customTimetableTimestamp?.startTime?.second ?: TIMETABLE_MINUTE_0
         }
 
         endMinutePicker.apply {
@@ -70,9 +70,9 @@ object HangangDialogUtil {
             setFormatter {
                 context.resources.getStringArray(R.array.timetable_picker_minutes)[it]
             }
-            minValue = 0
-            maxValue = 1
-            value = customTimetableTimestamp?.endTime?.second ?: 0
+            minValue = TIMETABLE_MINUTE_0
+            maxValue = TIMETABLE_MINUTE_30
+            value = customTimetableTimestamp?.endTime?.second ?: TIMETABLE_MINUTE_0
         }
 
         return DialogUtil.makeViewDialog(

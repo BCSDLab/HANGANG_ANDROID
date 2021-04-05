@@ -14,10 +14,6 @@ class TimeTableLectureFilterActivityContract : ActivityResultContract<LectureFil
             val lectureFilter: LectureFilter
     )
 
-    companion object {
-        const val TIMETABLE_LECTURE_FILTER = "TIMETABLE_LECTURE_FILTER"
-    }
-
     override fun createIntent(context: Context, input: LectureFilter?): Intent {
         return Intent(context, TimetableLectureFilterActivity::class.java).apply {
             putExtra(TIMETABLE_LECTURE_FILTER, input)
@@ -29,5 +25,9 @@ class TimeTableLectureFilterActivityContract : ActivityResultContract<LectureFil
                 resultCode == RESULT_OK,
                 intent?.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter()
         )
+    }
+
+    companion object {
+        const val TIMETABLE_LECTURE_FILTER = "TIMETABLE_LECTURE_FILTER"
     }
 }

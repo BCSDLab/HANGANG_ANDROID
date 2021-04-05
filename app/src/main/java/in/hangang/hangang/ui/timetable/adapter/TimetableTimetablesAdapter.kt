@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.timetable.adapter
 
 import `in`.hangang.core.view.dp2Px
-import `in`.hangang.core.view.visibleGone
+import `in`.hangang.core.view.setVisibility
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableTimetableTextBinding
@@ -17,12 +17,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 class TimetableTimetablesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    companion object {
-        const val TYPE_SEMESTER = 0
-        const val TYPE_TIMETABLE = 1
-        const val TYPE_DIVIDER = 2
-    }
 
     private val list = mutableListOf<Pair<Int, Any?>>()
 
@@ -68,8 +62,10 @@ class TimetableTimetablesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = list[position]
-        if (item === list.last()) with(holder.itemView) {
-            setPadding(paddingLeft, paddingTop, paddingRight, dp2Px(16f))
+        if (item === list.last()) {
+            with(holder.itemView) {
+                setPadding(paddingLeft, paddingTop, paddingRight, dp2Px(16f))
+            }
         }
         when (item.first) {
             TYPE_SEMESTER -> ((holder as SemesterViewHolder).itemView as TextView).apply {
@@ -145,9 +141,15 @@ class TimetableTimetablesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         fun setTimeTableStyle(isMainTimeTable: Boolean, isSelectedTimeTable: Boolean) {
             binding.textView.isEnabled = isSelectedTimeTable
-            binding.badge.visibility = visibleGone(isMainTimeTable)
+            binding.badge.setVisibility(isSelectedTimeTable)
         }
     }
 
     inner class DividerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    companion object {
+        const val TYPE_SEMESTER = 0
+        const val TYPE_TIMETABLE = 1
+        const val TYPE_DIVIDER = 2
+    }
 }

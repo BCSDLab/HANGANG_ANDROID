@@ -13,28 +13,10 @@ fun View.sp2Px(sp: Float): Int {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.displayMetrics).roundToInt()
 }
 
-fun visibleGone(boolean: Boolean) = if (boolean) {
-    View.VISIBLE
-} else {
-    View.GONE
-}
-
-fun visibleInvisible(boolean: Boolean) = if (boolean) {
-    View.VISIBLE
-} else {
-    View.INVISIBLE
-}
-
-fun goneVisible(boolean: Boolean) = if (boolean) {
-    View.GONE
-} else {
-    View.VISIBLE
-}
-
-fun invisibleVisible(boolean: Boolean) = if (boolean) {
-    View.INVISIBLE
-} else {
-    View.VISIBLE
+fun View.setVisibility(visible: Boolean) {
+    visibility =
+            if (visible) View.VISIBLE
+            else View.GONE
 }
 
 fun calculateRectOnScreen(view: View): Rect {

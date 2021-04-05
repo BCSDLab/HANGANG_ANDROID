@@ -1,7 +1,8 @@
 package `in`.hangang.hangang.data.source.remote
 
 import `in`.hangang.hangang.api.AuthApi
-import `in`.hangang.hangang.api.NoAuthApi
+import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_SEMESTER_ID
+import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_TIMETABLE_NAME
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.entity.TimetableMemo
@@ -15,9 +16,7 @@ import `in`.hangang.hangang.util.SemesterUtil
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRemoteDataSource(
-        private val noAuthApi: NoAuthApi,
-        private val authApi: AuthApi,
-        private val refreshApi: AuthApi
+        private val authApi: AuthApi
 ) : TimeTableDataSource {
     override fun getTimeTables(): Single<List<TimeTable>> {
         return Single.create { subscriber ->
@@ -26,8 +25,8 @@ class TimeTableRemoteDataSource(
                         if (list1.isEmpty()) {
                             makeTimeTable(
                                     UserTimeTableRequest(
-                                            name = "2021년 1학기 (1)",
-                                            semesterDateId = SemesterUtil.currentSemester
+                                            name = TIMETABLE_DEFAULT_TIMETABLE_NAME,
+                                            semesterDateId = TIMETABLE_DEFAULT_SEMESTER_ID
                                     )
                             ).subscribe({
                                 authApi.getTimeTables().subscribe({ list2 ->

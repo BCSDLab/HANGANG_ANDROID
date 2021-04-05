@@ -8,7 +8,7 @@ import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.core.view.edittext.SingleLineEditText
-import `in`.hangang.core.view.goneVisible
+import `in`.hangang.core.view.setVisibility
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.LectureTimeTable
@@ -333,13 +333,13 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun hideLectureTimetableDummyViews() {
         lectureTimetableDummyViews.forEach {
-            it.visibility = goneVisible(true)
+            it.setVisibility(false)
         }
     }
 
     private fun showLectureTimetableDummyViews() {
         lectureTimetableDummyViews.forEach {
-            it.visibility = goneVisible(false)
+            it.setVisibility(true)
         }
     }
 
