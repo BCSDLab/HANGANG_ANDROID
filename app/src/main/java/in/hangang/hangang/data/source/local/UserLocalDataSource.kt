@@ -2,6 +2,8 @@ package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
+import `in`.hangang.hangang.data.entity.User
+import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
@@ -69,6 +71,14 @@ class UserLocalDataSource : UserDataSource {
     }
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun getUserInformation(): Single<User> {
+        return Single.never()
+    }
+
+    override fun getUserCounts(): Single<UserCount> {
         return Single.never()
     }
 }

@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.di
 
-import `in`.hangang.hangang.data.source.UserRepository
+import `in`.hangang.hangang.data.source.repository.UserRepository
 import `in`.hangang.hangang.data.source.local.UserLocalDataSource
 import `in`.hangang.hangang.data.source.remote.UserRemoteDataSource
 import org.koin.dsl.module

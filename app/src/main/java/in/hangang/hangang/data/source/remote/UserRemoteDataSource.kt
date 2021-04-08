@@ -2,6 +2,8 @@ package `in`.hangang.hangang.data.source.remote
 
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
+import `in`.hangang.hangang.data.entity.User
+import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
@@ -63,5 +65,13 @@ class UserRemoteDataSource(
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return noAuthApi.passwordFind(PasswordFindRequest(portalAccount, password))
+    }
+
+    override fun getUserInformation(): Single<User> {
+        return authApi.getUserInformation()
+    }
+
+    override fun getUserCounts(): Single<UserCount> {
+        return authApi.getUserCounts()
     }
 }

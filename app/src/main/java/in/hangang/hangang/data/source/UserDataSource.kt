@@ -1,5 +1,7 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.entity.User
+import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
@@ -31,4 +33,8 @@ interface UserDataSource {
     fun emailPasswordConfig(portalAccount: String, secret: String): Single<CommonResponse>
 
     fun changePassword(portalAccount: String, password: String): Single<CommonResponse>
+
+    fun getUserInformation(): Single<User>
+
+    fun getUserCounts(): Single<UserCount>
 }

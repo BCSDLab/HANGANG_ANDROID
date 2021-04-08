@@ -1,4 +1,6 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.repository
+
+import `in`.hangang.hangang.data.source.TimetableDataSource
 
 class TimetableRepository(
         private val timetableLocalDataSource: TimetableDataSource,
