@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.mypage.activity.MyPagePointActivity">
+
+            <in.hangang.core.view.appbar.BaseAppBar
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:titleText="@string/my_point_app_bar_title" />
+
+            <TextView
+                android:id="@+id/text_view_my_point_summary_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/my_point_summary_title"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/app_bar" />
+
+            <TextView
+                android:id="@+id/text_view_my_point_summary_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/my_point_summary_description"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_my_point_summary_title" />
+
+            <TextView
+                android:id="@+id/text_view_my_point_usage_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/my_point_usage_title"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_my_point_summary_description" />
+
+            <GridLayout
+                android:id="@+id/grid_point_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:orientation="horizontal"
+                android:rowCount="4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_title">
+
+
+                <TextView
+                    android:id="@+id/text_view_my_point_usage_point_kinds_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/my_point_usage_point_kinds_1"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@id/text_view_my_point_usage_point_kind_values_1"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_title" />
+
+                <TextView
+                    android:id="@+id/text_view_my_point_usage_point_kind_values_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
+                    android:text="@string/my_point_usage_point_kind_values_1"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/text_view_my_point_usage_point_kinds_1"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_title" />
+
+
+                <TextView
+                    android:id="@+id/text_view_my_point_usage_point_kinds_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/my_point_usage_point_kinds_2"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@id/text_view_my_point_usage_point_kind_values_1"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_point_kinds_1" />
+
+                <TextView
+                    android:id="@+id/text_view_my_point_usage_point_kind_values_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/my_point_usage_point_kind_values_2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/text_view_my_point_usage_point_kinds_2"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_point_kinds_1" />
+
+                <TextView
+                    android:id="@+id/text_view_my_point_usage_point_kinds_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/my_point_usage_point_kinds_3"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@id/text_view_my_point_usage_point_kind_values_2"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_point_kinds_2" />
+
+                <TextView
+                    android:id="@+id/text_view_my_point_usage_point_kind_values_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/my_point_usage_point_kind_values_3"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/text_view_my_point_usage_point_kinds_3"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_point_kinds_2" />
+
+                <TextView
+                    android:id="@+id/text_view_my_point_usage_point_kinds_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/my_point_usage_point_kinds_4"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@id/text_view_my_point_usage_point_kind_values_3"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_point_kinds_3" />
+
+                <TextView
+                    android:id="@+id/text_view_my_point_usage_point_kind_values_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/my_point_usage_point_kind_values_4"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/text_view_my_point_usage_point_kinds_4"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_my_point_usage_point_kinds_3" />
+
+            </GridLayout>
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#000"
+                android:backgroundTint="?android:attr/textColorTertiary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/grid_point_info" />
+
+            <TextView
+                android:id="@+id/text_view_my_point_record_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/my_point_usage_title"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+
+            <View
+                android:id="@+id/view_my_point"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/background_my_page_point"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_my_point_record_title" />
+
+            <TextView
+                android:id="@+id/text_view_point"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/view_my_point"
+                app:layout_constraintEnd_toEndOf="@id/view_my_point"
+                app:layout_constraintStart_toStartOf="@id/view_my_point"
+                app:layout_constraintTop_toTopOf="@id/view_my_point"
+                tools:text="120P" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_point_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_my_point"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingTop="16dp"
+                android:clipToPadding="false"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
