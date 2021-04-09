@@ -1,8 +1,10 @@
-package `in`.hangang.hangang.ui.mypage
+package `in`.hangang.hangang.ui.mypage.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentMyPageBinding
+import `in`.hangang.hangang.ui.mypage.contract.MyPagePointRecordActivityContract
+import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import android.os.Bundle
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -11,6 +13,8 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
     override val layoutId = R.layout.fragment_my_page
 
     private val myPageViewModel: MyPageViewModel by sharedViewModel()
+
+    val myPagePointRecordActivityContract = registerForActivityResult(MyPagePointRecordActivityContract()) {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,6 +49,9 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
         with(binding) {
             imageButtonGotoSettings.setOnClickListener {
                 //TODO go to settings activity
+            }
+            viewMyPoint.setOnClickListener {
+                myPagePointRecordActivityContract.launch(myPageViewModel.user.value?.point ?: -1)
             }
         }
     }

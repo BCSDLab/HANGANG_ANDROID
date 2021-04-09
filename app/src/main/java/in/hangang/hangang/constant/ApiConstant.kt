@@ -16,3 +16,4 @@ const val SEND_PASSWORD_CONFIG_EMAIL = "/user/email/config"
 
 const val USER_LECTURE = "/user/lecture"
 const val USER_ME = "/user/me"
+const val USER_POINT_RECORD = "/user/point"

@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_mypage"
-        android:name="in.hangang.hangang.ui.mypage.MyPageFragment"
+        android:name="in.hangang.hangang.ui.mypage.fragment.MyPageFragment"
         android:label="@string/title_mypage"
         tools:layout="@layout/fragment_my_page" />
 </navigation>

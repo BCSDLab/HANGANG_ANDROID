@@ -10,7 +10,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.mypage.activity.MyPagePointActivity">
+            tools:context=".ui.mypage.activity.MyPagePointRecordActivity">
 
             <in.hangang.core.view.appbar.BaseAppBar
                 android:id="@+id/app_bar"
@@ -252,6 +252,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:paddingTop="16dp"
                 android:clipToPadding="false"/>
+
+            <ProgressBar
+                android:id="@+id/progress_point_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_my_point"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.entity.PointRecord
 import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -37,4 +38,6 @@ interface UserDataSource {
     fun getUserInformation(): Single<User>
 
     fun getUserCounts(): Single<UserCount>
+
+    fun getPointRecords(): Single<List<PointRecord>>
 }

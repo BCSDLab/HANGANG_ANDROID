@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source.remote
 
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
+import `in`.hangang.hangang.data.entity.PointRecord
 import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.request.*
@@ -73,5 +74,9 @@ class UserRemoteDataSource(
 
     override fun getUserCounts(): Single<UserCount> {
         return authApi.getUserCounts()
+    }
+
+    override fun getPointRecords(): Single<List<PointRecord>> {
+        return authApi.getUserPointRecord()
     }
 }
