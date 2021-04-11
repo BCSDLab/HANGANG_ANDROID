@@ -2,6 +2,7 @@ package `in`.hangang.hangang.ui.mypage.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.data.entity.UploadFile
 import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.source.repository.UserRepository
@@ -19,10 +20,12 @@ class MyPageViewModel(private val userRepository: UserRepository) : ViewModelBas
     private val _user = MutableLiveData<User>()
     private val _userCount = MutableLiveData<UserCount>()
     private val _pointRecords = MutableLiveData<List<PointRecord>>()
+    private val _uploadFiles = MutableLiveData<List<UploadFile>>()
 
     val user: LiveData<User> get() = _user
     val userCount: LiveData<UserCount> get() = _userCount
-    val pointRecord : LiveData<List<PointRecord>> get() = _pointRecords
+    val pointRecords: LiveData<List<PointRecord>> get() = _pointRecords
+    val uploadFiles: LiveData<List<UploadFile>> get() = _uploadFiles
 
     fun getMyPageData() {
         Single.zip(
@@ -51,6 +54,21 @@ class MyPageViewModel(private val userRepository: UserRepository) : ViewModelBas
                     pointRecordList.clear()
                     pointRecordList.addAll(it)
                     _pointRecords.postValue(pointRecordList)
+                }, {
+
+                })
+    }
+
+    fun getUploadFiles() {
+        userRepository.getPurchasedBanks()
+                .map {
+                    it.map { it.uploadFiles }.flatten()
+                }
+                .handleHttpException()
+                .handleProgress(this)
+                .withThread()
+                .subscribe({
+                    _uploadFiles.postValue(it)
                 }, {
 
                 })

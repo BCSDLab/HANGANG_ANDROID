@@ -2,6 +2,7 @@ package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.data.entity.LectureBank
 import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -25,4 +26,7 @@ interface AuthApi {
 
     @GET(USER_POINT_RECORD)
     fun getUserPointRecord(): Single<List<PointRecord>>
+
+    @GET(USER_PURCHASED)
+    fun getUserPurchasedBanks(): Single<List<LectureBank>>
 }

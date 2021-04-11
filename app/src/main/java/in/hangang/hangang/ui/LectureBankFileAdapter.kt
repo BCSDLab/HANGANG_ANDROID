@@ -1,0 +1,50 @@
+package `in`.hangang.hangang.ui
+
+import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
+import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.entity.LectureBank
+import `in`.hangang.hangang.data.entity.UploadFile
+import `in`.hangang.hangang.databinding.ItemLectureBankBinding
+import `in`.hangang.hangang.util.LectureBankUtil
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+
+class LectureBankFileAdapter(private val context: Context) : OnItemClickRecyclerViewAdapter<LectureBankFileAdapter.ViewHolder>() {
+
+    private val files = mutableListOf<UploadFile>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(DataBindingUtil.bind(
+                LayoutInflater
+                        .from(parent.context)
+                        .inflate(R.layout.item_lecture_bank, parent, false))!!
+        )
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+        holder.bind(files[position])
+    }
+
+    override fun getItemCount() = files.size
+
+    fun setFiles(files: List<UploadFile>) {
+        this.files.clear()
+        this.files.addAll(files)
+        notifyDataSetChanged()
+    }
+
+    fun getUploadFile(position: Int): UploadFile {
+        return files[position]
+    }
+
+    inner class ViewHolder(private val binding: ItemLectureBankBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(uploadFile: UploadFile) {
+            binding.imageViewFileType.setImageDrawable(LectureBankUtil.getLectureBankFileTypeImage(context, uploadFile.fileExt ?: ""))
+            binding.textViewFileName.text = uploadFile.fileName
+        }
+    }
+}

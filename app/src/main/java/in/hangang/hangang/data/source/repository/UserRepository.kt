@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.data.source.repository
 
 import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.data.entity.LectureBank
 import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -76,5 +77,9 @@ class UserRepository(
 
     override fun getPointRecords(): Single<List<PointRecord>> {
         return userRemoteDataSource.getPointRecords()
+    }
+
+    override fun getPurchasedBanks(): Single<List<LectureBank>> {
+        return userRemoteDataSource.getPurchasedBanks()
     }
 }

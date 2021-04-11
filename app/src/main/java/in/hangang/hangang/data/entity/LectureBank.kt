@@ -2,7 +2,7 @@ package `in`.hangang.hangang.data.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class PurchasedLectureBank(
+data class LectureBank(
         val id: Int,
         @SerializedName("user_id")
         val userId: Int,

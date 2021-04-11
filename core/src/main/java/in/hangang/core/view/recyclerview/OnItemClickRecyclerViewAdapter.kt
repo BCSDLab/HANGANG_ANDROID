@@ -23,5 +23,13 @@ abstract class OnItemClickRecyclerViewAdapter<VH : RecyclerView.ViewHolder> : Re
     interface OnItemClickListener {
         fun onItemClick(parent: RecyclerView?, view: View?, position: Int)
     }
+
+    inline fun setOnItemClickListener(crossinline onItemClickListener :(parent: RecyclerView?, view: View?, position: Int) -> Unit) {
+        this.onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(parent: RecyclerView?, view: View?, position: Int) {
+                onItemClickListener(parent, view, position)
+            }
+        }
+    }
 }
 

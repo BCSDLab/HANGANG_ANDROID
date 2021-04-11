@@ -3,13 +3,13 @@ package `in`.hangang.hangang.data.source.remote
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.data.entity.LectureBank
 import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserRemoteDataSource(
@@ -78,5 +78,9 @@ class UserRemoteDataSource(
 
     override fun getPointRecords(): Single<List<PointRecord>> {
         return authApi.getUserPointRecord()
+    }
+
+    override fun getPurchasedBanks(): Single<List<LectureBank>> {
+        return authApi.getUserPurchasedBanks()
     }
 }

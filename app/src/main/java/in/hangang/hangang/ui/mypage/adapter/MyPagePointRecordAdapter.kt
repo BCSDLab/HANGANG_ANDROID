@@ -1,25 +1,41 @@
 package `in`.hangang.hangang.ui.mypage.adapter
 
-import android.view.View
+import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.databinding.ItemMyPagePointRecordBinding
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
 class MyPagePointRecordAdapter : RecyclerView.Adapter<MyPagePointRecordAdapter.ViewHolder>() {
 
+    private val pointRecords = mutableListOf<PointRecord>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        return ViewHolder(DataBindingUtil.bind(
+                LayoutInflater
+                        .from(parent.context)
+                        .inflate(R.layout.item_my_page_point_record, parent, false))!!
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(pointRecord = pointRecords[position])
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+    override fun getItemCount() = pointRecords.size
+
+    fun setPointRecords(pointRecords: List<PointRecord>) {
+        this.pointRecords.clear()
+        this.pointRecords.addAll(pointRecords)
+        notifyDataSetChanged()
     }
 
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    class ViewHolder(private val binding: ItemMyPagePointRecordBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(pointRecord: PointRecord) {
+            binding.pointRecord = pointRecord
+            binding.executePendingBindings()
+        }
     }
 }
