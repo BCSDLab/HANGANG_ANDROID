@@ -120,7 +120,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         showLectureTimetableDummyViews()
                     }
                     TimetableViewModel.Mode.MODE_CUSTOM_LECTURE -> {
-                        changeBottomSheetFragment(timetableCustomLectureFragment, true)
+                        changeBottomSheetFragment(timetableCustomLectureFragment)
                         behavior.state = BottomSheetBehavior.STATE_EXPANDED
                         appBarOpenTimetableListButton.visibility = View.GONE
                         appBarMoreMenuButton.visibility = View.GONE
@@ -129,7 +129,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         showLectureTimetableDummyViews()
                     }
                     TimetableViewModel.Mode.MODE_LECTURE_DETAIL -> {
-                        changeBottomSheetFragment(timetableLectureDetailFragment, true)
+                        changeBottomSheetFragment(timetableLectureDetailFragment)
                         behavior.state = BottomSheetBehavior.STATE_EXPANDED
                         appBarOpenTimetableListButton.visibility = View.VISIBLE
                         appBarMoreMenuButton.visibility = View.VISIBLE
@@ -425,10 +425,9 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         ).show()
     }
 
-    private fun changeBottomSheetFragment(fragment: Fragment, addtoBackStack: Boolean = false) {
+    private fun changeBottomSheetFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction().apply {
             replace(R.id.timetable_bottom_sheet_container, fragment)
-            if (addtoBackStack) addToBackStack(null)
             commit()
         }
     }

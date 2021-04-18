@@ -12,37 +12,27 @@ import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.TimeTableDataSource
-import `in`.hangang.hangang.util.SemesterUtil
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRemoteDataSource(
         private val authApi: AuthApi
 ) : TimeTableDataSource {
-    override fun getTimeTables(): Single<List<TimeTable>> {
-        return Single.create { subscriber ->
-            authApi.getTimeTables()
-                    .subscribe({ list1 ->
-                        if (list1.isEmpty()) {
-                            makeTimeTable(
-                                    UserTimeTableRequest(
-                                            name = TIMETABLE_DEFAULT_TIMETABLE_NAME,
-                                            semesterDateId = TIMETABLE_DEFAULT_SEMESTER_ID
-                                    )
-                            ).subscribe({
-                                authApi.getTimeTables().subscribe({ list2 ->
-                                    subscriber.onSuccess(list2)
-                                }, {
-                                    subscriber.onError(it)
-                                })
-                            }, {
-                                subscriber.onError(it)
-                            })
-                        } else
-                            subscriber.onSuccess(list1)
-                    }, {
-                        subscriber.onError(it)
-                    })
-        }
+    override fun getTimeTables(): Single<Map<Int, List<TimeTable>>> {
+        return authApi.getTimeTables()
+                .flatMap { list ->
+                    if (list.isEmpty()) {
+                        makeTimeTable(
+                                UserTimeTableRequest(
+                                        name = TIMETABLE_DEFAULT_TIMETABLE_NAME,
+                                        semesterDateId = TIMETABLE_DEFAULT_SEMESTER_ID
+                                )
+                        ).flatMap {
+                            authApi.getTimeTables()
+                        }
+                    } else
+                        Single.just(list)
+                }
+                .map { list -> list.groupBy { it.semesterDateId } }
     }
 
     override fun getLectureTimetableList(classification: List<String>?, criteria: String?, department: String?, keyword: String?, limit: Int, page: Int, semesterDateId: Int): Single<List<LectureTimeTable>> {

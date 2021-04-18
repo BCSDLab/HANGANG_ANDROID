@@ -30,7 +30,7 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
             addingAvailable.observe(this@TimetableAddActivity) {
                 binding.buttonAddTimetable.isEnabled = it
             }
-            added.observe(this@TimetableAddActivity, EventObserver {
+            isAdded.observe(this@TimetableAddActivity, EventObserver {
                 if (it) {
                     setResult(1, Intent().apply {
                         putExtra(TimeTableAddActivityContract.TIMETABLE_ADDED, true)
@@ -40,7 +40,7 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
             })
             error.observe(this@TimetableAddActivity, EventObserver {
                 when (it.code) {
-                    24 -> showTimetableSemesterLimitErrorDialog()
+                    API_ERROR_CODE_TIMETABLE_EXCEED -> showTimetableSemesterLimitErrorDialog()
                 }
             })
         }

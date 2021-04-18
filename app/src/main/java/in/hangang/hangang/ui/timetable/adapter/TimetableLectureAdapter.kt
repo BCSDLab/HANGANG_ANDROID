@@ -2,6 +2,7 @@ package `in`.hangang.hangang.ui.timetable.adapter
 
 import `in`.hangang.core.view.setVisibility
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.constant.TIMETABLE_EMPTY_POSITION
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
 import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
@@ -20,7 +21,7 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
     private val lectures = mutableListOf<LectureTimeTable>()
     private val addedLectures = mutableSetOf<LectureTimeTable>()
     private val scraps = mutableListOf<LectureTimeTable>()
-    var currentSelectedPosition = -1
+    var currentSelectedPosition = TIMETABLE_EMPTY_POSITION
 
     var timetableLectureListener: TimetableLectureListener? = null
 
@@ -48,8 +49,8 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
             val beforeSelectedPosition = currentSelectedPosition
 
             if (currentSelectedPosition == position) {
-                timetableLectureListener?.onCheckedChange(-1, item)
-                currentSelectedPosition = -1
+                timetableLectureListener?.onCheckedChange(TIMETABLE_EMPTY_POSITION, item)
+                currentSelectedPosition = TIMETABLE_EMPTY_POSITION
             } else {
                 timetableLectureListener?.onCheckedChange(position, item)
                 currentSelectedPosition = position

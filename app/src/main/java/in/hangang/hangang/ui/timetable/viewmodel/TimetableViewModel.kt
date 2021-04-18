@@ -33,7 +33,7 @@ class TimetableViewModel(
 
     private val times = mutableListOf<CustomTimetableTimestamp>()
 
-    private val _timetables = MutableLiveData<List<TimeTable>>()
+    private val _timetables = MutableLiveData<Map<Int, List<TimeTable>>>()
     private val _mainTimetableEvent = MutableLiveData<Event<TimeTable>>()
     private val _setMainTimetableEvent = MutableLiveData<Event<CommonResponse>>()
     private val _timetableNameModifiedEvent = MutableLiveData<Event<String>>()
@@ -50,7 +50,7 @@ class TimetableViewModel(
 
     private val _timestamp = MutableLiveData<List<CustomTimetableTimestamp>>()
 
-    val timetables: LiveData<List<TimeTable>> get() = _timetables
+    val timetables: LiveData<Map<Int, List<TimeTable>>> get() = _timetables
     val mainTimetableEvent: LiveData<Event<TimeTable>> get() = _mainTimetableEvent
     val setMainTimetableEvent: LiveData<Event<CommonResponse>> get() = _setMainTimetableEvent
     val timetableNameModifiedEvent: LiveData<Event<String>> get() = _timetableNameModifiedEvent
@@ -75,9 +75,11 @@ class TimetableViewModel(
                 .withThread()
                 .handleProgress(this)
                 .handleHttpException()
-                .subscribe({
+                .doOnSuccess {
                     listTimetables.clear()
-                    listTimetables.addAll(it)
+                    listTimetables.addAll(it.toValuesList())
+                }
+                .subscribe({
                     _timetables.postValue(it)
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
@@ -311,10 +313,10 @@ class TimetableViewModel(
         return listTimetables.find { it.id == timetableId }
     }
 
-    private fun getTimetablesRx(): Single<List<TimeTable>> {
+    private fun getTimetablesRx(): Single<Map<Int, List<TimeTable>>> {
         return timeTableRepository.getTimeTables().doOnSuccess {
             listTimetables.clear()
-            listTimetables.addAll(it)
+            listTimetables.addAll(it.toValuesList())
             _timetables.postValue(it)
         }
     }

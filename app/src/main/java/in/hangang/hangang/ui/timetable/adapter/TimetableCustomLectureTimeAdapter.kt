@@ -5,6 +5,7 @@ import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import `in`.hangang.hangang.databinding.ItemTimetableCustomLectureTimestampBinding
 import `in`.hangang.hangang.ui.timetable.listener.OnItemClickListener
 import `in`.hangang.hangang.util.diffutil.CustomTimetableTimestampDiffCallback
+import `in`.hangang.hangang.util.format
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -29,16 +30,10 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
             with(customTimetableTimestamp) {
                 binding.textViewWeekday.text = weekdaysText[week]
                 binding.textViewTime.text =
-                        "${String.format("%02d", startTime.first)}:${
-                            String.format(
-                                    "%02d",
-                                    startTime.second
-                            )
-                        } ~ ${String.format("%02d", endTime.first)}:${
-                            String.format(
-                                    "%02d",
-                                    endTime.second
-                            )
+                        "${startTime.first.format(TIME_FORMAT)}:${
+                            startTime.second.format(TIME_FORMAT)
+                        } ~ ${endTime.first.format(TIME_FORMAT)}:${
+                            endTime.second.format(TIME_FORMAT)
                         }"
             }
         }
@@ -91,5 +86,9 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
                 onDeleteButtonClick(view, position)
             }
         }
+    }
+
+    companion object {
+        const val TIME_FORMAT = "02d"
     }
 }

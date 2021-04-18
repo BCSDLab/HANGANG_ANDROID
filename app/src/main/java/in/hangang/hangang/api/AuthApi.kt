@@ -67,8 +67,8 @@ interface AuthApi {
             @Query("criteria") criteria: String? = null,
             @Query("department") department: String? = null,
             @Query("keyword") keyword: String? = null,
-            @Query("limit") limit: Int = 10,
-            @Query("page") page: Int = 1,
+            @Query("limit") limit: Int = API_TIMETABLE_DEFAULT_LIMIT,
+            @Query("page") page: Int = API_TIMETABLE_DEFAULT_PAGE,
             @Query("semesterDateId") semesterDateId: Int
     ): Single<List<LectureTimeTable>>
 

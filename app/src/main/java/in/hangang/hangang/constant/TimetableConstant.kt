@@ -26,3 +26,5 @@ const val TIMETABLE_SEMESTER_1 = 5          //1학기 semester id
 const val TIMETABLE_SEMESTER_SUMMER = 5     //여름학기 semester id
 const val TIMETABLE_SEMESTER_2 = 5          //2학기 semester id
 const val TIMETABLE_SEMESTER_WINTER = 5     //겨울학기 semester id
+
+const val TIMETABLE_EMPTY_POSITION = -1

@@ -11,7 +11,7 @@ import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableLocalDataSource : TimeTableDataSource {
-    override fun getTimeTables(): Single<List<TimeTable>> {
+    override fun getTimeTables(): Single<Map<Int, List<TimeTable>>> {
         return Single.never()
     }
 

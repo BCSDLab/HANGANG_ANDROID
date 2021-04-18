@@ -13,7 +13,7 @@ class TimeTableRepository(
         private val timeTableLocalDataSource: TimeTableDataSource,
         private val timeTableRemoteDataSource: TimeTableDataSource
 ) : TimeTableDataSource {
-    override fun getTimeTables(): Single<List<TimeTable>> {
+    override fun getTimeTables(): Single<Map<Int, List<TimeTable>>> {
         return timeTableRemoteDataSource.getTimeTables()
     }
 

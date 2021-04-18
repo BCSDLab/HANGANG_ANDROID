@@ -8,7 +8,7 @@ import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
 
 interface TimeTableDataSource {
-    fun getTimeTables(): Single<List<TimeTable>>
+    fun getTimeTables(): Single<Map<Int, List<TimeTable>>>
     fun getLectureTimetableList(
             classification: List<String>? = null,
             criteria: String? = null,

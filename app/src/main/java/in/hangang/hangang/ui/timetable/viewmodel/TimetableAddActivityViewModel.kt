@@ -15,10 +15,10 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRepository) : ViewModelBase() {
-    private val _added = MutableLiveData(Event(false))
+    private val _isAdded = MutableLiveData(Event(false))
     private val _addingAvailable = MutableLiveData(false)
     private val _error = MutableLiveData<Event<CommonResponse>>()
-    val added: LiveData<Event<Boolean>> get() = _added
+    val isAdded: LiveData<Event<Boolean>> get() = _isAdded
     val addingAvailable: LiveData<Boolean> get() = _addingAvailable
     val error: LiveData<Event<CommonResponse>> get() = _error
 
@@ -31,7 +31,7 @@ class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRe
                 .handleProgress(this)
                 .withThread()
                 .subscribe({
-                    _added.postValue(Event(true))
+                    _isAdded.postValue(Event(true))
                 }, {
                     _error.postValue(Event(it.toCommonResponse()))
                 })

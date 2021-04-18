@@ -8,11 +8,24 @@ import `in`.hangang.hangang.databinding.ActivityTimetableLectureFilterBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableLectureFilterActivityContract.Companion.TIMETABLE_LECTURE_FILTER
 import android.content.Intent
 import android.os.Bundle
+import android.widget.CheckBox
 
 class TimetableLectureFilterActivity :
         ViewBindingActivity<ActivityTimetableLectureFilterBinding>() {
     override val layoutId: Int = R.layout.activity_timetable_lecture_filter
-    val lectureFilter: LectureFilter by lazy {
+    private val mapCheckBox: Map<String, CheckBox> by lazy {
+        mapOf(
+                CLASSIFICATION_LIBERAL_REQUIRED to binding.checkBoxFilterByClassificationLiberalRequired,
+                CLASSIFICATION_LIBERAL_CHOICE to binding.checkBoxFilterByClassificationLiberalChoice,
+                CLASSIFICATION_MAJOR_REQUIRED to binding.checkBoxFilterByClassificationMajorRequired,
+                CLASSIFICATION_MAJOR_CHOICE to binding.checkBoxFilterByClassificationMajorChoice,
+                CLASSIFICATION_MSC_REQUIRED to binding.checkBoxFilterByClassificationMscRequired,
+                CLASSIFICATION_MSC_CHOICE to binding.checkBoxFilterByClassificationMscChoice,
+                CLASSIFICATION_HRD_REQUIRED to binding.checkBoxFilterByClassificationHrdChoice,
+                CLASSIFICATION_HRD_CHOICE to binding.checkBoxFilterByClassificationHrdChoice
+        )
+    }
+    private val lectureFilter: LectureFilter by lazy {
         intent.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter()
     }
 
@@ -36,6 +49,7 @@ class TimetableLectureFilterActivity :
     }
 
     private fun initView() {
+        resetFilter()
         with(lectureFilter) {
             if (criteria == null) {
                 binding.checkBoxFilterByName.isChecked = true
@@ -45,42 +59,17 @@ class TimetableLectureFilterActivity :
                 binding.checkBoxFilterByProfessor.isChecked = criteria == TIMETABLE_CRITERIA_PROFESSOR
             }
 
-            binding.checkBoxFilterByClassificationLiberalRequired.isChecked = classifications.contains(CLASSIFICATION_LIBERAL_REQUIRED)
-            binding.checkBoxFilterByClassificationLiberalChoice.isChecked = classifications.contains(CLASSIFICATION_LIBERAL_CHOICE)
-            binding.checkBoxFilterByClassificationMajorRequired.isChecked = classifications.contains(CLASSIFICATION_MAJOR_REQUIRED)
-            binding.checkBoxFilterByClassificationMajorChoice.isChecked = classifications.contains(CLASSIFICATION_MAJOR_CHOICE)
-            binding.checkBoxFilterByClassificationMscRequired.isChecked = classifications.contains(CLASSIFICATION_MSC_REQUIRED)
-            binding.checkBoxFilterByClassificationMscChoice.isChecked = classifications.contains(CLASSIFICATION_MSC_CHOICE)
-            binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_REQUIRED)
-            binding.checkBoxFilterByClassificationHrdChoice.isChecked = classifications.contains(CLASSIFICATION_HRD_CHOICE)
+            classifications.forEach {
+                mapCheckBox[it]?.isChecked = true
+            }
         }
     }
 
     private fun applyFilterAndFinish() {
         val classifications = mutableListOf<String>()
-        if (binding.checkBoxFilterByClassificationLiberalRequired.isChecked)
-            classifications.add(CLASSIFICATION_LIBERAL_REQUIRED)
-
-        if (binding.checkBoxFilterByClassificationLiberalChoice.isChecked)
-            classifications.add(CLASSIFICATION_LIBERAL_CHOICE)
-
-        if (binding.checkBoxFilterByClassificationMajorRequired.isChecked)
-            classifications.add(CLASSIFICATION_MAJOR_REQUIRED)
-
-        if (binding.checkBoxFilterByClassificationMajorChoice.isChecked)
-            classifications.add(CLASSIFICATION_MAJOR_CHOICE)
-
-        if (binding.checkBoxFilterByClassificationMscRequired.isChecked)
-            classifications.add(CLASSIFICATION_MSC_REQUIRED)
-
-        if (binding.checkBoxFilterByClassificationMscChoice.isChecked)
-            classifications.add(CLASSIFICATION_MSC_CHOICE)
-
-        if (binding.checkBoxFilterByClassificationHrdRequired.isChecked)
-            classifications.add(CLASSIFICATION_HRD_REQUIRED)
-
-        if (binding.checkBoxFilterByClassificationHrdChoice.isChecked)
-            classifications.add(CLASSIFICATION_HRD_CHOICE)
+        mapCheckBox.forEach {
+            if(it.value.isChecked) classifications.add(it.key)
+        }
 
         val criteria = when {
             binding.checkBoxFilterByName.isChecked -> TIMETABLE_CRITERIA_LECTURE_NAME
@@ -98,14 +87,9 @@ class TimetableLectureFilterActivity :
     }
 
     private fun resetFilter() {
-        binding.checkBoxFilterByClassificationLiberalRequired.isChecked = false
-        binding.checkBoxFilterByClassificationLiberalChoice.isChecked = false
-        binding.checkBoxFilterByClassificationMajorRequired.isChecked = false
-        binding.checkBoxFilterByClassificationMajorChoice.isChecked = false
-        binding.checkBoxFilterByClassificationMscRequired.isChecked = false
-        binding.checkBoxFilterByClassificationMscChoice.isChecked = false
-        binding.checkBoxFilterByClassificationHrdChoice.isChecked = false
-        binding.checkBoxFilterByClassificationHrdChoice.isChecked = false
+        mapCheckBox.forEach {
+            it.value.isChecked = false
+        }
 
         binding.checkBoxFilterByName.isChecked = true
         binding.checkBoxFilterByProfessor.isChecked = true

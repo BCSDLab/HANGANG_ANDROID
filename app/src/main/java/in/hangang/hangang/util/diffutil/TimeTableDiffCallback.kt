@@ -5,8 +5,8 @@ import `in`.hangang.hangang.ui.timetable.adapter.TimetableTimetablesAdapter
 import androidx.recyclerview.widget.DiffUtil
 
 class TimeTableDiffCallback(
-        private val oldList: List<Pair<Int, Any?>>,
-        private val newList: List<Pair<Int, Any?>>
+        private val oldList: List<Any>,
+        private val newList: List<Any>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 
@@ -16,11 +16,11 @@ class TimeTableDiffCallback(
         val oldItem = oldList[oldItemPosition]
         val newItem = newList[newItemPosition]
 
-        return if (oldItem.first == TimetableTimetablesAdapter.TYPE_SEMESTER && newItem.first == TimetableTimetablesAdapter.TYPE_SEMESTER) {
-            (oldItem.second as Int) == (newItem.second as Int)
-        } else if (oldItem.first == TimetableTimetablesAdapter.TYPE_TIMETABLE && newItem.first == TimetableTimetablesAdapter.TYPE_TIMETABLE) {
-            (oldItem.second as TimeTable).id == (newItem.second as TimeTable).id
-        } else oldItem.first == TimetableTimetablesAdapter.TYPE_DIVIDER && newItem.first == TimetableTimetablesAdapter.TYPE_DIVIDER
+        return when {
+            oldItem is Int && newItem is Int -> oldItem == newItem
+            oldItem is TimeTable && newItem is TimeTable -> oldItem.id == newItem.id
+            else -> oldItem == newItem
+        }
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
