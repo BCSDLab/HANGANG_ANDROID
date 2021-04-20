@@ -146,7 +146,6 @@
     <string name="menu_item_save_image">이미지 저장</string>
     <string name="menu_item_edit_timetable_name">이름 수정</string>
     <string name="menu_item_remove_timetable">시간표 삭제</string>
-    <string name="mon">월</string>
     <string name="time_09">09</string>
     <string name="time_17">17</string>
     <string name="time_16">16</string>

@@ -6,7 +6,7 @@ import `in`.hangang.hangang.constant.TIMETABLE_EMPTY_POSITION
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
 import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
-import `in`.hangang.hangang.util.TimetableUtil
+import `in`.hangang.hangang.util.timetable.TimetableUtil
 import `in`.hangang.hangang.util.diffutil.LectureTimeTableDiffCallback
 import android.content.Context
 import android.view.LayoutInflater
@@ -112,7 +112,7 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
                 textViewLectureCredit.text = context.getString(R.string.credit, item.designScore)
                 textViewLectureGrade.text = context.getString(R.string.grade, item.grades)
                 textViewLectureClassification.text = item.classification
-                textViewLectureTime.text = TimetableUtil.toString(context, item.classTime ?: "[]")
+                textViewLectureTime.text = TimetableUtil.convertApiExpressionToKoreatechClassTime(context, item.classTime ?: "[]")
             }
         }
 

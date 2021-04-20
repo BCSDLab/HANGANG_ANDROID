@@ -10,7 +10,7 @@ import `in`.hangang.hangang.databinding.FragmentTimetableCustomLectureBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableCustomLectureTimeAdapter
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import `in`.hangang.hangang.util.HangangDialogUtil
-import `in`.hangang.hangang.util.TimetableUtil
+import `in`.hangang.hangang.util.timetable.TimetableUtil
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,7 +51,7 @@ class TimetableCustomLectureFragment :
                 )
                 timetableViewModel.setDummyLectureTimeTable(
                         LectureTimeTable(
-                                classTime = TimetableUtil.toExp(it)
+                                classTime = TimetableUtil.convertCustomTimetableTimestampToApiExpression(it)
                         )
                 )
             }
@@ -105,7 +105,7 @@ class TimetableCustomLectureFragment :
             timetableViewModel.addCustomLecture(
                     name = binding.editTextCustomLectureName.text.toString(),
                     professor = binding.editTextCustomLectureProfessor.text.toString(),
-                    classTime = TimetableUtil.toExp(timetableViewModel.timestamp.value!!),
+                    classTime = TimetableUtil.convertCustomTimetableTimestampToApiExpression(timetableViewModel.timestamp.value!!),
                     timetableId = timetableViewModel.displayingTimeTable.value?.id ?: TIMETABLE_INVALID_TIMETABLE_ID
             )
         }

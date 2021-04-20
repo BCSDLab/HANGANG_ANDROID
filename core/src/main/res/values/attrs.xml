@@ -71,6 +71,12 @@
         <attr name="columnWidth" />
         <attr name="rowCount" />
         <attr name="rowHeight" />
+        <attr name="rowHeaderTextSize" format="dimension" />
+        <attr name="columnHeaderTextSize" format="dimension" />
+        <attr name="rowHeaderTextColor" format="color|reference" />
+        <attr name="columnHeaderTextColor" format="color|reference" />
+        <attr name="topHeaderHeight" format="dimension" />
+        <attr name="leftHeaderWidth" format="dimension" />
         <attr name="layout_rowStart" format="float" />
         <attr name="layout_rowEnd" format="float" />
         <attr name="layout_columnStart" format="float" />

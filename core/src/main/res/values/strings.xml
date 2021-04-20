@@ -4,9 +4,11 @@
     <string name="ok">확인</string>
     <string name="close">닫기</string>
 
-    <string name="timetable_mon">월</string>
-    <string name="timetable_tue">화</string>
-    <string name="timetable_wed">수</string>
-    <string name="timetable_thu">목</string>
-    <string name="timetable_fri">금</string>
+    <string name="mon">월</string>
+    <string name="tue">화</string>
+    <string name="wed">수</string>
+    <string name="thu">목</string>
+    <string name="fri">금</string>
+    <string name="sat">토</string>
+    <string name="sun">일</string>
 </resources>

@@ -1,17 +1,13 @@
-package `in`.hangang.hangang.util
+package `in`.hangang.hangang.util.timetable
 
-import `in`.hangang.core.view.timetable.TimetableLayout
+import `in`.hangang.hangang.view.timetable.TimetableLayout
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
-import `in`.hangang.hangang.data.entity.LectureTimeTable
 import android.content.Context
-import android.view.View
-import androidx.core.content.ContextCompat
-import io.reactivex.rxjava3.core.Single
 import java.util.*
 
 object TimetableUtil {
-    private val timetableColors = arrayOf(
+    val timetableColors = arrayOf(
             R.color.timetable_color_1,
             R.color.timetable_color_2,
             R.color.timetable_color_3,
@@ -20,39 +16,6 @@ object TimetableUtil {
             R.color.timetable_color_6,
             R.color.timetable_color_7
     )
-
-    fun toExp(timestamps: List<CustomTimetableTimestamp>): String {
-        val set = mutableSetOf<Int>()
-        timestamps.forEach {
-            val startTime = (it.startTime.first - 9) * 2 + if (it.startTime.second < 30) 0 else 1
-            val endTime = (it.endTime.first - 9) * 2 + if (it.endTime.second < 30) 0 else 1
-
-            for (i in startTime until endTime) {
-                set.add(it.week * 100 + i)
-            }
-        }
-        return set.toList().sorted().joinToString(
-                prefix = "[",
-                postfix = "]",
-                separator = ", "
-        )
-    }
-
-    fun toString(context: Context, exp: String): String {
-        val stringBuilder = StringBuilder()
-        convert(exp) { f, l ->
-            with(stringBuilder) {
-                if (this.isNotEmpty()) append(", ")
-                append(getWeekString(context, l))
-                append(" ")
-                append(getTimeString(f))
-                append("~")
-                append(getTimeString(l))
-            }
-        }
-
-        return stringBuilder.toString()
-    }
 
     fun isLectureTimetableTimeDuplicate(classTime1: String, classTime2: String): Boolean {
         val time2List = classTime2.substring(1, classTime2.length - 1)
@@ -69,7 +32,55 @@ object TimetableUtil {
                 }
     }
 
-    private fun convert(exp: String, func: (Int, Int) -> Unit) {
+    fun convertCustomTimetableTimestampToApiExpression(timestamps: List<CustomTimetableTimestamp>): String {
+        val set = mutableSetOf<Int>()
+        timestamps.forEach {
+            val startTime = (it.startTime.first - 9) * 2 + if (it.startTime.second < 30) 0 else 1
+            val endTime = (it.endTime.first - 9) * 2 + if (it.endTime.second < 30) 0 else 1
+
+            for (i in startTime until endTime) {
+                set.add(it.week * 100 + i)
+            }
+        }
+        return set.toList().sorted().joinToString(
+                prefix = "[",
+                postfix = "]",
+                separator = ", "
+        )
+    }
+
+    fun convertApiExpressionToKoreatechClassTime(context: Context, exp: String): String {
+        val stringBuilder = StringBuilder()
+        convertExpression(exp) { f, l ->
+            with(stringBuilder) {
+                if (this.isNotEmpty()) append(", ")
+                append(getWeekString(context, l))
+                append(" ")
+                append(getTimeString(f))
+                append("~")
+                append(getTimeString(l))
+            }
+        }
+
+        return stringBuilder.toString()
+    }
+
+    fun convertApiExpressionToRC(apiExpression: String): List<TimetableLayout.RC> {
+        val rcs = mutableListOf<TimetableLayout.RC>()
+        convertExpression(apiExpression) { f, l ->
+            rcs.add(
+                    TimetableLayout.RC(
+                            columnStart = getWeek(l),
+                            columnEnd = getWeek(l) + 1,
+                            rowStart = getTime(f),
+                            rowEnd = getTime(l + 1)
+                    )
+            )
+        }
+        return rcs
+    }
+
+    private fun convertExpression(exp: String, callback: (Int, Int) -> Unit) {
         val stack = Stack<Int>()
         exp.substring(1, exp.length - 1)
                 .splitToSequence(", ")
@@ -81,7 +92,7 @@ object TimetableUtil {
                         stack.push(it)
                     else {
                         if (it - stack.peek() >= 2) {
-                            func(stack.firstElement(), stack.peek())
+                            callback(stack.firstElement(), stack.peek())
                             stack.clear()
                             stack.push(it)
                         } else {
@@ -90,11 +101,11 @@ object TimetableUtil {
                     }
                 }
         if (stack.isNotEmpty()) {
-            func(stack.firstElement(), stack.peek())
+            callback(stack.firstElement(), stack.peek())
         }
     }
 
-    fun getTimetableTextView(
+    /*fun getTimetableTextView(
             context: Context,
             lectureTimeTables: List<LectureTimeTable>
     ): Single<Map<View, LectureTimeTable>> {
@@ -142,19 +153,19 @@ object TimetableUtil {
                 subscriber.onError(e)
             }
         }
-    }
+    }*/
 
     //월(0) ~ 일(6)
     private fun getWeek(value: Int): Float = (value / 100).toFloat()
     private fun getWeekString(context: Context, value: Int): String =
             when (value / 100) {
-                0 -> context.getString(R.string.timetable_mon)
-                1 -> context.getString(R.string.timetable_tue)
-                2 -> context.getString(R.string.timetable_wed)
-                3 -> context.getString(R.string.timetable_thu)
-                4 -> context.getString(R.string.timetable_fri)
-                5 -> context.getString(R.string.timetable_sat)
-                6 -> context.getString(R.string.timetable_sun)
+                0 -> context.getString(R.string.mon)
+                1 -> context.getString(R.string.tue)
+                2 -> context.getString(R.string.wed)
+                3 -> context.getString(R.string.thu)
+                4 -> context.getString(R.string.fri)
+                5 -> context.getString(R.string.sat)
+                6 -> context.getString(R.string.sun)
                 else -> ""
             }
 
@@ -163,19 +174,4 @@ object TimetableUtil {
             with(value % 100) {
                 String.format("%02d", this / 2 + 1) + if (this % 2 == 0) "A" else "B"
             }
-
-    private fun convertToTimes(exp: String): List<TimetableLayout.RC> {
-        val rcs = mutableListOf<TimetableLayout.RC>()
-        convert(exp) { f, l ->
-            rcs.add(
-                    TimetableLayout.RC(
-                            columnStart = getWeek(l),
-                            columnEnd = getWeek(l) + 1,
-                            rowStart = getTime(f),
-                            rowEnd = getTime(l + 1)
-                    )
-            )
-        }
-        return rcs
-    }
 }

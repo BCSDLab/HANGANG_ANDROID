@@ -9,6 +9,7 @@ import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
 import `in`.hangang.hangang.util.*
+import `in`.hangang.hangang.util.timetable.TimetableUtil
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.ViewGroup
@@ -267,7 +268,7 @@ class TimetableViewModel(
         _availableAddingCustomTimetable.postValue(
                 name.isNotEmpty() &&
                         professor.isNotEmpty() &&
-                        TimetableUtil.toExp(times) != "[]"
+                        TimetableUtil.convertCustomTimetableTimestampToApiExpression(times) != "[]"
         )
     }
 

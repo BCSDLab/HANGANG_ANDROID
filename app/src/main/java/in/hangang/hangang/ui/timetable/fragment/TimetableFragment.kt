@@ -17,7 +17,7 @@ import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.*
 import `in`.hangang.hangang.util.LogUtil
-import `in`.hangang.hangang.util.TimetableUtil
+import `in`.hangang.hangang.util.timetable.TimetableUtil
 import `in`.hangang.hangang.util.file.FileUtil
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
@@ -37,9 +37,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     override val layoutId = R.layout.fragment_timetable
-
-    private val lectureTimetableDummyViews = arrayListOf<View>()
-    private val lectureTimeTableViews = hashMapOf<View, LectureTimeTable>()
 
     private var selectedLecturePositionTop = 0
 
@@ -108,7 +105,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarMoreMenuButton.visibility = View.VISIBLE
                         appBarAddManuallyButton.visibility = View.GONE
                         appBarCloseButton.visibility = View.GONE
-                        hideLectureTimetableDummyViews()
+                        binding.timetableLayout.isShowingDummyView = false
                     }
                     TimetableViewModel.Mode.MODE_LECTURE_LIST -> {
                         changeBottomSheetFragment(timetableLectureListFragment)
@@ -117,7 +114,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarMoreMenuButton.visibility = View.GONE
                         appBarAddManuallyButton.visibility = View.VISIBLE
                         appBarCloseButton.visibility = View.VISIBLE
-                        showLectureTimetableDummyViews()
+                        binding.timetableLayout.isShowingDummyView = true
                     }
                     TimetableViewModel.Mode.MODE_CUSTOM_LECTURE -> {
                         changeBottomSheetFragment(timetableCustomLectureFragment)
@@ -126,7 +123,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarMoreMenuButton.visibility = View.GONE
                         appBarAddManuallyButton.visibility = View.VISIBLE
                         appBarCloseButton.visibility = View.VISIBLE
-                        showLectureTimetableDummyViews()
+                        binding.timetableLayout.isShowingDummyView = true
                     }
                     TimetableViewModel.Mode.MODE_LECTURE_DETAIL -> {
                         changeBottomSheetFragment(timetableLectureDetailFragment)
@@ -135,7 +132,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarMoreMenuButton.visibility = View.VISIBLE
                         appBarAddManuallyButton.visibility = View.GONE
                         appBarCloseButton.visibility = View.GONE
-                        hideLectureTimetableDummyViews()
+                        binding.timetableLayout.isShowingDummyView = true
                     }
                 }
             }
@@ -145,11 +142,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             timetableBitmapImage.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
 
             lectureTimetablesInTimetable.observe(viewLifecycleOwner) {
-                TimetableUtil.getTimetableTextView(requireContext(), it)
-                        .withThread()
-                        .subscribe(this@TimetableFragment::showLectureTimeTable, {})
-                if (timetableViewModel.mode.value == TimetableViewModel.Mode.MODE_LECTURE_DETAIL)
-                    timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
+                binding.timetableLayout.removeAllTimetableItems()
+                binding.timetableLayout.addTimetableItem(*it.toTypedArray())
             }
 
             selectedTimetable.observe(viewLifecycleOwner) { lectureTimeTable ->
@@ -160,11 +154,10 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             }
 
             dummyTimeTable.observe(viewLifecycleOwner) {
-                TimetableUtil.getTimetableDummyView(requireContext(),
-                        if (it == null) listOf() else listOf(it))
-                        .withThread()
-                        .subscribe(this@TimetableFragment::showLectureDummyTimetable)
-                        .addTo(compositeDisposable)
+                if (it != null) {
+                    binding.timetableLayout.removeAllTimetableDummyItems()
+                    binding.timetableLayout.addTimetableDummyItem(it)
+                }
             }
 
             duplicatedLectureTimetable.observe(viewLifecycleOwner, EventObserver {
@@ -188,8 +181,26 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         binding.fabEdit.setOnClickListener {
             timetableViewModel.setMode(TimetableViewModel.Mode.MODE_LECTURE_LIST)
         }
-        binding.timetableLayout.setOnClickListener {
-            timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
+        with(binding.timetableLayout) {
+            setOnClickListener {
+                timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
+            }
+            setTimetableItemClickListener { view: View, lectureTimeTable: LectureTimeTable ->
+                timetableViewModel.setMode(TimetableViewModel.Mode.MODE_LECTURE_DETAIL)
+                binding.timetableScrollView.smoothScrollTo(0, view.top)
+                selectedLecturePositionTop = view.top
+                timetableLectureDetailViewModel.initWithLectureTimetable(lectureTimeTable)
+            }
+            setScrollViewCallback({
+                binding.timetableScrollView.smoothScrollTo(0, 0)
+            }, {
+                it[0].viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        binding.timetableScrollView.smoothScrollTo(0, it[0].top)
+                        it[0].viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }
+                })
+            })
         }
     }
 
@@ -293,54 +304,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         timetableLectureListViewModel.getScrapedLectures(false)
         timetableViewModel.getLectureTimeTablesInTimeTable(timetable)
         timetableLectureListViewModel.resetLectureFilter()
-    }
-
-    private fun showLectureTimeTable(lectureTimeTableViews: Map<View, LectureTimeTable>) {
-        this.lectureTimeTableViews.clear()
-        this.lectureTimeTableViews.putAll(lectureTimeTableViews)
-        binding.timetableLayout.removeAllViews()
-        lectureTimeTableViews.keys.forEach { view ->
-            view.setOnClickListener {
-                timetableViewModel.setMode(TimetableViewModel.Mode.MODE_LECTURE_DETAIL)
-                binding.timetableScrollView.smoothScrollTo(0, it.top)
-                selectedLecturePositionTop = it.top
-                lectureTimeTableViews[view]?.let { lectureTimeTable -> timetableLectureDetailViewModel.initWithLectureTimetable(lectureTimeTable) }
-            }
-            binding.timetableLayout.addView(view)
-        }
-    }
-
-    private fun showLectureDummyTimetable(lectureTimeTableViews: List<View>) {
-        lectureTimetableDummyViews.forEach {
-            binding.timetableLayout.removeView(it)
-        }
-        lectureTimetableDummyViews.clear()
-        lectureTimetableDummyViews.addAll(lectureTimeTableViews)
-        if (lectureTimetableDummyViews.isNotEmpty()) {
-            lectureTimetableDummyViews[0].viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    val it = lectureTimetableDummyViews[0]
-                    binding.timetableScrollView.smoothScrollTo(0, it.top)
-                    it.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                }
-            })
-            lectureTimetableDummyViews.forEach {
-                binding.timetableLayout.addView(it)
-            }
-        }
-
-    }
-
-    private fun hideLectureTimetableDummyViews() {
-        lectureTimetableDummyViews.forEach {
-            it.setVisibility(false)
-        }
-    }
-
-    private fun showLectureTimetableDummyViews() {
-        lectureTimetableDummyViews.forEach {
-            it.setVisibility(true)
-        }
     }
 
     private fun saveImageToFile(bitmap: Bitmap) {

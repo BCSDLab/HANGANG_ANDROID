@@ -2,11 +2,11 @@
 <resources>
 
     <string-array name="timetable_picker_weeks">
-        <item>@string/timetable_mon</item>
-        <item>@string/timetable_tue</item>
-        <item>@string/timetable_wed</item>
-        <item>@string/timetable_thu</item>
-        <item>@string/timetable_fri</item>
+        <item>@string/mon</item>
+        <item>@string/tue</item>
+        <item>@string/wed</item>
+        <item>@string/thu</item>
+        <item>@string/fri</item>
     </string-array>
 
     <string-array name="timetable_picker_hours">

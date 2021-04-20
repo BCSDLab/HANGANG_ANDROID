@@ -7,7 +7,7 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentTimetableLectureDetailBinding
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
-import `in`.hangang.hangang.util.TimetableUtil
+import `in`.hangang.hangang.util.timetable.TimetableUtil
 import android.os.Bundle
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -53,7 +53,7 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
             lectureTimetable.observe(viewLifecycleOwner) {
                 binding.lecture = it
                 binding.executePendingBindings()
-                binding.textViewTimetableLectureDetailTime.text = TimetableUtil.toString(requireContext(), it.classTime
+                binding.textViewTimetableLectureDetailTime.text = TimetableUtil.convertApiExpressionToKoreatechClassTime(requireContext(), it.classTime
                         ?: "[]")
             }
             memo.observe(viewLifecycleOwner, EventObserver {
