@@ -29,6 +29,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.rxjava3.kotlin.addTo
 import org.koin.android.ext.android.inject
@@ -192,7 +193,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 timetableLectureDetailViewModel.initWithLectureTimetable(lectureTimeTable)
             }
             setScrollViewCallback({
-                binding.timetableScrollView.smoothScrollTo(0, 0)
             }, {
                 it[0].viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                     override fun onGlobalLayout() {
