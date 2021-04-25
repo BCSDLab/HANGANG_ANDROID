@@ -9,6 +9,7 @@ import `in`.hangang.hangang.ui.home.mytimetable.viewmodel.MyTimetableFragmentVie
 import `in`.hangang.hangang.ui.home.recentlectures.viewmodel.RecentLecturesFragmentViewModel
 import `in`.hangang.hangang.ui.home.recommendedlectures.viewmodel.RecommendedLecturesFragmentViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
+import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
@@ -31,4 +32,5 @@ val viewModelModule = module {
     viewModel { RecentLecturesFragmentViewModel() }
     //Mypage
     viewModel { MyPageViewModel(get()) }
+    viewModel { MyScrapViewModel(get()) }
 }

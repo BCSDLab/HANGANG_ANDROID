@@ -1,15 +1,12 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.PointRecord
-import `in`.hangang.hangang.data.entity.LectureBank
-import `in`.hangang.hangang.data.entity.User
-import `in`.hangang.hangang.data.entity.UserCount
+import `in`.hangang.hangang.data.entity.*
+import `in`.hangang.hangang.data.request.ScrapLectureRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AuthApi {
     @GET(AUTH_TEST)
@@ -29,4 +26,14 @@ interface AuthApi {
 
     @GET(USER_PURCHASED)
     fun getUserPurchasedBanks(): Single<List<LectureBank>>
+
+    @GET(LECTURE_SCRAPED)
+    fun getScrapedLecture(): Single<List<Lecture>>
+
+    @POST(LECTURE_SCRAPED)
+    fun addScrapLecture(@Body scrapLectureRequest: ScrapLectureRequest): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = LECTURE_SCRAPED, hasBody = true)
+    fun getScrapLecture(@Body scrapLectureRequest: ScrapLectureRequest): Single<CommonResponse>
+
 }

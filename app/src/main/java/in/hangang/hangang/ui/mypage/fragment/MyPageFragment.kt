@@ -6,6 +6,7 @@ import `in`.hangang.hangang.databinding.FragmentMyPageBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.mypage.contract.MyPagePointRecordActivityContract
 import `in`.hangang.hangang.ui.mypage.contract.MyPagePurchasedBankActivityContract
+import `in`.hangang.hangang.ui.mypage.contract.MyScrapActivityContract
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import android.os.Bundle
 import android.view.View
@@ -22,6 +23,7 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
 
     private val myPagePointRecordActivityContract = registerForActivityResult(MyPagePointRecordActivityContract()) {}
     private val myPagePurchasedBankActivityContract = registerForActivityResult(MyPagePurchasedBankActivityContract()) {}
+    private val myScrapActivityContract = registerForActivityResult(MyScrapActivityContract()) {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,6 +64,9 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
             }
             textViewPurchasedBank.setOnClickListener {
                 myPagePurchasedBankActivityContract.launch(null)
+            }
+            textViewMyScrap.setOnClickListener {
+                myScrapActivityContract.launch(null)
             }
             viewMyPoint.setOnClickListener {
                 myPagePointRecordActivityContract.launch(myPageViewModel.user.value?.point ?: -1)

@@ -1,23 +1,20 @@
-package `in`.hangang.hangang.data.source.repository
+package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
-class LectureRepository(
-        private val lectureLocalDataSource: LectureDataSource,
-        private val lectureRemoteDataSource: LectureDataSource
-) : LectureDataSource {
+class LectureLocalDataSource: LectureDataSource {
     override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
-        return lectureRemoteDataSource.scrapLecture(lectureId)
+        return Single.never()
     }
 
     override fun unscrapLecture(lectureId: Int): Single<CommonResponse> {
-        return lectureRemoteDataSource.unscrapLecture(lectureId)
+        return Single.never()
     }
 
     override fun getScrapedLecture(): Single<List<Lecture>> {
-        return lectureRemoteDataSource.getScrapedLecture()
+        return Single.never()
     }
 }

@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity"></activity>
+        <activity android:name=".ui.mypage.activity.MyScrapActivity"></activity>
+        <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity" />
         <activity android:name=".ui.mypage.activity.MyPagePointRecordActivity" />
         <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
