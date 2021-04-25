@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class LectureBankFileAdapter(private val context: Context) : OnItemClickRecyclerViewAdapter<LectureBankFileAdapter.ViewHolder>() {
+class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileAdapter.ViewHolder>() {
 
     private val files = mutableListOf<UploadFile>()
 
@@ -20,7 +20,8 @@ class LectureBankFileAdapter(private val context: Context) : OnItemClickRecycler
         return ViewHolder(DataBindingUtil.bind(
                 LayoutInflater
                         .from(parent.context)
-                        .inflate(R.layout.item_lecture_bank, parent, false))!!
+                        .inflate(R.layout.item_lecture_bank, parent, false))!!,
+            parent.context
         )
     }
 
@@ -41,7 +42,7 @@ class LectureBankFileAdapter(private val context: Context) : OnItemClickRecycler
         return files[position]
     }
 
-    inner class ViewHolder(private val binding: ItemLectureBankBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemLectureBankBinding, private val context: Context) : RecyclerView.ViewHolder(binding.root) {
         fun bind(uploadFile: UploadFile) {
             binding.imageViewFileType.setImageDrawable(LectureBankUtil.getLectureBankFileTypeImage(context, uploadFile.fileExt ?: ""))
             binding.textViewFileName.text = uploadFile.fileName

@@ -220,7 +220,7 @@
 
 
         <TextView
-            android:id="@+id/text_view_bought_bank"
+            android:id="@+id/text_view_purchased_bank"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:paddingStart="16dp"
@@ -244,7 +244,7 @@
             app:tint="?android:attr/textColorPrimary" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_bought_bank"
+            android:id="@+id/recycler_view_purchased_bank_file"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -253,7 +253,7 @@
             android:paddingEnd="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_bought_bank" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_purchased_bank" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

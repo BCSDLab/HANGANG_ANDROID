@@ -118,5 +118,6 @@
     <string name="my_point_usage_point_kind_values_3">+ 50P</string>
     <string name="my_point_usage_point_kinds_4">- 강의자료 구입</string>
     <string name="my_point_usage_point_kind_values_4">- 100P</string>
+    <string name="my_page_purchased_bank_app_bar_title">구입한 자료</string>
 
 </resources>

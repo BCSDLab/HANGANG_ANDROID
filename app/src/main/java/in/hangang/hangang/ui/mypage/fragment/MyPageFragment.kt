@@ -5,6 +5,7 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentMyPageBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.mypage.contract.MyPagePointRecordActivityContract
+import `in`.hangang.hangang.ui.mypage.contract.MyPagePurchasedBankActivityContract
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import android.os.Bundle
 import android.view.View
@@ -16,9 +17,11 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
 
     private val myPageViewModel: MyPageViewModel by sharedViewModel()
     private val lectureBankFileAdapter : LectureBankFileAdapter by lazy {
-        LectureBankFileAdapter(requireContext())
+        LectureBankFileAdapter()
     }
+
     private val myPagePointRecordActivityContract = registerForActivityResult(MyPagePointRecordActivityContract()) {}
+    private val myPagePurchasedBankActivityContract = registerForActivityResult(MyPagePurchasedBankActivityContract()) {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,7 +43,6 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
                 binding.textViewNickname.text = it.nickname
                 binding.textViewMajor.text = it.major.joinToString(separator = ", ", prefix = "", postfix = "")
                 binding.textViewPoint.text = "${it.point}P"
-
             }
             userCount.observe(viewLifecycleOwner) {
                 binding.textViewCommentCount.text = it.getLectureBankCommentCount.toString()
@@ -58,10 +60,13 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
             imageButtonGotoSettings.setOnClickListener {
                 //TODO go to settings activity
             }
+            textViewPurchasedBank.setOnClickListener {
+                myPagePurchasedBankActivityContract.launch(null)
+            }
             viewMyPoint.setOnClickListener {
                 myPagePointRecordActivityContract.launch(myPageViewModel.user.value?.point ?: -1)
             }
-            recyclerViewBoughtBank.apply {
+            recyclerViewPurchasedBankFile.apply {
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 adapter = lectureBankFileAdapter
             }

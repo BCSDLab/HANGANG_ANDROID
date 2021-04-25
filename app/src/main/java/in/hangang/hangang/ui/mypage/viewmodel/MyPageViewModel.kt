@@ -1,11 +1,10 @@
 package `in`.hangang.hangang.ui.mypage.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.entity.PointRecord
-import `in`.hangang.hangang.data.entity.UploadFile
-import `in`.hangang.hangang.data.entity.User
-import `in`.hangang.hangang.data.entity.UserCount
+import `in`.hangang.hangang.data.entity.*
+import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.UserRepository
+import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
@@ -21,11 +20,13 @@ class MyPageViewModel(private val userRepository: UserRepository) : ViewModelBas
     private val _userCount = MutableLiveData<UserCount>()
     private val _pointRecords = MutableLiveData<List<PointRecord>>()
     private val _uploadFiles = MutableLiveData<List<UploadFile>>()
+    private val _purchasedBanks = MutableLiveData<List<LectureBank>>()
 
     val user: LiveData<User> get() = _user
     val userCount: LiveData<UserCount> get() = _userCount
     val pointRecords: LiveData<List<PointRecord>> get() = _pointRecords
     val uploadFiles: LiveData<List<UploadFile>> get() = _uploadFiles
+    val purchasedBanks: LiveData<List<LectureBank>> get() = _purchasedBanks
 
     fun getMyPageData() {
         Single.zip(
@@ -57,6 +58,18 @@ class MyPageViewModel(private val userRepository: UserRepository) : ViewModelBas
                 }, {
 
                 })
+    }
+
+    fun getPurchasedBanks() {
+        userRepository.getPurchasedBanks()
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _purchasedBanks.postValue(it)
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+            })
     }
 
     fun getUploadFiles() {
