@@ -58,32 +58,9 @@
         <attr name="pagingEnabled" format="boolean" />
     </declare-styleable>
 
-    <attr name="dividerColor" format="color|reference" />
-    <attr name="columnCount" format="integer"/>
-    <attr name="rowCount" format="integer"/>
-    <attr name="columnWidth" format="dimension" />
-    <attr name="rowHeight" format="dimension" />
-    <attr name="textArray" format="reference" />
-
-    <declare-styleable name="TimetableLayout" >
-        <attr name="dividerColor" />
-        <attr name="columnCount" />
-        <attr name="columnWidth" />
-        <attr name="rowCount" />
-        <attr name="rowHeight" />
-        <attr name="rowHeaderTextSize" format="dimension" />
-        <attr name="columnHeaderTextSize" format="dimension" />
-        <attr name="rowHeaderTextColor" format="color|reference" />
-        <attr name="columnHeaderTextColor" format="color|reference" />
-        <attr name="topHeaderHeight" format="dimension" />
-        <attr name="leftHeaderWidth" format="dimension" />
-        <attr name="layout_rowStart" format="float" />
-        <attr name="layout_rowEnd" format="float" />
-        <attr name="layout_columnStart" format="float" />
-        <attr name="layout_columnEnd" format="float" />
-    </declare-styleable>
-
     <declare-styleable name="PickerView">
         <attr name="android:entries" />
     </declare-styleable>
+
+    <attr name="textArray" format="reference" />
 </resources>
