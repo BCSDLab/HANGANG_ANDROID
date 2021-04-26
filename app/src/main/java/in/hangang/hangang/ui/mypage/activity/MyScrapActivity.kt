@@ -24,6 +24,8 @@ class MyScrapActivity : ViewBindingActivity<ActivityMyScrapBinding>() {
                 if (myScrapViewModel.isEditMode.value == true) {
                     toggleLectureSelection(position)
                     myScrapViewModel.changeRemoveButtonState(isLeastOneSelected())
+                } else {
+                    //TODO 강의평 상세페이지 이동
                 }
             }
         }

@@ -18,7 +18,7 @@ class LectureRemoteDataSource(
     }
 
     override fun unscrapLecture(lectureId: Int): Single<CommonResponse> {
-        return authApi.getScrapLecture(
+        return authApi.removeScrapLecture(
             ScrapLectureRequest(lectureId)
         )
     }

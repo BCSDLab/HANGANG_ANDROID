@@ -41,29 +41,15 @@ class MyScrapViewModel(
     fun unscrapLecture(vararg lectures: Lecture) {
         Single.zip(
             lectures.map { lectureRepository.unscrapLecture(it.id) }
-        ) {
+        ) {}.flatMap {
             lectureRepository.getScrapedLecture()
-                .doOnSuccess {
-                    _myScrapLecture.postValue(it)
-                    _isEditMode.postValue(false)
-                }
-
-            val success = mutableListOf<CommonResponse>()
-            val throwable = mutableListOf<Throwable>()
-            it.forEach { result ->
-                if(result is CommonResponse) success.add(result)
-                else if(result is Throwable) throwable.add(result)
-            }
-            success to throwable
         }
             .withThread()
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
-                if(!it.second.isEmpty()) {
-                    //Partially error when removing scrap lecture
-                    LogUtil.e("Partially error when removing scrap lecture")
-                }
+                _isEditMode.value = false
+                _myScrapLecture.value = it
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
             })
