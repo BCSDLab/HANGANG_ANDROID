@@ -21,8 +21,10 @@ class MyScrapActivity : ViewBindingActivity<ActivityMyScrapBinding>() {
     private val myScrapAdapter: MyScrapAdapter by lazy {
         MyScrapAdapter().apply {
             setOnItemClickListener { parent, view, position ->
-                if (myScrapViewModel.isEditMode.value == true)
+                if (myScrapViewModel.isEditMode.value == true) {
                     toggleLectureSelection(position)
+                    myScrapViewModel.changeRemoveButtonState(isLeastOneSelected())
+                }
             }
         }
     }
@@ -55,6 +57,9 @@ class MyScrapActivity : ViewBindingActivity<ActivityMyScrapBinding>() {
             }
             myScrapLecture.observe(this@MyScrapActivity) {
                 myScrapAdapter.setLectures(it)
+            }
+            canRemoveLecture.observe(this@MyScrapActivity) {
+                binding.buttonRemoveSelectedLecture.isEnabled = it
             }
             isEditMode.observe(this@MyScrapActivity) {
                 myScrapAdapter.isEditMode = it
@@ -108,6 +113,7 @@ class MyScrapActivity : ViewBindingActivity<ActivityMyScrapBinding>() {
             with(myScrapAdapter) {
                 if (isSelectedAll()) unselectAllLecture()
                 else selectAllLecture()
+                myScrapViewModel.changeRemoveButtonState(myScrapAdapter.isLeastOneSelected())
             }
         }
         binding.buttonRemoveSelectedLecture.setOnClickListener {

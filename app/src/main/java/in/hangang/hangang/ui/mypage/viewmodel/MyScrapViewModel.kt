@@ -19,10 +19,12 @@ class MyScrapViewModel(
 ) : ViewModelBase() {
 
     private val _myScrapLecture = MutableLiveData<List<Lecture>>()
-    private val _isEditMode = MutableLiveData<Boolean>()
+    private val _isEditMode = MutableLiveData(false)
+    private val _canRemoveLecture = MutableLiveData(false)
 
     val myScrapLecture : LiveData<List<Lecture>> get() = _myScrapLecture
     val isEditMode : LiveData<Boolean> get() = _isEditMode
+    val canRemoveLecture : LiveData<Boolean> get() = _canRemoveLecture
 
     fun getMyScrapLecture() {
         lectureRepository.getScrapedLecture()
@@ -69,5 +71,9 @@ class MyScrapViewModel(
 
     fun setEditMode(isEdit : Boolean) {
         _isEditMode.postValue(isEdit)
+    }
+
+    fun changeRemoveButtonState(isEnabled: Boolean) {
+        _canRemoveLecture.postValue(isEnabled)
     }
 }

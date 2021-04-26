@@ -5,23 +5,22 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.databinding.ItemMyScrapLectureBinding
 import `in`.hangang.hangang.util.diffutil.MyScrapDiffCallback
-import android.util.SparseArray
 import android.util.SparseBooleanArray
-import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.model.MutablePair
 
 class MyScrapAdapter : OnItemClickRecyclerViewAdapter<MyScrapAdapter.ViewHolder>() {
     private val lectures = mutableListOf<Lecture>()
-    private val selectedItemsPosition = SparseBooleanArray()
+    private val selectedLectures = SparseBooleanArray()
     var isEditMode = false
     set(value) {
         field = value
-        updateLectures()
+        lectures.forEachIndexed { i, lecture ->
+            notifyItemChanged(i, selectedLectures[i])
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +34,15 @@ class MyScrapAdapter : OnItemClickRecyclerViewAdapter<MyScrapAdapter.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         holder.bind(lectures[position])
-        holder.setSelection(selectedItemsPosition.get(position) && isEditMode)
+        holder.setSelection(selectedLectures[position])
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if(payloads.isEmpty())
+            super.onBindViewHolder(holder, position, payloads)
+        else {
+            holder.setSelection(payloads[0] as? Boolean ?: false)
+        }
     }
 
     override fun getItemCount() = lectures.size
@@ -48,46 +55,48 @@ class MyScrapAdapter : OnItemClickRecyclerViewAdapter<MyScrapAdapter.ViewHolder>
         this.lectures.addAll(lectures)
 
         diffResult.dispatchUpdatesTo(this)
-        selectedItemsPosition.clear()
     }
 
     fun toggleLectureSelection(position: Int) {
-        selectedItemsPosition.put(position, !selectedItemsPosition[position])
+        selectedLectures.put(position, !selectedLectures[position])
 
-        notifyItemChanged(position)
+        notifyItemChanged(position, selectedLectures[position])
     }
 
     fun selectAllLecture() {
         lectures.forEachIndexed {i, pair ->
-            selectedItemsPosition.put(i, true)
+            selectedLectures.put(i, true)
         }
-        updateLectures()
+        notifyItemRangeChanged(0, itemCount, true)
     }
 
     fun unselectAllLecture() {
         lectures.forEachIndexed {i, pair ->
-            selectedItemsPosition.put(i, false)
+            selectedLectures.put(i, false)
         }
-        updateLectures()
+        notifyItemRangeChanged(0, itemCount, false)
     }
 
     fun isSelectedAll() : Boolean {
         lectures.forEachIndexed {i, _ ->
-            if(!selectedItemsPosition[i]) return false
+            if(!selectedLectures[i]) return false
         }
         return true
+    }
+
+    fun isLeastOneSelected() : Boolean {
+        lectures.forEachIndexed { i, _ ->
+            if(selectedLectures[i]) return true
+        }
+        return false
     }
 
     fun getSelectedLectures() : List<Lecture> {
         val selectedLecture = mutableListOf<Lecture>()
         lectures.forEachIndexed {i, lecture ->
-            if(selectedItemsPosition[i]) selectedLecture.add(lecture)
+            if(selectedLectures[i]) selectedLecture.add(lecture)
         }
         return selectedLecture
-    }
-
-    private fun updateLectures() {
-        setLectures(listOf(*lectures.toTypedArray()))
     }
 
     class ViewHolder(private val binding: ItemMyScrapLectureBinding) : RecyclerView.ViewHolder(binding.root) {
