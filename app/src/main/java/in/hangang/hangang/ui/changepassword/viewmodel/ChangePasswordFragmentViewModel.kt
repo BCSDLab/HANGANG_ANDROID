@@ -17,21 +17,23 @@ class ChangePasswordFragmentViewModel(private val userRepository: UserRepository
     private val _changePasswordResponse = MutableLiveData<CommonResponse>()
     private val _throwable = MutableLiveData<Throwable>()
 
-    val changePasswordResponse : LiveData<CommonResponse> get() = _changePasswordResponse
-    val throwable : LiveData<Throwable> get() = _throwable
+    val changePasswordResponse: LiveData<CommonResponse> get() = _changePasswordResponse
+    val throwable: LiveData<Throwable> get() = _throwable
 
-    fun applyNewPassword(portalAccount: String,
-                         password: String) {
+    fun applyNewPassword(
+        portalAccount: String,
+        password: String
+    ) {
         userRepository.changePassword(portalAccount, password.toSHA256())
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({
-                    _changePasswordResponse.value = it
-                }, {
-                    LogUtil.e("Error in changing password : ${it.toCommonResponse().errorMessage}")
-                    _throwable.value = it
-                })
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _changePasswordResponse.value = it
+            }, {
+                LogUtil.e("Error in changing password : ${it.toCommonResponse().errorMessage}")
+                _throwable.value = it
+            })
     }
 
 }

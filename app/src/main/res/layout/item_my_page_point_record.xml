@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+
         <variable
             name="pointRecord"
             type="in.hangang.hangang.data.entity.PointRecord" />
@@ -18,12 +19,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:text="@{String.format(`%+dP`, pointRecord.variance)}"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{String.format(`%+dP`, pointRecord.variance)}"
             tools:text="+ 20P" />
 
         <TextView
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="1dp"
+            android:text="@{pointRecord.title}"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/text_view_point_record_time"
@@ -39,7 +41,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            android:text="@{pointRecord.title}"
             tools:text="강의평가 작성" />
 
         <TextView
@@ -48,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="1dp"
+            android:text="@{pointRecord.createdAt}"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +57,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_point_record_name"
             app:layout_constraintVertical_chainStyle="packed"
-            android:text="@{pointRecord.createdAt}"
             tools:text="10/01 13:11" />
 
 

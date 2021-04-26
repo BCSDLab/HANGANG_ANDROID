@@ -6,8 +6,8 @@ import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
 class LectureRepository(
-        private val lectureLocalDataSource: LectureDataSource,
-        private val lectureRemoteDataSource: LectureDataSource
+    private val lectureLocalDataSource: LectureDataSource,
+    private val lectureRemoteDataSource: LectureDataSource
 ) : LectureDataSource {
     override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
         return lectureRemoteDataSource.scrapLecture(lectureId)

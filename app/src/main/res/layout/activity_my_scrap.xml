@@ -12,22 +12,22 @@
             android:id="@+id/app_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:titleText="@string/my_scrap_app_bar_title" />
 
         <LinearLayout
             android:id="@+id/button_select_all"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            android:gravity="end|center_vertical"
             android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:gravity="end|center_vertical">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -38,10 +38,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="8dp"
                 android:text="@string/my_scrap_select_all"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="14sp"
-                android:paddingStart="8dp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -49,13 +49,13 @@
             android:id="@+id/recycler_view_my_scrap"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_select_all"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:clipToPadding="false"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_select_all" />
 
         <in.hangang.core.view.button.RoundedCornerButton
             android:id="@+id/button_remove_selected_lecture"

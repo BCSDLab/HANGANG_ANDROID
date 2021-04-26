@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,44 +11,44 @@
             android:id="@+id/text_view_bank_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
             android:ellipsize="end"
-            tools:text="매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트"
-            android:textSize="14sp"
+            android:singleLine="true"
             android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/image_view_goto_detail"
-            android:singleLine="true" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트매우 긴 텍스트" />
 
 
         <TextView
             android:id="@+id/text_view_lecture_lecture_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp"
-            android:singleLine="true"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxEms="10"
-            android:layout_marginTop="4dp"
+            android:singleLine="true"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_bank_title"
-            tools:text="asdfadsfasdfasdfasdfasdfadsfadsfadsfasdfadsfadsf"/>
+            tools:text="asdfadsfasdfasdfasdfasdfadsfadsfadsfasdfadsfadsf" />
 
         <TextView
             android:id="@+id/text_view_lecture_lecture_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" | "
             android:layout_marginTop="4dp"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            android:text=" | "
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/text_view_lecture_lecture_name"
             app:layout_constraintTop_toBottomOf="@id/text_view_bank_title" />
 
@@ -57,38 +57,38 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="48dp"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:singleLine="true"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp"
-            android:maxEms="8"
             app:layout_constraintHorizontal_chainStyle="packed"
-            android:layout_marginEnd="48dp"
-            android:singleLine="true"
-            android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/text_view_lecture_lecture_bar"
             app:layout_constraintTop_toBottomOf="@id/text_view_bank_title"
-            tools:text="asdfadsfasdfasdfasdfasdfadsfadsfadsfasdfadsfadsf"/>
+            tools:text="asdfadsfasdfasdfasdfasdfadsfadsfadsfasdfadsfadsf" />
 
         <ImageView
             android:id="@+id/image_view_goto_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_view_bank_title"
+            android:src="@drawable/ic_chevron_right"
             app:layout_constraintBottom_toBottomOf="@id/text_view_lecture_lecture_professor"
-            android:src="@drawable/ic_chevron_right" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_view_bank_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_file"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_lecture_name"
             android:layout_marginTop="12dp"
+            android:clipToPadding="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:clipToPadding="false" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_lecture_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,7 +5,7 @@ import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
-class LectureLocalDataSource: LectureDataSource {
+class LectureLocalDataSource : LectureDataSource {
     override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
         return Single.never()
     }

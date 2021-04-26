@@ -13,12 +13,12 @@ class RankingListAdapter : OnItemClickRecyclerViewAdapter<RankingListAdapter.Vie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_home_ranking_list,
-                        parent,
-                        false
-                )
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_home_ranking_list,
+                parent,
+                false
+            )
         )
     }
 
@@ -34,5 +34,5 @@ class RankingListAdapter : OnItemClickRecyclerViewAdapter<RankingListAdapter.Vie
     override fun getItemCount(): Int = 5
 
     class ViewHolder(itemHomeRankingListBinding: ItemHomeRankingListBinding) :
-            ViewBindingRecyclerViewHolder<ItemHomeRankingListBinding>(itemHomeRankingListBinding)
+        ViewBindingRecyclerViewHolder<ItemHomeRankingListBinding>(itemHomeRankingListBinding)
 }

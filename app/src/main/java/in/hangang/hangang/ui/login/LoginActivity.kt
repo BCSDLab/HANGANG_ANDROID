@@ -34,7 +34,8 @@ class LoginActivity : ViewBindingActivity<ActivityLoginBinding>() {
             loginButton.setOnClickListener {
                 loginViewModel.loginButtonClick(
                     portalID = portalId.text.toString().plus(getString(R.string.email_koreatech)),
-                    password = portalPassword.text.toString().toSHA256())
+                    password = portalPassword.text.toString().toSHA256()
+                )
             }
             findPassword.setOnClickListener {
                 val intent = Intent(this@LoginActivity, ChangePasswordActivity::class.java)

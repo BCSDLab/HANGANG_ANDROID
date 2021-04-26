@@ -7,7 +7,6 @@ import `in`.hangang.hangang.databinding.ActivityMyPagePointBinding
 import `in`.hangang.hangang.ui.mypage.adapter.MyPagePointRecordAdapter
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,7 +15,7 @@ class MyPagePointRecordActivity : ViewBindingActivity<ActivityMyPagePointBinding
     override val layoutId = R.layout.activity_my_page_point
 
     private val myPageViewModel: MyPageViewModel by viewModel()
-    private val myPagePointRecordAdapter : MyPagePointRecordAdapter by lazy {
+    private val myPagePointRecordAdapter: MyPagePointRecordAdapter by lazy {
         MyPagePointRecordAdapter()
     }
 

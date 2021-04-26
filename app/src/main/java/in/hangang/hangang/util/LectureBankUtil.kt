@@ -19,7 +19,7 @@ object LectureBankUtil {
     const val ZIP = "zip"
 
     fun getLectureBankFileTypeImage(context: Context, fileType: String): Drawable? {
-        return when(fileType) {
+        return when (fileType) {
             CELL -> ContextCompat.getDrawable(context, R.drawable.ic_cell)
             DOC -> ContextCompat.getDrawable(context, R.drawable.ic_doc)
             HWP -> ContextCompat.getDrawable(context, R.drawable.ic_hwp)

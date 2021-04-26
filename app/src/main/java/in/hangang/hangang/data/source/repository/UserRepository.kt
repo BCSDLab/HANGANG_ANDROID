@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.data.source.repository
 
-import `in`.hangang.hangang.data.entity.PointRecord
 import `in`.hangang.hangang.data.entity.LectureBank
+import `in`.hangang.hangang.data.entity.PointRecord
 import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -10,8 +10,8 @@ import `in`.hangang.hangang.data.source.UserDataSource
 import io.reactivex.rxjava3.core.Single
 
 class UserRepository(
-        private val userLocalDataSource: UserDataSource,
-        private val userRemoteDataSource: UserDataSource
+    private val userLocalDataSource: UserDataSource,
+    private val userRemoteDataSource: UserDataSource
 ) : UserDataSource {
     override fun signUp(
         major: Array<String>,

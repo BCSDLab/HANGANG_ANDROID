@@ -1,6 +1,5 @@
 package `in`.hangang.hangang.ui.mypage.contract
 
-import `in`.hangang.hangang.ui.mypage.activity.MyPagePointRecordActivity
 import `in`.hangang.hangang.ui.mypage.activity.MyPagePurchasedBankActivity
 import android.content.Context
 import android.content.Intent

@@ -1,13 +1,11 @@
 package `in`.hangang.hangang.ui.main
 
-import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityMainBinding
 import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : ViewBindingActivity<ActivityMainBinding>() {
     override val layoutId = R.layout.activity_main

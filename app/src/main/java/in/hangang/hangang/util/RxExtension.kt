@@ -6,8 +6,6 @@ import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_AUTH
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
-import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.*

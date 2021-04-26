@@ -2,8 +2,8 @@ package `in`.hangang.hangang.data.source.remote
 
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
-import `in`.hangang.hangang.data.entity.PointRecord
 import `in`.hangang.hangang.data.entity.LectureBank
+import `in`.hangang.hangang.data.entity.PointRecord
 import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.request.*
@@ -27,7 +27,7 @@ class UserRemoteDataSource(
         return noAuthApi.signUp(SignUpRequest(major, nickName, password, portalAccount))
     }
 
-    override fun checkAccessTokenValid(): Single<CommonResponse>{
+    override fun checkAccessTokenValid(): Single<CommonResponse> {
         return authApi.authCheck()
     }
 
@@ -52,11 +52,11 @@ class UserRemoteDataSource(
         return noAuthApi.configEmail(EmailConfigRequest(0, portalAccount, secret))
     }
 
-    override fun checkNickname(nickName: String): Single<CommonResponse>{
+    override fun checkNickname(nickName: String): Single<CommonResponse> {
         return noAuthApi.checkNickName(NickNameCheckRequest(nickName))
     }
 
-    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse>{
+    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse> {
         return noAuthApi.sendPasswordFindEmail(EmailRequest(1, portalAccount))
     }
 

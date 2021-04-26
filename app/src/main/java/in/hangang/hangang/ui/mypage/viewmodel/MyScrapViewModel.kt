@@ -1,9 +1,7 @@
 package `in`.hangang.hangang.ui.mypage.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.entity.Lecture
-import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.LectureRepository
 import `in`.hangang.hangang.util.LogUtil
@@ -22,9 +20,9 @@ class MyScrapViewModel(
     private val _isEditMode = MutableLiveData(false)
     private val _canRemoveLecture = MutableLiveData(false)
 
-    val myScrapLecture : LiveData<List<Lecture>> get() = _myScrapLecture
-    val isEditMode : LiveData<Boolean> get() = _isEditMode
-    val canRemoveLecture : LiveData<Boolean> get() = _canRemoveLecture
+    val myScrapLecture: LiveData<List<Lecture>> get() = _myScrapLecture
+    val isEditMode: LiveData<Boolean> get() = _isEditMode
+    val canRemoveLecture: LiveData<Boolean> get() = _canRemoveLecture
 
     fun getMyScrapLecture() {
         lectureRepository.getScrapedLecture()
@@ -55,7 +53,7 @@ class MyScrapViewModel(
             })
     }
 
-    fun setEditMode(isEdit : Boolean) {
+    fun setEditMode(isEdit: Boolean) {
         _isEditMode.postValue(isEdit)
     }
 

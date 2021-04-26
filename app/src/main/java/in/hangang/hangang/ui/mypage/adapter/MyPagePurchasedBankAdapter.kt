@@ -5,7 +5,6 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.LectureBank
 import `in`.hangang.hangang.databinding.ItemMyPagePurchasedBankBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -37,7 +36,10 @@ class MyPagePurchasedBankAdapter : OnItemClickRecyclerViewAdapter<MyPagePurchase
         notifyDataSetChanged()
     }
 
-    class ViewHolder(private val binding: ItemMyPagePurchasedBankBinding, private val layoutManager: RecyclerView.LayoutManager) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(
+        private val binding: ItemMyPagePurchasedBankBinding,
+        private val layoutManager: RecyclerView.LayoutManager
+    ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.recyclerViewFile.layoutManager = layoutManager
         }

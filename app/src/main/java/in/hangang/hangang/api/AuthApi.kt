@@ -6,7 +6,10 @@ import `in`.hangang.hangang.data.request.ScrapLectureRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.HTTP
+import retrofit2.http.POST
 
 interface AuthApi {
     @GET(AUTH_TEST)

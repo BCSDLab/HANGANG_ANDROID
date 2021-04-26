@@ -24,7 +24,7 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModelBase
     val password = MutableLiveData<String>()
 
 
-    fun loginButtonClick(portalID: String, password: String){
+    fun loginButtonClick(portalID: String, password: String) {
         userRepository.login(portalID, password)
             .handleHttpException()
             .handleProgress(this)

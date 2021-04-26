@@ -4,10 +4,10 @@ import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityVi
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
 import `in`.hangang.hangang.ui.dashboard.DashBoardViewModel
-import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.home.mytimetable.viewmodel.MyTimetableFragmentViewModel
 import `in`.hangang.hangang.ui.home.recentlectures.viewmodel.RecentLecturesFragmentViewModel
 import `in`.hangang.hangang.ui.home.recommendedlectures.viewmodel.RecommendedLecturesFragmentViewModel
+import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
@@ -20,7 +20,14 @@ val viewModelModule = module {
     viewModel { DashBoardViewModel(get()) }
     viewModel { SignUpEmailViewModel(get()) }
     viewModel { (handle: String) -> SignUpViewModel(get(), handle) }
-    viewModel { (portalAccount: String, nickName: String, password: String) -> SignUpMajorViewModel(get(), portalAccount, nickName, password) }
+    viewModel { (portalAccount: String, nickName: String, password: String) ->
+        SignUpMajorViewModel(
+            get(),
+            portalAccount,
+            nickName,
+            password
+        )
+    }
     //Change password activity, fragments
     viewModel { ChangePasswordActivityViewModel() }
     viewModel { ChangePasswordFragmentViewModel(get()) }

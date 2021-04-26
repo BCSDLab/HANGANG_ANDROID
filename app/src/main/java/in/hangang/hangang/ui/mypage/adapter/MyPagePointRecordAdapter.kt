@@ -13,10 +13,12 @@ class MyPagePointRecordAdapter : RecyclerView.Adapter<MyPagePointRecordAdapter.V
     private val pointRecords = mutableListOf<PointRecord>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(DataBindingUtil.bind(
+        return ViewHolder(
+            DataBindingUtil.bind(
                 LayoutInflater
-                        .from(parent.context)
-                        .inflate(R.layout.item_my_page_point_record, parent, false))!!
+                    .from(parent.context)
+                    .inflate(R.layout.item_my_page_point_record, parent, false)
+            )!!
         )
     }
 

@@ -30,34 +30,34 @@ class MyPageViewModel(private val userRepository: UserRepository) : ViewModelBas
 
     fun getMyPageData() {
         Single.zip(
-                userRepository.getUserInformation(),
-                userRepository.getUserCounts()
+            userRepository.getUserInformation(),
+            userRepository.getUserCounts()
         ) { user, userCount ->
             _user.postValue(user)
             _userCount.postValue(userCount)
         }
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
 
-                }, {
+            }, {
 
-                })
+            })
     }
 
     fun getPointRecord() {
         userRepository.getPointRecords()
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({
-                    pointRecordList.clear()
-                    pointRecordList.addAll(it)
-                    _pointRecords.postValue(pointRecordList)
-                }, {
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                pointRecordList.clear()
+                pointRecordList.addAll(it)
+                _pointRecords.postValue(pointRecordList)
+            }, {
 
-                })
+            })
     }
 
     fun getPurchasedBanks() {
@@ -74,16 +74,16 @@ class MyPageViewModel(private val userRepository: UserRepository) : ViewModelBas
 
     fun getUploadFiles() {
         userRepository.getPurchasedBanks()
-                .map {
-                    it.map { it.uploadFiles }.flatten()
-                }
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({
-                    _uploadFiles.postValue(it)
-                }, {
+            .map {
+                it.map { it.uploadFiles }.flatten()
+            }
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _uploadFiles.postValue(it)
+            }, {
 
-                })
+            })
     }
 }

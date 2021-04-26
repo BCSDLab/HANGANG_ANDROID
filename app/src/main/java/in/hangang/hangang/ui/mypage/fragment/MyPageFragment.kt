@@ -17,12 +17,13 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
     override val layoutId = R.layout.fragment_my_page
 
     private val myPageViewModel: MyPageViewModel by sharedViewModel()
-    private val lectureBankFileAdapter : LectureBankFileAdapter by lazy {
+    private val lectureBankFileAdapter: LectureBankFileAdapter by lazy {
         LectureBankFileAdapter()
     }
 
     private val myPagePointRecordActivityContract = registerForActivityResult(MyPagePointRecordActivityContract()) {}
-    private val myPagePurchasedBankActivityContract = registerForActivityResult(MyPagePurchasedBankActivityContract()) {}
+    private val myPagePurchasedBankActivityContract =
+        registerForActivityResult(MyPagePurchasedBankActivityContract()) {}
     private val myScrapActivityContract = registerForActivityResult(MyScrapActivityContract()) {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
     private fun initViewModel() {
         with(myPageViewModel) {
             isLoading.observe(viewLifecycleOwner) {
-                if(it) showProgressDialog()
+                if (it) showProgressDialog()
                 else hideProgressDialog()
             }
             user.observe(viewLifecycleOwner) {

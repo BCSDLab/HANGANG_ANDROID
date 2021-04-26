@@ -5,7 +5,6 @@ import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.request.ScrapLectureRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureDataSource
-import `in`.hangang.hangang.di.provideAuthApi
 import io.reactivex.rxjava3.core.Single
 
 class LectureRemoteDataSource(
