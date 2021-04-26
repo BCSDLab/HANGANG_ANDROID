@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.lecture
+package `in`.hangang.hangang.data.ranking
 
 import `in`.hangang.hangang.data.ranking.RankingLectureHashTag
 import com.google.gson.annotations.SerializedName
@@ -19,7 +19,7 @@ data class RankingLectureItem(
     @SerializedName("classification")
     val classification: String,
     @SerializedName("total_rating")
-    val totalRating: Int,
+    val totalRating: String,
     @SerializedName("last_reviewed")
     val lastReviewed_at: String,
     @SerializedName("review_count")
