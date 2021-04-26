@@ -8,7 +8,6 @@ import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.databinding.ActivityTimetableAddBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableAddActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableAddActivityViewModel
-import `in`.hangang.hangang.util.*
 import android.content.Intent
 import android.os.Bundle
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,11 +47,11 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
 
     private fun showTimetableSemesterLimitErrorDialog() {
         DialogUtil.makeSimpleDialog(
-                context = this,
-                title = getString(R.string.timetable_exceed_title),
-                message = getString(R.string.timetable_exceed_message_semester),
-                positiveButtonText = getString(R.string.ok),
-                positiveButtonOnClickListener = { dialog, _ -> dialog.dismiss() }
+            context = this,
+            title = getString(R.string.timetable_exceed_title),
+            message = getString(R.string.timetable_exceed_message_semester),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ -> dialog.dismiss() }
         ).show()
     }
 
@@ -60,8 +59,9 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
         initSemesterDateId()
         binding.buttonAddTimetable.setOnClickListener {
             timetableAddActivityViewModel.addTimeTable(
-                    semesterDateId = getSemesterDateId(),
-                    name = binding.editTextTimetableName.text.toString())
+                semesterDateId = getSemesterDateId(),
+                name = binding.editTextTimetableName.text.toString()
+            )
         }
         binding.editTextTimetableName.addTextChangedListener {
             timetableAddActivityViewModel.checkAddingAvailability(it.toString())
@@ -73,7 +73,7 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
         binding.radioButtonTimetableSemester2.isChecked = false
         binding.radioButtonTimetableSemester3.isChecked = false
         binding.radioButtonTimetableSemester4.isChecked = false
-        when(TIMETABLE_DEFAULT_SEMESTER_ID) {
+        when (TIMETABLE_DEFAULT_SEMESTER_ID) {
             TIMETABLE_SEMESTER_1 -> binding.radioButtonTimetableSemester1.isChecked = true
             TIMETABLE_SEMESTER_SUMMER -> binding.radioButtonTimetableSemester2.isChecked = true
             TIMETABLE_SEMESTER_2 -> binding.radioButtonTimetableSemester3.isChecked = true

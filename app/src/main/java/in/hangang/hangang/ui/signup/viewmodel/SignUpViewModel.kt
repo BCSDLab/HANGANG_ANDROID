@@ -18,15 +18,15 @@ class SignUpViewModel(private val userRepository: UserRepository, private val ha
     val id = handle
     fun checkNickName(nickName: String) {
         userRepository.checkNickname(nickName)
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({ data -> _nickNameCheckText.value = data.message },
-                        { error ->
-                            error.toCommonResponse().message?.let {
-                                _nickNameCheckText.value = it
-                            }
-                        }).addTo(compositeDisposable)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({ data -> _nickNameCheckText.value = data.message },
+                { error ->
+                    error.toCommonResponse().message?.let {
+                        _nickNameCheckText.value = it
+                    }
+                }).addTo(compositeDisposable)
     }
 
 }

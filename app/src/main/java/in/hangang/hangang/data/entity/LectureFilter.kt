@@ -5,8 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LectureFilter(
-        val criteria: String? = null,
-        val classifications: List<String> = listOf(),
-        val department: String? = null,
-        val keyword: String? = null
+    val criteria: String? = null,
+    val classifications: List<String> = listOf(),
+    val department: String? = null,
+    val keyword: String? = null
 ) : Parcelable

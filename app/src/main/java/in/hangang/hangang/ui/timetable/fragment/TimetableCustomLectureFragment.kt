@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TimetableCustomLectureFragment :
-        ViewBindingFragment<FragmentTimetableCustomLectureBinding>() {
+    ViewBindingFragment<FragmentTimetableCustomLectureBinding>() {
     override val layoutId = R.layout.fragment_timetable_custom_lecture
 
     private val timetableViewModel: TimetableViewModel by sharedViewModel()
@@ -46,13 +46,13 @@ class TimetableCustomLectureFragment :
             timestamp.observe(viewLifecycleOwner) {
                 timetableCustomLectureTimeAdapter.updateList(it)
                 checkValidation(
-                        binding.editTextCustomLectureName.text.toString(),
-                        binding.editTextCustomLectureProfessor.text.toString()
+                    binding.editTextCustomLectureName.text.toString(),
+                    binding.editTextCustomLectureProfessor.text.toString()
                 )
                 timetableViewModel.setDummyLectureTimeTable(
-                        LectureTimeTable(
-                                classTime = TimetableUtil.convertCustomTimetableTimestampToApiExpression(it)
-                        )
+                    LectureTimeTable(
+                        classTime = TimetableUtil.convertCustomTimetableTimestampToApiExpression(it)
+                    )
                 )
             }
             customLectureAdded.observe(viewLifecycleOwner, EventObserver {
@@ -68,21 +68,21 @@ class TimetableCustomLectureFragment :
         binding.buttonTimetableCustomLectureAddTime.setOnClickListener {
             HangangDialogUtil.makeTimetableCustomLectureTimePickerDialog(requireContext()) { week: Int, startTime: Pair<Int, Int>, endTime: Pair<Int, Int> ->
                 timetableViewModel.addTimestamp(
-                        CustomTimetableTimestamp(week, startTime, endTime)
+                    CustomTimetableTimestamp(week, startTime, endTime)
                 )
             }.show()
         }
         binding.recyclerViewCustomLectureTimestamp.layoutManager =
-                LinearLayoutManager(requireContext())
+            LinearLayoutManager(requireContext())
         binding.recyclerViewCustomLectureTimestamp.adapter = timetableCustomLectureTimeAdapter
         timetableCustomLectureTimeAdapter.setOnItemClickListener({ view, position ->
             HangangDialogUtil.makeTimetableCustomLectureTimePickerDialog(
-                    requireContext(),
-                    timetableViewModel.timestamp.value!![position]
+                requireContext(),
+                timetableViewModel.timestamp.value!![position]
             ) { week: Int, startTime: Pair<Int, Int>, endTime: Pair<Int, Int> ->
                 timetableViewModel.modifyTimestamp(
-                        position,
-                        CustomTimetableTimestamp(week, startTime, endTime)
+                    position,
+                    CustomTimetableTimestamp(week, startTime, endTime)
                 )
             }.show()
         }, { view, position ->
@@ -91,22 +91,22 @@ class TimetableCustomLectureFragment :
 
         binding.editTextCustomLectureName.addTextChangedListener {
             timetableViewModel.checkValidation(
-                    binding.editTextCustomLectureName.text.toString(),
-                    binding.editTextCustomLectureProfessor.text.toString()
+                binding.editTextCustomLectureName.text.toString(),
+                binding.editTextCustomLectureProfessor.text.toString()
             )
         }
         binding.editTextCustomLectureProfessor.addTextChangedListener {
             timetableViewModel.checkValidation(
-                    binding.editTextCustomLectureName.text.toString(),
-                    binding.editTextCustomLectureProfessor.text.toString()
+                binding.editTextCustomLectureName.text.toString(),
+                binding.editTextCustomLectureProfessor.text.toString()
             )
         }
         binding.buttonTimetableCustomLectureAdd.setOnClickListener {
             timetableViewModel.addCustomLecture(
-                    name = binding.editTextCustomLectureName.text.toString(),
-                    professor = binding.editTextCustomLectureProfessor.text.toString(),
-                    classTime = TimetableUtil.convertCustomTimetableTimestampToApiExpression(timetableViewModel.timestamp.value!!),
-                    timetableId = timetableViewModel.displayingTimeTable.value?.id ?: TIMETABLE_INVALID_TIMETABLE_ID
+                name = binding.editTextCustomLectureName.text.toString(),
+                professor = binding.editTextCustomLectureProfessor.text.toString(),
+                classTime = TimetableUtil.convertCustomTimetableTimestampToApiExpression(timetableViewModel.timestamp.value!!),
+                timetableId = timetableViewModel.displayingTimeTable.value?.id ?: TIMETABLE_INVALID_TIMETABLE_ID
             )
         }
     }

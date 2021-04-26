@@ -1,7 +1,6 @@
 package `in`.hangang.hangang.util
 
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_SEMESTER_ID
 import android.content.Context
 
 class SemesterUtil {

@@ -15,9 +15,11 @@ import org.koin.core.parameter.parametersOf
 class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
     override val layoutId: Int = R.layout.activity_sign_up_major
     private val signUpMajorViewModel: SignUpMajorViewModel by viewModel {
-        parametersOf(intent.getStringExtra("portalAccount"),
-                intent.getStringExtra("nickName"),
-                intent.getStringExtra("password"))
+        parametersOf(
+            intent.getStringExtra("portalAccount"),
+            intent.getStringExtra("nickName"),
+            intent.getStringExtra("password")
+        )
     }
 
 
@@ -31,17 +33,17 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
 
     private fun showSignUpCompleteDialog() {
         showSimpleDialog(
-                title = getString(R.string.sign_up_complete_dialog_title),
-                message = String.format(getString(R.string.sign_up_complete_dialog_message), nickName),
-                positiveButtonText = getString(R.string.reset_password_finished_positive_button),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
-                    val intent = Intent(this, LoginActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                },
-                cancelable = false
+            title = getString(R.string.sign_up_complete_dialog_title),
+            message = String.format(getString(R.string.sign_up_complete_dialog_message), nickName),
+            positiveButtonText = getString(R.string.reset_password_finished_positive_button),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            },
+            cancelable = false
         )
     }
 
@@ -79,7 +81,8 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
     private fun initEvent() {
         binding.majorCompleteButton.setOnClickListener {
             if (binding.majorCompleteButton.isEnabled) {
-                signUpMajorViewModel.major = ArrayList(signUpMajorViewModel.majorHashMap.values).toArray(arrayOfNulls(signUpMajorViewModel.majorHashMap.values.size))
+                signUpMajorViewModel.major =
+                    ArrayList(signUpMajorViewModel.majorHashMap.values).toArray(arrayOfNulls(signUpMajorViewModel.majorHashMap.values.size))
                 signUpMajorViewModel.signUp(signUpMajorViewModel.major, nickName!!, password!!, portalAccount!!)
             }
         }

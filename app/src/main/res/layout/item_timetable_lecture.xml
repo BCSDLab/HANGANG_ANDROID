@@ -109,8 +109,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:src="@drawable/ic_check_v_unselected"
             android:padding="16dp"
+            android:src="@drawable/ic_check_v_unselected"
             app:layout_constraintBottom_toBottomOf="@id/button_lecture_review"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/button_lecture_review" />

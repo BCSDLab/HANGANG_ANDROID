@@ -26,15 +26,15 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModelBase
 
     fun loginButtonClick(portalID: String, password: String) {
         userRepository.login(portalID, password)
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({ data ->
-                    LogUtil.d(data.httpStatus)
-                    _isLoginSuccess.value = true
-                }, { _ ->
-                    _errorConfig.value = true
-                }).addTo(compositeDisposable)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({ data ->
+                LogUtil.d(data.httpStatus)
+                _isLoginSuccess.value = true
+            }, { _ ->
+                _errorConfig.value = true
+            }).addTo(compositeDisposable)
 
 
     }

@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableLectureDetailViewModel(
-        private val timeTableRepository: TimeTableRepository
+    private val timeTableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
     private val _lectureTimetable = MutableLiveData<LectureTimeTable>()
@@ -32,15 +32,15 @@ class TimetableLectureDetailViewModel(
 
     fun getMemo(lectureTimeTable: LectureTimeTable) {
         timeTableRepository.getMemo(lectureTimeTable.id)
-                .withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    _memo.postValue(Event(it.memo ?: ""))
-                }, {
-                    _memo.postValue(Event(""))
-                })
-                .addTo(compositeDisposable)
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _memo.postValue(Event(it.memo ?: ""))
+            }, {
+                _memo.postValue(Event(""))
+            })
+            .addTo(compositeDisposable)
     }
 
     fun updateMemo(memo: String) {
@@ -49,19 +49,19 @@ class TimetableLectureDetailViewModel(
                 timeTableRepository.removeMemo(id)
             } else {
                 timeTableRepository.modifyMemo(
-                        timetableLectureId = id,
-                        memo = memo
+                    timetableLectureId = id,
+                    memo = memo
                 )
             })
-                    .withThread()
-                    .handleHttpException()
-                    .handleProgress(this)
-                    .subscribe({
-                        getMemo(_lectureTimetable.value!!)
-                    }, {
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    getMemo(_lectureTimetable.value!!)
+                }, {
 
-                    })
-                    .addTo(compositeDisposable)
+                })
+                .addTo(compositeDisposable)
         }
     }
 

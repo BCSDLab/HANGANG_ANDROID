@@ -14,7 +14,6 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 
 class TimetableTimetablesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -48,12 +47,12 @@ class TimetableTimetablesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_SEMESTER -> SemesterViewHolder(
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_timetable_semester_text, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.item_timetable_semester_text, parent, false)
             )
             TYPE_TIMETABLE -> TimetableViewHolder(
-                    DataBindingUtil.bind(
-                            LayoutInflater.from(parent.context).inflate(R.layout.item_timetable_timetable_text, parent, false)
-                    )!!
+                DataBindingUtil.bind(
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_timetable_timetable_text, parent, false)
+                )!!
             )
             else -> throw IllegalStateException("Wrong viewType!")
         }
@@ -122,14 +121,16 @@ class TimetableTimetablesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     inner class SemesterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val divider : View by lazy { itemView.findViewById(R.id.divider) }
-        val textView : TextView by lazy { itemView.findViewById(R.id.text_view) }
+        val divider: View by lazy { itemView.findViewById(R.id.divider) }
+        val textView: TextView by lazy { itemView.findViewById(R.id.text_view) }
 
         fun showDivider(show: Boolean) {
             divider.setVisibility(show)
         }
     }
-    inner class TimetableViewHolder(private val binding: ItemTimetableTimetableTextBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class TimetableViewHolder(private val binding: ItemTimetableTimetableTextBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TimeTable) {
             binding.timetable = item
             binding.executePendingBindings()

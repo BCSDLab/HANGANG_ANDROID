@@ -25,23 +25,23 @@ class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewMod
     var isAuthNumable = false // 인증번호 전송활성화 여부
     fun sendEmail(portalID: String) {
         userRepository.emailCheck(portalID)
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({ data -> _emailSendText.value = data.message },
-                        { error -> LogUtil.e(error.toCommonResponse().message) })
-                .addTo(compositeDisposable)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({ data -> _emailSendText.value = data.message },
+                { error -> LogUtil.e(error.toCommonResponse().message) })
+            .addTo(compositeDisposable)
     }
 
     fun sendEmailConfig(portalID: String, secret: String) {
         userRepository.emailConfig(portalID, secret)
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({ data -> _emainConfigSendText.value = data.httpStatus.equals("OK") },
-                        { error ->
-                            _errorConfig.value = true
-                        })
-                .addTo(compositeDisposable)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({ data -> _emainConfigSendText.value = data.httpStatus.equals("OK") },
+                { error ->
+                    _errorConfig.value = true
+                })
+            .addTo(compositeDisposable)
     }
 }

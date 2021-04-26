@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class ChangePasswordPagerAdapter(fragmentActivity: FragmentActivity) :
-        FragmentStateAdapter(fragmentActivity) {
+    FragmentStateAdapter(fragmentActivity) {
 
     private val emailAuthenticationFragment = EmailAuthenticationFragment()
     private val newPasswordFragment = ChangePasswordFragment()

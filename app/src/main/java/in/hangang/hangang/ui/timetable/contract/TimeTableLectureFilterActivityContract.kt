@@ -7,11 +7,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 
-class TimeTableLectureFilterActivityContract : ActivityResultContract<LectureFilter?, TimeTableLectureFilterActivityContract.Result>() {
+class TimeTableLectureFilterActivityContract :
+    ActivityResultContract<LectureFilter?, TimeTableLectureFilterActivityContract.Result>() {
 
     data class Result(
-            val apply: Boolean,
-            val lectureFilter: LectureFilter
+        val apply: Boolean,
+        val lectureFilter: LectureFilter
     )
 
     override fun createIntent(context: Context, input: LectureFilter?): Intent {
@@ -22,8 +23,8 @@ class TimeTableLectureFilterActivityContract : ActivityResultContract<LectureFil
 
     override fun parseResult(resultCode: Int, intent: Intent?): Result {
         return Result(
-                resultCode == RESULT_OK,
-                intent?.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter()
+            resultCode == RESULT_OK,
+            intent?.extras?.getParcelable(TIMETABLE_LECTURE_FILTER) ?: LectureFilter()
         )
     }
 

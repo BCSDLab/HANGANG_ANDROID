@@ -49,13 +49,13 @@
             android:id="@+id/recycler_view_timetable_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:clipToPadding="false"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_timetable_list_limit"/>
+            app:layout_constraintTop_toBottomOf="@id/text_view_timetable_list_limit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

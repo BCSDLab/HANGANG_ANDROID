@@ -21,27 +21,27 @@ class DashBoardViewModel(private val userRepository: UserRepository) : ViewModel
 
     fun checkNickName(nickName: String) {
         userRepository.checkNickname(nickName)
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .doOnSubscribe { _nickNameCheckText.postValue("검색중") }
-                .subscribe({ data -> _nickNameCheckText.value = data.message },
-                        { error ->
-                            error.toCommonResponse().message?.let {
-                                _nickNameCheckText.value = it
-                            }
-                        }).addTo(compositeDisposable)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .doOnSubscribe { _nickNameCheckText.postValue("검색중") }
+            .subscribe({ data -> _nickNameCheckText.value = data.message },
+                { error ->
+                    error.toCommonResponse().message?.let {
+                        _nickNameCheckText.value = it
+                    }
+                }).addTo(compositeDisposable)
     }
 
 
     fun sendEmail(portalID: String) {
         userRepository.emailCheck(portalID)
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .doOnSubscribe { _emailSendText.postValue("전송중") }
-                .subscribe({ data -> _emailSendText.value = data.message },
-                        { error -> LogUtil.e(error.message) })
-                .addTo(compositeDisposable)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .doOnSubscribe { _emailSendText.postValue("전송중") }
+            .subscribe({ data -> _emailSendText.value = data.message },
+                { error -> LogUtil.e(error.message) })
+            .addTo(compositeDisposable)
     }
 }

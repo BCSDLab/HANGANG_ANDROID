@@ -44,14 +44,16 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
     private fun initRecyclerView() {
         binding.recyclerViewTimetableList.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewTimetableList.adapter = timetableAdapter
-        timetableAdapter.selectedTimeTableId = intent.extras?.getParcelable<TimeTable>(TimetableListActivityContract.SELECTED_TIMETABLE)?.id
+        timetableAdapter.selectedTimeTableId =
+            intent.extras?.getParcelable<TimeTable>(TimetableListActivityContract.SELECTED_TIMETABLE)?.id
                 ?: 0
-        timetableAdapter.timetableListRecyclerViewOnItemClickListener = object : TimetableListRecyclerViewOnItemClickListener {
-            override fun onTimeTableItemClick(timetable: TimeTable) {
-                setResult(RESULT_OK, Intent().putExtra(TimetableListActivityContract.SELECTED_TIMETABLE, timetable))
-                finish()
+        timetableAdapter.timetableListRecyclerViewOnItemClickListener =
+            object : TimetableListRecyclerViewOnItemClickListener {
+                override fun onTimeTableItemClick(timetable: TimeTable) {
+                    setResult(RESULT_OK, Intent().putExtra(TimetableListActivityContract.SELECTED_TIMETABLE, timetable))
+                    finish()
+                }
             }
-        }
     }
 
     private fun initViewModel() {
@@ -97,11 +99,11 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
 
     private fun showTimetableLimitErrorDialog() {
         DialogUtil.makeSimpleDialog(
-                context = this,
-                title = getString(R.string.timetable_exceed_title),
-                message = getString(R.string.timetable_exceed_message),
-                positiveButtonText = getString(R.string.ok),
-                positiveButtonOnClickListener = { dialog, _ -> dialog.dismiss() }
+            context = this,
+            title = getString(R.string.timetable_exceed_title),
+            message = getString(R.string.timetable_exceed_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ -> dialog.dismiss() }
         ).show()
     }
 }

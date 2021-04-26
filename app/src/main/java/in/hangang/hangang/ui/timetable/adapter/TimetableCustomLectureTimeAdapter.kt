@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 class TimetableCustomLectureTimeAdapter(private val context: Context) :
-        RecyclerView.Adapter<TimetableCustomLectureTimeAdapter.ViewHolder>() {
+    RecyclerView.Adapter<TimetableCustomLectureTimeAdapter.ViewHolder>() {
 
     private val list = mutableListOf<CustomTimetableTimestamp>()
     private val weekdaysText: Array<CharSequence> by lazy { context.resources.getTextArray(R.array.timetable_picker_weeks) }
@@ -23,29 +23,29 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
     var onItemClickListener: OnItemClickListener? = null
 
     class ViewHolder(
-            val binding: ItemTimetableCustomLectureTimestampBinding,
-            private val weekdaysText: Array<CharSequence>
+        val binding: ItemTimetableCustomLectureTimestampBinding,
+        private val weekdaysText: Array<CharSequence>
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(customTimetableTimestamp: CustomTimetableTimestamp) {
             with(customTimetableTimestamp) {
                 binding.textViewWeekday.text = weekdaysText[week]
                 binding.textViewTime.text =
-                        "${startTime.first.format(TIME_FORMAT)}:${
-                            startTime.second.format(TIME_FORMAT)
-                        } ~ ${endTime.first.format(TIME_FORMAT)}:${
-                            endTime.second.format(TIME_FORMAT)
-                        }"
+                    "${startTime.first.format(TIME_FORMAT)}:${
+                        startTime.second.format(TIME_FORMAT)
+                    } ~ ${endTime.first.format(TIME_FORMAT)}:${
+                        endTime.second.format(TIME_FORMAT)
+                    }"
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                DataBindingUtil.bind(
-                        LayoutInflater.from(parent.context)
-                                .inflate(R.layout.item_timetable_custom_lecture_timestamp, parent, false)
-                )!!,
-                weekdaysText
+            DataBindingUtil.bind(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_timetable_custom_lecture_timestamp, parent, false)
+            )!!,
+            weekdaysText
         )
     }
 
@@ -74,8 +74,8 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
     }
 
     inline fun setOnItemClickListener(
-            crossinline onItemClick: (view: View, position: Int) -> Unit,
-            crossinline onDeleteButtonClick: (view: View, position: Int) -> Unit,
+        crossinline onItemClick: (view: View, position: Int) -> Unit,
+        crossinline onDeleteButtonClick: (view: View, position: Int) -> Unit,
     ) {
         onItemClickListener = object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {

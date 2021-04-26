@@ -10,13 +10,13 @@ import io.reactivex.rxjava3.core.Single
 interface TimeTableDataSource {
     fun getTimeTables(): Single<Map<Int, List<TimeTable>>>
     fun getLectureTimetableList(
-            classification: List<String>? = null,
-            criteria: String? = null,
-            department: String? = null,
-            keyword: String? = null,
-            limit: Int = 10,
-            page: Int = 1,
-            semesterDateId: Int
+        classification: List<String>? = null,
+        criteria: String? = null,
+        department: String? = null,
+        keyword: String? = null,
+        limit: Int = 10,
+        page: Int = 1,
+        semesterDateId: Int
     ): Single<List<LectureTimeTable>>
 
     fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse>
@@ -30,33 +30,33 @@ interface TimeTableDataSource {
     fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun getScrapLectures(
-            classification: List<String>? = null,
-            department: String? = null,
-            keyword: String? = null
+        classification: List<String>? = null,
+        department: String? = null,
+        keyword: String? = null
     ): Single<Collection<LectureTimeTable>>
 
     fun addCustomLectureInTimetable(
-            classTime: String?,
-            name: String?,
-            professor: String?,
-            userTimetableId: Int
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
     ): Single<CommonResponse>
 
     fun getMemo(
-            timetableLectureId: Int
+        timetableLectureId: Int
     ): Single<TimetableMemo>
 
     fun addMemo(
-            timetableLectureId: Int,
-            memo: String
+        timetableLectureId: Int,
+        memo: String
     ): Single<CommonResponse>
 
     fun modifyMemo(
-            timetableLectureId: Int,
-            memo: String
+        timetableLectureId: Int,
+        memo: String
     ): Single<CommonResponse>
 
     fun removeMemo(
-            timetableLectureId: Int
+        timetableLectureId: Int
     ): Single<CommonResponse>
 }

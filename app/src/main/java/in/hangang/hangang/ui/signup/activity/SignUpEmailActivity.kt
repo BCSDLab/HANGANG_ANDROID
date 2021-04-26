@@ -55,13 +55,13 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
                 if (signUpEmailViewModel.isAuthNumable) {
                     if (signUpEmailViewModel.isAuthNumSend == false) {
                         signUpEmailViewModel.sendEmail(
-                                binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech))
+                            binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech))
                         )
                         resendAvailable()
                         signUpEmailViewModel.isAuthNumSend = true
                     } else {
                         signUpEmailViewModel.sendEmail(
-                                binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech))
+                            binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech))
                         )
                         initResendDialog()
                     }
@@ -70,8 +70,8 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             authCompleteButton.setOnClickListener {
                 if (binding.authCompleteButton.isEnabled)
                     signUpEmailViewModel.sendEmailConfig(
-                            binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech)),
-                            binding.authnumEditText.text.toString()
+                        binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech)),
+                        binding.authnumEditText.text.toString()
                     )
             }
         }
@@ -110,28 +110,29 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
 
     private fun initErrorDialog() {
         showSimpleDialog(
-                title = getString(R.string.reset_password_error_auth),
-                message = getString(R.string.check_authnum_or_email),
-                positiveButtonText = getString(R.string.reset_password_retry_auth),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    binding.authnumEditText.setText("")
-                    authNumAvailable()
-                    signUpEmailViewModel.isAuthNumSend = false
-                    dialog?.dismiss()
+            title = getString(R.string.reset_password_error_auth),
+            message = getString(R.string.check_authnum_or_email),
+            positiveButtonText = getString(R.string.reset_password_retry_auth),
+            positiveButtonOnClickListener = { dialog, _ ->
+                binding.authnumEditText.setText("")
+                authNumAvailable()
+                signUpEmailViewModel.isAuthNumSend = false
+                dialog?.dismiss()
 
-                },
-                cancelable = false)
+            },
+            cancelable = false
+        )
     }
 
     private fun initResendDialog() {
         showSimpleDialog(
-                title = getString(R.string.reset_password_dialog_resent_title),
-                message = getString(R.string.reset_password_dialog_check_portal_message),
-                positiveButtonText = getString(R.string.ok),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
-                },
-                cancelable = false
+            title = getString(R.string.reset_password_dialog_resent_title),
+            message = getString(R.string.reset_password_dialog_check_portal_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            },
+            cancelable = false
         )
 
     }

@@ -14,9 +14,9 @@ class TimetableListActivityContract : ActivityResultContract<TimeTable, Timetabl
     }
 
     class Result(
-            val resultCode: Int,
-            val selectedTimetable: TimeTable?,
-            val timetableListChanged: Boolean = false
+        val resultCode: Int,
+        val selectedTimetable: TimeTable?,
+        val timetableListChanged: Boolean = false
     )
 
     override fun createIntent(context: Context, input: TimeTable): Intent {
@@ -27,9 +27,9 @@ class TimetableListActivityContract : ActivityResultContract<TimeTable, Timetabl
 
     override fun parseResult(resultCode: Int, intent: Intent?): Result {
         return Result(
-                resultCode = resultCode,
-                selectedTimetable = intent?.extras?.getParcelable(SELECTED_TIMETABLE),
-                timetableListChanged = intent?.extras?.getBoolean(TIMETABLE_LIST_CHANGED) ?: false
+            resultCode = resultCode,
+            selectedTimetable = intent?.extras?.getParcelable(SELECTED_TIMETABLE),
+            timetableListChanged = intent?.extras?.getBoolean(TIMETABLE_LIST_CHANGED) ?: false
         )
     }
 }

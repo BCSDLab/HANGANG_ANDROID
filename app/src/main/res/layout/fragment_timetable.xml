@@ -18,10 +18,10 @@
             android:id="@+id/timetable_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorSurface"
             android:layout_marginTop="?attr/actionBarSize"
-            tools:context=".ui.timetable.fragment.TimetableFragment"
-            android:orientation="vertical">
+            android:background="?attr/colorSurface"
+            android:orientation="vertical"
+            tools:context=".ui.timetable.fragment.TimetableFragment">
 
             <in.hangang.hangang.view.timetable.TimetableColumnHeader
                 android:layout_width="match_parent"
@@ -32,15 +32,15 @@
                 android:id="@+id/timetable_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:layout_marginTop="-1dp">
+                android:layout_marginTop="-1dp"
+                android:clipToPadding="false">
 
-                    <in.hangang.hangang.view.timetable.TimetableLayout
-                        android:id="@+id/timetable_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="?android:attr/textColorPrimary"
-                        app:dividerColor="?android:attr/textColorTertiary" />
+                <in.hangang.hangang.view.timetable.TimetableLayout
+                    android:id="@+id/timetable_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:dividerColor="?android:attr/textColorTertiary" />
 
             </androidx.core.widget.NestedScrollView>
 
@@ -62,7 +62,7 @@
             android:layout_height="320dp"
             android:background="@drawable/background_timetable_bottom_sheet"
             android:elevation="8dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

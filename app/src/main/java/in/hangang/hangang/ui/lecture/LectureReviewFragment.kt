@@ -17,12 +17,12 @@ class LectureReviewFragment : Fragment() {
     protected lateinit var binding: FragmentLectureReviewBinding
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_lecture_review, container, false
+            inflater, R.layout.fragment_lecture_review, container, false
         )
 
         return binding.root

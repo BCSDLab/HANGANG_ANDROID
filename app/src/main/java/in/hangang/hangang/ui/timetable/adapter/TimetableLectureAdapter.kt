@@ -6,8 +6,8 @@ import `in`.hangang.hangang.constant.TIMETABLE_EMPTY_POSITION
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
 import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
-import `in`.hangang.hangang.util.timetable.TimetableUtil
 import `in`.hangang.hangang.util.diffutil.LectureTimeTableDiffCallback
+import `in`.hangang.hangang.util.timetable.TimetableUtil
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,7 +16,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
+class TimetableLectureAdapter(private val context: Context) :
+    RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
 
     private val lectures = mutableListOf<LectureTimeTable>()
     private val addedLectures = mutableSetOf<LectureTimeTable>()
@@ -27,10 +28,10 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimetableLectureViewHolder {
         return TimetableLectureViewHolder(
-                DataBindingUtil.bind(
-                        LayoutInflater.from(parent.context)
-                                .inflate(R.layout.item_timetable_lecture, parent, false)
-                )!!
+            DataBindingUtil.bind(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_timetable_lecture, parent, false)
+            )!!
         )
     }
 
@@ -102,7 +103,8 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
         notifyDataSetChanged()
     }
 
-    inner class TimetableLectureViewHolder(val binding: ItemTimetableLectureBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TimetableLectureViewHolder(val binding: ItemTimetableLectureBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LectureTimeTable) {
             with(binding) {
                 textViewLectureTitle.text = item.name
@@ -112,7 +114,8 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
                 textViewLectureCredit.text = context.getString(R.string.credit, item.designScore)
                 textViewLectureGrade.text = context.getString(R.string.grade, item.grades)
                 textViewLectureClassification.text = item.classification
-                textViewLectureTime.text = TimetableUtil.convertApiExpressionToKoreatechClassTime(context, item.classTime ?: "[]")
+                textViewLectureTime.text =
+                    TimetableUtil.convertApiExpressionToKoreatechClassTime(context, item.classTime ?: "[]")
             }
         }
 
@@ -123,10 +126,11 @@ class TimetableLectureAdapter(private val context: Context) : RecyclerView.Adapt
 
         fun setScrapButton(isSelected: Boolean) {
             binding.checkBoxScrap.setImageDrawable(
-                    ContextCompat.getDrawable(context,
-                            if (isSelected) R.drawable.ic_check_v_selected
-                            else R.drawable.ic_check_v_unselected
-                    )
+                ContextCompat.getDrawable(
+                    context,
+                    if (isSelected) R.drawable.ic_check_v_selected
+                    else R.drawable.ic_check_v_unselected
+                )
             )
         }
     }

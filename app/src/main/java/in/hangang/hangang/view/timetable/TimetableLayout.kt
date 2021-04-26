@@ -1,9 +1,9 @@
 package `in`.hangang.hangang.view.timetable
 
-import `in`.hangang.hangang.R
 import `in`.hangang.core.view.dp2Px
 import `in`.hangang.core.view.setVisibility
 import `in`.hangang.core.view.sp2Px
+import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.util.timetable.TimetableUtil
 import `in`.hangang.hangang.util.toValuesList

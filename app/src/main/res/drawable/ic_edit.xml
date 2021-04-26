@@ -3,18 +3,18 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
-  <path
-      android:pathData="M20,14.66V20c0,0.53 -0.21,1.04 -0.586,1.414C19.04,21.79 18.53,22 18,22H4c-0.53,0 -1.04,-0.21 -1.414,-0.586C2.21,21.04 2,20.53 2,20V6c0,-0.53 0.21,-1.04 0.586,-1.414C2.96,4.21 3.47,4 4,4h5.34"
-      android:strokeLineJoin="round"
-      android:strokeWidth="1.5"
-      android:fillColor="#00000000"
-      android:strokeColor="?attr/colorOnPrimarySurface"
-      android:strokeLineCap="round"/>
-  <path
-      android:pathData="M18,2l4,4 -10,10H8v-4L18,2z"
-      android:strokeLineJoin="round"
-      android:strokeWidth="1.5"
-      android:fillColor="#00000000"
-      android:strokeColor="?attr/colorOnPrimarySurface"
-      android:strokeLineCap="round"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M20,14.66V20c0,0.53 -0.21,1.04 -0.586,1.414C19.04,21.79 18.53,22 18,22H4c-0.53,0 -1.04,-0.21 -1.414,-0.586C2.21,21.04 2,20.53 2,20V6c0,-0.53 0.21,-1.04 0.586,-1.414C2.96,4.21 3.47,4 4,4h5.34"
+        android:strokeWidth="1.5"
+        android:strokeColor="?attr/colorOnPrimarySurface"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M18,2l4,4 -10,10H8v-4L18,2z"
+        android:strokeWidth="1.5"
+        android:strokeColor="?attr/colorOnPrimarySurface"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
 </vector>

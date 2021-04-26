@@ -6,10 +6,10 @@ import io.reactivex.rxjava3.core.Single
 
 interface UserDataSource {
     fun signUp(
-            major: Array<String>,
-            nickName: String,
-            password: String,
-            portalAccount: String
+        major: Array<String>,
+        nickName: String,
+        password: String,
+        portalAccount: String
     ): Single<CommonResponse>
 
     fun checkAccessTokenValid(): Single<CommonResponse>

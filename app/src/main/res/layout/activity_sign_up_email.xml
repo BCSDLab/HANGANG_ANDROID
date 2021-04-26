@@ -72,32 +72,34 @@
                 android:layout_width="97dp"
                 android:layout_height="28dp"
                 android:backgroundTint="@color/color_state_button_blue"
-                android:text="@string/reset_password_send_auth_number"
+                android:enabled="false"
                 android:gravity="center"
+                android:text="@string/reset_password_send_auth_number"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
             android:orientation="vertical">
+
             <in.hangang.core.view.button.RoundedCornerButton
                 android:id="@+id/auth_complete_button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="32dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="32dp"
                 android:backgroundTint="@color/color_state_button_blue"
-                android:text="@string/reset_password_finish_email_auth"
-                android:gravity="center"
                 android:enabled="false"
-                android:textSize="14sp"
-                android:textColor="@color/white"/>
+                android:gravity="center"
+                android:text="@string/reset_password_finish_email_auth"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
 
         </LinearLayout>
 

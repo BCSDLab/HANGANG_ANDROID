@@ -23,19 +23,21 @@ class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRe
     val error: LiveData<Event<CommonResponse>> get() = _error
 
     fun addTimeTable(semesterDateId: Int = TIMETABLE_DEFAULT_SEMESTER_ID, name: String) {
-        timeTableRepository.makeTimeTable(UserTimeTableRequest(
+        timeTableRepository.makeTimeTable(
+            UserTimeTableRequest(
                 name = name,
                 semesterDateId = semesterDateId
-        ))
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({
-                    _isAdded.postValue(Event(true))
-                }, {
-                    _error.postValue(Event(it.toCommonResponse()))
-                })
-                .addTo(compositeDisposable)
+            )
+        )
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _isAdded.postValue(Event(true))
+            }, {
+                _error.postValue(Event(it.toCommonResponse()))
+            })
+            .addTo(compositeDisposable)
     }
 
     fun checkAddingAvailability(name: String) {

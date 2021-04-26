@@ -4,8 +4,8 @@ import `in`.hangang.hangang.data.entity.Lecture
 import androidx.recyclerview.widget.DiffUtil
 
 class LectureDiffCallback(
-        private val oldList: List<Lecture>,
-        private val newList: List<Lecture>
+    private val oldList: List<Lecture>,
+    private val newList: List<Lecture>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 

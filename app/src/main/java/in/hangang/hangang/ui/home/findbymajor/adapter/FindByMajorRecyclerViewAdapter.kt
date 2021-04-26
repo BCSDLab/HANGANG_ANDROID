@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
 class FindByMajorRecyclerViewAdapter(val context: Context) :
-        OnItemClickRecyclerViewAdapter<FindByMajorRecyclerViewAdapter.ViewHolder>() {
+    OnItemClickRecyclerViewAdapter<FindByMajorRecyclerViewAdapter.ViewHolder>() {
 
     private val fullMajors: Array<String> by lazy { context.resources.getStringArray(R.array.major_full_word_wrap) }
     private val coverDrawables: TypedArray by lazy {
@@ -20,16 +20,16 @@ class FindByMajorRecyclerViewAdapter(val context: Context) :
     }
 
     class ViewHolder(binding: ItemHomeFindByMajorBinding) :
-            ViewBindingRecyclerViewHolder<ItemHomeFindByMajorBinding>(binding)
+        ViewBindingRecyclerViewHolder<ItemHomeFindByMajorBinding>(binding)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_home_find_by_major,
-                        parent,
-                        false
-                )
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_home_find_by_major,
+                parent,
+                false
+            )
         )
     }
 
@@ -39,7 +39,7 @@ class FindByMajorRecyclerViewAdapter(val context: Context) :
             textViewFindByMajor.text = fullMajors[position]
             extraLeftPadding.visibility = if (position == 0) View.VISIBLE else View.GONE
             extraRightPadding.visibility =
-                    if (position == itemCount - 1) View.VISIBLE else View.GONE
+                if (position == itemCount - 1) View.VISIBLE else View.GONE
         }
     }
 

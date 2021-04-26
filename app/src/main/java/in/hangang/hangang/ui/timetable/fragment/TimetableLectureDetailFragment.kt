@@ -30,8 +30,8 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
             timetableViewModel.displayingTimeTable.value?.let { timetable ->
                 timetableLectureDetailViewModel.lectureTimetable.value?.let { lectureTimeTable ->
                     timetableViewModel.removeTimeTableLecture(
-                            timetable = timetable,
-                            lectureTimeTable = lectureTimeTable
+                        timetable = timetable,
+                        lectureTimeTable = lectureTimeTable
                     )
                 }
             }
@@ -53,8 +53,11 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
             lectureTimetable.observe(viewLifecycleOwner) {
                 binding.lecture = it
                 binding.executePendingBindings()
-                binding.textViewTimetableLectureDetailTime.text = TimetableUtil.convertApiExpressionToKoreatechClassTime(requireContext(), it.classTime
-                        ?: "[]")
+                binding.textViewTimetableLectureDetailTime.text =
+                    TimetableUtil.convertApiExpressionToKoreatechClassTime(
+                        requireContext(), it.classTime
+                            ?: "[]"
+                    )
             }
             memo.observe(viewLifecycleOwner, EventObserver {
                 binding.editTextMemo.setText(it)

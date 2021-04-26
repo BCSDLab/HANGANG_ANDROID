@@ -56,8 +56,8 @@ val netWorkModule = module {
                 val refreshToken = Hawk.get(REFRESH_TOKEN, "")
                 LogUtil.d("access token : $accessToken")
                 val newRequest: Request = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer $accessToken")
-                        .build()
+                    .addHeader("Authorization", "Bearer $accessToken")
+                    .build()
                 chain.proceed(newRequest)
             }
         }.build()
@@ -78,8 +78,8 @@ val netWorkModule = module {
                 val refreshToken = Hawk.get(REFRESH_TOKEN, "")
                 LogUtil.d("refresh token : $refreshToken")
                 val newRequest: Request = chain.request().newBuilder()
-                        .addHeader("RefreshToken", "Bearer $refreshToken")
-                        .build()
+                    .addHeader("RefreshToken", "Bearer $refreshToken")
+                    .build()
                 chain.proceed(newRequest)
             }
         }.build()
@@ -88,32 +88,32 @@ val netWorkModule = module {
 
     single(named(NO_AUTH)) {
         Retrofit.Builder()
-                .client(get(named(NO_AUTH)))
-                .baseUrl(get<String>(named(URL)))
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .build()
+            .client(get(named(NO_AUTH)))
+            .baseUrl(get<String>(named(URL)))
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .build()
     }
 
     single(named(AUTH)) {
         Retrofit.Builder()
-                .client(get(named(AUTH)))
-                .baseUrl(get<String>(named(URL)))
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .build()
+            .client(get(named(AUTH)))
+            .baseUrl(get<String>(named(URL)))
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .build()
     }
 
     single(named(REFRESH_AUTH)) {
         Retrofit.Builder()
-                .client(get(named(REFRESH_AUTH)))
-                .baseUrl(get<String>(named(URL)))
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .build()
+            .client(get(named(REFRESH_AUTH)))
+            .baseUrl(get<String>(named(URL)))
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .build()
     }
 
     single(named(NO_AUTH)) {

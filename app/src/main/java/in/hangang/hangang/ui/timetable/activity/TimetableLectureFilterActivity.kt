@@ -11,18 +11,18 @@ import android.os.Bundle
 import android.widget.CheckBox
 
 class TimetableLectureFilterActivity :
-        ViewBindingActivity<ActivityTimetableLectureFilterBinding>() {
+    ViewBindingActivity<ActivityTimetableLectureFilterBinding>() {
     override val layoutId: Int = R.layout.activity_timetable_lecture_filter
     private val mapCheckBox: Map<String, CheckBox> by lazy {
         mapOf(
-                CLASSIFICATION_LIBERAL_REQUIRED to binding.checkBoxFilterByClassificationLiberalRequired,
-                CLASSIFICATION_LIBERAL_CHOICE to binding.checkBoxFilterByClassificationLiberalChoice,
-                CLASSIFICATION_MAJOR_REQUIRED to binding.checkBoxFilterByClassificationMajorRequired,
-                CLASSIFICATION_MAJOR_CHOICE to binding.checkBoxFilterByClassificationMajorChoice,
-                CLASSIFICATION_MSC_REQUIRED to binding.checkBoxFilterByClassificationMscRequired,
-                CLASSIFICATION_MSC_CHOICE to binding.checkBoxFilterByClassificationMscChoice,
-                CLASSIFICATION_HRD_REQUIRED to binding.checkBoxFilterByClassificationHrdChoice,
-                CLASSIFICATION_HRD_CHOICE to binding.checkBoxFilterByClassificationHrdChoice
+            CLASSIFICATION_LIBERAL_REQUIRED to binding.checkBoxFilterByClassificationLiberalRequired,
+            CLASSIFICATION_LIBERAL_CHOICE to binding.checkBoxFilterByClassificationLiberalChoice,
+            CLASSIFICATION_MAJOR_REQUIRED to binding.checkBoxFilterByClassificationMajorRequired,
+            CLASSIFICATION_MAJOR_CHOICE to binding.checkBoxFilterByClassificationMajorChoice,
+            CLASSIFICATION_MSC_REQUIRED to binding.checkBoxFilterByClassificationMscRequired,
+            CLASSIFICATION_MSC_CHOICE to binding.checkBoxFilterByClassificationMscChoice,
+            CLASSIFICATION_HRD_REQUIRED to binding.checkBoxFilterByClassificationHrdChoice,
+            CLASSIFICATION_HRD_CHOICE to binding.checkBoxFilterByClassificationHrdChoice
         )
     }
     private val lectureFilter: LectureFilter by lazy {
@@ -68,7 +68,7 @@ class TimetableLectureFilterActivity :
     private fun applyFilterAndFinish() {
         val classifications = mutableListOf<String>()
         mapCheckBox.forEach {
-            if(it.value.isChecked) classifications.add(it.key)
+            if (it.value.isChecked) classifications.add(it.key)
         }
 
         val criteria = when {
@@ -78,10 +78,12 @@ class TimetableLectureFilterActivity :
         }
 
         setResult(RESULT_OK, Intent().apply {
-            putExtra(TIMETABLE_LECTURE_FILTER, lectureFilter.copy(
+            putExtra(
+                TIMETABLE_LECTURE_FILTER, lectureFilter.copy(
                     criteria = criteria,
                     classifications = classifications
-            ))
+                )
+            )
         })
         finish()
     }
