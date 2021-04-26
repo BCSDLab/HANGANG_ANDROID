@@ -34,14 +34,14 @@ class MyScrapAdapter : OnItemClickRecyclerViewAdapter<MyScrapAdapter.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         holder.bind(lectures[position])
-        holder.setSelection(selectedLectures[position])
+        holder.setSelection(selectedLectures[position] && isEditMode)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
         if(payloads.isEmpty())
             super.onBindViewHolder(holder, position, payloads)
         else {
-            holder.setSelection(payloads[0] as? Boolean ?: false)
+            holder.setSelection((payloads[0] as? Boolean ?: false) && isEditMode)
         }
     }
 
