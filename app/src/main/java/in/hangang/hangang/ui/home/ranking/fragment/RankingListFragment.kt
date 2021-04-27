@@ -23,34 +23,47 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
         arguments?.let {
             major = it.getString("major").toString()
         }
-        //major = "" ?: requireActivity().resources.getStringArray(R.array.major_full)[0]
-        LogUtil.e(major)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        RxJavaPlugins.setErrorHandler {
-            if (it is UndeliverableException) {
-                LogUtil.e("undeliver")
-            }
-        }
-        binding.recyclerViewRankingList.adapter = adapter
 
+        binding.recyclerViewRankingList.adapter = adapter
+        setUnDelieverableHandler()
         initViewModel()
+        initEvent()
         getRankingList(major)
 
     }
+
 
     private fun getRankingList(major: String) {
         rankingLectureViewModel.getRankingLectureByTotalRating(major)
     }
 
+    fun setUnDelieverableHandler() {
+        RxJavaPlugins.setErrorHandler {
+            if (it is UndeliverableException) {
+                binding.failRankingListLinearlayout.visibility = View.VISIBLE
+            }
+        }
+
+    }
+
+    private fun initEvent() {
+        binding.rankingRetryButton.setOnClickListener {
+            getRankingList(major)
+        }
+    }
+
     private fun initViewModel() {
+        LogUtil.e("initviewmodel")
         with(rankingLectureViewModel) {
             rankingLectureList.observe(viewLifecycleOwner, {
                 it?.let { adapter.submitList(it) }
 
             })
+
         }
     }
 
