@@ -181,6 +181,21 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
         }
     }
 
+    override fun onDestroyView() {
+        with(timetableViewModel) {
+            lectureTimetablesInTimetable.removeObservers(viewLifecycleOwner)
+        }
+        with(timetableLectureListViewModel) {
+            isLoading.removeObservers(viewLifecycleOwner)
+            lectures.removeObservers(viewLifecycleOwner)
+            timetableLectureChanged.removeObservers(viewLifecycleOwner)
+            scraps.removeObservers(viewLifecycleOwner)
+            lectureFilter.removeObservers(viewLifecycleOwner)
+            resetLectureFilter.removeObservers(viewLifecycleOwner)
+        }
+        super.onDestroyView()
+    }
+
     private fun updateLectureList() {
         if (timetableLectureListViewModel.isShowingScraps.value == true) {
             timetableLectureListViewModel.getScrapedLectures(true)

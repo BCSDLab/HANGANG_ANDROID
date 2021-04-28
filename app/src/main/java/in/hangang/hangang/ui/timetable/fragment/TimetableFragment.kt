@@ -23,6 +23,7 @@ import `in`.hangang.hangang.util.withThread
 import android.app.Activity.RESULT_OK
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -80,14 +81,18 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         )
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         timetableViewModel.getMainTimeTable()
 
+        initView()
         initAppBar()
         initBottomSheet()
-        initView()
         initViewModel()
     }
 
@@ -400,4 +405,20 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         }
     }
 
+    override fun onDestroyView() {
+        with(timetableViewModel) {
+            isLoading.removeObservers(viewLifecycleOwner)
+            mode.removeObservers(viewLifecycleOwner)
+            displayingTimeTable.removeObservers(viewLifecycleOwner)
+            timetableBitmapImage.removeObservers(viewLifecycleOwner)
+            lectureTimetablesInTimetable.removeObservers(viewLifecycleOwner)
+            selectedTimetable.removeObservers(viewLifecycleOwner)
+            dummyTimeTable.removeObservers(viewLifecycleOwner)
+            duplicatedLectureTimetable.removeObservers(viewLifecycleOwner)
+            mainTimetableEvent.removeObservers(viewLifecycleOwner)
+            setMainTimetableEvent.removeObservers(viewLifecycleOwner)
+            timetableNameModifiedEvent.removeObservers(viewLifecycleOwner)
+        }
+        super.onDestroyView()
+    }
 }

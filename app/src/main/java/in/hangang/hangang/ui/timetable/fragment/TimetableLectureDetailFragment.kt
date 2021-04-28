@@ -64,4 +64,14 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
             })
         }
     }
+
+
+    override fun onDestroyView() {
+        with(timetableLectureDetailViewModel) {
+            isLoading.removeObservers(viewLifecycleOwner)
+            lectureTimetable.removeObservers(viewLifecycleOwner)
+            memo.removeObservers(this@TimetableLectureDetailFragment)
+        }
+        super.onDestroyView()
+    }
 }

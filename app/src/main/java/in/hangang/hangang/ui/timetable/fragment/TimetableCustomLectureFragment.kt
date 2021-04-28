@@ -110,4 +110,13 @@ class TimetableCustomLectureFragment :
             )
         }
     }
+
+    override fun onDestroyView() {
+        with(timetableViewModel) {
+            timestamp.removeObservers(viewLifecycleOwner)
+            customLectureAdded.removeObservers(viewLifecycleOwner)
+            availableAddingCustomTimetable.removeObservers(viewLifecycleOwner)
+        }
+        super.onDestroyView()
+    }
 }

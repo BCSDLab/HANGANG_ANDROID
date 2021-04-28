@@ -11,9 +11,9 @@ import androidx.databinding.ViewDataBinding
 abstract class ViewBindingFragment<T : ViewDataBinding> : FragmentBase() {
     @get:LayoutRes
     abstract val layoutId: Int
-    private lateinit var _binding: T
+    private var _binding: T? = null
     val binding: T
-        get() = _binding
+        get() = _binding!!
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -21,12 +21,17 @@ abstract class ViewBindingFragment<T : ViewDataBinding> : FragmentBase() {
             savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        _binding.lifecycleOwner = this
-        return _binding.root
+        _binding!!.lifecycleOwner = this
+        return _binding!!.root
+    }
+
+    override fun onDestroyView() {
+        _binding?.unbind()
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onDestroy() {
-        binding.unbind()
         hideProgressDialog()
         super.onDestroy()
     }
