@@ -106,5 +106,5 @@
     <string name="ranking_fail_message_1">강의랭킹을</string>
     <string name="ranking_fail_message_2">불러오지 못하였습니다.</string>
     <string name="retry">재시도</string>
-
+    <string name="review_search_hint">교과명, 교수명, 과목코드 검색</string>
 </resources>
