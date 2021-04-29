@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_evaluation"
-        android:name="in.hangang.hangang.ui.dashboard.DashboardFragment"
+        android:name="in.hangang.hangang.ui.lecturereview.LectureReviewListFragment"
         android:label="@string/title_evaluation"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_list_review_lecture" />
 
     <fragment
         android:id="@+id/navigation_document"
