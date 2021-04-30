@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lecture_review_searchbar">
             <RadioGroup
-                android:id="@+id/radio_group_department"
+                android:id="@+id/reivew_radio_group_department"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -50,8 +50,8 @@
 
 
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_0"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_0"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="16dp"
@@ -62,8 +62,8 @@
                     android:text="@string/major_simple_0"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_1"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_1"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
@@ -74,8 +74,8 @@
                     android:text="@string/major_simple_1"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_2"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_2"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
@@ -86,8 +86,8 @@
                     android:text="@string/major_simple_2"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_3"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_3"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
@@ -98,8 +98,8 @@
                     android:text="@string/major_simple_3"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_4"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_4"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
@@ -110,8 +110,8 @@
                     android:text="@string/major_simple_4"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_5"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_5"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
@@ -122,8 +122,8 @@
                     android:text="@string/major_simple_5"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_6"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_6"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
@@ -134,8 +134,8 @@
                     android:text="@string/major_simple_6"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_7"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_7"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
@@ -146,8 +146,8 @@
                     android:text="@string/major_simple_7"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_8"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_8"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
@@ -158,8 +158,8 @@
                     android:text="@string/major_simple_8"
                     android:textSize="14sp" />
 
-                <in.hangang.core.view.button.checkbox.FilledCheckBox
-                    android:id="@+id/radio_button_major_9"
+                <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                    android:id="@+id/review_radio_button_major_9"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="8dp"
