@@ -16,13 +16,13 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun getLectureTimetableList(
-        classification: List<String>?,
-        criteria: String?,
-        department: String?,
-        keyword: String?,
-        limit: Int,
-        page: Int,
-        semesterDateId: Int
+            classification: List<String>?,
+            criteria: String?,
+            department: String?,
+            keyword: String?,
+            limit: Int,
+            page: Int,
+            semesterDateId: Int
     ): Single<List<LectureTimeTable>> {
         return Single.never()
     }
@@ -56,8 +56,8 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun removeLectureFromTimeTable(
-        lectureId: Int,
-        timetableId: Int
+            lectureId: Int,
+            timetableId: Int
     ): Single<CommonResponse> {
         return Single.never()
     }
@@ -71,9 +71,9 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun getScrapLectures(
-        classification: List<String>?,
-        department: String?,
-        keyword: String?
+            classification: List<String>?,
+            department: String?,
+            keyword: String?
     ): Single<Collection<LectureTimeTable>> {
         return Single.create { subscriber ->
             try {
@@ -97,10 +97,10 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun addCustomLectureInTimetable(
-        classTime: String?,
-        name: String?,
-        professor: String?,
-        userTimetableId: Int
+            classTime: String?,
+            name: String?,
+            professor: String?,
+            userTimetableId: Int
     ): Single<CommonResponse> {
         return Single.never()
     }

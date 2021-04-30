@@ -24,10 +24,10 @@ val viewModelModule = module {
     viewModel { (handle: String) -> SignUpViewModel(get(), handle) }
     viewModel { (portalAccount: String, nickName: String, password: String) ->
         SignUpMajorViewModel(
-            get(),
-            portalAccount,
-            nickName,
-            password
+                get(),
+                portalAccount,
+                nickName,
+                password
         )
     }
     //Change password activity, fragments

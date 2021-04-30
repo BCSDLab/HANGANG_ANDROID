@@ -15,7 +15,7 @@ class FindByMajorFragment : ViewBindingFragment<FragmentHomeFindByMajorBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerViewFindByMajor.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewFindByMajor.adapter = FindByMajorRecyclerViewAdapter(requireActivity())
     }
 }

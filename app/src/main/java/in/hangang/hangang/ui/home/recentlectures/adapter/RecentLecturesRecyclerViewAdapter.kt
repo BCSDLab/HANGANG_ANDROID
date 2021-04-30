@@ -10,16 +10,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
 class RecentLecturesRecyclerViewAdapter :
-    OnItemClickRecyclerViewAdapter<RecentLecturesRecyclerViewAdapter.ViewHolder>() {
+        OnItemClickRecyclerViewAdapter<RecentLecturesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_home_recent_lectures_list,
-                parent,
-                false
-            )
+                DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.item_home_recent_lectures_list,
+                        parent,
+                        false
+                )
         )
     }
 
@@ -34,5 +34,5 @@ class RecentLecturesRecyclerViewAdapter :
     override fun getItemCount(): Int = 0
 
     class ViewHolder(itemHomeRecentLecturesListBinding: ItemHomeRecentLecturesListBinding) :
-        ViewBindingRecyclerViewHolder<ItemHomeRecentLecturesListBinding>(itemHomeRecentLecturesListBinding)
+            ViewBindingRecyclerViewHolder<ItemHomeRecentLecturesListBinding>(itemHomeRecentLecturesListBinding)
 }

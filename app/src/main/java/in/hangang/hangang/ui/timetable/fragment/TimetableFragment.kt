@@ -76,8 +76,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private val appBarAddManuallyButton by lazy {
         appBarTextButton(
-            getString(R.string.timetable_add_manually),
-            width = ViewGroup.LayoutParams.WRAP_CONTENT
+                getString(R.string.timetable_add_manually),
+                width = ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
 
@@ -231,8 +231,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 binding.timetableScrollView.setPadding(
-                    0, 0, 0,
-                    (bottomSheet.height * (slideOffset + 1)).toInt()
+                        0, 0, 0,
+                        (bottomSheet.height * (slideOffset + 1)).toInt()
                 )
             }
         })
@@ -300,7 +300,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     //리스트 형태의 시간표 관리 화면 표시
     private fun openTimetableList() {
         timetableListActivityResult.launch(
-            timetableViewModel.displayingTimeTable.value
+                timetableViewModel.displayingTimeTable.value
         )
     }
 
@@ -314,29 +314,29 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun saveImageToFile(bitmap: Bitmap) {
         requireWriteStorage {
             fileUtil.saveImageToPictures(
-                bitmap = bitmap,
-                fileName = "${timetableViewModel.displayingTimeTable.value?.name ?: "Unknown"}.jpg"
+                    bitmap = bitmap,
+                    fileName = "${timetableViewModel.displayingTimeTable.value?.name ?: "Unknown"}.jpg"
             )
-                .withThread()
-                .handleProgress(timetableViewModel)
-                .subscribe({
-                    LogUtil.d(it.path)
-                }, {
-                    it.printStackTrace()
-                })
+                    .withThread()
+                    .handleProgress(timetableViewModel)
+                    .subscribe({
+                        LogUtil.d(it.path)
+                    }, {
+                        it.printStackTrace()
+                    })
         }
     }
 
     private fun showMainTimetableSetDialog() {
         DialogUtil.makeSimpleDialog(
-            requireContext(),
-            title = getString(R.string.timetable_dialog_finish_main_timetable_title),
-            message = getString(R.string.timetable_dialog_finish_main_timetable_message),
-            positiveButtonText = getString(R.string.ok),
-            positiveButtonOnClickListener = { dialog, _ ->
-                dialog.dismiss()
-            },
-            cancelable = true
+                requireContext(),
+                title = getString(R.string.timetable_dialog_finish_main_timetable_title),
+                message = getString(R.string.timetable_dialog_finish_main_timetable_message),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { dialog, _ ->
+                    dialog.dismiss()
+                },
+                cancelable = true
         ).show()
     }
 
@@ -347,54 +347,54 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             }
 
             DialogUtil.makeViewDialog(requireContext(),
-                title = getString(R.string.timetable_dialog_edit_timetable_name_title),
-                view = editText,
-                cancelable = true,
-                positiveButtonText = getString(R.string.ok),
-                negativeButtonText = getString(R.string.cancel),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    timetableViewModel.modifyTimeTableName(
-                        timetableViewModel.displayingTimeTable.value!!,
-                        editText.text.toString()
-                    )
-                    dialog.dismiss()
-                },
-                negativeButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
-                }).show()
+                    title = getString(R.string.timetable_dialog_edit_timetable_name_title),
+                    view = editText,
+                    cancelable = true,
+                    positiveButtonText = getString(R.string.ok),
+                    negativeButtonText = getString(R.string.cancel),
+                    positiveButtonOnClickListener = { dialog, _ ->
+                        timetableViewModel.modifyTimeTableName(
+                                timetableViewModel.displayingTimeTable.value!!,
+                                editText.text.toString()
+                        )
+                        dialog.dismiss()
+                    },
+                    negativeButtonOnClickListener = { dialog, _ ->
+                        dialog.dismiss()
+                    }).show()
         }
     }
 
     private fun showRemoveTimeTableDialog() {
         if (timetableViewModel.displayingTimeTable.value != null) {
             DialogUtil.makeSimpleDialog(
-                requireContext(),
-                title = getString(R.string.timetable_dialog_remove_timetable_title),
-                message = "",
-                positiveButtonText = getString(R.string.ok),
-                negativeButtonText = getString(R.string.close),
-                negativeButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
-                },
-                positiveButtonOnClickListener = { dialog, _ ->
-                    timetableViewModel.removeTimetable(timetableViewModel.displayingTimeTable.value!!)
-                    dialog.dismiss()
-                },
-                cancelable = true
+                    requireContext(),
+                    title = getString(R.string.timetable_dialog_remove_timetable_title),
+                    message = "",
+                    positiveButtonText = getString(R.string.ok),
+                    negativeButtonText = getString(R.string.close),
+                    negativeButtonOnClickListener = { dialog, _ ->
+                        dialog.dismiss()
+                    },
+                    positiveButtonOnClickListener = { dialog, _ ->
+                        timetableViewModel.removeTimetable(timetableViewModel.displayingTimeTable.value!!)
+                        dialog.dismiss()
+                    },
+                    cancelable = true
             ).show()
         }
     }
 
     private fun showTimetableDuplicatedDialog(lectureTimeTable: LectureTimeTable) {
         DialogUtil.makeSimpleDialog(
-            requireContext(),
-            title = getString(R.string.timetable_duplicated_title),
-            message = getString(R.string.timetable_duplicated_message, lectureTimeTable.name),
-            positiveButtonText = getString(R.string.ok),
-            positiveButtonOnClickListener = { dialog, _ ->
-                dialog.dismiss()
-            },
-            cancelable = true
+                requireContext(),
+                title = getString(R.string.timetable_duplicated_title),
+                message = getString(R.string.timetable_duplicated_message, lectureTimeTable.name),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { dialog, _ ->
+                    dialog.dismiss()
+                },
+                cancelable = true
         ).show()
     }
 

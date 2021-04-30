@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.view.timetable
+package `in`.hangang.hangang.ui.customview.timetable
 
 import `in`.hangang.core.R
 import `in`.hangang.core.view.dp2Px
@@ -13,11 +13,11 @@ import android.view.View
 import androidx.annotation.ColorInt
 
 class TimetableColumnHeader @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0
 ) :
-    View(context, attrs, defStyleAttr) {
+        View(context, attrs, defStyleAttr) {
 
     interface ColumnHeaderTextFormatter {
         fun format(columnPosition: Int): String
@@ -35,15 +35,15 @@ class TimetableColumnHeader @JvmOverloads constructor(
     var columnHeaderTextFormatter = object : ColumnHeaderTextFormatter {
         override fun format(columnPosition: Int): String {
             return with(
-                arrayOf(
-                    context.getString(R.string.mon),
-                    context.getString(R.string.tue),
-                    context.getString(R.string.wed),
-                    context.getString(R.string.thu),
-                    context.getString(R.string.fri),
-                    context.getString(R.string.sat),
-                    context.getString(R.string.sun)
-                )
+                    arrayOf(
+                            context.getString(R.string.mon),
+                            context.getString(R.string.tue),
+                            context.getString(R.string.wed),
+                            context.getString(R.string.thu),
+                            context.getString(R.string.fri),
+                            context.getString(R.string.sat),
+                            context.getString(R.string.sun)
+                    )
             ) {
                 this[columnPosition % this.size]
             }
@@ -95,33 +95,33 @@ class TimetableColumnHeader @JvmOverloads constructor(
 
     init {
         context.theme.obtainStyledAttributes(
-            attrs,
-            `in`.hangang.hangang.R.styleable.TimetableColumnHeader,
-            defStyleAttr,
-            0
+                attrs,
+                `in`.hangang.hangang.R.styleable.TimetableColumnHeader,
+                defStyleAttr,
+                0
         ).apply {
             dividerColor =
-                getColor(
-                    `in`.hangang.hangang.R.styleable.TimetableColumnHeader_dividerColor,
-                    Color.parseColor("#eeeeee")
-                )
+                    getColor(
+                            `in`.hangang.hangang.R.styleable.TimetableColumnHeader_dividerColor,
+                            Color.parseColor("#eeeeee")
+                    )
             columnCount = getInteger(`in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnCount, 5)
             columnWidth =
-                getDimensionPixelSize(`in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnWidth, dp2Px(64f))
+                    getDimensionPixelSize(`in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnWidth, dp2Px(64f))
             columnHeaderHeight =
-                getDimensionPixelSize(
-                    `in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnHeaderHeight,
-                    dp2Px(36f)
-                )
+                    getDimensionPixelSize(
+                            `in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnHeaderHeight,
+                            dp2Px(36f)
+                    )
             columnHeaderTextColor = getColor(
-                `in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnHeaderTextColor,
-                Color.parseColor("#222222")
+                    `in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnHeaderTextColor,
+                    Color.parseColor("#222222")
             )
             columnHeaderTextSize =
-                getDimensionPixelSize(
-                    `in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnHeaderTextSize,
-                    sp2Px(12f)
-                )
+                    getDimensionPixelSize(
+                            `in`.hangang.hangang.R.styleable.TimetableColumnHeader_columnHeaderTextSize,
+                            sp2Px(12f)
+                    )
 
             recycle()
         }
@@ -135,16 +135,16 @@ class TimetableColumnHeader @JvmOverloads constructor(
         columnHeaderTextPaint.getTextBounds("A", 0, 1, textRectTemp)
 
         val width =
-            when (MeasureSpec.getMode(widthMeasureSpec)) {
-                MeasureSpec.EXACTLY -> defaultWidth
-                else -> columnCount * columnWidth
-            }
+                when (MeasureSpec.getMode(widthMeasureSpec)) {
+                    MeasureSpec.EXACTLY -> defaultWidth
+                    else -> columnCount * columnWidth
+                }
 
         val height =
-            when (MeasureSpec.getMode(heightMeasureSpec)) {
-                MeasureSpec.EXACTLY -> defaultHeight
-                else -> textRectTemp.height() + paddingTop + paddingBottom
-            }
+                when (MeasureSpec.getMode(heightMeasureSpec)) {
+                    MeasureSpec.EXACTLY -> defaultHeight
+                    else -> textRectTemp.height() + paddingTop + paddingBottom
+                }
 
         cellWidth = (width - paddingLeft - paddingRight) / columnCount
 
@@ -160,19 +160,19 @@ class TimetableColumnHeader @JvmOverloads constructor(
             with(columnHeaderTextFormatter.format(i)) {
                 columnHeaderTextPaint.getTextBounds(this, 0, this.length, textRectTemp)
                 canvas.drawText(
-                    this,
-                    paddingLeft + (cellWidth * (i + 0.5)).toFloat() - textRectTemp.width() / 2,
-                    (dp2Px(COLUMN_HEADER_TEXT_TOP_MARGIN_DP) + textRectTemp.height() + textRectTemp.top).toFloat(),
-                    columnHeaderTextPaint
+                        this,
+                        paddingLeft + (cellWidth * (i + 0.5)).toFloat() - textRectTemp.width() / 2,
+                        (dp2Px(COLUMN_HEADER_TEXT_TOP_MARGIN_DP) + textRectTemp.height() + textRectTemp.top).toFloat(),
+                        columnHeaderTextPaint
                 )
             }
         }//Draw a column line
         canvas.drawLine(
-            0f,
-            measuredHeight.toFloat() - linePaint.strokeWidth,
-            measuredWidth.toFloat(),
-            measuredHeight.toFloat() - linePaint.strokeWidth,
-            linePaint
+                0f,
+                measuredHeight.toFloat() - linePaint.strokeWidth,
+                measuredWidth.toFloat(),
+                measuredHeight.toFloat() - linePaint.strokeWidth,
+                linePaint
         ) // Draw a top header line
 
     }

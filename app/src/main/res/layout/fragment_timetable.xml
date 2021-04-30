@@ -23,7 +23,7 @@
             android:orientation="vertical"
             tools:context=".ui.timetable.fragment.TimetableFragment">
 
-            <in.hangang.hangang.view.timetable.TimetableColumnHeader
+            <in.hangang.hangang.ui.customview.timetable.TimetableColumnHeader
                 android:layout_width="match_parent"
                 android:layout_height="26dp"
                 android:paddingLeft="36dp" />
@@ -35,7 +35,7 @@
                 android:layout_marginTop="-1dp"
                 android:clipToPadding="false">
 
-                <in.hangang.hangang.view.timetable.TimetableLayout
+                <in.hangang.hangang.ui.customview.timetable.TimetableLayout
                     android:id="@+id/timetable_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

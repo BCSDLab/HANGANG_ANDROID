@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableLectureListViewModel(
-    private val timetableRepository: TimeTableRepository
+        private val timetableRepository: TimeTableRepository
 ) : ViewModelBase() {
     private val lectureList = mutableListOf<LectureTimeTable>()
     private val scrapLectures = mutableListOf<LectureTimeTable>()
@@ -43,7 +43,7 @@ class TimetableLectureListViewModel(
     var semesterDateId: Int = 5
 
     fun getLectures(
-        semesterDateId: Int
+            semesterDateId: Int
     ) {
         setShowingScrap(false)
         page = 0
@@ -51,38 +51,38 @@ class TimetableLectureListViewModel(
         lectureList.clear()
 
         getLecturesRx()
-            .handleProgress(this)
-            .subscribe({
-                lectureList.addAll(it)
-                _lectures.postValue(lectureList)
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
+                .handleProgress(this)
+                .subscribe({
+                    lectureList.addAll(it)
+                    _lectures.postValue(lectureList)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
     }
 
     fun getLectures() {
         page++
         getLecturesRx()
-            .subscribe({
-                lectureList.addAll(it)
-                _lectures.postValue(lectureList)
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
-            .addTo(compositeDisposable)
+                .subscribe({
+                    lectureList.addAll(it)
+                    _lectures.postValue(lectureList)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
+                .addTo(compositeDisposable)
     }
 
     private fun getLecturesRx(): Single<List<LectureTimeTable>> {
         return timetableRepository.getLectureTimetableList(
-            classification = lectureFilter.value?.classifications,
-            criteria = lectureFilter.value?.criteria,
-            department = lectureFilter.value?.department,
-            keyword = lectureFilter.value?.keyword,
-            page = page,
-            semesterDateId = semesterDateId
+                classification = lectureFilter.value?.classifications,
+                criteria = lectureFilter.value?.criteria,
+                department = lectureFilter.value?.department,
+                keyword = lectureFilter.value?.keyword,
+                page = page,
+                semesterDateId = semesterDateId
         )
-            .handleHttpException()
-            .withThread()
+                .handleHttpException()
+                .withThread()
     }
 
     fun toggleScrapLecture(lectureTimeTable: LectureTimeTable) {
@@ -96,45 +96,45 @@ class TimetableLectureListViewModel(
 
     private fun scrapLecture(lectureTimeTable: LectureTimeTable) {
         timetableRepository.scrapLecture(lectureTimeTable)
-            .withThread()
-            .subscribe({
-                scrapLectures.add(it)
-                _scraps.postValue(scrapLectures)
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
+                .withThread()
+                .subscribe({
+                    scrapLectures.add(it)
+                    _scraps.postValue(scrapLectures)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
     }
 
     private fun unscrapLecture(lectureTimeTable: LectureTimeTable) {
         timetableRepository.unscrapLecture(lectureTimeTable)
-            .withThread()
-            .subscribe({
-                scrapLectures.remove(it)
-                _scraps.postValue(scrapLectures)
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
+                .withThread()
+                .subscribe({
+                    scrapLectures.remove(it)
+                    _scraps.postValue(scrapLectures)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
     }
 
     fun getScrapedLectures(
-        switchLecturesList: Boolean
+            switchLecturesList: Boolean
     ) {
         if (switchLecturesList) setShowingScrap(true)
         timetableRepository.getScrapLectures(
-            _lectureFilter.value?.classifications,
-            _lectureFilter.value?.department,
-            _lectureFilter.value?.keyword
+                _lectureFilter.value?.classifications,
+                _lectureFilter.value?.department,
+                _lectureFilter.value?.keyword
         )
-            .withThread()
-            .handleProgress(this)
-            .subscribe({
-                scrapLectures.clear()
-                scrapLectures.addAll(it)
-                _scraps.postValue(scrapLectures)
-                if (switchLecturesList) _lectures.postValue(scrapLectures)
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
+                .withThread()
+                .handleProgress(this)
+                .subscribe({
+                    scrapLectures.clear()
+                    scrapLectures.addAll(it)
+                    _scraps.postValue(scrapLectures)
+                    if (switchLecturesList) _lectures.postValue(scrapLectures)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
     }
 
     fun setShowingScrap(value: Boolean) {
@@ -148,7 +148,7 @@ class TimetableLectureListViewModel(
     fun resetLectureFilter() {
         _resetLectureFilter.postValue(Event(true))
         _lectureFilter.postValue(
-            LectureFilter()
+                LectureFilter()
         )
     }
 }

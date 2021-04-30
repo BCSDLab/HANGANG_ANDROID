@@ -31,8 +31,8 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
             }
             isAdded.observe(this@TimetableAddActivity, EventObserver {
                 if (it) {
-                    setResult(1, Intent().apply {
-                        putExtra(TimeTableAddActivityContract.TIMETABLE_ADDED, true)
+                    setResult(TimeTableAddActivityContract.TIMETABLE_RESULT_IS_ADDED, Intent().apply {
+                        putExtra(TimeTableAddActivityContract.TIMETABLE_IS_ADDED, true)
                     })
                     finish()
                 }
@@ -47,11 +47,11 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
 
     private fun showTimetableSemesterLimitErrorDialog() {
         DialogUtil.makeSimpleDialog(
-            context = this,
-            title = getString(R.string.timetable_exceed_title),
-            message = getString(R.string.timetable_exceed_message_semester),
-            positiveButtonText = getString(R.string.ok),
-            positiveButtonOnClickListener = { dialog, _ -> dialog.dismiss() }
+                context = this,
+                title = getString(R.string.timetable_exceed_title),
+                message = getString(R.string.timetable_exceed_message_semester),
+                positiveButtonText = getString(R.string.ok),
+                positiveButtonOnClickListener = { dialog, _ -> dialog.dismiss() }
         ).show()
     }
 
@@ -59,8 +59,8 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
         initSemesterDateId()
         binding.buttonAddTimetable.setOnClickListener {
             timetableAddActivityViewModel.addTimeTable(
-                semesterDateId = getSemesterDateId(),
-                name = binding.editTextTimetableName.text.toString()
+                    semesterDateId = getSemesterDateId(),
+                    name = binding.editTextTimetableName.text.toString()
             )
         }
         binding.editTextTimetableName.addTextChangedListener {

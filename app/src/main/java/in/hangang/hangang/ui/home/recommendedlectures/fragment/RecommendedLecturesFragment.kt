@@ -19,7 +19,7 @@ class RecommendedLecturesFragment : ViewBindingFragment<FragmentHomeRecommendedL
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerViewRecommendedLectures.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewRecommendedLectures.adapter = RecommendedLecturesRecyclerViewAdapter()
 
         recommendedLecturesFragmentViewModel.timetableCount.observe(viewLifecycleOwner) {

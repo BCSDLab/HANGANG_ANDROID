@@ -5,9 +5,9 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.TIMETABLE_EMPTY_POSITION
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
+import `in`.hangang.hangang.ui.customview.timetable.TimetableUtil
 import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
 import `in`.hangang.hangang.util.diffutil.LectureTimeTableDiffCallback
-import `in`.hangang.hangang.util.timetable.TimetableUtil
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 class TimetableLectureAdapter(private val context: Context) :
-    RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
+        RecyclerView.Adapter<TimetableLectureAdapter.TimetableLectureViewHolder>() {
 
     private val lectures = mutableListOf<LectureTimeTable>()
     private val addedLectures = mutableSetOf<LectureTimeTable>()
@@ -28,10 +28,10 @@ class TimetableLectureAdapter(private val context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimetableLectureViewHolder {
         return TimetableLectureViewHolder(
-            DataBindingUtil.bind(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_timetable_lecture, parent, false)
-            )!!
+                DataBindingUtil.bind(
+                        LayoutInflater.from(parent.context)
+                                .inflate(R.layout.item_timetable_lecture, parent, false)
+                )!!
         )
     }
 
@@ -49,12 +49,12 @@ class TimetableLectureAdapter(private val context: Context) :
         holder.itemView.setOnClickListener {
             val beforeSelectedPosition = currentSelectedPosition
 
-            if (currentSelectedPosition == position) {
+            currentSelectedPosition = if (currentSelectedPosition == position) {
                 timetableLectureListener?.onCheckedChange(TIMETABLE_EMPTY_POSITION, item)
-                currentSelectedPosition = TIMETABLE_EMPTY_POSITION
+                TIMETABLE_EMPTY_POSITION
             } else {
                 timetableLectureListener?.onCheckedChange(position, item)
-                currentSelectedPosition = position
+                position
             }
 
             notifyItemChanged(beforeSelectedPosition)
@@ -104,7 +104,7 @@ class TimetableLectureAdapter(private val context: Context) :
     }
 
     inner class TimetableLectureViewHolder(val binding: ItemTimetableLectureBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+            RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LectureTimeTable) {
             with(binding) {
                 textViewLectureTitle.text = item.name
@@ -115,7 +115,8 @@ class TimetableLectureAdapter(private val context: Context) :
                 textViewLectureGrade.text = context.getString(R.string.grade, item.grades)
                 textViewLectureClassification.text = item.classification
                 textViewLectureTime.text =
-                    TimetableUtil.convertApiExpressionToKoreatechClassTime(context, item.classTime ?: "[]")
+                        TimetableUtil.convertApiExpressionToKoreatechClassTime(context, item.classTime
+                                ?: "[]")
             }
         }
 
@@ -126,11 +127,11 @@ class TimetableLectureAdapter(private val context: Context) :
 
         fun setScrapButton(isSelected: Boolean) {
             binding.checkBoxScrap.setImageDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    if (isSelected) R.drawable.ic_check_v_selected
-                    else R.drawable.ic_check_v_unselected
-                )
+                    ContextCompat.getDrawable(
+                            context,
+                            if (isSelected) R.drawable.ic_check_v_selected
+                            else R.drawable.ic_check_v_unselected
+                    )
             )
         }
     }

@@ -1,11 +1,10 @@
-package `in`.hangang.hangang.view.timetable
+package `in`.hangang.hangang.ui.customview.timetable
 
 import `in`.hangang.core.view.dp2Px
 import `in`.hangang.core.view.setVisibility
 import `in`.hangang.core.view.sp2Px
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.util.timetable.TimetableUtil
 import `in`.hangang.hangang.util.toValuesList
 import android.content.Context
 import android.graphics.Canvas
@@ -22,11 +21,11 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 
 class TimetableLayout @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0
 ) :
-    ViewGroup(context, attrs, defStyleAttr) {
+        ViewGroup(context, attrs, defStyleAttr) {
 
     interface RowHeaderTextFormatter {
         fun format(rowPosition: Int): String
@@ -42,10 +41,10 @@ class TimetableLayout @JvmOverloads constructor(
     }
 
     data class RC(
-        val rowStart: Float,
-        val rowEnd: Float,
-        val columnStart: Float,
-        val columnEnd: Float
+            val rowStart: Float,
+            val rowEnd: Float,
+            val columnStart: Float,
+            val columnEnd: Float
     )
 
     private val timetableItemMap = mutableMapOf<LectureTimeTable, List<View>>()
@@ -136,25 +135,25 @@ class TimetableLayout @JvmOverloads constructor(
         setWillNotDraw(false)
 
         context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.TimetableLayout,
-            defStyleAttr,
-            0
+                attrs,
+                R.styleable.TimetableLayout,
+                defStyleAttr,
+                0
         ).apply {
             dividerColor =
-                getColor(R.styleable.TimetableLayout_dividerColor, Color.parseColor("#eeeeee"))
+                    getColor(R.styleable.TimetableLayout_dividerColor, Color.parseColor("#eeeeee"))
             rowCount = getInteger(R.styleable.TimetableLayout_rowCount, 9)
             columnCount = getInteger(R.styleable.TimetableLayout_columnCount, 5)
             rowHeight = getDimensionPixelSize(R.styleable.TimetableLayout_rowHeight, dp2Px(54f))
             columnWidth = getDimensionPixelSize(R.styleable.TimetableLayout_columnWidth, dp2Px(64f))
             rowHeaderWidth =
-                getDimensionPixelSize(R.styleable.TimetableLayout_rowHeaderWidth, dp2Px(36f))
+                    getDimensionPixelSize(R.styleable.TimetableLayout_rowHeaderWidth, dp2Px(36f))
             rowHeaderTextColor = getColor(
-                R.styleable.TimetableLayout_rowHeaderTextColor,
-                Color.parseColor("#222222")
+                    R.styleable.TimetableLayout_rowHeaderTextColor,
+                    Color.parseColor("#222222")
             )
             rowHeaderTextSize =
-                getDimensionPixelSize(R.styleable.TimetableLayout_rowHeaderTextSize, sp2Px(10f))
+                    getDimensionPixelSize(R.styleable.TimetableLayout_rowHeaderTextSize, sp2Px(10f))
 
             recycle()
         }
@@ -165,16 +164,16 @@ class TimetableLayout @JvmOverloads constructor(
         val defaultHeight = MeasureSpec.getSize(heightMeasureSpec)
 
         val width =
-            when (MeasureSpec.getMode(widthMeasureSpec)) {
-                MeasureSpec.EXACTLY -> defaultWidth
-                else -> columnCount * columnWidth
-            }
+                when (MeasureSpec.getMode(widthMeasureSpec)) {
+                    MeasureSpec.EXACTLY -> defaultWidth
+                    else -> columnCount * columnWidth
+                }
 
         val height =
-            when (MeasureSpec.getMode(heightMeasureSpec)) {
-                MeasureSpec.EXACTLY -> defaultHeight
-                else -> rowCount * rowHeight
-            }
+                when (MeasureSpec.getMode(heightMeasureSpec)) {
+                    MeasureSpec.EXACTLY -> defaultHeight
+                    else -> rowCount * rowHeight
+                }
 
         cellWidth = (width - rowHeaderWidth) / columnCount
         cellHeight = height / rowCount
@@ -187,14 +186,14 @@ class TimetableLayout @JvmOverloads constructor(
             val desiredHeight = cellHeight * (lp.rowEnd - lp.rowStart)
 
             child.measure(
-                MeasureSpec.makeMeasureSpec(desiredWidth.toInt(), MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(desiredHeight.toInt(), MeasureSpec.EXACTLY)
+                    MeasureSpec.makeMeasureSpec(desiredWidth.toInt(), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(desiredHeight.toInt(), MeasureSpec.EXACTLY)
             )
         }
 
         setMeasuredDimension(
-            (width + linePaint.strokeWidth).toInt(),
-            (height + linePaint.strokeWidth).toInt()
+                (width + linePaint.strokeWidth).toInt(),
+                (height + linePaint.strokeWidth).toInt()
         )
     }
 
@@ -215,54 +214,54 @@ class TimetableLayout @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         if (canvas == null) return
         canvas.drawLine(
-            rowHeaderWidth.toFloat(),
-            0f,
-            rowHeaderWidth.toFloat(),
-            measuredHeight.toFloat(),
-            linePaint
+                rowHeaderWidth.toFloat(),
+                0f,
+                rowHeaderWidth.toFloat(),
+                measuredHeight.toFloat(),
+                linePaint
         ) //Draw a left header line
 
         for (i in 0 until columnCount) {
             canvas.drawLine(
-                (cellWidth * i).toFloat() + rowHeaderWidth,
-                0f,
-                (cellWidth * i).toFloat() + rowHeaderWidth,
-                measuredHeight.toFloat(),
-                linePaint
+                    (cellWidth * i).toFloat() + rowHeaderWidth,
+                    0f,
+                    (cellWidth * i).toFloat() + rowHeaderWidth,
+                    measuredHeight.toFloat(),
+                    linePaint
             )
         }
         canvas.drawLine(
-            (cellWidth * columnCount).toFloat() + rowHeaderWidth,
-            0f,
-            (cellWidth * columnCount).toFloat() + rowHeaderWidth,
-            measuredHeight.toFloat(),
-            linePaint
+                (cellWidth * columnCount).toFloat() + rowHeaderWidth,
+                0f,
+                (cellWidth * columnCount).toFloat() + rowHeaderWidth,
+                measuredHeight.toFloat(),
+                linePaint
         )
         //Draw a column line
         for (i in 0 until rowCount) {
             with(rowHeaderTextFormatter.format(i)) {
                 rowHeaderTextPaint.getTextBounds(this, 0, this.length, textRectTemp)
                 canvas.drawText(
-                    this,
-                    (rowHeaderWidth - dp2Px(ROW_HEADER_TEXT_RIGHT_MARGIN_DP) - textRectTemp.width() - textRectTemp.left).toFloat(),
-                    (cellHeight * i).toFloat() - textRectTemp.top + dp2Px(ROW_HEADER_TEXT_TOP_MARGIN_DP),
-                    rowHeaderTextPaint
+                        this,
+                        (rowHeaderWidth - dp2Px(ROW_HEADER_TEXT_RIGHT_MARGIN_DP) - textRectTemp.width() - textRectTemp.left).toFloat(),
+                        (cellHeight * i).toFloat() - textRectTemp.top + dp2Px(ROW_HEADER_TEXT_TOP_MARGIN_DP),
+                        rowHeaderTextPaint
                 )
             }
             canvas.drawLine(
-                rowHeaderWidth.toFloat(),
-                (cellHeight * i).toFloat(),
-                measuredWidth.toFloat(),
-                (cellHeight * i).toFloat(),
-                linePaint
+                    rowHeaderWidth.toFloat(),
+                    (cellHeight * i).toFloat(),
+                    measuredWidth.toFloat(),
+                    (cellHeight * i).toFloat(),
+                    linePaint
             )
         }
         canvas.drawLine(
-            rowHeaderWidth.toFloat(),
-            (cellHeight * rowCount).toFloat(),
-            measuredWidth.toFloat(),
-            (cellHeight * rowCount).toFloat(),
-            linePaint
+                rowHeaderWidth.toFloat(),
+                (cellHeight * rowCount).toFloat(),
+                measuredWidth.toFloat(),
+                (cellHeight * rowCount).toFloat(),
+                linePaint
         )//Draw a row line
 
     }
@@ -284,36 +283,36 @@ class TimetableLayout @JvmOverloads constructor(
     }
 
     fun addTimetableItem(
-        vararg lectureTimeTables: LectureTimeTable
+            vararg lectureTimeTables: LectureTimeTable
     ) {
         lectureTimeTables.forEach { lectureTimeTable ->
             val views = mutableListOf<TextView>()
             TimetableUtil.convertApiExpressionToRC(
-                lectureTimeTable.classTime
-                    ?: "[]"
+                    lectureTimeTable.classTime
+                            ?: "[]"
             ).forEach { rc ->
                 views.add(TextView(context).apply {
                     setBackgroundColor(ContextCompat.getColor(context, TimetableUtil.timetableColors[itemAddedCount]))
                     setTextColor(ContextCompat.getColor(context, R.color.white))
                     text = String.format(
-                        "%s\n%s %s",
-                        lectureTimeTable.name,
-                        lectureTimeTable.classNumber,
-                        lectureTimeTable.professor
+                            "%s\n%s %s",
+                            lectureTimeTable.name,
+                            lectureTimeTable.classNumber,
+                            lectureTimeTable.professor
                     )
                     setTextSize(COMPLEX_UNIT_SP, 10f)
                     setPadding(
-                        dp2Px(4f),
-                        dp2Px(4f),
-                        dp2Px(4f),
-                        dp2Px(4f)
+                            dp2Px(4f),
+                            dp2Px(4f),
+                            dp2Px(4f),
+                            dp2Px(4f)
                     )
                     layoutParams = LayoutParams(
-                        context, null,
-                        rc.rowStart,
-                        rc.rowEnd,
-                        rc.columnStart,
-                        rc.columnEnd
+                            context, null,
+                            rc.rowStart,
+                            rc.rowEnd,
+                            rc.columnStart,
+                            rc.columnEnd
                     )
                     setOnClickListener {
                         timetableItemClickListener?.onTimetableItemClick(it, lectureTimeTable)
@@ -321,9 +320,9 @@ class TimetableLayout @JvmOverloads constructor(
                 })
             }
             replaceView(
-                map = timetableItemMap,
-                key = lectureTimeTable,
-                views = views
+                    map = timetableItemMap,
+                    key = lectureTimeTable,
+                    views = views
             )
             itemAddedCount++
         }
@@ -332,37 +331,37 @@ class TimetableLayout @JvmOverloads constructor(
     }
 
     fun addTimetableDummyItem(
-        vararg lectureTimeTables: LectureTimeTable
+            vararg lectureTimeTables: LectureTimeTable
     ) {
         lectureTimeTables.forEach { lectureTimeTable ->
             val views = mutableListOf<View>()
             TimetableUtil.convertApiExpressionToRC(
-                lectureTimeTable.classTime
-                    ?: "[]"
+                    lectureTimeTable.classTime
+                            ?: "[]"
             ).forEach { rc ->
                 views.add(View(context).apply {
                     setBackgroundResource(R.drawable.background_timetable_outline)
                     layoutParams = LayoutParams(
-                        context, null,
-                        rc.rowStart,
-                        rc.rowEnd,
-                        rc.columnStart,
-                        rc.columnEnd
+                            context, null,
+                            rc.rowStart,
+                            rc.rowEnd,
+                            rc.columnStart,
+                            rc.columnEnd
                     )
                 })
             }
 
             replaceView(
-                map = timetableDummyItemMap,
-                key = lectureTimeTable,
-                views = views
+                    map = timetableDummyItemMap,
+                    key = lectureTimeTable,
+                    views = views
             )
         }
         scrollViewCallback?.scrollToDummyView(timetableDummyItemMap.toValuesList())
     }
 
     fun removeTimetableItem(
-        vararg lectureTimeTables: LectureTimeTable
+            vararg lectureTimeTables: LectureTimeTable
     ) {
         lectureTimeTables.forEach { lectureTimeTable ->
             timetableItemMap[lectureTimeTable]?.forEach {
@@ -373,7 +372,7 @@ class TimetableLayout @JvmOverloads constructor(
     }
 
     fun removeTimetableDummyItem(
-        vararg lectureTimeTables: LectureTimeTable
+            vararg lectureTimeTables: LectureTimeTable
     ) {
         lectureTimeTables.forEach { lectureTimeTable ->
             timetableDummyItemMap[lectureTimeTable]?.forEach {
@@ -403,8 +402,8 @@ class TimetableLayout @JvmOverloads constructor(
     }
 
     inline fun setScrollViewCallback(
-        crossinline callbackItem: (List<View>) -> Unit,
-        crossinline callbackDummy: (List<View>) -> Unit
+            crossinline callbackItem: (List<View>) -> Unit,
+            crossinline callbackDummy: (List<View>) -> Unit
     ) {
         scrollViewCallback = object : ScrollViewCallback {
             override fun scrollToItemView(timetableItemViews: List<View>) {
@@ -426,7 +425,7 @@ class TimetableLayout @JvmOverloads constructor(
     }
 
     class LayoutParams(context: Context, attrs: AttributeSet? = null) : MarginLayoutParams(
-        WRAP_CONTENT, WRAP_CONTENT
+            WRAP_CONTENT, WRAP_CONTENT
     ) {
         var rowStart: Float = 0f
         var rowEnd: Float = 0f
@@ -434,12 +433,12 @@ class TimetableLayout @JvmOverloads constructor(
         var columnEnd: Float = 0f
 
         constructor(
-            context: Context,
-            attrs: AttributeSet? = null,
-            rowStart: Float,
-            rowEnd: Float,
-            columnStart: Float,
-            columnEnd: Float,
+                context: Context,
+                attrs: AttributeSet? = null,
+                rowStart: Float,
+                rowEnd: Float,
+                columnStart: Float,
+                columnEnd: Float,
         ) : this(context, null) {
             this.rowStart = rowStart
             this.rowEnd = rowEnd
@@ -449,10 +448,10 @@ class TimetableLayout @JvmOverloads constructor(
 
         init {
             context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.TimetableLayout,
-                0,
-                0
+                    attrs,
+                    R.styleable.TimetableLayout,
+                    0,
+                    0
             ).apply {
                 rowStart = getFloat(R.styleable.TimetableLayout_layout_rowStart, 0f)
                 rowEnd = getFloat(R.styleable.TimetableLayout_layout_rowEnd, 0f)

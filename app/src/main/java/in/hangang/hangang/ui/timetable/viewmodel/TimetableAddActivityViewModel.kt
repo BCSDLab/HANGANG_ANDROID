@@ -24,20 +24,20 @@ class TimetableAddActivityViewModel(private val timeTableRepository: TimeTableRe
 
     fun addTimeTable(semesterDateId: Int = TIMETABLE_DEFAULT_SEMESTER_ID, name: String) {
         timeTableRepository.makeTimeTable(
-            UserTimeTableRequest(
-                name = name,
-                semesterDateId = semesterDateId
-            )
+                UserTimeTableRequest(
+                        name = name,
+                        semesterDateId = semesterDateId
+                )
         )
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({
-                _isAdded.postValue(Event(true))
-            }, {
-                _error.postValue(Event(it.toCommonResponse()))
-            })
-            .addTo(compositeDisposable)
+                .handleHttpException()
+                .handleProgress(this)
+                .withThread()
+                .subscribe({
+                    _isAdded.postValue(Event(true))
+                }, {
+                    _error.postValue(Event(it.toCommonResponse()))
+                })
+                .addTo(compositeDisposable)
     }
 
     fun checkAddingAvailability(name: String) {

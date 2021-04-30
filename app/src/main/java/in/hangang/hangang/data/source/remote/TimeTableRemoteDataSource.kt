@@ -15,37 +15,37 @@ import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRemoteDataSource(
-    private val authApi: AuthApi
+        private val authApi: AuthApi
 ) : TimeTableDataSource {
     override fun getTimeTables(): Single<Map<Int, List<TimeTable>>> {
         return authApi.getTimeTables()
-            .flatMap { list ->
-                if (list.isEmpty()) {
-                    makeTimeTable(
-                        UserTimeTableRequest(
-                            name = TIMETABLE_DEFAULT_TIMETABLE_NAME,
-                            semesterDateId = TIMETABLE_DEFAULT_SEMESTER_ID
-                        )
-                    ).flatMap {
-                        authApi.getTimeTables()
-                    }
-                } else
-                    Single.just(list)
-            }
-            .map { list -> list.groupBy { it.semesterDateId } }
+                .flatMap { list ->
+                    if (list.isEmpty()) {
+                        makeTimeTable(
+                                UserTimeTableRequest(
+                                        name = TIMETABLE_DEFAULT_TIMETABLE_NAME,
+                                        semesterDateId = TIMETABLE_DEFAULT_SEMESTER_ID
+                                )
+                        ).flatMap {
+                            authApi.getTimeTables()
+                        }
+                    } else
+                        Single.just(list)
+                }
+                .map { list -> list.groupBy { it.semesterDateId } }
     }
 
     override fun getLectureTimetableList(
-        classification: List<String>?,
-        criteria: String?,
-        department: String?,
-        keyword: String?,
-        limit: Int,
-        page: Int,
-        semesterDateId: Int
+            classification: List<String>?,
+            criteria: String?,
+            department: String?,
+            keyword: String?,
+            limit: Int,
+            page: Int,
+            semesterDateId: Int
     ): Single<List<LectureTimeTable>> {
         return authApi.getTimetableLectureList(
-            classification, criteria, department, keyword, limit, page, semesterDateId
+                classification, criteria, department, keyword, limit, page, semesterDateId
         ).map { it.map { item -> item.copy(lectureId = item.id) }.toList() }
     }
 
@@ -59,16 +59,16 @@ class TimeTableRemoteDataSource(
 
     override fun modifyTimeTableName(timetableId: Int, name: String): Single<CommonResponse> {
         return authApi.modifyTimeTableName(
-            UserTimeTableRequest(
-                id = timetableId,
-                name = name
-            )
+                UserTimeTableRequest(
+                        id = timetableId,
+                        name = name
+                )
         )
     }
 
     override fun setMainTimeTable(timetableId: Int): Single<CommonResponse> {
         return authApi.setMainTimeTable(
-            TimeTableRequest(userTimeTableId = timetableId)
+                TimeTableRequest(userTimeTableId = timetableId)
         )
     }
 
@@ -82,72 +82,72 @@ class TimeTableRemoteDataSource(
 
     override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
         return authApi.addLectureInTimeTable(
-            TimeTableRequest(lectureId, timetableId)
+                TimeTableRequest(lectureId, timetableId)
         )
     }
 
     override fun removeLectureFromTimeTable(
-        lectureId: Int,
-        timetableId: Int
+            lectureId: Int,
+            timetableId: Int
     ): Single<CommonResponse> {
         return authApi.removeLectureInTimeTable(
-            TimeTableRequest(lectureId, timetableId)
+                TimeTableRequest(lectureId, timetableId)
         )
     }
 
     override fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
         return authApi.scrapLecture(
-            TimeTableRequest(
-                lectureId = lectureTimeTable.lectureId
-            )
+                TimeTableRequest(
+                        lectureId = lectureTimeTable.lectureId
+                )
         )
-            .flatMap { Single.just(lectureTimeTable) }
+                .flatMap { Single.just(lectureTimeTable) }
     }
 
     override fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable> {
         return authApi.unscrapLecture(
-            TimeTableRequest(
-                lectureId = lectureTimeTable.lectureId
-            )
+                TimeTableRequest(
+                        lectureId = lectureTimeTable.lectureId
+                )
         )
-            .flatMap { Single.just(lectureTimeTable) }
+                .flatMap { Single.just(lectureTimeTable) }
     }
 
     override fun getScrapLectures(
-        classification: List<String>?,
-        department: String?,
-        keyword: String?
+            classification: List<String>?,
+            department: String?,
+            keyword: String?
     ): Single<Collection<LectureTimeTable>> {
         return authApi.getScrapLectures()
-            .flatMap { list ->
-                val collection: Collection<LectureTimeTable> = list.filter {
-                    if (classification == null || classification.isEmpty()) true
-                    else classification.contains(it.classification)
-                }.filter {
-                    if (department != null) department == it.department
-                    else true
-                }.filter {
-                    if (keyword != null)
-                        it.contains(keyword)
-                    else true
-                }.map {
-                    it.copy(lectureId = it.id)
-                }.toSet()
+                .flatMap { list ->
+                    val collection: Collection<LectureTimeTable> = list.filter {
+                        if (classification == null || classification.isEmpty()) true
+                        else classification.contains(it.classification)
+                    }.filter {
+                        if (department != null) department == it.department
+                        else true
+                    }.filter {
+                        if (keyword != null)
+                            it.contains(keyword)
+                        else true
+                    }.map {
+                        it.copy(lectureId = it.id)
+                    }.toSet()
 
-                Single.just(collection)
-            }
+                    Single.just(collection)
+                }
     }
 
     override fun addCustomLectureInTimetable(
-        classTime: String?,
-        name: String?,
-        professor: String?,
-        userTimetableId: Int
+            classTime: String?,
+            name: String?,
+            professor: String?,
+            userTimetableId: Int
     ): Single<CommonResponse> {
         return authApi.addCustomLectureInTimetable(
-            TimeTableCustomLectureRequest(
-                classTime, name, professor, userTimetableId
-            )
+                TimeTableCustomLectureRequest(
+                        classTime, name, professor, userTimetableId
+                )
         )
     }
 
@@ -157,26 +157,26 @@ class TimeTableRemoteDataSource(
 
     override fun addMemo(timetableLectureId: Int, memo: String): Single<CommonResponse> {
         return authApi.addTimetableMemo(
-            TimetableMemoRequest(
-                timetableLectureId, memo
-            )
+                TimetableMemoRequest(
+                        timetableLectureId, memo
+                )
         )
     }
 
     override fun modifyMemo(timetableLectureId: Int, memo: String): Single<CommonResponse> {
         return authApi.modifyTimetableMemo(
-            TimetableMemoRequest(
-                timetableLectureId, memo
-            )
+                TimetableMemoRequest(
+                        timetableLectureId, memo
+                )
         )
     }
 
     override fun removeMemo(timetableLectureId: Int): Single<CommonResponse> {
         return authApi.removeTimetableMemo(
-            TimetableMemoRequest(
-                timetableLectureId = timetableLectureId,
-                memo = null
-            )
+                TimetableMemoRequest(
+                        timetableLectureId = timetableLectureId,
+                        memo = null
+                )
         )
     }
 }

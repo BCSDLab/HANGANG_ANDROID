@@ -5,9 +5,9 @@ import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.core.view.setVisibility
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentTimetableLectureDetailBinding
+import `in`.hangang.hangang.ui.customview.timetable.TimetableUtil
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
-import `in`.hangang.hangang.util.timetable.TimetableUtil
 import android.os.Bundle
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -30,8 +30,8 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
             timetableViewModel.displayingTimeTable.value?.let { timetable ->
                 timetableLectureDetailViewModel.lectureTimetable.value?.let { lectureTimeTable ->
                     timetableViewModel.removeTimeTableLecture(
-                        timetable = timetable,
-                        lectureTimeTable = lectureTimeTable
+                            timetable = timetable,
+                            lectureTimeTable = lectureTimeTable
                     )
                 }
             }
@@ -54,10 +54,10 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
                 binding.lecture = it
                 binding.executePendingBindings()
                 binding.textViewTimetableLectureDetailTime.text =
-                    TimetableUtil.convertApiExpressionToKoreatechClassTime(
-                        requireContext(), it.classTime
-                            ?: "[]"
-                    )
+                        TimetableUtil.convertApiExpressionToKoreatechClassTime(
+                                requireContext(), it.classTime
+                                ?: "[]"
+                        )
             }
             memo.observe(viewLifecycleOwner, EventObserver {
                 binding.editTextMemo.setText(it)

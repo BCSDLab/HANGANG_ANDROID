@@ -12,11 +12,11 @@ import java.io.OutputStream
 
 class FileUtilLegacyImpl(private val context: Context) : FileUtil {
     override fun saveImageToPictures(
-        bitmap: Bitmap,
-        fileName: String,
-        mineType: String,
-        directory: String,
-        mediaContentUri: Uri
+            bitmap: Bitmap,
+            fileName: String,
+            mineType: String,
+            directory: String,
+            mediaContentUri: Uri
     ): Single<Uri> {
         return Single.create { subscriber ->
             var outputStream: OutputStream? = null

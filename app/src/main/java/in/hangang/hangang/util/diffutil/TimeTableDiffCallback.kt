@@ -4,8 +4,8 @@ import `in`.hangang.hangang.data.entity.TimeTable
 import androidx.recyclerview.widget.DiffUtil
 
 class TimeTableDiffCallback(
-    private val oldList: List<Any>,
-    private val newList: List<Any>
+        private val oldList: List<Any>,
+        private val newList: List<Any>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 

@@ -28,16 +28,16 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
 
     private val timetableLectureAdapter: TimetableLectureAdapter by lazy {
         TimetableLectureAdapter(
-            requireContext()
+                requireContext()
         )
     }
 
     private val timetableLectureFilterActivityResult =
-        registerForActivityResult(TimeTableLectureFilterActivityContract()) {
-            if (it.apply) {
-                timetableLectureListViewModel.setLectureFilter(it.lectureFilter)
+            registerForActivityResult(TimeTableLectureFilterActivityContract()) {
+                if (it.apply) {
+                    timetableLectureListViewModel.setLectureFilter(it.lectureFilter)
+                }
             }
-        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,7 +52,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                 if (!it.isChecked) {
                     timetableLectureListViewModel.setShowingScrap(false)
                     timetableLectureListViewModel.setLectureFilter(
-                        getLectureFilter().copy(department = null)
+                            getLectureFilter().copy(department = null)
                     )
                 } else {
                     binding.radioGroupDepartment.childViews().forEach { child ->
@@ -61,30 +61,30 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                     it.isChecked = true
                     timetableLectureListViewModel.setShowingScrap(it.id == R.id.radio_button_major_scrap)
                     timetableLectureListViewModel.setLectureFilter(
-                        getLectureFilter().copy(
-                            department = when (it.id) {
-                                R.id.radio_button_major_0 -> DEPARTMENT_LIBERAL
-                                R.id.radio_button_major_1 -> DEPARTMENT_HRD
-                                R.id.radio_button_major_2 -> DEPARTMENT_MECHANICAL
-                                R.id.radio_button_major_3 -> DEPARTMENT_DESIGN
-                                R.id.radio_button_major_4 -> DEPARTMENT_MECHATRONICS
-                                R.id.radio_button_major_5 -> DEPARTMENT_INDUSTRIAL
-                                R.id.radio_button_major_6 -> DEPARTMENT_ENERGY
-                                R.id.radio_button_major_7 -> DEPARTMENT_CONVERGENCE
-                                R.id.radio_button_major_8 -> DEPARTMENT_ELECTRONIC
-                                R.id.radio_button_major_9 -> DEPARTMENT_COMPUTER
-                                else -> null
-                            }
-                        )
+                            getLectureFilter().copy(
+                                    department = when (it.id) {
+                                        R.id.radio_button_major_0 -> DEPARTMENT_LIBERAL
+                                        R.id.radio_button_major_1 -> DEPARTMENT_HRD
+                                        R.id.radio_button_major_2 -> DEPARTMENT_MECHANICAL
+                                        R.id.radio_button_major_3 -> DEPARTMENT_DESIGN
+                                        R.id.radio_button_major_4 -> DEPARTMENT_MECHATRONICS
+                                        R.id.radio_button_major_5 -> DEPARTMENT_INDUSTRIAL
+                                        R.id.radio_button_major_6 -> DEPARTMENT_ENERGY
+                                        R.id.radio_button_major_7 -> DEPARTMENT_CONVERGENCE
+                                        R.id.radio_button_major_8 -> DEPARTMENT_ELECTRONIC
+                                        R.id.radio_button_major_9 -> DEPARTMENT_COMPUTER
+                                        else -> null
+                                    }
+                            )
                     )
                 }
             }
         }
         binding.timetableLectureSearchBar.setSearchListener {
             timetableLectureListViewModel.setLectureFilter(
-                getLectureFilter().copy(
-                    keyword = it
-                )
+                    getLectureFilter().copy(
+                            keyword = it
+                    )
             )
         }
         binding.buttonTimetableLectureFilter.setOnClickListener {
@@ -95,7 +95,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
         binding.recyclerViewTimetableLectures.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTimetableLectures.adapter = timetableLectureAdapter
         binding.recyclerViewTimetableLectures.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
+                RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
@@ -112,26 +112,26 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
             }
 
             override fun onAddButtonClicked(
-                position: Int,
-                lectureTimeTable: LectureTimeTable
+                    position: Int,
+                    lectureTimeTable: LectureTimeTable
             ): Boolean {
                 timetableViewModel.displayingTimeTable.value?.let {
                     timetableViewModel.addTimeTableLecture(
-                        timetable = it,
-                        lectureTimeTable = lectureTimeTable
+                            timetable = it,
+                            lectureTimeTable = lectureTimeTable
                     )
                 }
                 return false
             }
 
             override fun onRemoveButtonClicked(
-                position: Int,
-                lectureTimeTable: LectureTimeTable
+                    position: Int,
+                    lectureTimeTable: LectureTimeTable
             ): Boolean {
                 timetableViewModel.displayingTimeTable.value?.let {
                     timetableViewModel.removeTimeTableLecture(
-                        timetable = it,
-                        lectureTimeTable = lectureTimeTable
+                            timetable = it,
+                            lectureTimeTable = lectureTimeTable
                     )
                 }
                 return false
@@ -201,8 +201,8 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
             timetableLectureListViewModel.getScrapedLectures(true)
         } else {
             timetableLectureListViewModel.getLectures(
-                semesterDateId = timetableViewModel.displayingTimeTable.value?.semesterDateId
-                    ?: 5
+                    semesterDateId = timetableViewModel.displayingTimeTable.value?.semesterDateId
+                            ?: 5
             )
         }
     }
@@ -214,5 +214,5 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
     }
 
     private fun getLectureFilter(): LectureFilter =
-        timetableLectureListViewModel.lectureFilter.value ?: LectureFilter()
+            timetableLectureListViewModel.lectureFilter.value ?: LectureFilter()
 }
