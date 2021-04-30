@@ -3,7 +3,7 @@ package `in`.hangang.hangang.di
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
-import `in`.hangang.hangang.ui.lecturereview.LectureReviewListViewModel
+import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewListViewModel
 import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.home.mytimetable.viewmodel.MyTimetableFragmentViewModel
 import `in`.hangang.hangang.ui.home.ranking.viewmodel.RankingLectureViewModel
@@ -30,4 +30,5 @@ val viewModelModule = module {
     viewModel { RecommendedLecturesFragmentViewModel() }
     viewModel { RecentLecturesFragmentViewModel() }
     viewModel { RankingLectureViewModel(get()) }
+
 }

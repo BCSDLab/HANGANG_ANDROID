@@ -58,8 +58,8 @@ interface NoAuthApi {
         @Query("department") department: String? = null,
         @Query("hash_tag") hashTag: Int? = null,
         @Query("keyword") keyword: String? = null,
-        @Query("limit") limit: Int = 10,
-        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 20,
+        @Query("page") page: Int? = null,
         @Query("sort") sort: String? = null
     ): Single<ArrayList<RankingLectureItem>>
 

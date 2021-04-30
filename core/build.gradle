@@ -62,6 +62,9 @@ dependencies {
     api project.androidxNavigationUi
     api project.androidxMaterial
     api project.androidxFragment
+    api project.androidxPagingRuntime
+    api project.androidxPagingCommon
+    api project.androidxPagingRxjava3
     /* Dependency - AndroidX lifecycle */
     api project.androidxLifecycleLivedata
     api project.androidLifecycleViewmodel

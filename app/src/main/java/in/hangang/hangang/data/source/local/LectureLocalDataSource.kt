@@ -5,15 +5,15 @@ import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
 class LectureLocalDataSource : LectureDataSource {
-    override fun getLectureRankingByTotalRating(major: String): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByTotalRating(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
         return Single.never()
     }
 
-    override fun getLectureRankingByReviewCount(major: String): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByReviewCount(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
         return Single.never()
     }
 
-    override fun getLectureRankingByLatestReview(major: String): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByLatestReview(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
         return Single.never()
     }
 }

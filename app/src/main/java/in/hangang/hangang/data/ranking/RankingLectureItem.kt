@@ -23,7 +23,7 @@ data class RankingLectureItem(
     @SerializedName("last_reviewed")
     val lastReviewed_at: String,
     @SerializedName("review_count")
-    val reviewCount: Int,
+    val reviewCount: String,
     @SerializedName("is_deleted")
     val isDeleted: Boolean,
     @SerializedName("created_at")

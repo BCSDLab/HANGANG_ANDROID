@@ -17,7 +17,7 @@ class RankingLectureViewModel(private val lectureRepository: LectureRepository) 
     val rankingLectureList: LiveData<ArrayList<RankingLectureItem>> get() = _rankingLectureList
 
     fun getRankingLectureByTotalRating(major: String) {
-        lectureRepository.getLectureRankingByTotalRating(major)
+        lectureRepository.getLectureRankingByTotalRating(major,1)
             .handleHttpException()
             .handleProgress(this)
             .withThread()
