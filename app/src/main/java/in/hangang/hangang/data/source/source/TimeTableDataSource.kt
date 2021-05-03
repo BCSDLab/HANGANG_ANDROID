@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source.source
 
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -23,8 +24,8 @@ interface TimeTableDataSource {
     fun removeTimeTable(timetableId: Int): Single<CommonResponse>
     fun modifyTimeTableName(timetableId: Int, name: String): Single<CommonResponse>
     fun setMainTimeTable(timetableId: Int): Single<CommonResponse>
-    fun getMainTimeTable(): Single<Int>
-    fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>>
+    fun getMainTimeTable(): Single<TimeTableWithLecture>
+    fun getTimetable(timetableId: Int): Single<TimeTableWithLecture>
     fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
     fun removeLectureFromTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
     fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>

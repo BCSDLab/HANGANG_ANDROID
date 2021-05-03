@@ -89,6 +89,6 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
     }
 
     companion object {
-        const val TIME_FORMAT = "02d"
+        const val TIME_FORMAT = "%02d"
     }
 }

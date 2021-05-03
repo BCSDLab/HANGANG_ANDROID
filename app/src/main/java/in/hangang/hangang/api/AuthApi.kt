@@ -2,7 +2,7 @@ package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.MainTimeTable
+import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
@@ -53,8 +53,8 @@ interface AuthApi {
 
     @GET(TIMETABLE_LECTURE)
     fun getLectureListFromTimeTable(
-            @Query("timeTableId") timetableId: Int
-    ): Single<List<LectureTimeTable>>
+        @Query("timeTableId") timetableId: Int
+    ): Single<TimeTableWithLecture>
 
     @POST(TIMETABLE_CUSTOM_LECTURE)
     fun addCustomLectureInTimetable(
@@ -73,7 +73,7 @@ interface AuthApi {
     ): Single<List<LectureTimeTable>>
 
     @GET(TIMETABLE_MAIN)
-    fun getMainTimeTable(): Single<MainTimeTable>
+    fun getMainTimeTable(): Single<TimeTableWithLecture>
 
     @HTTP(method = "PATCH", path = TIMETABLE_MAIN, hasBody = true)
     fun setMainTimeTable(

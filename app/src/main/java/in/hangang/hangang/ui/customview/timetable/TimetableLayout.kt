@@ -295,10 +295,10 @@ class TimetableLayout @JvmOverloads constructor(
                     setBackgroundColor(ContextCompat.getColor(context, TimetableUtil.timetableColors[itemAddedCount]))
                     setTextColor(ContextCompat.getColor(context, R.color.white))
                     text = String.format(
-                            "%s\n%s %s",
-                            lectureTimeTable.name,
-                            lectureTimeTable.classNumber,
-                            lectureTimeTable.professor
+                            "%s\n%s%s",
+                            lectureTimeTable.name ?: "",
+                            lectureTimeTable.classNumber?.let { "$it " } ?: "",
+                            lectureTimeTable.professor?.let { "$it " } ?: ""
                     )
                     setTextSize(COMPLEX_UNIT_SP, 10f)
                     setPadding(

@@ -55,7 +55,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
         if (it.resultCode == RESULT_OK) {
             it.selectedTimetable?.let { timetable ->
-                timetableViewModel.setDisplayingTimeTable(timetable)
+                timetableViewModel.getTimeTable(timetable)
             }
             if (it.timetableListChanged) timetableViewModel.getTimetables()
             timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
@@ -307,7 +307,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun updateTimeTable(timetable: TimeTable) {
         binding.appBar.title = timetable.name.toString()
         timetableLectureListViewModel.getScrapedLectures(false)
-        timetableViewModel.getLectureTimeTablesInTimeTable(timetable)
+        //timetableViewModel.getLectureTimeTablesInTimeTable(timetable)
         timetableLectureListViewModel.resetLectureFilter()
     }
 

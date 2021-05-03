@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source.local
 import `in`.hangang.hangang.constant.TIMETABLE_LECTURE_DIPS
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -43,11 +44,11 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         return Single.never()
     }
 
-    override fun getMainTimeTable(): Single<Int> {
+    override fun getMainTimeTable(): Single<TimeTableWithLecture> {
         return Single.never()
     }
 
-    override fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>> {
+    override fun getTimetable(timetableId: Int): Single<TimeTableWithLecture> {
         return Single.never()
     }
 

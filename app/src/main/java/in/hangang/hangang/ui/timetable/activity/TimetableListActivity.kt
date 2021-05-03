@@ -39,6 +39,9 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
         initAppBar()
         initRecyclerView()
         initViewModel()
+
+        timetableViewModel.getTimetables()
+        timetableViewModel.getMainTimeTable()
     }
 
     private fun initRecyclerView() {

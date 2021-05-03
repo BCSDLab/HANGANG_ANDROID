@@ -5,6 +5,7 @@ import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_SEMESTER_ID
 import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_TIMETABLE_NAME
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
 import `in`.hangang.hangang.data.request.TimeTableRequest
@@ -18,21 +19,8 @@ class TimeTableRemoteDataSource(
         private val authApi: AuthApi
 ) : TimeTableDataSource {
     override fun getTimeTables(): Single<Map<Int, List<TimeTable>>> {
-        return authApi.getTimeTables()
-                .flatMap { list ->
-                    if (list.isEmpty()) {
-                        makeTimeTable(
-                                UserTimeTableRequest(
-                                        name = TIMETABLE_DEFAULT_TIMETABLE_NAME,
-                                        semesterDateId = TIMETABLE_DEFAULT_SEMESTER_ID
-                                )
-                        ).flatMap {
-                            authApi.getTimeTables()
-                        }
-                    } else
-                        Single.just(list)
-                }
-                .map { list -> list.groupBy { it.semesterDateId } }
+        return getTimetablesOrMakeNew()
+            .map { list -> list.groupBy { it.semesterDateId } }
     }
 
     override fun getLectureTimetableList(
@@ -54,7 +42,7 @@ class TimeTableRemoteDataSource(
     }
 
     override fun removeTimeTable(timetableId: Int): Single<CommonResponse> {
-        return authApi.deleteTimeTable(TimeTableRequest(userTimeTableId = timetableId))
+        return authApi.deleteTimeTable(TimeTableRequest(id = timetableId))
     }
 
     override fun modifyTimeTableName(timetableId: Int, name: String): Single<CommonResponse> {
@@ -68,15 +56,27 @@ class TimeTableRemoteDataSource(
 
     override fun setMainTimeTable(timetableId: Int): Single<CommonResponse> {
         return authApi.setMainTimeTable(
-                TimeTableRequest(userTimeTableId = timetableId)
+            TimeTableRequest(id = timetableId)
         )
     }
 
-    override fun getMainTimeTable(): Single<Int> {
-        return authApi.getMainTimeTable().map { it.id }
+    override fun getMainTimeTable(): Single<TimeTableWithLecture> {
+        var attempts = 0
+        return authApi.getMainTimeTable()
+            .onErrorResumeNext {
+                getTimetablesOrMakeNew().flatMap {
+                    authApi.setMainTimeTable(
+                        TimeTableRequest(
+                            id = it[0].id
+                        )
+                    )
+                }.flatMap {
+                    authApi.getMainTimeTable()
+                }
+            }
     }
 
-    override fun getLectureList(timetableId: Int): Single<List<LectureTimeTable>> {
+    override fun getTimetable(timetableId: Int): Single<TimeTableWithLecture> {
         return authApi.getLectureListFromTimeTable(timetableId)
     }
 
@@ -178,5 +178,22 @@ class TimeTableRemoteDataSource(
                         memo = null
                 )
         )
+    }
+
+    private fun getTimetablesOrMakeNew(): Single<List<TimeTable>> {
+        return authApi.getTimeTables()
+            .flatMap { list ->
+                if (list.isEmpty()) {
+                    makeTimeTable(
+                        UserTimeTableRequest(
+                            name = TIMETABLE_DEFAULT_TIMETABLE_NAME,
+                            semesterDateId = TIMETABLE_DEFAULT_SEMESTER_ID
+                        )
+                    ).flatMap {
+                        authApi.getTimeTables()
+                    }
+                } else
+                    Single.just(list)
+            }
     }
 }

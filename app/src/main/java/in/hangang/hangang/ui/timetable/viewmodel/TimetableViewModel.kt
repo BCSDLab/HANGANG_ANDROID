@@ -5,6 +5,7 @@ import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.toTimeTable
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.TimeTableRepository
@@ -88,17 +89,33 @@ class TimetableViewModel(
                 })
     }
 
+    fun getTimeTable(timetable: TimeTable) {
+        timeTableRepository.getTimetable(timetable.id)
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _displayingTimeTable.postValue(it.toTimeTable())
+                _lectureTimetablesInTimetable.postValue(it.lectureList)
+            }, {
+                //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
+                LogUtil.e(it.toCommonResponse().errorMessage)
+            })
+            .addTo(compositeDisposable)
+    }
+
     fun getMainTimeTable() {
-        getMainTimeTableRx()
-                .withThread()
-                .handleProgress(this)
-                .handleHttpException()
-                .subscribe({
-                    _mainTimetableEvent.value = Event(it)
-                }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                    //TODO 메인 시간표 가져오는 중 오류
-                })
+        timeTableRepository.getMainTimeTable()
+            .withThread()
+            .handleProgress(this)
+            .handleHttpException()
+            .subscribe({
+                _mainTimetableEvent.postValue(Event(it.toTimeTable()))
+                _lectureTimetablesInTimetable.postValue(it.lectureList)
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+                //TODO 메인 시간표 가져오는 중 오류
+            })
     }
 
     fun setMainTimetable(timetableId: Int) {
@@ -116,20 +133,21 @@ class TimetableViewModel(
 
     fun removeTimetable(timetable: TimeTable) {
         timeTableRepository.removeTimeTable(timetableId = timetable.id)
-                .flatMap {
-                    getTimetablesRx()
-                }.flatMap {
-                    getMainTimeTableRx()
-                }
-                .withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    _displayingTimeTable.postValue(it)
-                }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                    //TODO 시간표 삭제 중 오류
-                })
+            .flatMap {
+                getTimetablesRx()
+            }.flatMap {
+                timeTableRepository.getMainTimeTable()
+            }
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _displayingTimeTable.postValue(it.toTimeTable())
+                _lectureTimetablesInTimetable.postValue(it.lectureList)
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+                //TODO 시간표 삭제 중 오류
+            })
     }
 
     fun modifyTimeTableName(timetable: TimeTable, name: String) {
@@ -177,17 +195,17 @@ class TimetableViewModel(
     }
 
     fun getLectureTimeTablesInTimeTable(timetable: TimeTable) {
-        timeTableRepository.getLectureList(timetable.id)
-                .withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    _lectureTimetablesInTimetable.postValue(it)
-                }, {
-                    //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                })
-                .addTo(compositeDisposable)
+        timeTableRepository.getTimetable(timetable.id)
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lectureTimetablesInTimetable.postValue(it.lectureList)
+            }, {
+                //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
+                LogUtil.e(it.toCommonResponse().errorMessage)
+            })
+            .addTo(compositeDisposable)
     }
 
     private fun checkLectureDuplication(classTime: String): LectureTimeTable? {
@@ -207,13 +225,13 @@ class TimetableViewModel(
                     lectureId = lectureTimeTable.id,
                     timetableId = timetable.id
             ).flatMap {
-                timeTableRepository.getLectureList(timetable.id)
+                timeTableRepository.getTimetable(timetable.id)
             }
                     .withThread()
                     .handleHttpException()
                     .handleProgress(this)
                     .subscribe({
-                        _lectureTimetablesInTimetable.postValue(it)
+                        _lectureTimetablesInTimetable.postValue(it.lectureList)
                     }, {
                         LogUtil.e(it.toCommonResponse().errorMessage)
                         //TODO 시간표에 강의 추가 중 에러 발생시
@@ -224,21 +242,21 @@ class TimetableViewModel(
 
     fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
         timeTableRepository.removeLectureFromTimeTable(
-                lectureId = lectureTimeTable.lectureId,
-                timetableId = timetable.id
+            lectureId = lectureTimeTable.lectureId,
+            timetableId = timetable.id
         ).flatMap {
-            timeTableRepository.getLectureList(timetable.id)
+            timeTableRepository.getTimetable(timetable.id)
         }
-                .withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    _lectureTimetablesInTimetable.postValue(it)
-                }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                    //TODO 시간표에 강의 삭제 중 에러 발생시
-                })
-                .addTo(compositeDisposable)
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lectureTimetablesInTimetable.postValue(it.lectureList)
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+                //TODO 시간표에 강의 삭제 중 에러 발생시
+            })
+            .addTo(compositeDisposable)
     }
 
     fun selectLectureTimeTable(lectureTimeTable: LectureTimeTable?) {
@@ -282,18 +300,18 @@ class TimetableViewModel(
             timeTableRepository.addCustomLectureInTimetable(
                     classTime, name, professor, timetableId
             )
-                    .flatMap {
-                        timeTableRepository.getLectureList(timetableId)
-                    }
-                    .withThread()
-                    .handleProgress(this)
-                    .handleHttpException()
-                    .subscribe({
-                        _customLectureAdded.postValue(Event(true))
-                        _lectureTimetablesInTimetable.postValue(it)
-                    }, {
-                        LogUtil.e(it.toCommonResponse().errorMessage)
-                    })
+                .flatMap {
+                    timeTableRepository.getTimetable(timetableId)
+                }
+                .withThread()
+                .handleProgress(this)
+                .handleHttpException()
+                .subscribe({
+                    _customLectureAdded.postValue(Event(true))
+                    _lectureTimetablesInTimetable.postValue(it.lectureList)
+                }, {
+                    LogUtil.e(it.toCommonResponse().errorMessage)
+                })
         }
 
     }
@@ -310,46 +328,11 @@ class TimetableViewModel(
         _timestamp.postValue(times)
     }
 
-    private fun findTimeTableById(timetableId: Int): TimeTable? {
-        return listTimetables.find { it.id == timetableId }
-    }
-
     private fun getTimetablesRx(): Single<Map<Int, List<TimeTable>>> {
         return timeTableRepository.getTimeTables().doOnSuccess {
             listTimetables.clear()
             listTimetables.addAll(it.toValuesList())
             _timetables.postValue(it)
-        }
-    }
-
-    private fun getMainTimeTableRx(): Single<TimeTable> {
-        return if (listTimetables.isEmpty()) {
-            getTimetablesRx()
-                    .flatMap {
-                        getMainTimeTableRx()
-                    }
-        } else {
-            timeTableRepository.getMainTimeTable()
-                    .flatMap { id ->
-                        findTimeTableByIdRx(id)
-                    }
-                    .onErrorResumeNext {
-                        if (it is EOFException) {
-                            timeTableRepository.setMainTimeTable(listTimetables[0].id)
-                                    .flatMap { getMainTimeTableRx() }
-                        } else
-                            Single.error(it)
-                    }
-        }
-    }
-
-    private fun findTimeTableByIdRx(timetableId: Int): Single<TimeTable> {
-        return with(findTimeTableById(timetableId)) {
-            if (this == null) {
-                timeTableRepository.setMainTimeTable(listTimetables[0].id).flatMap {
-                    Single.just(listTimetables[0])
-                }
-            } else Single.just(this)
         }
     }
 
