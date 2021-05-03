@@ -1,12 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/recycler_view_ranking_list"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="306dp"
-        tools:context=".ui.home.ranking.fragment.RankingListFragment"
-        tools:itemCount="5"
-        tools:listitem="@layout/item_home_ranking_list" />
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_ranking_list"
+            android:layout_width="match_parent"
+            android:layout_height="306dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:context=".ui.home.ranking.fragment.RankingListFragment"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_home_ranking_list" />
+
+        <LinearLayout
+            android:id="@+id/fail_ranking_list_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/apologize"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ranking_fail_message_1"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ranking_fail_message_2"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/ranking_retry_button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/retry" />
+        </LinearLayout>
+    </FrameLayout>
+
+
 </layout>

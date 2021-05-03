@@ -1,7 +1,10 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import io.reactivex.rxjava3.core.Single
+
 interface LectureDataSource {
-    fun getLectureRanking(major: String)
-    fun getRecommendedLectures()
-    fun getRecentLectures()
+    fun getLectureRankingByTotalRating(major: String): Single<ArrayList<RankingLectureItem>>
+    fun getLectureRankingByReviewCount(major: String): Single<ArrayList<RankingLectureItem>>
+    fun getLectureRankingByLatestReview(major: String): Single<ArrayList<RankingLectureItem>>
 }

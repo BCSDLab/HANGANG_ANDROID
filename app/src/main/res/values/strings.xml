@@ -102,4 +102,9 @@
     <string name="home_title_recent_lectures">최근 본 강의</string>
     <string name="login_error_text">가입하지 않은 아이디거나, 잘못된 비밀번호 입니다.</string>
 
+    <string name="apologize">죄송합니다.</string>
+    <string name="ranking_fail_message_1">강의랭킹을</string>
+    <string name="ranking_fail_message_2">불러오지 못하였습니다.</string>
+    <string name="retry">재시도</string>
+
 </resources>
