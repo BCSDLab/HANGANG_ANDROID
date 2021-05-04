@@ -12,21 +12,21 @@ class LectureRepository(
     private val lectureLocalDataSource: LectureDataSource,
     private val lectureRemoteDataSource: LectureDataSource
 ) : LectureDataSource {
-    override fun getLectureRankingByTotalRating(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
-        return lectureRemoteDataSource.getLectureRankingByTotalRating(major, page)
+    override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+        return lectureRemoteDataSource.getLectureRankingByTotalRating(majors, page)
     }
 
-    override fun getLectureRankingByReviewCount(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
-        return lectureRemoteDataSource.getLectureRankingByReviewCount(major, page)
+    override fun getLectureRankingByReviewCount(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+        return lectureRemoteDataSource.getLectureRankingByReviewCount(majors, page)
     }
 
-    override fun getLectureRankingByLatestReview(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
-        return lectureRemoteDataSource.getLectureRankingByLatestReview(major, page)
+    override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+        return lectureRemoteDataSource.getLectureRankingByLatestReview(majors, page)
     }
 
-    fun getLectureReviewList(major: String): Flowable<PagingData<RankingLectureItem>> {
+    fun getLectureReviewList(majors: ArrayList<String>): Flowable<PagingData<RankingLectureItem>> {
         return Pager(PagingConfig(pageSize = 20)){
-            LectureReviewPagingSource(lectureRemoteDataSource,major)
+            LectureReviewPagingSource(lectureRemoteDataSource,majors)
         }.flowable
     }
 }

@@ -55,7 +55,7 @@ interface NoAuthApi {
     @GET(LECTURES_RANKING)
     fun getLectureRanking(
         @Query("classification") classification: String? = null,
-        @Query("department") department: String? = null,
+        @Query("department") department: ArrayList<String>? = null,
         @Query("hash_tag") hashTag: Int? = null,
         @Query("keyword") keyword: String? = null,
         @Query("limit") limit: Int = 20,

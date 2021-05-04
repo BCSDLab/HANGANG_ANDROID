@@ -15,9 +15,10 @@ import io.reactivex.rxjava3.kotlin.addTo
 class RankingLectureViewModel(private val lectureRepository: LectureRepository) : ViewModelBase() {
     private val _rankingLectureList = MutableLiveData<ArrayList<RankingLectureItem>>()
     val rankingLectureList: LiveData<ArrayList<RankingLectureItem>> get() = _rankingLectureList
+    var majorArrayList = ArrayList<String>()
 
-    fun getRankingLectureByTotalRating(major: String) {
-        lectureRepository.getLectureRankingByTotalRating(major,1)
+    fun getRankingLectureByTotalRating(majors: ArrayList<String>) {
+        lectureRepository.getLectureRankingByTotalRating(majors, 1)
             .handleHttpException()
             .handleProgress(this)
             .withThread()

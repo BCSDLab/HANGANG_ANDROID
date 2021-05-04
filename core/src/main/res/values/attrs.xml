@@ -15,6 +15,7 @@
     </declare-styleable>
 
     <declare-styleable name="SearchAppBar">
+        <attr name="showBackButton"/>
         <attr name="android:hint" />
         <attr name="android:text" />
     </declare-styleable>

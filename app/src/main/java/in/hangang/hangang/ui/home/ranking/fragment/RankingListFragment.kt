@@ -22,6 +22,8 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
         super.onCreate(savedInstanceState)
         arguments?.let {
             major = it.getString("major").toString()
+            rankingLectureViewModel.majorArrayList.clear()
+            rankingLectureViewModel.majorArrayList.add(major)
         }
     }
 
@@ -32,13 +34,13 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
         setUnDelieverableHandler()
         initViewModel()
         initEvent()
-        getRankingList(major)
+        getRankingList()
 
     }
 
 
-    private fun getRankingList(major: String) {
-        rankingLectureViewModel.getRankingLectureByTotalRating(major)
+    private fun getRankingList() {
+        rankingLectureViewModel.getRankingLectureByTotalRating(rankingLectureViewModel.majorArrayList)
     }
 
     fun setUnDelieverableHandler() {
@@ -52,7 +54,7 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
 
     private fun initEvent() {
         binding.rankingRetryButton.setOnClickListener {
-            getRankingList(major)
+            getRankingList()
         }
     }
 

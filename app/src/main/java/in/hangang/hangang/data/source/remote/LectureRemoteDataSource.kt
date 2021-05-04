@@ -10,15 +10,15 @@ import io.reactivex.rxjava3.core.Single
 
 class LectureRemoteDataSource(private val noAuthApi: NoAuthApi) : LectureDataSource {
 
-    override fun getLectureRankingByTotalRating(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
-        return noAuthApi.getLectureRanking(department = major, sort = SORT_BY_TOTAL_RATING, page = page)
+    override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+        return noAuthApi.getLectureRanking(department = majors, sort = SORT_BY_TOTAL_RATING, page = page)
     }
 
-    override fun getLectureRankingByReviewCount(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
-        return noAuthApi.getLectureRanking(department = major, sort = SORT_BY_REVIEW_COUNT, page = page)
+    override fun getLectureRankingByReviewCount(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+        return noAuthApi.getLectureRanking(department = majors, sort = SORT_BY_REVIEW_COUNT, page = page)
     }
 
-    override fun getLectureRankingByLatestReview(major: String, page: Int): Single<ArrayList<RankingLectureItem>> {
-        return noAuthApi.getLectureRanking(department = major, sort = SORT_BY_LATEST_REVIEW, page = page)
+    override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+        return noAuthApi.getLectureRanking(department = majors, sort = SORT_BY_LATEST_REVIEW, page = page)
     }
 }

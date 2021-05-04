@@ -1,19 +1,21 @@
 package `in`.hangang.hangang.ui.lecturereview.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
-import `in`.hangang.core.view.button.radiobutton.FilledRadioButton
+import `in`.hangang.core.toast.shortToast
+import `in`.hangang.core.view.button.checkbox.FilledCheckBox
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentListReviewLectureBinding
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureReviewAdapter
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewListViewModel
 import `in`.hangang.hangang.util.LogUtil
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.HorizontalScrollView
-import android.widget.RadioButton
-import androidx.core.view.children
-import androidx.paging.PagingData
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -23,65 +25,77 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
     private val adapter = LectureReviewAdapter()
     private val fullMajors: Array<String> by lazy { resources.getStringArray(R.array.major_full) }
     private var majorIdx = 0
-    private val radioButtonId = arrayOf(R.id.review_radio_button_major_0, R.id.review_radio_button_major_1, R.id.review_radio_button_major_2, R.id.review_radio_button_major_3, R.id.review_radio_button_major_4,
-        R.id.review_radio_button_major_5, R.id.review_radio_button_major_6, R.id.review_radio_button_major_7, R.id.review_radio_button_major_8, R.id.review_radio_button_major_9)
-    var reviewRadioButtons = arrayOfNulls<FilledRadioButton>(10)
+    private val checkboxButtonId = arrayOf(
+        R.id.review_checkbox_button_major_0,
+        R.id.review_checkbox_button_major_1,
+        R.id.review_checkbox_button_major_2,
+        R.id.review_checkbox_button_major_3,
+        R.id.review_checkbox_button_major_4,
+        R.id.review_checkbox_button_major_5,
+        R.id.review_checkbox_button_major_6,
+        R.id.review_checkbox_button_major_7,
+        R.id.review_checkbox_button_major_8,
+        R.id.review_checkbox_button_major_9
+    )
+    var reviewcheckboxButtons = arrayOfNulls<FilledCheckBox>(10)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lectureReviewRecyclerview.adapter = adapter
-        initViewModel()
         init()
         initEvent()
-
+        initViewModel()
 
 
     }
-    private fun init(){
-        for(id in 0..9){
-            reviewRadioButtons[id] = binding.root.findViewById(radioButtonId[id])
+
+    private fun init() {
+        for (id in 0..9) {
+            reviewcheckboxButtons[id] = binding.root.findViewById(checkboxButtonId[id])
         }
         if (arguments == null) {
-            getLectureReviewList("")
+            getLectureReviewList()
         } else {
             majorIdx = arguments?.getInt("major")!!
-            reviewRadioButtons[majorIdx]?.isChecked = true
-            getLectureReviewList(fullMajors[majorIdx])
-            reviewRadioButtons[majorIdx]?.let {
-                focusOnView(binding.lectureReviewHorizontalScrollview, it
-                )
+            LogUtil.e(fullMajors[majorIdx])
+            lectureReviewListViewModel.selectedMajorList.add(fullMajors[majorIdx])
+            reviewcheckboxButtons[majorIdx]?.isChecked = true
+            getLectureReviewList()
+            reviewcheckboxButtons[majorIdx]?.let {
+                lifecycleScope.launch {
+                    focusOnViewAsync(binding.lectureReviewHorizontalScrollview, it)
+                }
             }
 
         }
     }
-    private fun initEvent(){
-        binding.reivewRadioGroupDepartment.setOnCheckedChangeListener { group, checkedId ->
-            LogUtil.e(checkedId.toString())
-            majorIdx = getSeletedIdx(checkedId)
-            adapter.submitData(lifecycle, PagingData.empty())
-            getLectureReviewList(fullMajors[majorIdx])
+
+
+    private fun initEvent() {
+        for (id in 0..9) {
+            reviewcheckboxButtons[id]?.setOnClickListener {
+                if ((it as FilledCheckBox).isChecked) {
+                    if (lectureReviewListViewModel.isAddMajorPossible()) {
+                        lectureReviewListViewModel.selectedMajorList.add(fullMajors[id])
+                        getLectureReviewList()
+                    } else {
+                        it.isChecked = false
+                        context?.shortToast { "학부 정보는 최대 2개까지만 선택 가능합니다" }
+                    }
+                } else {
+                    lectureReviewListViewModel.selectedMajorList.remove(fullMajors[id])
+                    getLectureReviewList()
+                }
+            }
         }
+
+
     }
 
-    private fun getSeletedIdx(id: Int): Int {
-        when (id) {
-            R.id.review_radio_button_major_0 -> return 0
-            R.id.review_radio_button_major_1 -> return 1
-            R.id.review_radio_button_major_2 -> return 2
-            R.id.review_radio_button_major_3 -> return 3
-            R.id.review_radio_button_major_4 -> return 4
-            R.id.review_radio_button_major_5 -> return 5
-            R.id.review_radio_button_major_6 -> return 6
-            R.id.review_radio_button_major_7 -> return 7
-            R.id.review_radio_button_major_8 -> return 8
-            R.id.review_radio_button_major_9 -> return 9
-            else -> return -1
-        }
-    }
-
-    private fun focusOnView(scroll: HorizontalScrollView, view: FilledRadioButton) {
-        Handler().post(Runnable {
-            scroll.smoothScrollTo(view.left, 0)
-        })
+    private fun CoroutineScope.focusOnViewAsync(
+        scroll: HorizontalScrollView,
+        view: FilledCheckBox
+    ) = async(Dispatchers.Main) {
+        scroll.smoothScrollTo(view.left, 0)
     }
 
     private fun initViewModel() {
@@ -92,8 +106,14 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
         }
     }
 
-    private fun getLectureReviewList(major: String) {
-        lectureReviewListViewModel.getLectureReviewList(major)
+    private fun getLectureReviewList() {
+        for (i in lectureReviewListViewModel.selectedMajorList) {
+            LogUtil.e(i)
+        }
+        if (lectureReviewListViewModel.selectedMajorList.size == 0)
+            lectureReviewListViewModel.getLectureReviewList(lectureReviewListViewModel.selectedMajorListDefault)
+        else
+            lectureReviewListViewModel.getLectureReviewList(lectureReviewListViewModel.selectedMajorList)
     }
 
 
