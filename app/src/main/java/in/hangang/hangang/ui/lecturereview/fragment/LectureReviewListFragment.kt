@@ -22,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureBinding>() {
     override val layoutId: Int = R.layout.fragment_list_review_lecture
     private val lectureReviewListViewModel: LectureReviewListViewModel by viewModel()
-    private val adapter = LectureReviewAdapter()
+    private lateinit var lectureReviewAdapter: LectureReviewAdapter
     private val fullMajors: Array<String> by lazy { resources.getStringArray(R.array.major_full) }
     private var majorIdx = 0
     private val checkboxButtonId = arrayOf(
@@ -40,13 +40,13 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
     var reviewcheckboxButtons = arrayOfNulls<FilledCheckBox>(10)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lectureReviewRecyclerview.adapter = adapter
         init()
         initEvent()
         initViewModel()
 
-
     }
+
+
 
     private fun init() {
         for (id in 0..9) {
@@ -101,7 +101,10 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
     private fun initViewModel() {
         with(lectureReviewListViewModel) {
             rankingLectureList.observe(viewLifecycleOwner, {
-                it?.let { adapter.submitData(lifecycle, it) }
+                it?.let {
+                    lectureReviewAdapter = LectureReviewAdapter(scrapLectureList)
+                    binding.lectureReviewRecyclerview.adapter = lectureReviewAdapter
+                    lectureReviewAdapter.submitData(lifecycle, it) }
             })
         }
     }

@@ -16,4 +16,8 @@ class LectureLocalDataSource : LectureDataSource {
     override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
         return Single.never()
     }
+
+    override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
+        return Single.never()
+    }
 }

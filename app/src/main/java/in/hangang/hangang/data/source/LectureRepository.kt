@@ -24,6 +24,10 @@ class LectureRepository(
         return lectureRemoteDataSource.getLectureRankingByLatestReview(majors, page)
     }
 
+    override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
+        return lectureRemoteDataSource.getScrapedLecture()
+    }
+
     fun getLectureReviewList(majors: ArrayList<String>): Flowable<PagingData<RankingLectureItem>> {
         return Pager(PagingConfig(pageSize = 20)){
             LectureReviewPagingSource(lectureRemoteDataSource,majors)

@@ -2,8 +2,13 @@ package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.LectureRepository
 import `in`.hangang.hangang.data.source.LectureReviewPagingSource
+import `in`.hangang.hangang.util.LogUtil
+import `in`.hangang.hangang.util.handleHttpException
+import `in`.hangang.hangang.util.handleProgress
+import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,6 +17,7 @@ import androidx.paging.rxjava3.cachedIn
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.kotlin.addTo
 import java.util.*
+import kotlin.collections.ArrayList
 
 class LectureReviewListViewModel(private val lectureRepository: LectureRepository) :
     ViewModelBase() {
@@ -21,6 +27,7 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
     var selectedMajorList = ArrayList<String>()
     var selectedMajorListDefault = ArrayList<String>()
     val isLoadEnd = MutableLiveData<Boolean>()
+    var scrapLectureList = ArrayList<RankingLectureItem>()
 
     init {
         selectedMajorListDefault.add("")
@@ -30,16 +37,27 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
         return selectedMajorList.size < 2
     }
 
-    fun getLectureReviewList(majors: ArrayList<String>): Flowable<PagingData<RankingLectureItem>> {
+    fun getLectureReviewList(majors: ArrayList<String>) {
+        lectureRepository.getScrapedLecture()
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({ scrapList ->
+                scrapLectureList = scrapList
+                getLectureList(majors)
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+            })
+            .addTo(compositeDisposable)
+    }
 
-        val newResult = lectureRepository
+    fun getLectureList(majors: ArrayList<String>) {
+        lectureRepository
             .getLectureReviewList(majors)
             .cachedIn(viewModelScope)
-        currentResult = newResult
-        newResult.subscribe {
-            _rankingLectureList.value = it
-        }
+            .subscribe {
+                _rankingLectureList.value = it
+            }
             .addTo(compositeDisposable)
-        return newResult
     }
 }

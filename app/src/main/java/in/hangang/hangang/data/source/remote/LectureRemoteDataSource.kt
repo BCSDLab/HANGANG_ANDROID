@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source.remote
 
+import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.constant.SORT_BY_LATEST_REVIEW
 import `in`.hangang.hangang.constant.SORT_BY_REVIEW_COUNT
@@ -8,7 +9,7 @@ import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
-class LectureRemoteDataSource(private val noAuthApi: NoAuthApi) : LectureDataSource {
+class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val authApi: AuthApi) : LectureDataSource {
 
     override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
         return noAuthApi.getLectureRanking(department = majors, sort = SORT_BY_TOTAL_RATING, page = page)
@@ -20,5 +21,9 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi) : LectureDataSou
 
     override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
         return noAuthApi.getLectureRanking(department = majors, sort = SORT_BY_LATEST_REVIEW, page = page)
+    }
+
+    override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
+        return authApi.getScrapedLecture()
     }
 }

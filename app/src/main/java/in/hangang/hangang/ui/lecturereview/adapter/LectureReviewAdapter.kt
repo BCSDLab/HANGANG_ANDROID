@@ -5,13 +5,14 @@ import `in`.hangang.hangang.databinding.ItemHomeRankingListBinding
 import `in`.hangang.hangang.databinding.ItemLectureReviewBinding
 import `in`.hangang.hangang.util.LogUtil
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class LectureReviewAdapter :
+class LectureReviewAdapter(var scrapList: ArrayList<RankingLectureItem>) :
     PagingDataAdapter<RankingLectureItem, LectureReviewAdapter.ViewHolder>(lectureReviewDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,13 +29,18 @@ class LectureReviewAdapter :
         val rankngLectureItem = getItem(position)
         if (rankngLectureItem != null) {
             holder.bind(rankngLectureItem)
+            if(scrapList.contains(rankngLectureItem)){
+                holder.binding.lectureReviewScrap.visibility = View.VISIBLE
+            }else{
+                holder.binding.lectureReviewScrap.visibility = View.INVISIBLE
+            }
         }else{
             LogUtil.e("onbindviewholder")
         }
     }
 
 
-    class ViewHolder(private val binding: ItemLectureReviewBinding) :
+    class ViewHolder(val binding: ItemLectureReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: RankingLectureItem) {

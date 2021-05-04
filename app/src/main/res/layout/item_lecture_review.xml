@@ -145,6 +145,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <ImageView
+            android:id="@+id/lecture_review_scrap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_bookmark"
