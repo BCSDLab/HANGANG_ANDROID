@@ -51,14 +51,6 @@ class TimetableLectureFilterActivity :
     private fun initView() {
         resetFilter()
         with(lectureFilter) {
-            if (criteria == null) {
-                binding.checkBoxFilterByName.isChecked = true
-                binding.checkBoxFilterByProfessor.isChecked = true
-            } else {
-                binding.checkBoxFilterByName.isChecked = criteria == TIMETABLE_CRITERIA_LECTURE_NAME
-                binding.checkBoxFilterByProfessor.isChecked = criteria == TIMETABLE_CRITERIA_PROFESSOR
-            }
-
             classifications.forEach {
                 mapCheckBox[it]?.isChecked = true
             }
@@ -71,16 +63,9 @@ class TimetableLectureFilterActivity :
             if (it.value.isChecked) classifications.add(it.key)
         }
 
-        val criteria = when {
-            binding.checkBoxFilterByName.isChecked -> TIMETABLE_CRITERIA_LECTURE_NAME
-            binding.checkBoxFilterByProfessor.isChecked -> TIMETABLE_CRITERIA_PROFESSOR
-            else -> null
-        }
-
         setResult(RESULT_OK, Intent().apply {
             putExtra(
                     TIMETABLE_LECTURE_FILTER, lectureFilter.copy(
-                    criteria = criteria,
                     classifications = classifications
             )
             )
@@ -92,8 +77,5 @@ class TimetableLectureFilterActivity :
         mapCheckBox.forEach {
             it.value.isChecked = false
         }
-
-        binding.checkBoxFilterByName.isChecked = true
-        binding.checkBoxFilterByProfessor.isChecked = true
     }
 }

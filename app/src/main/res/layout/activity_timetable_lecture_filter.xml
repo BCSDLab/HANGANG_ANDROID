@@ -28,60 +28,16 @@
             app:layout_constraintTop_toTopOf="@id/button_close" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/timetable_lecture_filter_criteria"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_close" />
-
-        <in.hangang.core.view.button.checkbox.FilledCheckBox
-            android:id="@+id/check_box_filter_by_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:checked="true"
-            android:paddingStart="12dp"
-            android:paddingTop="6dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="6dp"
-            android:text="@string/timetable_lecture_filter_by_name"
-            android:textColor="@color/color_state_button_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <in.hangang.core.view.button.checkbox.FilledCheckBox
-            android:id="@+id/check_box_filter_by_professor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:checked="true"
-            android:paddingStart="12dp"
-            android:paddingTop="6dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="6dp"
-            android:text="@string/timetable_lecture_filter_by_professor"
-            android:textColor="@color/color_state_button_text"
-            app:layout_constraintStart_toEndOf="@id/check_box_filter_by_name"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:text="@string/timetable_lecture_filter_by_classification"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/check_box_filter_by_name" />
+            app:layout_constraintTop_toBottomOf="@id/button_close" />
 
         <GridLayout
             android:layout_width="match_parent"

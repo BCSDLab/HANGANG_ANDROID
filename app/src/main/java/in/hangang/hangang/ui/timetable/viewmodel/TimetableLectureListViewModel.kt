@@ -75,7 +75,6 @@ class TimetableLectureListViewModel(
     private fun getLecturesRx(): Single<List<LectureTimeTable>> {
         return timetableRepository.getLectureTimetableList(
                 classification = lectureFilter.value?.classifications,
-                criteria = lectureFilter.value?.criteria,
                 department = lectureFilter.value?.department,
                 keyword = lectureFilter.value?.keyword,
                 page = page,

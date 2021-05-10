@@ -202,7 +202,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
         } else {
             timetableLectureListViewModel.getLectures(
                     semesterDateId = timetableViewModel.displayingTimeTable.value?.semesterDateId
-                            ?: 5
+                            ?: TIMETABLE_DEFAULT_SEMESTER_ID
             )
         }
     }
