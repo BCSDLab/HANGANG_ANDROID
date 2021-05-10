@@ -37,11 +37,8 @@ class MyScrapViewModel(
     }
 
     fun unscrapLecture(vararg lectures: Lecture) {
-        Single.zip(
-            lectures.map { lectureRepository.unscrapLecture(it.id) }
-        ) {}.flatMap {
-            lectureRepository.getScrapedLecture()
-        }
+        lectureRepository.unscrapLecture(*lectures.map { it.id }.toIntArray())
+            .flatMap { lectureRepository.getScrapedLecture() }
             .withThread()
             .handleHttpException()
             .handleProgress(this)

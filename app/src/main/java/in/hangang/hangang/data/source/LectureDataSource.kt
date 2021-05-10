@@ -6,6 +6,6 @@ import io.reactivex.rxjava3.core.Single
 
 interface LectureDataSource {
     fun scrapLecture(lectureId: Int): Single<CommonResponse>
-    fun unscrapLecture(lectureId: Int): Single<CommonResponse>
+    fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse>
     fun getScrapedLecture(): Single<List<Lecture>>
 }

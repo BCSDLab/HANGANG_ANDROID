@@ -37,6 +37,6 @@ interface AuthApi {
     fun addScrapLecture(@Body scrapLectureRequest: ScrapLectureRequest): Single<CommonResponse>
 
     @HTTP(method = "DELETE", path = LECTURE_SCRAPED, hasBody = true)
-    fun removeScrapLecture(@Body scrapLectureRequest: ScrapLectureRequest): Single<CommonResponse>
+    fun removeScrapLecture(@Body lectureIds: List<Int>): Single<CommonResponse>
 
 }

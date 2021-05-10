@@ -12,14 +12,12 @@ class LectureRemoteDataSource(
 ) : LectureDataSource {
     override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
         return authApi.addScrapLecture(
-            ScrapLectureRequest(lectureId)
+            ScrapLectureRequest(id = lectureId)
         )
     }
 
-    override fun unscrapLecture(lectureId: Int): Single<CommonResponse> {
-        return authApi.removeScrapLecture(
-            ScrapLectureRequest(lectureId)
-        )
+    override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
+        return authApi.removeScrapLecture(lectureId.toList())
     }
 
     override fun getScrapedLecture(): Single<List<Lecture>> {

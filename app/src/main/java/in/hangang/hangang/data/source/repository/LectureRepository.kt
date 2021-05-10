@@ -13,8 +13,8 @@ class LectureRepository(
         return lectureRemoteDataSource.scrapLecture(lectureId)
     }
 
-    override fun unscrapLecture(lectureId: Int): Single<CommonResponse> {
-        return lectureRemoteDataSource.unscrapLecture(lectureId)
+    override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
+        return lectureRemoteDataSource.unscrapLecture(*lectureId)
     }
 
     override fun getScrapedLecture(): Single<List<Lecture>> {
