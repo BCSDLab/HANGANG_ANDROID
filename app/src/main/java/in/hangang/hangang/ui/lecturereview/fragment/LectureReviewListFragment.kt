@@ -145,7 +145,7 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
             })
             isGetScrapList.observe(viewLifecycleOwner,{
                 if(it){
-                    lectureReviewAdapter = LectureReviewAdapter(scrapLectureList)
+                    lectureReviewAdapter = LectureReviewAdapter(scrapLectureList, requireActivity())
                     binding.lectureReviewRecyclerview.adapter = lectureReviewAdapter
                     isComplete = true
                     initSelecteMajor()

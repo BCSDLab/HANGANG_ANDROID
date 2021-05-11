@@ -15,6 +15,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lecture_review_constraintlayout"
         android:layout_width="match_parent"
         android:layout_height="110dp">
 

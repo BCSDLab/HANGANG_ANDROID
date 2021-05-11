@@ -1,8 +1,12 @@
 package `in`.hangang.hangang.data.ranking
 
 import `in`.hangang.hangang.data.ranking.RankingLectureHashTag
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import java.lang.StringBuilder
 
+@Parcelize
 data class RankingLectureItem(
     @SerializedName("id")
     val id: Int,
@@ -30,4 +34,19 @@ data class RankingLectureItem(
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String,
-)
+    @SerializedName("code")
+    val code: String,
+
+    ) : Parcelable{
+        public fun getTotalSemester(): String{
+            var sb = StringBuilder()
+            var max = semesterData.size
+            semesterData.forEachIndexed{ idx, semester ->
+                sb.append(semester)
+                if(idx != max - 1){
+                    sb.append(", ")
+                }
+            }
+            return sb.toString()
+        }
+    }
