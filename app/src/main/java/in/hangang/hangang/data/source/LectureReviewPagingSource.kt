@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.util.handleHttpException
+import androidx.compose.runtime.key
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
 import io.reactivex.rxjava3.core.Single
@@ -13,7 +14,11 @@ private const val LECTURE_REVIEW_TOTAL = 30
 
 class LectureReviewPagingSource(
     private val lectureDataSource: LectureDataSource,
-    private val majors: ArrayList<String>
+    private val majors: ArrayList<String>,
+    private var filterType: ArrayList<String>?,
+    private var filterHashTag: ArrayList<Int>?,
+    private var keyword: String?,
+    private val sort: String
 ) :
     RxPagingSource<Int, RankingLectureItem>() {
     override fun getRefreshKey(state: PagingState<Int, RankingLectureItem>): Int? {
@@ -22,9 +27,18 @@ class LectureReviewPagingSource(
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, RankingLectureItem>> {
         val nextPageNumber = params.key ?: LECTURE_REVIEW_STARTING_PAGE_INDEX
-        return lectureDataSource.getLectureRankingByTotalRating(
+        if(filterType?.size == 0)
+            filterType = null
+        if(filterHashTag?.size == 0)
+            filterHashTag = null
+        return lectureDataSource.getFilteredLectureList(
             majors = majors,
-            page = nextPageNumber
+            page = nextPageNumber,
+            filterType = filterType,
+            filterHashTag = filterHashTag,
+            sort = sort,
+            keyword = keyword
+
         )
             .handleHttpException()
             .subscribeOn(Schedulers.io())

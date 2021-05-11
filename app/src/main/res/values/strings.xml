@@ -107,4 +107,34 @@
     <string name="ranking_fail_message_2">불러오지 못하였습니다.</string>
     <string name="retry">재시도</string>
     <string name="review_search_hint">교과명, 교수명, 과목코드 검색</string>
+    <!-- 강의평 필터-->
+    <string name="apply_filter">필터를 적용해 보세요.</string>
+    <string name="sort">정렬</string>
+    <string name="sort_by_1">평점순</string>
+    <string name="sort_by_2">평가순</string>
+    <string name="sort_by_3">최신순</string>
+    <string name="sort_by">기준</string>
+    <string name="sort_by_lecture_name">교과명</string>
+    <string name="sort_by_professor_name">교수명</string>
+    <string name="lecture_filter_type">유형</string>
+    <string name="lecture_filter_type_1">교양필수</string>
+    <string name="lecture_filter_type_2">교양선택</string>
+    <string name="lecture_filter_type_3">전공필수</string>
+    <string name="lecture_filter_type_4">전공선택</string>
+    <string name="lecture_filter_type_5">MSC필수</string>
+    <string name="lecture_filter_type_6">MSC선택</string>
+    <string name="lecture_filter_type_7">HRD필수</string>
+    <string name="lecture_filter_type_8">HRD선택</string>
+    <string name="hash_tag">해시태그</string>
+    <string name="hash_tag1">#그저그러함</string>
+    <string name="hash_tag2">#학점왤케짜</string>
+    <string name="hash_tag3">#리얼수면제</string>
+    <string name="hash_tag4">#수업개빡셈</string>
+    <string name="hash_tag5">#배운거많음</string>
+    <string name="hash_tag6">#좋은교수님</string>
+    <string name="hash_tag7">#진심꿀과목</string>
+    <string name="hash_tag8">#이거듣지마</string>
+    <string name="hash_tag9">#조금아쉬움</string>
+    <string name="lecture_review_filter_reset">초기화</string>
+    <string name="lecture_review_filter_apply">적용</string>
 </resources>

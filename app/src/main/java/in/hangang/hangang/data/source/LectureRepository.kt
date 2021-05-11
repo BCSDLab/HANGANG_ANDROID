@@ -28,9 +28,28 @@ class LectureRepository(
         return lectureRemoteDataSource.getScrapedLecture()
     }
 
-    fun getLectureReviewList(majors: ArrayList<String>): Flowable<PagingData<RankingLectureItem>> {
+    override fun getFilteredLectureList(
+        majors: ArrayList<String>,
+        page: Int,
+        filterType: ArrayList<String>?,
+        filterHashTag: ArrayList<Int>?,
+        sort: String,
+        keyword: String?
+    ): Single<ArrayList<RankingLectureItem>> {
+        return lectureRemoteDataSource.getFilteredLectureList(majors,page,filterType,filterHashTag,sort,keyword)
+    }
+
+
+
+    fun getFilteredLectureReviewList(
+        majors: ArrayList<String>,
+        filterType: ArrayList<String>?,
+        filterHashTag: ArrayList<Int>?,
+        sort: String,
+        keyword: String?
+    ):Flowable<PagingData<RankingLectureItem>> {
         return Pager(PagingConfig(pageSize = 20)){
-            LectureReviewPagingSource(lectureRemoteDataSource,majors)
+            LectureReviewPagingSource(lectureRemoteDataSource,majors, filterType, filterHashTag, keyword, sort)
         }.flowable
     }
 }

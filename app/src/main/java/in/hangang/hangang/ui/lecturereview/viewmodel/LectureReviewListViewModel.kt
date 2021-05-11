@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.LectureRepository
@@ -26,9 +27,31 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
     var currentResult: Flowable<PagingData<RankingLectureItem>>? = null
     var selectedMajorList = ArrayList<String>()
     var selectedMajorListDefault = ArrayList<String>()
-    val isLoadEnd = MutableLiveData<Boolean>()
+    private val _isGetScrapList = MutableLiveData<Boolean>()
+    val isGetScrapList: LiveData<Boolean> get() = _isGetScrapList
     var scrapLectureList = ArrayList<RankingLectureItem>()
+    var filterSort = SORT_BY_TOTAL_RATING
+    var filterType = ArrayList<String>()
+    var filterHashTag = ArrayList<Int>()
+    var keyword: String? = null
+    var filterTypeIsChecked = booleanArrayOf(false, false, false, false, false, false, false, false)
+    var filterHashTagIsChecked =
+        booleanArrayOf(false, false, false, false, false, false, false, false, false)
 
+    fun getTempFilterType(): ArrayList<String>{
+        var tempFilterType = ArrayList<String>()
+        filterType.addAll(filterType)
+        return tempFilterType
+    }
+    fun getTempFilterSort(): String{
+        var tempSort = filterSort
+        return tempSort
+    }
+    fun getTempHashTag(): ArrayList<Int>{
+        var tempHashTag = ArrayList<Int>()
+        tempHashTag.addAll(filterHashTag)
+        return tempHashTag
+    }
     init {
         selectedMajorListDefault.add("")
     }
@@ -38,26 +61,34 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
     }
 
     fun getLectureReviewList(majors: ArrayList<String>) {
-        lectureRepository.getScrapedLecture()
-            .withThread()
-            .handleHttpException()
-            .handleProgress(this)
-            .subscribe({ scrapList ->
-                scrapLectureList = scrapList
-                getLectureList(majors)
-            }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-            })
-            .addTo(compositeDisposable)
-    }
-
-    fun getLectureList(majors: ArrayList<String>) {
+        for (i in majors) {
+            LogUtil.e(i.toString())
+        }
+        for (i in filterType) {
+            LogUtil.e(i.toString())
+        }
         lectureRepository
-            .getLectureReviewList(majors)
+            .getFilteredLectureReviewList(majors, filterType, filterHashTag, filterSort, keyword)
             .cachedIn(viewModelScope)
             .subscribe {
                 _rankingLectureList.value = it
             }
             .addTo(compositeDisposable)
     }
+
+    fun getScrapList() {
+        lectureRepository.getScrapedLecture()
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({ scrapList ->
+                scrapLectureList = scrapList
+                _isGetScrapList.value = true
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+            })
+            .addTo(compositeDisposable)
+    }
+
+
 }
