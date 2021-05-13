@@ -18,7 +18,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
-import java.io.EOFException
 
 class TimetableViewModel(
         private val timeTableRepository: TimeTableRepository
@@ -46,7 +45,7 @@ class TimetableViewModel(
     private val _lectureTimetablesInTimetable = MutableLiveData<List<LectureTimeTable>>()
     private val _selectedTimetable = MutableLiveData<LectureTimeTable?>()
     private val _dummyTimeTable = MutableLiveData<LectureTimeTable?>()
-    private val _duplicatedLectureTimetable = MutableLiveData<Event<LectureTimeTable?>>()
+    private val _onErrorAddLectureTimetable = MutableLiveData<Event<CommonResponse>>()
     private val _customLectureAdded = MutableLiveData<Event<Boolean>>()
     private val _availableAddingCustomTimetable = MutableLiveData<Boolean>()
 
@@ -62,7 +61,7 @@ class TimetableViewModel(
     val lectureTimetablesInTimetable: LiveData<List<LectureTimeTable>> get() = _lectureTimetablesInTimetable
     val selectedTimetable: LiveData<LectureTimeTable?> get() = _selectedTimetable
     val dummyTimeTable: LiveData<LectureTimeTable?> get() = _dummyTimeTable
-    val duplicatedLectureTimetable: LiveData<Event<LectureTimeTable?>> get() = _duplicatedLectureTimetable
+    val onErrorAddLectureTimetable: LiveData<Event<CommonResponse>> get() = _onErrorAddLectureTimetable
     val timestamp: LiveData<List<CustomTimetableTimestamp>> get() = _timestamp
     val customLectureAdded: LiveData<Event<Boolean>> get() = _customLectureAdded
     val availableAddingCustomTimetable: LiveData<Boolean> get() = _availableAddingCustomTimetable
@@ -208,19 +207,7 @@ class TimetableViewModel(
             .addTo(compositeDisposable)
     }
 
-    private fun checkLectureDuplication(classTime: String): LectureTimeTable? {
-        _lectureTimetablesInTimetable.value?.forEach {
-            if (TimetableUtil.isLectureTimetableTimeDuplicate(it.classTime ?: "[]", classTime)) {
-                _duplicatedLectureTimetable.postValue(Event(it))
-                return it
-            }
-        }
-        _duplicatedLectureTimetable.postValue(Event(null))
-        return null
-    }
-
     fun addTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
-        if (checkLectureDuplication(lectureTimeTable.classTime ?: "[]") == null) {
             timeTableRepository.addLectureInTimeTable(
                     lectureId = lectureTimeTable.id,
                     timetableId = timetable.id
@@ -233,11 +220,9 @@ class TimetableViewModel(
                     .subscribe({
                         _lectureTimetablesInTimetable.postValue(it.lectureList)
                     }, {
-                        LogUtil.e(it.toCommonResponse().errorMessage)
-                        //TODO 시간표에 강의 추가 중 에러 발생시
+                        _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
                     })
                     .addTo(compositeDisposable)
-        }
     }
 
     fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
@@ -257,10 +242,6 @@ class TimetableViewModel(
                 //TODO 시간표에 강의 삭제 중 에러 발생시
             })
             .addTo(compositeDisposable)
-    }
-
-    fun selectLectureTimeTable(lectureTimeTable: LectureTimeTable?) {
-        _selectedTimetable.postValue(lectureTimeTable)
     }
 
     fun setDummyLectureTimeTable(lectureTimeTable: LectureTimeTable?) {
@@ -296,7 +277,6 @@ class TimetableViewModel(
             classTime: String,
             timetableId: Int
     ) {
-        if (checkLectureDuplication(classTime) == null) {
             timeTableRepository.addCustomLectureInTimetable(
                     classTime, name, professor, timetableId
             )
@@ -310,10 +290,8 @@ class TimetableViewModel(
                     _customLectureAdded.postValue(Event(true))
                     _lectureTimetablesInTimetable.postValue(it.lectureList)
                 }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
+                    _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
                 })
-        }
-
     }
 
     fun initCustomLectureValue() {

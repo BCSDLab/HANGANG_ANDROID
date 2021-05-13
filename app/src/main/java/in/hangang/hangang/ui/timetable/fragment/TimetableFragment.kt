@@ -165,8 +165,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 }
             }
 
-            duplicatedLectureTimetable.observe(viewLifecycleOwner, EventObserver {
-                it?.let { lecture -> showTimetableDuplicatedDialog(lecture) }
+            onErrorAddLectureTimetable.observe(viewLifecycleOwner, EventObserver {
+                showTimetableAddErrorDialog(it.errorMessage ?: "")
             })
             mainTimetableEvent.observe(viewLifecycleOwner, EventObserver {
                 timetableViewModel.setDisplayingTimeTable(it)
@@ -385,11 +385,11 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         }
     }
 
-    private fun showTimetableDuplicatedDialog(lectureTimeTable: LectureTimeTable) {
+    private fun showTimetableAddErrorDialog(message: String) {
         DialogUtil.makeSimpleDialog(
                 requireContext(),
                 title = getString(R.string.timetable_duplicated_title),
-                message = getString(R.string.timetable_duplicated_message, lectureTimeTable.name),
+                message = message,
                 positiveButtonText = getString(R.string.ok),
                 positiveButtonOnClickListener = { dialog, _ ->
                     dialog.dismiss()
@@ -414,7 +414,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             lectureTimetablesInTimetable.removeObservers(viewLifecycleOwner)
             selectedTimetable.removeObservers(viewLifecycleOwner)
             dummyTimeTable.removeObservers(viewLifecycleOwner)
-            duplicatedLectureTimetable.removeObservers(viewLifecycleOwner)
+            onErrorAddLectureTimetable.removeObservers(viewLifecycleOwner)
             mainTimetableEvent.removeObservers(viewLifecycleOwner)
             setMainTimetableEvent.removeObservers(viewLifecycleOwner)
             timetableNameModifiedEvent.removeObservers(viewLifecycleOwner)
