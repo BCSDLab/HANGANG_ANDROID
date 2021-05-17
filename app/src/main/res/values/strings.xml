@@ -139,4 +139,15 @@
     <string name="lecture_review_filter_apply">적용</string>
     <string name="lecture_semester">개설학기</string>
     <string name="lecture_review_write">작성</string>
+    <string name="lecture_review_titmetable_info">시간표 정보</string>
+    <string name="lecture_grade">학점</string>
+    <string name="lecture_time">시간표 정보</string>
+    <string name="lecture_check_time">분반과 시간을 확인하세요.</string>
+    <string name="lecture_detail_total_evaluation">종합 평가</string>
+    <string name="rating">평점</string>
+    <string name="attendance_frequency">출첵빈도</string>
+    <string name="exam_difficulty">시험 난이도</string>
+    <string name="homework_size">과제량</string>
+    <string name="grade_ratio">성적비율</string>
+    <string name="total_evaluation_number">전체 평가 수</string>
 </resources>

@@ -1,5 +1,8 @@
 package `in`.hangang.hangang.data.source.local
 
+import `in`.hangang.hangang.data.evaluation.Chart
+import `in`.hangang.hangang.data.evaluation.ClassLecture
+import `in`.hangang.hangang.data.evaluation.Evaluation
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
@@ -29,6 +32,18 @@ class LectureLocalDataSource : LectureDataSource {
         sort: String,
         keyword: String?
     ): Single<ArrayList<RankingLectureItem>> {
+        return Single.never()
+    }
+
+    override fun getEvaluationRating(id: Int): Single<ArrayList<Int>> {
+        return Single.never()
+    }
+
+    override fun getClassLecture(id: Int): Single<ArrayList<ClassLecture>> {
+        return Single.never()
+    }
+
+    override fun getEvaluationTotal(id: Int): Single<Evaluation> {
         return Single.never()
     }
 }

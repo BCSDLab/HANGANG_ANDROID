@@ -36,17 +36,23 @@ data class RankingLectureItem(
     val updatedAt: String,
     @SerializedName("code")
     val code: String,
+    @SerializedName("grade")
+    val grade: String
 
-    ) : Parcelable{
-        public fun getTotalSemester(): String{
-            var sb = StringBuilder()
-            var max = semesterData.size
-            semesterData.forEachIndexed{ idx, semester ->
-                sb.append(semester)
-                if(idx != max - 1){
-                    sb.append(", ")
-                }
+) : Parcelable {
+    fun getTotalSemester(): String {
+        var sb = StringBuilder()
+        var max = semesterData.size
+        semesterData.forEachIndexed { idx, semester ->
+            sb.append(semester)
+            if (idx != max - 1) {
+                sb.append(", ")
             }
-            return sb.toString()
         }
+        return sb.toString()
     }
+
+    fun getStringGrade(): String {
+        return "${grade}학점"
+    }
+}

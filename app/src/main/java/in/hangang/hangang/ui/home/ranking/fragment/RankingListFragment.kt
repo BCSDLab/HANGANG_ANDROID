@@ -59,7 +59,6 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
     }
 
     private fun initViewModel() {
-        LogUtil.e("initviewmodel")
         with(rankingLectureViewModel) {
             rankingLectureList.observe(viewLifecycleOwner, {
                 it?.let { adapter.submitList(it) }

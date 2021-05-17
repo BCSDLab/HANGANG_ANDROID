@@ -10,4 +10,8 @@ data class RankingLectureHashTag
     @SerializedName("id")
     val id: Int,
     @SerializedName("tag")
-     val tag: String) : Parcelable
+     val tag: String) : Parcelable{
+         fun tagToString(): String{
+             return "# ${tag}"
+         }
+     }

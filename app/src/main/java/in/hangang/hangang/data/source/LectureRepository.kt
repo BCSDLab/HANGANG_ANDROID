@@ -1,5 +1,8 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.evaluation.Chart
+import `in`.hangang.hangang.data.evaluation.ClassLecture
+import `in`.hangang.hangang.data.evaluation.Evaluation
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -39,7 +42,9 @@ class LectureRepository(
         return lectureRemoteDataSource.getFilteredLectureList(majors,page,filterType,filterHashTag,sort,keyword)
     }
 
-
+    override fun getClassLecture(id: Int): Single<ArrayList<ClassLecture>> {
+        return lectureRemoteDataSource.getClassLecture(id)
+    }
 
     fun getFilteredLectureReviewList(
         majors: ArrayList<String>,
@@ -51,5 +56,13 @@ class LectureRepository(
         return Pager(PagingConfig(pageSize = 20)){
             LectureReviewPagingSource(lectureRemoteDataSource,majors, filterType, filterHashTag, keyword, sort)
         }.flowable
+    }
+
+    override fun getEvaluationRating(id: Int): Single<ArrayList<Int>> {
+        return lectureRemoteDataSource.getEvaluationRating(id)
+    }
+
+    override fun getEvaluationTotal(id: Int): Single<Evaluation> {
+        return lectureRemoteDataSource.getEvaluationTotal(id)
     }
 }
