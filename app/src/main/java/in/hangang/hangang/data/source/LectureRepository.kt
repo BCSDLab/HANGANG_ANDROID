@@ -1,9 +1,9 @@
 package `in`.hangang.hangang.data.source
 
-import `in`.hangang.hangang.data.evaluation.Chart
-import `in`.hangang.hangang.data.evaluation.ClassLecture
-import `in`.hangang.hangang.data.evaluation.Evaluation
+import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.response.CommonResponse
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -64,5 +64,32 @@ class LectureRepository(
 
     override fun getEvaluationTotal(id: Int): Single<Evaluation> {
         return lectureRemoteDataSource.getEvaluationTotal(id)
+    }
+
+    override fun getRecommentedDocs(keyword: String): Single<LectureDocResult> {
+        return lectureRemoteDataSource.getRecommentedDocs(keyword)
+    }
+
+    override fun getLectureReview(
+        id: Int,
+        page: Int,
+        keyword: String?,
+        sort: String
+    ): Single<ArrayList<LectureReview>> {
+        return lectureRemoteDataSource.getLectureReview(id, page, keyword, sort)
+    }
+
+    fun getLectureReviewList(id: Int, keyword: String?, sort: String):Flowable<PagingData<LectureReview>> {
+        return Pager(PagingConfig(pageSize = 20)){
+            ReviewPagingSource(lectureRemoteDataSource,id, keyword, sort)
+        }.flowable
+    }
+
+    override fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse> {
+        return lectureRemoteDataSource.postReviewRecommend(reviewRecommendRequest)
+    }
+
+    override fun getLectureReviewItem(id: Int): Single<LectureReview> {
+        return lectureRemoteDataSource.getLectureReviewItem(id)
     }
 }

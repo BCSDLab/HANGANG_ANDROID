@@ -30,6 +30,6 @@ class ProgressDialog(context: Context, message: String) {
     }
 
     fun dismiss() {
-        progressDialog?.hide()
+        progressDialog?.dismiss()
     }
 }

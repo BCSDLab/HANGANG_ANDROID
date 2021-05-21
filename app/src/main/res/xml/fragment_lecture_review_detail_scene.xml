@@ -11,8 +11,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lecture_detail_time_title"
             />
-
-
+        <Constraint android:id="@+id/lecture_detail_no_recommend_docs_guide"
+            android:layout_width="0dp"
+            android:layout_height="112dp"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:text="@string/no_lecture_docs"
+            android:textColor="@color/gray_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lecture_detail_recommend_document_title"
+            app:layout_constraintBottom_toTopOf="@+id/divide_line_4"
+            android:layout_marginTop="16dp"
+            app:visibilityMode="ignore"
+            />
 
     </ConstraintSet>
 
@@ -24,6 +36,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lecture_detail_time_title"/>
+        <Constraint android:id="@+id/lecture_detail_no_recommend_docs_guide"
+            android:layout_width="0dp"
+            android:layout_height="112dp"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:text="@string/no_lecture_docs"
+            android:textColor="@color/gray_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lecture_detail_recommend_document_title"
+            app:layout_constraintBottom_toTopOf="@+id/divide_line_4"
+            android:layout_marginTop="16dp"
+            app:visibilityMode="ignore"
+            />
     </ConstraintSet>
 
     <Transition

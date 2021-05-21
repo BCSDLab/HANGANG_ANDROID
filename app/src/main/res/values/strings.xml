@@ -150,4 +150,10 @@
     <string name="homework_size">과제량</string>
     <string name="grade_ratio">성적비율</string>
     <string name="total_evaluation_number">전체 평가 수</string>
+    <string name="lecture_bank_recommend">강의자료 추천</string>
+    <string name="no_lecture_docs">등록된 강의자료가 없습니다.</string>
+    <string name="assignment_info">과제정보</string>
+    <string name="report">신고</string>
+    <string name="personal_evaluation">개인 평가</string>
+    <string name="no_info">정보 없음</string>
 </resources>

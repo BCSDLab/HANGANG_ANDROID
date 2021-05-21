@@ -134,6 +134,9 @@ open class BaseAppBar @JvmOverloads constructor(
     fun removeViewInRight(index: Int) {
         rightContainer.removeViewAt(index)
     }
+    fun setRightButtonClickListener(listener: OnClickListener){
+        rightTextView.setOnClickListener(listener)
+    }
 
     inline fun setOnAppBarButtonClickListener(
             crossinline onclickViewInLeftContainer : (view: View, index: Int) -> (Unit) = {_, _ ->},

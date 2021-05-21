@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="lectureDoc"
+            type="in.hangang.hangang.data.evaluation.LectureDoc" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lecture_review_constraintlayout"
+        android:layout_width="90dp"
+        android:layout_height="112dp">
+        <ImageView
+            android:id="@+id/lecture_detail_recommend_docs_thumnail"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:imageFromUrl="@{lectureDoc.thumbnail}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:textColor="@color/black2"
+            android:text="@{lectureDoc.title}"
+            tools:text="사랑의 역사 필요하다는 말"
+            app:layout_constraintTop_toBottomOf="@+id/lecture_detail_recommend_docs_thumnail"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

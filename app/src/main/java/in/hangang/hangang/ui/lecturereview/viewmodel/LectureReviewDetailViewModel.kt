@@ -1,24 +1,28 @@
 package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.evaluation.Chart
-import `in`.hangang.hangang.data.evaluation.ClassLecture
-import `in`.hangang.hangang.data.evaluation.Evaluation
+import `in`.hangang.hangang.data.evaluation.*
+import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.LectureRepository
 import `in`.hangang.hangang.data.source.TimeTableRepository
+import `in`.hangang.hangang.di.repositoryModule
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.rxjava3.cachedIn
 import com.github.mikephil.charting.data.BarEntry
 import io.reactivex.rxjava3.kotlin.addTo
 
 class LectureReviewDetailViewModel (private val lectureRepository: LectureRepository, private val timeTableRepository: TimeTableRepository) :
     ViewModelBase() {
-
+    val REVIEW_RECOMMEND_KEY = "id"
     private val _classLectureList = MutableLiveData<ArrayList<ClassLecture>>()
     val classLectureList: LiveData<ArrayList<ClassLecture>> get() = _classLectureList
 
@@ -28,7 +32,37 @@ class LectureReviewDetailViewModel (private val lectureRepository: LectureReposi
     private val _evaluationTotal = MutableLiveData<Evaluation>()
     val evaluationTotal : LiveData<Evaluation> get() = _evaluationTotal
 
-    var barEntryList: ArrayList<BarEntry> = ArrayList()
+    private val _recommendedDocs = MutableLiveData<ArrayList<LectureDoc>>()
+    val recommendedDocs : LiveData<ArrayList<LectureDoc>> get() = _recommendedDocs
+
+    private val _reviewList = MutableLiveData<PagingData<LectureReview>>()
+    val reviewList : LiveData<PagingData<LectureReview>> get() = _reviewList
+
+    var keyword: String? = null
+    var sort = "좋아요"
+    var commonResponse = MutableLiveData<CommonResponse>()
+    var lectureReviewItem = MutableLiveData<LectureReview>()
+
+    fun getReviewList(id: Int, keyword: String?, sort: String){
+        lectureRepository.getLectureReviewList(id,keyword,sort)
+            .cachedIn(viewModelScope)
+            .subscribe {
+                _reviewList.value = it
+            }
+            .addTo(compositeDisposable)
+    }
+
+    fun getRecommentedDocs(keyword: String){
+        lectureRepository.getRecommentedDocs(keyword)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                    _recommendedDocs.value = it.result
+            }, {
+                LogUtil.e(it.message.toString())
+                })
+    }
 
     fun getEvaluationRating(id: Int){
         lectureRepository.getEvaluationRating(id)
@@ -79,19 +113,29 @@ class LectureReviewDetailViewModel (private val lectureRepository: LectureReposi
         }
         return barEntryList
     }
-    fun getChartX(rating: Float): Float{
-        return when(rating){
-            in 0.1f..0.5f -> 1f
-            in 0.6f..1f -> 2f
-            in 1.1f..1.5f -> 3f
-            in 1.6f..2f -> 4f
-            in 2.1f..2.5f -> 5f
-            in 2.6f..3f -> 6f
-            in 3.1f..3.5f -> 7f
-            in 3.6f..4f -> 8f
-            in 4.1f..4.5f -> 9f
-            in 4.6f..5f -> 10f
-            else -> 0f
-        }
+    fun postReviewRecommend(reviewId: Int){
+        var reviewRecommendRequest = ReviewRecommendRequest(reviewId)
+        lectureRepository.postReviewRecommend(reviewRecommendRequest)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                commonResponse.value = it
+            },{
+                LogUtil.e(it.message.toString())
+            })
+            .addTo(compositeDisposable)
+    }
+    fun getReviewLectureItem(id: Int){
+        lectureRepository.getLectureReviewItem(id)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                lectureReviewItem.value = it
+            },{
+                LogUtil.e(it.message.toString())
+            })
+            .addTo(compositeDisposable)
     }
 }

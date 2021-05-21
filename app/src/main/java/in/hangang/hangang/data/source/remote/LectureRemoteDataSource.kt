@@ -5,12 +5,13 @@ import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.constant.SORT_BY_LATEST_REVIEW
 import `in`.hangang.hangang.constant.SORT_BY_REVIEW_COUNT
 import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
-import `in`.hangang.hangang.data.evaluation.Chart
-import `in`.hangang.hangang.data.evaluation.ClassLecture
-import `in`.hangang.hangang.data.evaluation.Evaluation
+import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
+import retrofit2.http.Body
 
 class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val authApi: AuthApi) :
     LectureDataSource {
@@ -80,5 +81,26 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
 
     override fun getEvaluationTotal(id: Int): Single<Evaluation> {
         return authApi.getEvalutaionTotal(id)
+    }
+
+    override fun getRecommentedDocs(keyword: String): Single<LectureDocResult> {
+        return authApi.getRecommentedDocs(keyword = keyword)
+    }
+
+    override fun getLectureReview(
+        id: Int,
+        page: Int,
+        keyword: String?,
+        sort: String
+    ): Single<ArrayList<LectureReview>> {
+        return authApi.getLectureReview(id = id, page = page, keyword = keyword, sort = sort)
+    }
+
+    override fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse> {
+        return authApi.postReviewRecommend(reviewRecommendRequest)
+    }
+
+    override fun getLectureReviewItem(id: Int): Single<LectureReview> {
+        return authApi.getLectureReviewItem(id)
     }
 }

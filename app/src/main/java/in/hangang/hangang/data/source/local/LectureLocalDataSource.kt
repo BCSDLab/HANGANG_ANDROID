@@ -1,9 +1,9 @@
 package `in`.hangang.hangang.data.source.local
 
-import `in`.hangang.hangang.data.evaluation.Chart
-import `in`.hangang.hangang.data.evaluation.ClassLecture
-import `in`.hangang.hangang.data.evaluation.Evaluation
+import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
@@ -44,6 +44,27 @@ class LectureLocalDataSource : LectureDataSource {
     }
 
     override fun getEvaluationTotal(id: Int): Single<Evaluation> {
+        return Single.never()
+    }
+
+    override fun getRecommentedDocs(keyword: String): Single<LectureDocResult> {
+        return Single.never()
+    }
+
+    override fun getLectureReview(
+        id: Int,
+        page: Int,
+        keyword: String?,
+        sort: String
+    ): Single<ArrayList<LectureReview>> {
+        return Single.never()
+    }
+
+    override fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun getLectureReviewItem(id: Int): Single<LectureReview> {
         return Single.never()
     }
 }
