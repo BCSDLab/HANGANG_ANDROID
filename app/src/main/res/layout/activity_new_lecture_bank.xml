@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.lecturebank.fragment.LectureBankDetailFragment">
+
+        <in.hangang.core.view.appbar.BaseAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleText="@string/lecture_bank_new_app_bar_title"/>
+
+        <androidx.core.widget.NestedScrollView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            app:layout_constraintBottom_toTopOf="@id/divider_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/edit_text_lecture_bank_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:minHeight="54dp"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:hint="@string/lecture_bank_new_bank_title_hint"
+                    android:padding="16dp"/>
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edit_text_lecture_bank_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="#000"
+                    android:backgroundTint="?android:attr/textColorTertiary"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_lecture"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:minHeight="54dp"
+                    android:textSize="14sp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:gravity="center_vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider1"
+                    app:layout_constraintEnd_toStartOf="@id/button_lecture_bank_search_lecture"
+                    android:hint="@string/lecture_bank_new_bank_lecture_hint"
+                    android:padding="16dp"/>
+
+                <in.hangang.core.view.button.RoundedCornerButton
+                    android:id="@+id/button_lecture_bank_search_lecture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/text_view_lecture_bank_lecture"
+                    app:layout_constraintBottom_toBottomOf="@id/text_view_lecture_bank_lecture"
+                    android:backgroundTint="@color/color_state_button_blue"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/search"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="?attr/colorOnPrimary"/>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_lecture"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="#000"
+                    android:backgroundTint="?android:attr/textColorTertiary"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_semester"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:minHeight="54dp"
+                    android:textSize="14sp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:gravity="center_vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider2"
+                    app:layout_constraintEnd_toStartOf="@id/spinner_lecture_bank_semester"
+                    android:hint="@string/lecture_bank_new_lecture_semester_hint"
+                    android:padding="16dp"/>
+
+                <in.hangang.core.view.spinner.BottomSheetSpinner
+                    android:id="@+id/spinner_lecture_bank_semester"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/text_view_lecture_bank_semester"
+                    app:layout_constraintBottom_toBottomOf="@id/text_view_lecture_bank_semester"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/search"
+                    android:textColor="?attr/colorOnPrimary"/>
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_semester"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="#000"
+                    android:backgroundTint="?android:attr/textColorTertiary"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:layout_constraintTop_toBottomOf="@id/divider3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:hint="@string/lecture_bank_new_lecture_type_hint"
+                    android:paddingTop="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"/>
+
+                <GridLayout
+                    android:id="@+id/layout_lecture_bank_types"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="4"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:layout_marginTop="-4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_type">
+
+                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                        android:id="@+id/check_box_lecture_bank_type_previous_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:paddingStart="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="6dp"
+                        android:checked="true"
+                        android:text="@string/lecture_bank_type_previous_bank"
+                        android:textColor="@color/color_state_button_text"/>
+
+                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                        android:id="@+id/check_box_lecture_bank_type_writing_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:paddingStart="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/lecture_bank_type_writing_bank"
+                        android:textColor="@color/color_state_button_text"/>
+
+                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                        android:id="@+id/check_box_lecture_bank_type_assignment_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:paddingStart="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/lecture_bank_type_assignment_bank"
+                        android:textColor="@color/color_state_button_text"/>
+
+                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                        android:id="@+id/check_box_lecture_bank_type_lecture_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:paddingStart="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/lecture_bank_type_lecture_bank"
+                        android:textColor="@color/color_state_button_text"/>
+
+                    <in.hangang.core.view.button.checkbox.FilledCheckBox
+                        android:id="@+id/check_box_lecture_bank_type_etc_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:paddingStart="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/lecture_bank_type_etc_bank"
+                        android:textColor="@color/color_state_button_text"/>
+
+                </GridLayout>
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_lecture_bank_types"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="#000"
+                    android:backgroundTint="?android:attr/textColorTertiary"/>
+
+                <EditText
+                    android:id="@+id/edit_text_lecture_bank_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:minHeight="54dp"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:hint="@string/lecture_bank_new_bank_content_hint"
+                    android:padding="16dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <View
+            android:id="@+id/divider_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_files"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"/>
+
+        <LinearLayout
+            android:id="@+id/layout_files"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_lecture_bank_new_file"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/lecture_bank_new_plz_upload_file_message"
+                android:textColor="?android:attr/textColorSecondary"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/text_view_file_count_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                tools:visibility="gone"
+                tools:text="총 4개 ( 852KB / 50MB )"
+                android:textColor="?android:attr/textColorSecondary"
+                android:gravity="end|center_vertical"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_list_files"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                tools:visibility="gone"
+                android:paddingEnd="16dp"/>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/button_lecture_bank_new_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:src="@drawable/ic_folder_plus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_lecture_bank_new_finish"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/button_lecture_bank_new_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:src="@drawable/ic_image"
+            app:layout_constraintStart_toEndOf="@id/button_lecture_bank_new_file"
+            app:layout_constraintBottom_toTopOf="@id/button_lecture_bank_new_finish"
+            android:background="@null"/>
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_lecture_bank_new_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/color_state_button_blue"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:enabled="false"
+            android:text="@string/lecture_bank_new_finish"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

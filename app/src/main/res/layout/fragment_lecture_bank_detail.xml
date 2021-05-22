@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.lecturebank.fragment.LectureBankDetailFragment">
+
+        <in.hangang.core.view.appbar.BaseAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleText="@string/lecture_bank_detail_title"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    tools:text="디자인 논리 논술 필기본인데 참고만하세요."
+                    app:layout_constraintEnd_toStartOf="@+id/imageButton"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_author"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_title"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="14sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    tools:text="도미는이유정"
+                    app:layout_constraintEnd_toEndOf="@+id/text_view_lecture_bank_title"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/ic_more_horizontal"
+                    android:tint="?android:attr/textColorSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/text_view_lecture_bank_title"
+                    app:layout_constraintBottom_toBottomOf="@id/text_view_lecture_bank_title"
+                    android:padding="16dp"
+                    android:id="@+id/imageButton"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_created_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_author"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    tools:text="작성일 2021-05-16"
+                    app:layout_constraintEnd_toStartOf="@+id/layout_thumbs_count"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_thumbs_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/text_view_lecture_bank_created_date"
+                    app:layout_constraintBottom_toBottomOf="@id/text_view_lecture_bank_created_date"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_thumbs_up"
+                        app:layout_constraintEnd_toStartOf="@id/text_view_thumbs_up_count"
+                        app:layout_constraintTop_toTopOf="@id/text_view_thumbs_up_count"
+                        app:layout_constraintBottom_toBottomOf="@id/text_view_thumbs_up_count"
+                        app:tint="@color/color_state_lecture_bank_thumbs_up"
+                        android:layout_marginEnd="4dp"/>
+
+                    <TextView
+                        android:id="@+id/text_view_thumbs_up_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="43"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="@color/color_state_lecture_bank_thumbs_up"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/image_view_lecture_bank_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_created_date"
+                    android:layout_marginTop="16dp"
+                    android:adjustViewBounds="true"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_lecture_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    tools:text="문명과 역사"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image_view_lecture_bank_image"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginTop="16dp"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_lecture_semester"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    tools:text="2020년 1학기"
+                    app:layout_constraintStart_toEndOf="@id/text_view_lecture_bank_lecture_name"
+                    app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_bank_lecture_name"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="end"
+                    tools:text="필기자료"
+                    app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_bank_lecture_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:paddingEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/text_view_attach_file_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    tools:text="첨부파일 (12.3MB)"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_lecture_name"
+                    android:layout_marginTop="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_attach_file_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_attach_file_info"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:clipToPadding="false" />
+
+                <in.hangang.core.view.button.RoundedCornerButton
+                    android:id="@+id/button_purchase"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_view_attach_file_list"
+                    android:backgroundTint="@color/color_state_button_blue"
+                    android:layout_margin="16dp"
+                    tools:text="구입하기 (-100P)"
+                    android:textColor="@color/color_state_button_text"
+                    android:gravity="center"/>
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/button_purchase"
+                    android:background="#000"
+                    android:backgroundTint="?android:attr/textColorTertiary" />
+
+                <in.hangang.core.view.edittext.FilledEditText
+                    android:id="@+id/edit_text_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lecture_bank_detail_comment_hint"
+                    android:minHeight="40dp"
+                    android:gravity=""
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider1"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_comment_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edit_text_comment" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
+</layout>
