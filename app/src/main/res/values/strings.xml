@@ -112,22 +112,23 @@
     <string name="lecture_bank_filter_apply">적용</string>
     <string name="lecture_bank_filter_message">필터를 적용해 보세요.</string>
     <string name="lecture_bank_filter_sorting">정렬</string>
-    <string name="lecture_bank_type_previous_bank">기출자료</string>
-    <string name="lecture_bank_type_writing_bank">필기자료</string>
-    <string name="lecture_bank_type_assignment_bank">과제자료</string>
-    <string name="lecture_bank_type_lecture_bank">강의자료</string>
-    <string name="lecture_bank_type_etc_bank">기타자료</string>
+    <string name="lecture_bank_category_previous_bank">기출자료</string>
+    <string name="lecture_bank_category_writing_bank">필기자료</string>
+    <string name="lecture_bank_category_assignment_bank">과제자료</string>
+    <string name="lecture_bank_category_lecture_bank">강의자료</string>
+    <string name="lecture_bank_category_etc_bank">기타자료</string>
     <string name="lecture_bank_sort_by_recent">최신순</string>
     <string name="lecture_bank_sort_by_thumbs_count">좋아요순</string>
-    <string name="lecture_bank_filter_type">유형</string>
+    <string name="lecture_bank_filter_category">유형</string>
     <string name="lecture_bank_new_app_bar_title">자료 업로드</string>
     <string name="lecture_bank_new_bank_title_hint">제목을 입력해주세요.</string>
     <string name="lecture_bank_new_bank_lecture_hint">과목명 검색</string>
     <string name="search">검색</string>
     <string name="lecture_bank_new_lecture_semester_hint">제작 및 수강학기</string>
     <string name="lecture_bank_new_bank_content_hint"><p>자료에 대한 설명을 작성해주세요. (저작권법 제133조에 따라 타인 또는 유포금지 자료를 업로드할 경우, 저작권에 위배되어 경고 없이 삭제될 수 있습니다.)</p>\n\n<p><b>강의자료 작성이 완료될 시, 수정이나 삭제가 불가합니다.</b></p></string>
-    <string name="lecture_bank_new_lecture_type_hint">자료유형</string>
+    <string name="lecture_bank_new_lecture_category_hint">자료유형</string>
     <string name="lecture_bank_new_finish">작성완료 (+70P)</string>
     <string name="lecture_bank_new_plz_upload_file_message">자료를 최소 1개이상 업로드 해주세요. ( 0KB / 50 MB )</string>
+    <string name="lecture_bank_search_bar_hint">교과명, 교수명, 키워드 검색</string>
 
 </resources>

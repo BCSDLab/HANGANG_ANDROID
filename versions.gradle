@@ -22,6 +22,9 @@ ext {
     def androidx_material_version = "1.2.1"
     androidxMaterial = "com.google.android.material:material:$androidx_material_version"
 
+    def paging_version = "3.0.0"
+    androidXPaging = "androidx.paging:paging-runtime:$paging_version"
+    androidXPagingRxJava3 = "androidx.paging:paging-rxjava3:$paging_version"
 
     /* Dependency - AndroidX Lifecycle */
     def android_lifecycle_version = "2.2.0"

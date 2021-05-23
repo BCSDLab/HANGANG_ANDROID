@@ -3,8 +3,10 @@ package `in`.hangang.hangang.di
 import `in`.hangang.hangang.constant.AUTH
 import `in`.hangang.hangang.constant.NO_AUTH
 import `in`.hangang.hangang.constant.REFRESH_AUTH
+import `in`.hangang.hangang.data.source.local.LectureBankLocalDataSource
 import `in`.hangang.hangang.data.source.local.LectureLocalDataSource
 import `in`.hangang.hangang.data.source.local.UserLocalDataSource
+import `in`.hangang.hangang.data.source.remote.LectureBankRemoteDataSource
 import `in`.hangang.hangang.data.source.remote.LectureRemoteDataSource
 import `in`.hangang.hangang.data.source.remote.UserRemoteDataSource
 import org.koin.core.qualifier.named
@@ -15,4 +17,6 @@ val dataSourceModule = module {
     single { UserLocalDataSource() }
     single { LectureRemoteDataSource(get(named(NO_AUTH))) }
     single { LectureLocalDataSource() }
+    single { LectureBankRemoteDataSource(get(named(AUTH))) }
+    single { LectureBankLocalDataSource() }
 }

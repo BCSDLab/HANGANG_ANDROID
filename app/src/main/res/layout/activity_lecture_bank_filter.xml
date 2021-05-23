@@ -58,6 +58,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_title_sorting"
             android:orientation="horizontal" >
+
             <in.hangang.core.view.button.radiobutton.FilledRadioButton
                 android:id="@+id/radio_button_sort_by_recent"
                 android:layout_width="wrap_content"
@@ -87,10 +88,10 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/text_view_title_type"
+            android:id="@+id/text_view_title_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lecture_bank_filter_type"
+            android:text="@string/lecture_bank_filter_category"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             android:layout_marginStart="16dp"
@@ -107,10 +108,10 @@
             android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_title_type">
+            app:layout_constraintTop_toBottomOf="@id/text_view_title_category">
 
             <in.hangang.core.view.button.checkbox.FilledCheckBox
-                android:id="@+id/check_box_lecture_bank_type_previous_bank"
+                android:id="@+id/check_box_lecture_bank_category_previous_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -120,11 +121,11 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="6dp"
-                android:text="@string/lecture_bank_type_previous_bank"
+                android:text="@string/lecture_bank_category_previous_bank"
                 android:textColor="@color/color_state_button_text"/>
 
             <in.hangang.core.view.button.checkbox.FilledCheckBox
-                android:id="@+id/check_box_lecture_bank_type_writing_bank"
+                android:id="@+id/check_box_lecture_bank_category_writing_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -134,11 +135,11 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="6dp"
-                android:text="@string/lecture_bank_type_writing_bank"
+                android:text="@string/lecture_bank_category_writing_bank"
                 android:textColor="@color/color_state_button_text"/>
 
             <in.hangang.core.view.button.checkbox.FilledCheckBox
-                android:id="@+id/check_box_lecture_bank_type_assignment_bank"
+                android:id="@+id/check_box_lecture_bank_category_assignment_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -148,11 +149,11 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="6dp"
-                android:text="@string/lecture_bank_type_assignment_bank"
+                android:text="@string/lecture_bank_category_assignment_bank"
                 android:textColor="@color/color_state_button_text"/>
 
             <in.hangang.core.view.button.checkbox.FilledCheckBox
-                android:id="@+id/check_box_lecture_bank_type_lecture_bank"
+                android:id="@+id/check_box_lecture_bank_category_lecture_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -162,11 +163,11 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="6dp"
-                android:text="@string/lecture_bank_type_lecture_bank"
+                android:text="@string/lecture_bank_category_lecture_bank"
                 android:textColor="@color/color_state_button_text"/>
 
             <in.hangang.core.view.button.checkbox.FilledCheckBox
-                android:id="@+id/check_box_lecture_bank_type_etc_bank"
+                android:id="@+id/check_box_lecture_bank_category_etc_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -177,7 +178,7 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="6dp"
-                android:text="@string/lecture_bank_type_etc_bank"
+                android:text="@string/lecture_bank_category_etc_bank"
                 android:textColor="@color/color_state_button_text"/>
 
         </GridLayout>

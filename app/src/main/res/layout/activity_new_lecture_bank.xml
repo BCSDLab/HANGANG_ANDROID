@@ -133,7 +133,7 @@
                     android:backgroundTint="?android:attr/textColorTertiary"/>
 
                 <TextView
-                    android:id="@+id/text_view_lecture_bank_type"
+                    android:id="@+id/text_view_lecture_bank_category"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -143,13 +143,13 @@
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintTop_toBottomOf="@id/divider3"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:hint="@string/lecture_bank_new_lecture_type_hint"
+                    android:hint="@string/lecture_bank_new_lecture_category_hint"
                     android:paddingTop="16dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"/>
 
                 <GridLayout
-                    android:id="@+id/layout_lecture_bank_types"
+                    android:id="@+id/layout_lecture_bank_categorys"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:columnCount="4"
@@ -158,10 +158,10 @@
                     android:layout_marginTop="-4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_type">
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_category">
 
                     <in.hangang.core.view.button.checkbox.FilledCheckBox
-                        android:id="@+id/check_box_lecture_bank_type_previous_bank"
+                        android:id="@+id/check_box_lecture_bank_category_previous_bank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
@@ -172,11 +172,11 @@
                         android:paddingEnd="12dp"
                         android:paddingBottom="6dp"
                         android:checked="true"
-                        android:text="@string/lecture_bank_type_previous_bank"
+                        android:text="@string/lecture_bank_category_previous_bank"
                         android:textColor="@color/color_state_button_text"/>
 
                     <in.hangang.core.view.button.checkbox.FilledCheckBox
-                        android:id="@+id/check_box_lecture_bank_type_writing_bank"
+                        android:id="@+id/check_box_lecture_bank_category_writing_bank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
@@ -186,11 +186,11 @@
                         android:paddingTop="6dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="6dp"
-                        android:text="@string/lecture_bank_type_writing_bank"
+                        android:text="@string/lecture_bank_category_writing_bank"
                         android:textColor="@color/color_state_button_text"/>
 
                     <in.hangang.core.view.button.checkbox.FilledCheckBox
-                        android:id="@+id/check_box_lecture_bank_type_assignment_bank"
+                        android:id="@+id/check_box_lecture_bank_category_assignment_bank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
@@ -200,11 +200,11 @@
                         android:paddingTop="6dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="6dp"
-                        android:text="@string/lecture_bank_type_assignment_bank"
+                        android:text="@string/lecture_bank_category_assignment_bank"
                         android:textColor="@color/color_state_button_text"/>
 
                     <in.hangang.core.view.button.checkbox.FilledCheckBox
-                        android:id="@+id/check_box_lecture_bank_type_lecture_bank"
+                        android:id="@+id/check_box_lecture_bank_category_lecture_bank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
@@ -214,11 +214,11 @@
                         android:paddingTop="6dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="6dp"
-                        android:text="@string/lecture_bank_type_lecture_bank"
+                        android:text="@string/lecture_bank_category_lecture_bank"
                         android:textColor="@color/color_state_button_text"/>
 
                     <in.hangang.core.view.button.checkbox.FilledCheckBox
-                        android:id="@+id/check_box_lecture_bank_type_etc_bank"
+                        android:id="@+id/check_box_lecture_bank_category_etc_bank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
@@ -229,7 +229,7 @@
                         android:paddingTop="6dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="6dp"
-                        android:text="@string/lecture_bank_type_etc_bank"
+                        android:text="@string/lecture_bank_category_etc_bank"
                         android:textColor="@color/color_state_button_text"/>
 
                 </GridLayout>
@@ -239,7 +239,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_lecture_bank_types"
+                    app:layout_constraintTop_toBottomOf="@id/layout_lecture_bank_categorys"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:background="#000"
                     android:backgroundTint="?android:attr/textColorTertiary"/>

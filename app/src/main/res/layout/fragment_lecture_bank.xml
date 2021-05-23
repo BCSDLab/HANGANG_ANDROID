@@ -13,12 +13,13 @@
             android:id="@+id/app_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/lecture_bank_search_bar_hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageButton
-            android:id="@+id/button_timetable_lecture_filter"
+            android:id="@+id/button_lecture_bank_lecture_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -36,7 +37,7 @@
             android:fadingEdgeLength="48dp"
             android:requiresFadingEdge="horizontal"
             android:scrollbars="none"
-            app:layout_constraintEnd_toStartOf="@id/button_timetable_lecture_filter"
+            app:layout_constraintEnd_toStartOf="@id/button_lecture_bank_lecture_filter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/app_bar">
 
@@ -185,8 +186,12 @@
             android:layout_marginBottom="32dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_lecture_bank"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:paddingTop="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scroll_view_majors"
