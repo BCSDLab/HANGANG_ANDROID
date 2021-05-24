@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
+import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.DEPARTMENT_COMPUTER
 import `in`.hangang.hangang.constant.DEPARTMENT_CONVERGENCE
@@ -24,6 +25,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 import kotlin.reflect.jvm.internal.impl.util.Check
 
 class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
@@ -48,6 +50,7 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
     private val lectureBankFilterActivityContract = registerForActivityResult(LectureBankFilterActivityContract()) {
         if(it != null) {
             lectureBankViewModel.setFilter(it)
+            binding.recyclerViewLectureBank.smoothScrollToPosition(0)
         }
     }
 
@@ -84,6 +87,7 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
                 it.isChecked = true
             }
             lectureBankViewModel.setDepartment(if(it.isChecked) departmentMap[it] else null)
+            binding.recyclerViewLectureBank.smoothScrollToPosition(0)
         }}
     }
 }

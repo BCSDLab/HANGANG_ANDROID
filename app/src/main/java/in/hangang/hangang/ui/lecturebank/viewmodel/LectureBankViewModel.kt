@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.constant.LECTURE_BANKS_ORDER_BY_ID
 import `in`.hangang.hangang.data.lecturebank.LectureBank
 import `in`.hangang.hangang.data.lecturebank.LectureBankFilter
