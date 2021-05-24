@@ -22,6 +22,7 @@ class RankingLectureViewModel(private val lectureRepository: LectureRepository) 
             .handleHttpException()
             .handleProgress(this)
             .withThread()
+            .map { it -> it.result }
             .subscribe({
                 _rankingLectureList.value = getTopFiveList(it)
             }, {

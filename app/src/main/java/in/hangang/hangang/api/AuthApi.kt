@@ -35,7 +35,7 @@ interface AuthApi {
                          @Query("limit") limit: Int = 20,
                         @Query("page") page: Int,
                          @Query("keyword") keyword: String?,
-                        @Query("sort") sort: String): Single<ArrayList<LectureReview>>
+                        @Query("sort") sort: String): Single<LectureReviewResult>
 
     @GET(LECTURE_DOCUMENTS)
     fun getRecommentedDocs(@Query("category") category: ArrayList<String>? = null,
@@ -52,6 +52,8 @@ interface AuthApi {
     @GET(LECTURE_REVIEW)
     fun getLectureReviewItem(@Path("id") id: Int): Single<LectureReview>
 
+    @GET(LECTURE_SEMESTER)
+    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<String>>
 
     @GET(TIMETABLE)
     fun getTimeTables(

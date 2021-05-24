@@ -121,7 +121,6 @@ class LectureReviewFilterFragment : ViewBindingFragment<FragmentLectureReviewFil
             }
         }
         binding.lectureReviewFilterApplyButton.setOnClickListener {
-            LogUtil.e("applly")
             setFilters()
             context?.shortToast { "필터가 적용되었습니다." }
         }

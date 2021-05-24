@@ -6,14 +6,27 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.lang.StringBuilder
 
+data class RankingLectureResult(
+    @SerializedName("result")
+    val result: ArrayList<RankingLectureItem>,
+    @SerializedName("count")
+    val count: Int
+)
+
 @Parcelize
 data class RankingLectureItem(
     @SerializedName("id")
     val id: Int,
+    @SerializedName("is_scraped")
+    val isScraped: Boolean,
+    @SerializedName("grade")
+    val grade: Int,
     @SerializedName("semester_data")
     val semesterData: List<String>,
     @SerializedName("top3_hash_tag")
     val top3HashTag: List<RankingLectureHashTag>,
+    @SerializedName("code")
+    val code: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("department")
@@ -33,12 +46,7 @@ data class RankingLectureItem(
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")
-    val updatedAt: String,
-    @SerializedName("code")
-    val code: String,
-    @SerializedName("grade")
-    val grade: String
-
+    val updatedAt: String
 ) : Parcelable {
     fun getTotalSemester(): String {
         var sb = StringBuilder()

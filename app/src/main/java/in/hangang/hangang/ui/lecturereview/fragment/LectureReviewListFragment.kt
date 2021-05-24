@@ -64,20 +64,36 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
 
     private fun init() {
         inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        lectureReviewAdapter = LectureReviewAdapter(requireActivity())
+        binding.lectureReviewRecyclerview.adapter = lectureReviewAdapter
         for (id in 0..9) {
             reviewcheckboxButtons[id] = binding.root.findViewById(checkboxButtonId[id])
         }
-        lectureReviewListViewModel.getScrapList()
+
+        initSelecteMajor()
+        //lectureReviewListViewModel.getScrapList()
 
     }
+    private fun setMajorButton(){
+        for(i in 0..9){
+            reviewcheckboxButtons[i]?.isChecked = lectureReviewListViewModel.selectedMajorList.contains(fullMajors[i])
+        }
+    }
     private fun initSelecteMajor(){
-        if (arguments == null) {
+        if (arguments == null && lectureReviewListViewModel.selectedMajorList.size == 0) {
+            lectureReviewListViewModel.selectedMajorList.clear()
             getLectureReviewList()
-        } else {
+        } else if(arguments == null && lectureReviewListViewModel.selectedMajorList.size >= 0){
+            setMajorButton()
+            getLectureReviewList()
+
+        }
+        else {
             majorIdx = arguments?.getInt("major")!!
-            LogUtil.e(fullMajors[majorIdx])
-            lectureReviewListViewModel.selectedMajorList.add(fullMajors[majorIdx])
-            reviewcheckboxButtons[majorIdx]?.isChecked = true
+            if(!reviewcheckboxButtons[majorIdx]?.isChecked!!) {
+                lectureReviewListViewModel.selectedMajorList.add(fullMajors[majorIdx])
+            }
+            setMajorButton()
             getLectureReviewList()
             reviewcheckboxButtons[majorIdx]?.let {
                 lifecycleScope.launch {
@@ -107,7 +123,7 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
             }
         }
         binding.buttonReviewLectureFilter.setOnClickListener {
-            navController.navigate(R.id.action_navigation_evaluation_to_lecture_review_filter)
+                navController.navigate(R.id.action_navigation_evaluation_to_lecture_review_filter)
         }
         binding.lectureReviewSearchbar.onBackButtonClickListener = object : View.OnClickListener{
             override fun onClick(v: View?) {
@@ -139,16 +155,7 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
         with(lectureReviewListViewModel) {
             rankingLectureList.observe(viewLifecycleOwner, {
                 it?.let {
-                    if(isComplete)
-                        lectureReviewAdapter.submitData(lifecycle, it)
-                }
-            })
-            isGetScrapList.observe(viewLifecycleOwner,{
-                if(it){
-                    lectureReviewAdapter = LectureReviewAdapter(scrapLectureList, requireActivity())
-                    binding.lectureReviewRecyclerview.adapter = lectureReviewAdapter
-                    isComplete = true
-                    initSelecteMajor()
+                    lectureReviewAdapter.submitData(lifecycle, it)
                 }
             })
         }

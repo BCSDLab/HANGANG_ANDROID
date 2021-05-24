@@ -116,6 +116,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             override fun onClick(v: View?) {
                 LogUtil.e("click")
                 val intent = Intent(activity, LectureEvaluationActivity::class.java)
+                intent.putExtra("lectureId",lecture.id)
                 startActivity(intent)
             }
         })

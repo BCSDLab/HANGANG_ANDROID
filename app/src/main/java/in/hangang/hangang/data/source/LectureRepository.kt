@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import androidx.paging.Pager
@@ -15,15 +16,15 @@ class LectureRepository(
     private val lectureLocalDataSource: LectureDataSource,
     private val lectureRemoteDataSource: LectureDataSource
 ) : LectureDataSource {
-    override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return lectureRemoteDataSource.getLectureRankingByTotalRating(majors, page)
     }
 
-    override fun getLectureRankingByReviewCount(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByReviewCount(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return lectureRemoteDataSource.getLectureRankingByReviewCount(majors, page)
     }
 
-    override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return lectureRemoteDataSource.getLectureRankingByLatestReview(majors, page)
     }
 
@@ -38,7 +39,7 @@ class LectureRepository(
         filterHashTag: ArrayList<Int>?,
         sort: String,
         keyword: String?
-    ): Single<ArrayList<RankingLectureItem>> {
+    ): Single<RankingLectureResult> {
         return lectureRemoteDataSource.getFilteredLectureList(majors,page,filterType,filterHashTag,sort,keyword)
     }
 
@@ -75,7 +76,7 @@ class LectureRepository(
         page: Int,
         keyword: String?,
         sort: String
-    ): Single<ArrayList<LectureReview>> {
+    ): Single<LectureReviewResult> {
         return lectureRemoteDataSource.getLectureReview(id, page, keyword, sort)
     }
 
@@ -91,5 +92,9 @@ class LectureRepository(
 
     override fun getLectureReviewItem(id: Int): Single<LectureReview> {
         return lectureRemoteDataSource.getLectureReviewItem(id)
+    }
+
+    override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
+        return lectureRemoteDataSource.getLectureSemester(id)
     }
 }

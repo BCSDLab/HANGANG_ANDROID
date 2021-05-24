@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class LectureReviewAdapter(var scrapList: ArrayList<RankingLectureItem>, val context: Context) :
+class LectureReviewAdapter(val context: Context) :
     PagingDataAdapter<RankingLectureItem, LectureReviewAdapter.ViewHolder>(lectureReviewDiffUtil) {
     private val navController: NavController by lazy {
         Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
@@ -37,11 +37,6 @@ class LectureReviewAdapter(var scrapList: ArrayList<RankingLectureItem>, val con
         val rankingLectureItem = getItem(position)
         if (rankingLectureItem != null) {
             holder.bind(rankingLectureItem)
-            if(scrapList.contains(rankingLectureItem)){
-                holder.binding.lectureReviewScrap.visibility = View.VISIBLE
-            }else{
-                holder.binding.lectureReviewScrap.visibility = View.INVISIBLE
-            }
         }else{
             LogUtil.e("onbindviewholder")
         }

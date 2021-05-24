@@ -11,7 +11,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlin.reflect.jvm.internal.impl.renderer.KeywordStringsGenerated
 
 private const val LECTURE_REVIEW_STARTING_PAGE_INDEX = 1
-private const val LECTURE_REVIEW_TOTAL = 30
 class ReviewPagingSource (
     private val lectureDataSource: LectureDataSource,
     private val id: Int,
@@ -34,7 +33,8 @@ class ReviewPagingSource (
             .handleHttpException()
             .subscribeOn(Schedulers.io())
             .map{
-                toLoadResult(it, nextPageNumber)
+                LECTURE_REVIEW_TOTAL = (it.count / 20) + 1
+                toLoadResult(it.result, nextPageNumber)
             }
             .onErrorReturn { LoadResult.Error(it) }
     }
@@ -49,5 +49,8 @@ class ReviewPagingSource (
             prevKey = if (nextPageNumber == LECTURE_REVIEW_STARTING_PAGE_INDEX) null else nextPageNumber - 1,
             nextKey = if (nextPageNumber < LECTURE_REVIEW_TOTAL) nextPageNumber + 1 else null
         )
+    }
+    companion object{
+        var LECTURE_REVIEW_TOTAL: Int = 30
     }
 }

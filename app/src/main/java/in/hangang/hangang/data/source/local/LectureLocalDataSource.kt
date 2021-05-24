@@ -2,21 +2,22 @@ package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
 class LectureLocalDataSource : LectureDataSource {
-    override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return Single.never()
     }
 
-    override fun getLectureRankingByReviewCount(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByReviewCount(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return Single.never()
     }
 
-    override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return Single.never()
     }
 
@@ -31,7 +32,7 @@ class LectureLocalDataSource : LectureDataSource {
         filterHashTag: ArrayList<Int>?,
         sort: String,
         keyword: String?
-    ): Single<ArrayList<RankingLectureItem>> {
+    ): Single<RankingLectureResult> {
         return Single.never()
     }
 
@@ -56,7 +57,7 @@ class LectureLocalDataSource : LectureDataSource {
         page: Int,
         keyword: String?,
         sort: String
-    ): Single<ArrayList<LectureReview>> {
+    ): Single<LectureReviewResult> {
         return Single.never()
     }
 
@@ -65,6 +66,10 @@ class LectureLocalDataSource : LectureDataSource {
     }
 
     override fun getLectureReviewItem(id: Int): Single<LectureReview> {
+        return Single.never()
+    }
+
+    override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
         return Single.never()
     }
 }

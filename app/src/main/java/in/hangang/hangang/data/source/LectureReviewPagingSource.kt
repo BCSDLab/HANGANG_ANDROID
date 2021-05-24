@@ -9,7 +9,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 private const val LECTURE_REVIEW_STARTING_PAGE_INDEX = 1
-private const val LECTURE_REVIEW_TOTAL = 30
 
 
 class LectureReviewPagingSource(
@@ -43,7 +42,8 @@ class LectureReviewPagingSource(
             .handleHttpException()
             .subscribeOn(Schedulers.io())
             .map {
-                toLoadResult(it, nextPageNumber)
+                LECTURE_REVIEW_TOTAL = (it.count / 20) + 1
+                toLoadResult(it.result, nextPageNumber)
             }
             .onErrorReturn { LoadResult.Error(it) }
     }
@@ -59,6 +59,9 @@ class LectureReviewPagingSource(
             prevKey = if (nextPageNumber == LECTURE_REVIEW_STARTING_PAGE_INDEX) null else nextPageNumber - 1,
             nextKey = if (nextPageNumber < LECTURE_REVIEW_TOTAL) nextPageNumber + 1 else null
         )
+    }
+    companion object{
+        var LECTURE_REVIEW_TOTAL: Int = 30
     }
 
 

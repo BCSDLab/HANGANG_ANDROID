@@ -4,6 +4,12 @@ import `in`.hangang.hangang.data.ranking.RankingLectureHashTag
 import com.google.gson.annotations.SerializedName
 import java.lang.StringBuilder
 
+data class LectureReviewResult(
+    @SerializedName("result")
+    var result: ArrayList<LectureReview>,
+    @SerializedName("count")
+    var count: Int
+    )
 data class LectureReview(
     @SerializedName("id")
     var id: Int,

@@ -7,6 +7,7 @@ import `in`.hangang.hangang.constant.SORT_BY_REVIEW_COUNT
 import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureDataSource
@@ -19,7 +20,7 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun getLectureRankingByTotalRating(
         majors: ArrayList<String>,
         page: Int
-    ): Single<ArrayList<RankingLectureItem>> {
+    ): Single<RankingLectureResult> {
         return noAuthApi.getLectureRanking(
             department = majors,
             sort = SORT_BY_TOTAL_RATING,
@@ -30,7 +31,7 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun getLectureRankingByReviewCount(
         majors: ArrayList<String>,
         page: Int
-    ): Single<ArrayList<RankingLectureItem>> {
+    ): Single<RankingLectureResult> {
         return noAuthApi.getLectureRanking(
             department = majors,
             sort = SORT_BY_REVIEW_COUNT,
@@ -41,7 +42,7 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun getLectureRankingByLatestReview(
         majors: ArrayList<String>,
         page: Int
-    ): Single<ArrayList<RankingLectureItem>> {
+    ): Single<RankingLectureResult> {
         return noAuthApi.getLectureRanking(
             department = majors,
             sort = SORT_BY_LATEST_REVIEW,
@@ -60,7 +61,7 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
         filterHashTag: ArrayList<Int>?,
         sort: String,
         keyword: String?
-    ): Single<ArrayList<RankingLectureItem>> {
+    ): Single<RankingLectureResult> {
         return noAuthApi.getLectureRanking(
             department = majors,
             sort = sort,
@@ -92,7 +93,7 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
         page: Int,
         keyword: String?,
         sort: String
-    ): Single<ArrayList<LectureReview>> {
+    ): Single<LectureReviewResult> {
         return authApi.getLectureReview(id = id, page = page, keyword = keyword, sort = sort)
     }
 
@@ -102,5 +103,9 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
 
     override fun getLectureReviewItem(id: Int): Single<LectureReview> {
         return authApi.getLectureReviewItem(id)
+    }
+
+    override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
+        return authApi.getLectureSemester(id)
     }
 }

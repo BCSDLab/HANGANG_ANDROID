@@ -156,4 +156,18 @@
     <string name="report">신고</string>
     <string name="personal_evaluation">개인 평가</string>
     <string name="no_info">정보 없음</string>
+    <string name="semester_title">수강학기</string>
+    <string name="high">상</string>
+    <string name="middle">중</string>
+    <string name="low">하</string>
+    <string name="duplicated_select">중복선택</string>
+    <string name="team_play">팀플</string>
+    <string name="assignment_report">레포트</string>
+    <string name="debate">토론</string>
+    <string name="quize">퀴즈</string>
+    <string name="grade_portion_high">후하게주심</string>
+    <string name="grade_portion_middle">적당히주심</string>
+    <string name="grade_portion_low">아쉽게주심</string>
+    <string name="total_evaluation">총평</string>
+    <string name="lecture_evaluation_write_complete">작성완료 (+30P)</string>
 </resources>
