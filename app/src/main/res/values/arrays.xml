@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="major_simple_0">교양</string>
+    <string name="major_simple_1">HRD</string>
+    <string name="major_simple_2">기계</string>
+    <string name="major_simple_3">디자인·건축</string>
+    <string name="major_simple_4">메카</string>
+    <string name="major_simple_5">산경</string>
+    <string name="major_simple_6">에신화</string>
+    <string name="major_simple_7">융합</string>
+    <string name="major_simple_8">전기전자</string>
+    <string name="major_simple_9">컴퓨터</string>
+
     <string-array name="major_simple">
-        <item>교양</item>
-        <item>HRD</item>
-        <item>기계</item>
-        <item>디자인·건축</item>
-        <item>메카</item>
-        <item>산경</item>
-        <item>에신화</item>
-        <item>융합</item>
-        <item>전기전자</item>
-        <item>컴퓨터</item>
+        <item>@string/major_simple_0</item>
+        <item>@string/major_simple_1</item>
+        <item>@string/major_simple_2</item>
+        <item>@string/major_simple_3</item>
+        <item>@string/major_simple_4</item>
+        <item>@string/major_simple_5</item>
+        <item>@string/major_simple_6</item>
+        <item>@string/major_simple_7</item>
+        <item>@string/major_simple_8</item>
+        <item>@string/major_simple_9</item>
     </string-array>
 
     <string-array name="major_full">
