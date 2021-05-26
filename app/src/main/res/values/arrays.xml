@@ -63,4 +63,12 @@
         <item>@drawable/cover_image_9</item>
         <item>@drawable/cover_image_10</item>
     </integer-array>
+
+    <string-array name="lecture_bank_report_types">
+        <item>욕설/비하</item>
+        <item>유출/사칭/저작권 위배</item>
+        <item>허위/부적절한 정보</item>
+        <item>광고/도배</item>
+        <item>음란물</item>
+    </string-array>
 </resources>

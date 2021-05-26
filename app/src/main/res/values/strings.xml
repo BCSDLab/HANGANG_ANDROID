@@ -7,7 +7,7 @@
     <string name="app_name">한강</string>
     <string name="title_home">홈</string>
     <string name="title_evaluation">강의평</string>
-    <string name="title_document">강의자료</string>
+    <string name="title_lecture_bank">강의자료</string>
     <string name="title_timetable">시간표</string>
     <string name="title_mypage">마이페이지</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -130,5 +130,14 @@
     <string name="lecture_bank_new_finish">작성완료 (+70P)</string>
     <string name="lecture_bank_new_plz_upload_file_message">자료를 최소 1개이상 업로드 해주세요. ( 0KB / 50 MB )</string>
     <string name="lecture_bank_search_bar_hint">교과명, 교수명, 키워드 검색</string>
+    <string name="lecture_bank_created_date">작성일 %1$s</string>
+    <string name="lecture_bank_detail_purchase_with_point">구입하기 (-%1$sP)</string>
+    <string name="lecture_bank_detail_attachment_info">첨부파일 (%1$s)</string>
+    <string name="lecture_bank_purchased">구입완료</string>
+    <string name="lecture_bank_scrap">스크랩</string>
+    <string name="lecture_bank_unscrap">스크랩 취소</string>
+    <string name="lecture_bank_report">신고</string>
+    <string name="lecture_bank_reported_title">신고해주셔서 감사합니다.</string>
+    <string name="lecture_bank_reported_message">회원님의 의견은 한강 서비스를 안전하게 유지하기 위해 사용하겠습니다.</string>
 
 </resources>

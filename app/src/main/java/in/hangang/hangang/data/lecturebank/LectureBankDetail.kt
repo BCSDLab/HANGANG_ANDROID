@@ -2,7 +2,7 @@ package `in`.hangang.hangang.data.lecturebank
 
 import com.google.gson.annotations.SerializedName
 
-data class LectureBank(
+data class LectureBankDetail(
     val id: Int,
     @SerializedName("user_id") val userId : Int,
     @SerializedName("lecture_id") val lectureId : Int,
@@ -20,5 +20,6 @@ data class LectureBank(
     @SerializedName("is_purchase") val isPurchased : Boolean,
     val thumbnail: String,
     val user : User,
-    val lecture: Lecture
+    val lecture: Lecture,
+    val uploadFiles: List<UploadFile>
 )

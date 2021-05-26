@@ -1,15 +1,14 @@
 package `in`.hangang.hangang.api
 
-import `in`.hangang.hangang.constant.AUTH_TEST
-import `in`.hangang.hangang.constant.LECTURE_BANKS
-import `in`.hangang.hangang.constant.REFRESH
-import `in`.hangang.hangang.data.lecturebank.LectureBankResult
+import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.response.LectureBankResponse
+import `in`.hangang.hangang.data.request.LectureBankReportRequest
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.LectureBankCommentResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface AuthApi {
     @GET(AUTH_TEST)
@@ -25,5 +24,36 @@ interface AuthApi {
     @Query("keyword") keyword: String?,
     @Query("limit") limit: Int,
     @Query("order") order: String,
-    @Query("page") page : Int) : Single<LectureBankResult>
+    @Query("page") page : Int) : Single<LectureBankResponse>
+
+    @GET("$LECTURE_BANKS/{id}")
+    fun getLectureBankDetail(@Path("id") id: Int) : Single<LectureBankDetail>
+
+    @GET("$LECTURE_BANKS_HIT/{id}")
+    fun hitLectureBank(@Path("id") id: Int) : Single<CommonResponse>
+
+    @GET("$LECTURE_BANKS_PURCHASE/{id}")
+    fun purchaseLectureBank(@Path("id") id: Int) : Single<CommonResponse>
+
+    @GET("$LECTURE_BANKS_PURCHASE_CHECK/{id}")
+    fun checkLectureBankPurchased(@Path("id") id: Int) : Single<Boolean>
+
+    @POST("$LECTURE_BANKS_SCRAP/{id}")
+    fun scrapLectureBank(@Path("id") id: Int) : Single<Int>
+
+    @HTTP(method = "DELETE", path = LECTURE_BANKS_SCRAP, hasBody = true)
+    fun unscrapLectureBanks(@Body ids: List<Int>) : Single<CommonResponse>
+
+    @POST(LECTURE_BANKS_REPORT)
+    fun reportLectureBank(@Body lectureBankReportRequest: LectureBankReportRequest) : Single<CommonResponse>
+
+    @GET(LECTURE_BANKS_COMMENTS)
+    fun getLectureBankComments(
+        @Path("id") id: Int,
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ) : Single<LectureBankCommentResponse>
+
+    @POST(LECTURE_BANKS_REPORT_COMMENT)
+    fun reportLectureBankComment(@Body lectureBankReportRequest: LectureBankReportRequest) : Single<CommonResponse>
 }

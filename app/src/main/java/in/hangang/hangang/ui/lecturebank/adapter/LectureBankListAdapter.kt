@@ -12,7 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class LectureBankListAdapter : PagingDataAdapter<LectureBank, LectureBankListAdapter.LectureBankViewHolder>(
-    lectureBankDiffUtil) {
+    lectureBankDiffCallback) {
+
+    interface OnItemClickListener {
+        fun onItemClick(id: Int)
+    }
+
+    var onItemClickListener : OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LectureBankViewHolder {
         return LectureBankViewHolder(
@@ -24,6 +30,17 @@ class LectureBankListAdapter : PagingDataAdapter<LectureBank, LectureBankListAda
         val lectureBank = getItem(position)
         if(lectureBank != null) {
             holder.bind(lectureBank)
+            holder.itemView.setOnClickListener {
+                onItemClickListener?.onItemClick(lectureBank.id)
+            }
+        }
+    }
+
+    inline fun setOnItemClickListener(crossinline onItemClick: (Int) -> Unit) {
+        onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(id: Int) {
+                onItemClick(id)
+            }
         }
     }
 
@@ -34,6 +51,8 @@ class LectureBankListAdapter : PagingDataAdapter<LectureBank, LectureBankListAda
         fun bind(lectureBank: LectureBank) {
             binding.root.clipToOutline = true
             binding.bank = lectureBank
+            binding.imageViewThumbsUp.isSelected = lectureBank.isHit
+            binding.textViewHitsCount.isSelected = lectureBank.isHit
             Glide.with(binding.root.context).load(lectureBank.thumbnail).into(binding.imageViewLectureBankThumbnail)
 
             binding.executePendingBindings()
@@ -41,7 +60,7 @@ class LectureBankListAdapter : PagingDataAdapter<LectureBank, LectureBankListAda
     }
 
     companion object {
-        val lectureBankDiffUtil = object : DiffUtil.ItemCallback<LectureBank>() {
+        val lectureBankDiffCallback = object : DiffUtil.ItemCallback<LectureBank>() {
             override fun areItemsTheSame(oldItem: LectureBank, newItem: LectureBank): Boolean {
                 return oldItem.id == newItem.id
             }

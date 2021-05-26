@@ -1,9 +1,9 @@
 package `in`.hangang.hangang.di
 
-import `in`.hangang.hangang.data.source.LectureBankRepository
-import `in`.hangang.hangang.data.source.LectureRepository
-import `in`.hangang.hangang.data.source.UserRepository
 import `in`.hangang.hangang.data.source.local.LectureBankLocalDataSource
+import `in`.hangang.hangang.data.source.repository.LectureBankRepository
+import `in`.hangang.hangang.data.source.repository.LectureRepository
+import `in`.hangang.hangang.data.source.repository.UserRepository
 import `in`.hangang.hangang.data.source.local.LectureLocalDataSource
 import `in`.hangang.hangang.data.source.local.UserLocalDataSource
 import `in`.hangang.hangang.data.source.remote.LectureBankRemoteDataSource
@@ -13,6 +13,6 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single { UserRepository(get() as UserLocalDataSource, get() as UserRemoteDataSource) }
-    single { LectureRepository(get() as LectureLocalDataSource, get() as LectureRemoteDataSource)}
+    single { LectureRepository(get() as LectureLocalDataSource, get() as LectureRemoteDataSource) }
     single { LectureBankRepository(get() as LectureBankLocalDataSource, get() as LectureBankRemoteDataSource) }
 }

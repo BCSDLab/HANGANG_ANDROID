@@ -1,17 +1,16 @@
 package `in`.hangang.hangang.ui.lecturebank.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.constant.LECTURE_BANKS_ORDER_BY_ID
 import `in`.hangang.hangang.data.lecturebank.LectureBank
 import `in`.hangang.hangang.data.lecturebank.LectureBankFilter
-import `in`.hangang.hangang.data.source.LectureBankRepository
+import `in`.hangang.hangang.data.source.repository.LectureBankRepository
+import `in`.hangang.hangang.di.repositoryModule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
-import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.kotlin.addTo
 
 class LectureBankViewModel(

@@ -52,12 +52,14 @@
                 android:padding="8dp">
 
                 <ImageView
+                    android:id="@+id/image_view_thumbs_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_thumbs_up"
                     app:tint="@color/color_state_lecture_bank_thumbs_up"/>
 
                 <TextView
+                    android:id="@+id/text_view_hits_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"

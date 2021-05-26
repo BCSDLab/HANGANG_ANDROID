@@ -1,6 +1,10 @@
 package `in`.hangang.core.view
 
+import android.app.Activity
+import android.view.View
+import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.annotation.MenuRes
 import org.koin.core.qualifier._q
 import java.lang.IllegalStateException
 
@@ -23,5 +27,12 @@ fun TextView.setMultiEllipsizeText(
         else {
 
         }
+    }
+}
+
+fun View.showPopupMenu(@MenuRes menuId: Int) : PopupMenu {
+    return PopupMenu(context, this).apply {
+        inflate(menuId)
+        show()
     }
 }

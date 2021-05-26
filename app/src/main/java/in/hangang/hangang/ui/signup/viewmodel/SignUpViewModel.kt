@@ -2,14 +2,12 @@ package `in`.hangang.hangang.ui.signup.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.UserRepository
+import `in`.hangang.hangang.data.source.repository.UserRepository
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
-import androidx.compose.runtime.savedinstancestate.savedInstanceState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import io.reactivex.rxjava3.kotlin.addTo
 
 class SignUpViewModel(private val userRepository: UserRepository, private val handle: String) : ViewModelBase() {

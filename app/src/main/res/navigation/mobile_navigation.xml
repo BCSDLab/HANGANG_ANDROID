@@ -12,14 +12,8 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_evaluation"
+        android:id="@+id/navigation_lecture_bank"
         android:name="in.hangang.hangang.ui.lecturebank.fragment.LectureBankFragment"
-        android:label="@string/title_evaluation"
+        android:label="@string/title_lecture_bank"
         tools:layout="@layout/fragment_lecture_bank" />
-
-    <fragment
-        android:id="@+id/navigation_document"
-        android:name="in.hangang.hangang.ui.notifications.NotificationsFragment"
-        android:label="@string/title_document"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>
