@@ -4,6 +4,7 @@ import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.UploadFile
 import `in`.hangang.hangang.databinding.ItemLectureBankBinding
+import `in`.hangang.hangang.databinding.ItemLectureBankUploadFileBinding
 import `in`.hangang.hangang.util.LectureBankUtil
 import android.content.Context
 import android.view.LayoutInflater
@@ -20,7 +21,7 @@ class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileA
             DataBindingUtil.bind(
                 LayoutInflater
                     .from(parent.context)
-                    .inflate(R.layout.item_lecture_bank, parent, false)
+                    .inflate(R.layout.item_lecture_bank_upload_file, parent, false)
             )!!,
             parent.context
         )
@@ -43,7 +44,7 @@ class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileA
         return files[position]
     }
 
-    inner class ViewHolder(private val binding: ItemLectureBankBinding, private val context: Context) :
+    inner class ViewHolder(private val binding: ItemLectureBankUploadFileBinding, private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(uploadFile: UploadFile) {
             binding.imageViewFileType.setImageDrawable(
