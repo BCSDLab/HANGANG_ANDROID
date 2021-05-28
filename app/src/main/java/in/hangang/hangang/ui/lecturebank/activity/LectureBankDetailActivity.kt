@@ -3,28 +3,41 @@ package `in`.hangang.hangang.ui.lecturebank.activity
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.livedata.EventObserver
+import `in`.hangang.core.util.hideKeyboard
+import `in`.hangang.core.util.showKeyboard
 import `in`.hangang.core.util.toProperCapacityUnit
 import `in`.hangang.core.view.showPopupMenu
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.databinding.ActivityLectureBankDetailBinding
+import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.lecturebank.adapter.LectureBankCommentsAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankDetailActivityContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankDetailViewModel
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputFilter
+import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailBinding>() {
     override val layoutId = R.layout.activity_lecture_bank_detail
 
     private val lectureBankDetailViewModel: LectureBankDetailViewModel by viewModel()
+    private var isShowingCommentField = false
 
     private val lectureBankCommentsAdapter : LectureBankCommentsAdapter by lazy {
         LectureBankCommentsAdapter()
+    }
+
+    private val lectureBankFileAdapter : LectureBankFileAdapter by lazy {
+        LectureBankFileAdapter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +55,7 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
     }
 
     private fun initView() {
+        hideCommentField()
         with(binding) {
             buttonLectureBankMore.setOnClickListener {
                 it.showPopupMenu(R.menu.menu_lecture_bank_detail).apply {
@@ -69,10 +83,31 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
                     }
                 }
             }
+            editTextComment.filters = arrayOf(InputFilter.LengthFilter(COMMENT_MAX_TEXT_COUNT))
+            editTextComment.addTextChangedListener {
+                textViewCommentTextCount.text = getString(R.string.lecture_bank_comment_text_count, it?.length ?: 0, COMMENT_MAX_TEXT_COUNT)
+                imageViewCommentApply.isEnabled = !it.isNullOrBlank()
+            }
+            imageViewCommentApply.setOnClickListener {
+                lectureBankDetailViewModel.commentLectureBank(editTextComment.text.toString())
+                editTextComment.setText("")
+                hideCommentField()
+            }
             recyclerViewCommentList.layoutManager = LinearLayoutManager(this@LectureBankDetailActivity)
             recyclerViewCommentList.adapter = lectureBankCommentsAdapter
+            recyclerViewAttachFileList.layoutManager = LinearLayoutManager(this@LectureBankDetailActivity, LinearLayoutManager.HORIZONTAL, false)
+            recyclerViewAttachFileList.adapter = lectureBankFileAdapter
             lectureBankCommentsAdapter.setOnItemClickListener { //Report button clicked
-                showLectureBankCommentReportDialog(commentId = it.id)
+                showLectureBankCommentReportDialog(commentId = it.id ?: 0)
+            }
+            textViewComment.setOnClickListener {
+                showCommentField()
+            }
+            layout.setOnClickListener {
+                hideCommentField()
+            }
+            buttonPurchase.setOnClickListener {
+                showLectureBankPurchaseDialog()
             }
         }
     }
@@ -96,7 +131,32 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             errorEvent.observe(this@LectureBankDetailActivity, EventObserver {
                 showErrorDialog(it)
             })
+            isPurchased.observe(this@LectureBankDetailActivity) {
+                lectureBankFileAdapter.isEnabled = it.first
+                binding.buttonPurchase.apply {
+                    text =
+                        if (it.first) {
+                            getString(R.string.lecture_bank_purchased)
+                        } else {
+                            getString(
+                                R.string.lecture_bank_detail_purchase_with_point,
+                                it.second.toString()
+                            )
+                        }
+                    isEnabled = !it.first
+                }
+            }
+            commentAppliedEvent.observe(this@LectureBankDetailActivity) {
+                lectureBankDetailViewModel.getLectureBankComments()
+            }
         }
+    }
+
+    override fun onBackPressed() {
+        if(isShowingCommentField) {
+            hideCommentField()
+        } else
+            super.onBackPressed()
     }
 
     private fun setLectureBankDetail(lectureBankDetail: LectureBankDetail) {
@@ -108,20 +168,9 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             )
             textViewLectureBankCreatedDate.text =
                 getString(R.string.lecture_bank_created_date, lectureBankDetail.createdAt.split("T")[0])
-            buttonPurchase.apply {
-                text =
-                    if (lectureBankDetail.isPurchased) {
-                        getString(R.string.lecture_bank_purchased)
-                    } else {
-                        getString(
-                            R.string.lecture_bank_detail_purchase_with_point,
-                            lectureBankDetail.pointPrice.toString()
-                        )
-                    }
-                isEnabled = !lectureBankDetail.isPurchased
-            }
             imageViewThumbsUp.isSelected = lectureBankDetail.isHit
             textViewThumbsUpCount.isSelected = lectureBankDetail.isHit
+            lectureBankFileAdapter.setFiles(lectureBankDetail.uploadFiles)
         }
 
         Glide.with(this).load(lectureBankDetail.thumbnail).into(binding.imageViewLectureBankImage)
@@ -141,6 +190,21 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
                 lectureBankDetailViewModel.reportComment(commentId, which + 1)
             }
             .show()
+    }
+
+    private fun showLectureBankPurchaseDialog() {
+        showSimpleDialog(
+            message = getString(R.string.lecture_bank_purchase_message),
+            positiveButtonText = getString(R.string.lecture_bank_proceed_purchase),
+            positiveButtonOnClickListener = { dialog, _ ->
+                lectureBankDetailViewModel.purchaseLectureBank()
+                dialog.dismiss()
+            },
+            negativeButtonText = getString(R.string.cancel),
+            negativeButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            }
+        )
     }
 
     private fun showReportedDialog() {
@@ -164,7 +228,20 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
         )
     }
 
-    companion object {
+    private fun hideCommentField() {
+        binding.fieldComment.visibility = View.GONE
+        isShowingCommentField = false
+        hideKeyboard()
+    }
 
+    private fun showCommentField() {
+        binding.fieldComment.visibility = View.VISIBLE
+        isShowingCommentField = true
+        binding.editTextComment.requestFocus()
+        showKeyboard(binding.editTextComment)
+    }
+
+    companion object {
+        const val COMMENT_MAX_TEXT_COUNT = 300
     }
 }

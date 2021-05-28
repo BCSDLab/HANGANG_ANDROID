@@ -25,15 +25,19 @@ class LectureBankDetailViewModel(
 
     private val _lectureBankDetail = MutableLiveData<LectureBankDetail>()
     private val _isScraped = MutableLiveData<Boolean>()
+    private val _isPurchased = MutableLiveData<Pair<Boolean, Int>>()
     private val _reportedEvent = MutableLiveData<Event<Boolean>>()
     private val _lectureBankCommentPagingData = MutableLiveData<PagingData<LectureBankComment>>()
     private val _errorEvent = MutableLiveData<Event<CommonResponse>>()
+    private val _commentAppliedEvent = MutableLiveData<Event<Int>>()
 
     val lectureBankDetail : LiveData<LectureBankDetail> get() = _lectureBankDetail
     val isScraped : LiveData<Boolean> get() = _isScraped
+    val isPurchased : LiveData<Pair<Boolean, Int>> get() = _isPurchased
     val reportedEvent : LiveData<Event<Boolean>> get() = _reportedEvent
     val lectureBankCommentPagingData : LiveData<PagingData<LectureBankComment>> get() = _lectureBankCommentPagingData
     val errorEvent : LiveData<Event<CommonResponse>> get() = _errorEvent
+    val commentAppliedEvent : LiveData<Event<Int>> get() = _commentAppliedEvent
 
     fun getLectureBankDetail(id: Int) {
         lectureBankRepository.getLectureBankDetail(id)
@@ -43,8 +47,10 @@ class LectureBankDetailViewModel(
             .subscribe( {
                 _lectureBankDetail.value = it
                 _isScraped.value = it.userScrapId > 0
+                _isPurchased.value = it.isPurchased to it.pointPrice
                 userScrapId = it.userScrapId
             }, this::postErrorViewModel)
+            .addTo(compositeDisposable)
     }
 
     fun getLectureBankComments() {
@@ -67,6 +73,7 @@ class LectureBankDetailViewModel(
                 userScrapId = it
                 _isScraped.value = true
             }, this::postErrorViewModel)
+            .addTo(compositeDisposable)
     }
 
     fun unscrapLecture() {
@@ -78,6 +85,18 @@ class LectureBankDetailViewModel(
             .subscribe( {
                 _isScraped.value = false
             }, this::postErrorViewModel)
+            .addTo(compositeDisposable)
+    }
+
+    fun purchaseLectureBank() {
+        lectureBankRepository.purchaseLectureBank(lectureBankDetail.value?.id ?: -1)
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe( {
+                _isPurchased.value = true to (lectureBankDetail.value?.pointPrice ?: 0)
+            }, this::postErrorViewModel)
+            .addTo(compositeDisposable)
     }
 
     fun reportLecture(type: Int) {
@@ -91,6 +110,7 @@ class LectureBankDetailViewModel(
             .subscribe( {
                 _reportedEvent.value = Event(true)
             }, this::postErrorViewModel)
+            .addTo(compositeDisposable)
     }
 
     fun reportComment(commentId: Int, type: Int) {
@@ -104,6 +124,21 @@ class LectureBankDetailViewModel(
             .subscribe( {
                 _reportedEvent.value = Event(true)
             }, this::postErrorViewModel)
+            .addTo(compositeDisposable)
+    }
+
+    fun commentLectureBank(comment: String) {
+        lectureBankRepository.commentLectureBank(
+            lectureBankDetail.value?.id ?: -1,
+            comment
+        )
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe( {
+                _commentAppliedEvent.value = Event(it)
+            }, this::postErrorViewModel)
+            .addTo(compositeDisposable)
     }
 
     private fun postErrorViewModel(t: Throwable) {

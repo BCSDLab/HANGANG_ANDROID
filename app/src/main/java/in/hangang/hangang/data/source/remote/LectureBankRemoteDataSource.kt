@@ -37,20 +37,24 @@ class LectureBankRemoteDataSource(
         }.flowable
     }
 
+    override fun commentLectureBank(lectureBankId: Int, comment: String): Single<Int> {
+        return authApi.commentLectureBank(lectureBankId, LectureBankComment(comments = comment))
+    }
+
     override fun getLectureBankDetail(id: Int): Single<LectureBankDetail> {
         return authApi.getLectureBankDetail(id)
     }
 
-    override fun hitLectureBank(id: Int): Single<CommonResponse> {
-        return authApi.hitLectureBank(id)
+    override fun hitLectureBank(lectureBankId: Int): Single<CommonResponse> {
+        return authApi.hitLectureBank(lectureBankId)
     }
 
-    override fun purchaseLectureBank(id: Int): Single<CommonResponse> {
-        return authApi.purchaseLectureBank(id)
+    override fun purchaseLectureBank(lectureBankId: Int): Single<CommonResponse> {
+        return authApi.purchaseLectureBank(lectureBankId)
     }
 
-    override fun checkLectureBankPurchased(id: Int): Single<Boolean> {
-        return authApi.checkLectureBankPurchased(id)
+    override fun checkLectureBankPurchased(lectureBankId: Int): Single<Boolean> {
+        return authApi.checkLectureBankPurchased(lectureBankId)
     }
 
     override fun scrapLectureBank(lectureBankId: Int): Single<Int> {

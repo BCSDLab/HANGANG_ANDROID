@@ -24,19 +24,23 @@ class LectureBankLocalDataSource : LectureBankDataSource {
         return Flowable.never()
     }
 
+    override fun commentLectureBank(lectureBankId: Int, comment: String): Single<Int> {
+        return Single.never()
+    }
+
     override fun getLectureBankDetail(id: Int): Single<LectureBankDetail> {
         return Single.never()
     }
 
-    override fun hitLectureBank(id: Int): Single<CommonResponse> {
+    override fun hitLectureBank(lectureBankId: Int): Single<CommonResponse> {
         return Single.never()
     }
 
-    override fun purchaseLectureBank(id: Int): Single<CommonResponse> {
+    override fun purchaseLectureBank(lectureBankId: Int): Single<CommonResponse> {
         return Single.never()
     }
 
-    override fun checkLectureBankPurchased(id: Int): Single<Boolean> {
+    override fun checkLectureBankPurchased(lectureBankId: Int): Single<Boolean> {
         return Single.never()
     }
 

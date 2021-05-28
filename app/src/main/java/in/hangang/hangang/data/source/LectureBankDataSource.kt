@@ -24,14 +24,18 @@ interface LectureBankDataSource {
     fun getLectureBankComments(
         lectureBankId: Int
     ) : Flowable<PagingData<LectureBankComment>>
+    fun commentLectureBank(
+        lectureBankId: Int,
+        comment: String
+    ): Single<Int>
 
     fun getLectureBankDetail(id: Int) : Single<LectureBankDetail>
 
-    fun hitLectureBank(id: Int) : Single<CommonResponse>
+    fun hitLectureBank(lectureBankId: Int) : Single<CommonResponse>
 
-    fun purchaseLectureBank(id: Int) : Single<CommonResponse>
+    fun purchaseLectureBank(lectureBankId: Int) : Single<CommonResponse>
 
-    fun checkLectureBankPurchased(id: Int) : Single<Boolean>
+    fun checkLectureBankPurchased(lectureBankId: Int) : Single<Boolean>
 
     fun scrapLectureBank(lectureBankId: Int) : Single<Int>
     fun unscrapLectureBank(scrapId: Int) : Single<CommonResponse>

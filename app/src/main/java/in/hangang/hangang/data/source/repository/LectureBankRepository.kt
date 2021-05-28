@@ -28,20 +28,24 @@ class LectureBankRepository(
         return lectureBankRemoteDataSource.getLectureBankComments(lectureBankId)
     }
 
+    override fun commentLectureBank(lectureBankId: Int, comment: String): Single<Int> {
+        return lectureBankRemoteDataSource.commentLectureBank(lectureBankId, comment)
+    }
+
     override fun getLectureBankDetail(id: Int): Single<LectureBankDetail> {
         return lectureBankRemoteDataSource.getLectureBankDetail(id)
     }
 
-    override fun hitLectureBank(id: Int): Single<CommonResponse> {
-        return lectureBankRemoteDataSource.hitLectureBank(id)
+    override fun hitLectureBank(lectureBankId: Int): Single<CommonResponse> {
+        return lectureBankRemoteDataSource.hitLectureBank(lectureBankId)
     }
 
-    override fun purchaseLectureBank(id: Int): Single<CommonResponse> {
-        return lectureBankRemoteDataSource.purchaseLectureBank(id)
+    override fun purchaseLectureBank(lectureBankId: Int): Single<CommonResponse> {
+        return lectureBankRemoteDataSource.purchaseLectureBank(lectureBankId)
     }
 
-    override fun checkLectureBankPurchased(id: Int): Single<Boolean> {
-        return lectureBankRemoteDataSource.checkLectureBankPurchased(id)
+    override fun checkLectureBankPurchased(lectureBankId: Int): Single<Boolean> {
+        return lectureBankRemoteDataSource.checkLectureBankPurchased(lectureBankId)
     }
 
     override fun scrapLectureBank(lectureBankId: Int): Single<Int> {

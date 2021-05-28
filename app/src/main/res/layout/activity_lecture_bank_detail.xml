@@ -10,19 +10,29 @@
             type="in.hangang.hangang.data.lecturebank.LectureBankDetail"/>
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:clickable="true"
         tools:context=".ui.lecturebank.fragment.LectureBankDetailFragment">
 
-        <in.hangang.core.view.appbar.BaseAppBar
-            android:id="@+id/app_bar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleText="@string/lecture_bank_detail_title"/>
+            app:elevation="0dp">
+
+            <in.hangang.core.view.appbar.BaseAppBar
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleText="@string/lecture_bank_detail_title"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:layout_marginTop="56dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -164,7 +174,7 @@
                     android:textColor="?attr/colorPrimary"
                     android:gravity="end"
                     tools:text="필기자료"
-                    android:text="@{bank.lecture.classification}"
+                    android:text="@{bank.category.get(0)}"
                     app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_bank_lecture_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:paddingEnd="16dp"/>
@@ -250,16 +260,19 @@
                     android:layout_marginTop="16dp"
                     android:backgroundTint="?android:attr/textColorTertiary"/>
 
-                <in.hangang.core.view.edittext.FilledEditText
-                    android:id="@+id/edit_text_comment"
+                <TextView
+                    android:id="@+id/text_view_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/lecture_bank_detail_comment_hint"
                     android:minHeight="40dp"
-                    android:gravity=""
+                    android:gravity="center_vertical"
+                    android:background="@drawable/filled_edit_text_background"
+                    android:backgroundTint="?android:attr/textColorTertiary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider1"
+                    android:padding="8dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -273,11 +286,88 @@
                     android:clipToPadding="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edit_text_comment"/>
+                    app:layout_constraintTop_toBottomOf="@id/text_view_comment"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-    </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/field_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_gravity="bottom">
+
+            <View
+                android:id="@+id/divider_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="#000"
+                android:backgroundTint="?android:attr/textColorTertiary"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/filled_edit_text_background"
+                android:layout_margin="16dp"
+                android:backgroundTint="?android:attr/textColorTertiary"/>
+
+            <EditText
+                android:id="@+id/edit_text_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="8"
+                android:minHeight="56dp"
+                android:inputType="textMultiLine"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintTop_toBottomOf="@id/divider_edit_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/image_view_comment_apply"
+                android:padding="8dp"
+                android:hint="@string/lecture_bank_detail_comment_hint"
+                android:textSize="12sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:gravity="top"
+                tools:text="a"/>
+
+            <TextView
+                android:id="@+id/text_view_comment_text_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                tools:text="0/300자"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="12sp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:id="@+id/image_view_comment_apply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_paper_airplane"
+                android:padding="8dp"
+                app:tint="@color/color_state_button_blue_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </layout>
