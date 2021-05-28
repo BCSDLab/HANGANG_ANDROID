@@ -116,7 +116,6 @@ interface AuthApi {
     fun unscrapLecture(
             @Body timeTableRequest: TimeTableRequest
     ): Single<CommonResponse>
-    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<String>>
 
     @GET(LECTURE_SCRAPED)
     fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>>
@@ -127,15 +126,15 @@ interface AuthApi {
     @GET(EVALUTATION_TOTAL)
     fun getEvalutaionTotal(@Path("id")id: Int): Single<Evaluation>
 
-    fun getClassLectures(@Path("id") id: Int): Single<ArrayList<ClassLecture>>
     @GET(CLASS_LECTURES)
+    fun getClassLectures(@Path("id") id: Int): Single<ArrayList<ClassLecture>>
 
     @GET(LECTURE_REVIEWS)
     fun getLectureReview(@Path("id") id: Int,
                          @Query("limit") limit: Int = 20,
-                        @Query("page") page: Int,
+                         @Query("page") page: Int,
                          @Query("keyword") keyword: String?,
-                        @Query("sort") sort: String): Single<LectureReviewResult>
+                         @Query("sort") sort: String): Single<LectureReviewResult>
     @GET(LECTURE_DOCUMENTS)
     fun getRecommentedDocs(@Query("category") category: ArrayList<String>? = null,
 
@@ -149,11 +148,11 @@ interface AuthApi {
         @Body reviewRecommendRequest: ReviewRecommendRequest
     ): Single<CommonResponse>
 
-    fun getLectureReviewItem(@Path("id") id: Int): Single<LectureReview>
     @GET(LECTURE_REVIEW)
+    fun getLectureReviewItem(@Path("id") id: Int): Single<LectureReview>
 
     @GET(LECTURE_SEMESTER)
-
+    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<String>>
 }
 
 

@@ -22,7 +22,7 @@
                 android:layout_marginEnd="-16dp"
                 android:background="@null"
                 android:src="@drawable/ic_back"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/layout_search"

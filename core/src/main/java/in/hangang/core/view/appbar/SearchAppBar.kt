@@ -24,10 +24,6 @@ class SearchAppBar @JvmOverloads constructor(
         fun onSearch(keyword: String)
     }
 
-    interface SearchListener {
-        fun onSearch(keyword: String)
-    }
-
     var filterable: Filterable? = null
     var filterListener: Filter.FilterListener? = null
     var searchListener: SearchListener? = null
