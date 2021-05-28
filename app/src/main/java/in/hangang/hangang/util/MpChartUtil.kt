@@ -41,10 +41,13 @@ fun BarChart.initScoreChart(context: Context, entries: ArrayList<BarEntry>) {
             textColor = ContextCompat.getColor(context, R.color.gray_500) //라벨 색상
             valueFormatter = object : ValueFormatter() {
                 override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                    //return entries.get(value as Int).data as String
                     val values = arrayOf("", "1.0", "", "2.0", "", "3.0", "", "4.0", "", "5.0")
+                    //return values[values.toInt()]
                     return values.getOrNull(value.toInt() - 1) ?: value.toString()
                 }
             }
+
             textSize = 10f // 텍스트 크기
         }
 

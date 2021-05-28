@@ -1,38 +1,66 @@
 package `in`.hangang.hangang.ui.home.ranking.adapter
 
-import `in`.hangang.core.base.ViewBindingRecyclerViewHolder
-import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
-import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.ItemHomeRankingListBinding
+import `in`.hangang.hangang.util.LogUtil
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 
-class RankingListAdapter : OnItemClickRecyclerViewAdapter<RankingListAdapter.ViewHolder>() {
+class RankingListAdapter :
+    ListAdapter<RankingLectureItem, RankingListAdapter.ViewHolder>(rankingLectureDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_home_ranking_list,
-                        parent,
-                        false
-                )
+            ItemHomeRankingListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.rankingItemNumber.text = "${position + 1}"
-        holder.binding.rankingItemStarNumber.text = "4.2"
-        holder.binding.rankingItemTitle.text = "사랑의 역사"
-        holder.binding.rankingItemProfessor.text = "김사랑"
-
-        if (position == itemCount - 1) holder.binding.divider.visibility = View.GONE
+        val rankngLectureItem = getItem(position)
+        if (rankngLectureItem != null) {
+            holder.bind(rankngLectureItem, position)
+        }else{
+            LogUtil.e("onbindviewholder")
+        }
     }
 
-    override fun getItemCount(): Int = 5
 
-    class ViewHolder(itemHomeRankingListBinding: ItemHomeRankingListBinding) :
-            ViewBindingRecyclerViewHolder<ItemHomeRankingListBinding>(itemHomeRankingListBinding)
+    class ViewHolder(private val binding: ItemHomeRankingListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+
+        }
+        fun bind(item: RankingLectureItem, position: Int) {
+            binding.apply {
+                rankingLectureItem = item
+                ranking = position + 1
+                executePendingBindings()
+            }
+        }
+    }
+
+    companion object {
+        val rankingLectureDiffUtil = object : DiffUtil.ItemCallback<RankingLectureItem>() {
+            override fun areItemsTheSame(
+                oldItem: RankingLectureItem,
+                newItem: RankingLectureItem
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(
+                oldItem: RankingLectureItem,
+                newItem: RankingLectureItem
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 }

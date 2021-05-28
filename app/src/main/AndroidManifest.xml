@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity"></activity>
         <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableLectureFilterActivity"></activity>
         <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableAddActivity" />
         <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableListActivity" />
@@ -27,7 +28,7 @@
         <activity android:name=".ui.signup.activity.SignUpActivity" />
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
         <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
-        <activity android:name=".ui.main.MainActivity"></activity>
+        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -5,18 +5,24 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 
 class SearchAppBar @JvmOverloads constructor(
-        context: Context,
-        attributeSet: AttributeSet? = null,
-        defStyleAttr: Int = 0,
-        defStyleRes: Int = 0
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
 ) : LinearLayout(context, attributeSet, defStyleAttr, defStyleRes) {
-    private val view = LayoutInflater.from(context).inflate(R.layout.layout_app_bar_search, this, true)
+    private val view =
+        LayoutInflater.from(context).inflate(R.layout.layout_app_bar_search, this, true)
+
+    interface SearchListener {
+        fun onSearch(keyword: String)
+    }
 
     interface SearchListener {
         fun onSearch(keyword: String)
@@ -35,6 +41,12 @@ class SearchAppBar @JvmOverloads constructor(
                 return@setOnKeyListener true
             }
             return@setOnKeyListener false
+        }
+        onFocusChangeListener = object : View.OnFocusChangeListener {
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                Log.e("focus","${hasFocus}")
+                showBackButton = hasFocus
+            }
         }
     }
     val searchButton = findViewById<ImageButton>(R.id.search_layout_button_search).apply {
@@ -56,10 +68,10 @@ class SearchAppBar @JvmOverloads constructor(
 
     init {
         context.theme.obtainStyledAttributes(
-                attributeSet,
-                R.styleable.SearchAppBar,
-                defStyleAttr,
-                defStyleRes
+            attributeSet,
+            R.styleable.SearchAppBar,
+            defStyleAttr,
+            defStyleRes
         ).apply {
             searchField.hint = getString(R.styleable.SearchAppBar_android_hint)
             searchField.setText(getString(R.styleable.SearchAppBar_android_text))
@@ -103,6 +115,9 @@ class SearchAppBar @JvmOverloads constructor(
     fun extendSelection(index: Int) = searchField.extendSelection(index)
     fun selectAll() = searchField.selectAll()
 
-    fun addTextChangedListener(textWatcher: TextWatcher) = searchField.addTextChangedListener(textWatcher)
-    fun removeTextChangedListener(textWatcher: TextWatcher) = searchField.removeTextChangedListener(textWatcher)
+    fun addTextChangedListener(textWatcher: TextWatcher) =
+        searchField.addTextChangedListener(textWatcher)
+
+    fun removeTextChangedListener(textWatcher: TextWatcher) =
+        searchField.removeTextChangedListener(textWatcher)
 }

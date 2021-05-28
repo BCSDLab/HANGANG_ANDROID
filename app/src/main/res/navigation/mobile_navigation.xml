@@ -9,19 +9,49 @@
         android:id="@+id/navigation_home"
         android:name="in.hangang.hangang.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_evaluation"
+            app:destination="@id/navigation_evaluation" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_evaluation"
-        android:name="in.hangang.hangang.ui.dashboard.DashboardFragment"
+        android:name="in.hangang.hangang.ui.lecturereview.fragment.LectureReviewListFragment"
         android:label="@string/title_evaluation"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_list_review_lecture" >
+        <action
+            android:id="@+id/action_navigation_evaluation_to_lecture_review_filter"
+            app:destination="@id/lecture_review_filter" />
+        <action
+            android:id="@+id/action_navigation_evaluation_to_lecture_review_detail"
+            app:destination="@id/lecture_review_detail" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_document"
         android:name="in.hangang.hangang.ui.notifications.NotificationsFragment"
         android:label="@string/title_document"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/lecture_review_filter"
+        android:name="in.hangang.hangang.ui.lecturereview.fragment.LectureReviewFilterFragment"
+        tools:layout="@layout/fragment_lecture_review_filter">
+        <action
+            android:id="@+id/action_lecture_review_filter_to_navigation_evaluation"
+            app:destination="@id/navigation_evaluation"
+            app:popUpTo="@id/navigation_evaluation"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/lecture_review_detail"
+        android:name="in.hangang.hangang.ui.lecturereview.fragment.LectureReviewDetailFragment"
+        tools:layout="@layout/fragment_lecture_review_detail">
+
+        <action
+            android:id="@+id/action_lecture_review_detail_to_navigation_evaluation"
+            app:destination="@id/navigation_evaluation" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_timetable"

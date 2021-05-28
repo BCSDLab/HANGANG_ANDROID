@@ -1,6 +1,8 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -51,6 +53,17 @@ interface NoAuthApi {
     fun login(
             @Body loginRequest: LoginRequest
     ): Single<TokenResponse>
+
+    @GET(LECTURES_RANKING)
+    fun getLectureRanking(
+        @Query("classification") classification: ArrayList<String>? = null,
+        @Query("department") department: ArrayList<String>? = null,
+        @Query("hash_tag") hashTag: ArrayList<Int>? = null,
+        @Query("keyword") keyword: String? = null,
+        @Query("limit") limit: Int = 20,
+        @Query("page") page: Int? = null,
+        @Query("sort") sort: String? = null
+    ): Single<RankingLectureResult>
 
     @GET(LECTURES)
     fun getLectures(
