@@ -48,6 +48,7 @@ class TimetableViewModel(
     private val _onErrorAddLectureTimetable = MutableLiveData<Event<CommonResponse>>()
     private val _customLectureAdded = MutableLiveData<Event<Boolean>>()
     private val _availableAddingCustomTimetable = MutableLiveData<Boolean>()
+    private val _lectureTimetableRemovedEvent = MutableLiveData<Event<Int>>()
 
     private val _timestamp = MutableLiveData<List<CustomTimetableTimestamp>>()
 
@@ -65,6 +66,7 @@ class TimetableViewModel(
     val timestamp: LiveData<List<CustomTimetableTimestamp>> get() = _timestamp
     val customLectureAdded: LiveData<Event<Boolean>> get() = _customLectureAdded
     val availableAddingCustomTimetable: LiveData<Boolean> get() = _availableAddingCustomTimetable
+    val lectureTimetableRemovedEvent : LiveData<Event<Int>> get() = _lectureTimetableRemovedEvent
 
     fun setMode(mode: Mode) {
         if (_mode.value != mode)
@@ -227,7 +229,7 @@ class TimetableViewModel(
 
     fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
         timeTableRepository.removeLectureFromTimeTable(
-            lectureId = lectureTimeTable.lectureId,
+            lectureId = lectureTimeTable.id,
             timetableId = timetable.id
         ).flatMap {
             timeTableRepository.getTimetable(timetable.id)
@@ -236,6 +238,7 @@ class TimetableViewModel(
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
+                _lectureTimetableRemovedEvent.postValue(Event(lectureTimeTable.id))
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
