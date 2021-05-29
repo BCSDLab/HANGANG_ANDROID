@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.source
 
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem

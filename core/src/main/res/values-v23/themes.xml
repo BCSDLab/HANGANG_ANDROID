@@ -12,5 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="android:popupMenuStyle">@style/HangangPopupMenu</item>
+        <item name="popupMenuStyle">@style/HangangPopupMenu</item>
     </style>
 </resources>

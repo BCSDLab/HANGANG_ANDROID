@@ -9,7 +9,7 @@
     <color name="orange_500">#ffffab2e</color>
 
     <color name="black">#FF000000</color>
-    <color name="black2">#222222</color>
+    <color name="black2">#ff222222</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white1">#FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
@@ -21,5 +21,13 @@
     <color name="gray_200">#c4c4c4</color>
     <color name="gray_100">#eeeeee</color>
 
+    <!-- Timetable color -->
+    <color name="timetable_color_1">#ff738a</color>
+    <color name="timetable_color_2">#ffb340</color>
+    <color name="timetable_color_3">#ffa1fb</color>
+    <color name="timetable_color_4">#72b0ff</color>
+    <color name="timetable_color_5">#3ce3b7</color>
+    <color name="timetable_color_6">#9086ff</color>
+    <color name="timetable_color_7">#43d5f6</color>
 
 </resources>

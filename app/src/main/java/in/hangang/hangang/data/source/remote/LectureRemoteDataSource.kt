@@ -10,7 +10,8 @@ import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.LectureDataSource
+import `in`.hangang.hangang.data.source.source.LectureDataSource
+
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
 

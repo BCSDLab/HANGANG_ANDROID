@@ -12,9 +12,9 @@ class ViewPager(context: Context, attributeSet: AttributeSet) : ViewPager(contex
 
     init {
         context.theme.obtainStyledAttributes(
-            attributeSet,
-            R.styleable.ViewPager,
-            0, 0
+                attributeSet,
+                R.styleable.ViewPager,
+                0, 0
         ).apply {
             pagingEnabled = getBoolean(R.styleable.ViewPager_pagingEnabled, true)
 

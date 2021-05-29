@@ -81,4 +81,7 @@ ext {
     def hawk_version = "2.0.1"
     hawk =  "com.orhanobut:hawk:$hawk_version"
 
+    def logger_version = "2.2.0"
+    prettyLogger = "com.orhanobut:logger:$logger_version"
+
 }

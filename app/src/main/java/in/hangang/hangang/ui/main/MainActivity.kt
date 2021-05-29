@@ -1,6 +1,5 @@
 package `in`.hangang.hangang.ui.main
 
-import `in`.hangang.core.base.activity.ActivityBase
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityMainBinding
@@ -16,6 +15,7 @@ class MainActivity : ViewBindingActivity<ActivityMainBinding>() {
     private val lectureReviewListViewModel: LectureReviewListViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(binding.navView, navController)
         binding.navView.setOnNavigationItemReselectedListener {}

@@ -52,4 +52,10 @@
             android:id="@+id/action_lecture_review_detail_to_navigation_evaluation"
             app:destination="@id/navigation_evaluation" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_timetable"
+        android:name="in.hangang.hangang.ui.timetable.fragment.TimetableFragment"
+        android:label="@string/title_timetable"
+        tools:layout="@layout/fragment_timetable" />
 </navigation>

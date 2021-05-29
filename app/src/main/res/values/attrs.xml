@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="dividerColor" format="color|reference" />
+    <attr name="columnCount" format="integer" />
+    <attr name="rowCount" format="integer" />
+    <attr name="columnWidth" format="dimension" />
+    <attr name="rowHeight" format="dimension" />
+
+    <declare-styleable name="TimetableLayout">
+        <attr name="dividerColor" />
+        <attr name="columnCount" />
+        <attr name="columnWidth" />
+        <attr name="rowCount" />
+        <attr name="rowHeight" />
+        <attr name="rowHeaderTextSize" format="dimension" />
+        <attr name="rowHeaderTextColor" format="color|reference" />
+        <attr name="rowHeaderWidth" format="dimension" />
+        <attr name="layout_rowStart" format="float" />
+        <attr name="layout_rowEnd" format="float" />
+        <attr name="layout_columnStart" format="float" />
+        <attr name="layout_columnEnd" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="TimetableColumnHeader">
+        <attr name="dividerColor" />
+        <attr name="columnCount" />
+        <attr name="columnWidth" />
+        <attr name="columnHeaderHeight" format="dimension" />
+        <attr name="columnHeaderTextSize" format="dimension" />
+        <attr name="columnHeaderTextColor" format="color|reference" />
+    </declare-styleable>
+</resources>
