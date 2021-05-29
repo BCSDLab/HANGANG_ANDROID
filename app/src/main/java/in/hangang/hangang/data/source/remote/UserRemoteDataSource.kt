@@ -4,6 +4,7 @@ import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
 import io.reactivex.rxjava3.core.Completable
@@ -24,7 +25,7 @@ class UserRemoteDataSource(
         return noAuthApi.signUp(SignUpRequest(major, nickName, password, portalAccount))
     }
 
-    override fun checkAccessTokenValid(): Single<CommonResponse>{
+    override fun checkAccessTokenValid(): Single<CommonResponse> {
         return authApi.authCheck()
     }
 
@@ -49,19 +50,44 @@ class UserRemoteDataSource(
         return noAuthApi.configEmail(EmailConfigRequest(0, portalAccount, secret))
     }
 
-    override fun checkNickname(nickName: String): Single<CommonResponse>{
+    override fun checkNickname(nickName: String): Single<CommonResponse> {
         return noAuthApi.checkNickName(NickNameCheckRequest(nickName))
     }
 
-    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse>{
+    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse> {
         return noAuthApi.sendPasswordFindEmail(EmailRequest(1, portalAccount))
     }
 
-    override fun emailPasswordConfig(portalAccount: String, secret: String): Single<CommonResponse> {
+    override fun emailPasswordConfig(
+        portalAccount: String,
+        secret: String
+    ): Single<CommonResponse> {
         return noAuthApi.sendPasswordConfigEmail(EmailConfigRequest(1, portalAccount, secret))
     }
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return noAuthApi.passwordFind(PasswordFindRequest(portalAccount, password))
     }
+
+    override fun deleteAccount(): Single<CommonResponse> {
+        return authApi.deleteAccount()
+    }
+
+    override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
+        return Completable.never()
+    }
+
+    override fun getAutoLoginStatus(): Single<Boolean> {
+        return Single.never()
+    }
+
+    override fun getMyProfile(): Single<MyProfileResponse> {
+        return authApi.setMyProfile()
+    }
+
+    override fun saveProfile(name: String, nickName: String, major: Array<String>): Single<CommonResponse> {
+        return authApi.saveMyProfile(SaveMyProfileRequest(name, nickName, major))
+    }
+
+
 }

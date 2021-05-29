@@ -17,19 +17,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.signup.activity.SignUpMajorActivity"/>
-        <activity android:name=".ui.signup.activity.SignUpActivity" />
-        <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
-        <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
-        <activity android:name=".ui.main.MainActivity">
+        <activity android:name=".ui.settings.activity.MyProfileActivity"></activity>
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity"/>
-
+        <activity android:name=".ui.settings.activity.SettingsActivity" />
+        <activity android:name=".ui.signup.activity.SignUpMajorActivity" />
+        <activity android:name=".ui.signup.activity.SignUpActivity" />
+        <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
+        <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
+        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity" />
     </application>
 
 </manifest>

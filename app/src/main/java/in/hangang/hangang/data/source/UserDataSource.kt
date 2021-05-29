@@ -1,7 +1,9 @@
 package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface UserDataSource {
@@ -31,4 +33,14 @@ interface UserDataSource {
     fun emailPasswordConfig(portalAccount: String, secret: String): Single<CommonResponse>
 
     fun changePassword(portalAccount: String, password: String): Single<CommonResponse>
+
+    fun saveProfile(name: String, nickName: String, major: Array<String>): Single<CommonResponse>
+
+    fun deleteAccount(): Single<CommonResponse>
+
+    fun saveAutoLogin(isAutoLogin: Boolean): Completable
+
+    fun getAutoLoginStatus(): Single<Boolean>
+
+    fun getMyProfile(): Single<MyProfileResponse>
 }

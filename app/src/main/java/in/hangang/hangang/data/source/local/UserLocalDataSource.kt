@@ -3,9 +3,11 @@ package `in`.hangang.hangang.data.source.local
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
 import com.orhanobut.hawk.Hawk
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserLocalDataSource : UserDataSource {
@@ -70,5 +72,25 @@ class UserLocalDataSource : UserDataSource {
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return Single.never()
+    }
+
+    override fun deleteAccount(): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAutoLoginStatus(): Single<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getMyProfile(): Single<MyProfileResponse> {
+        return Single.never()
+    }
+
+    override fun saveProfile(name: String, nickName: String, major: Array<String>): Single<CommonResponse> {
+        return  Single.never()
     }
 }

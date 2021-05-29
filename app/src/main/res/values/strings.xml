@@ -1,5 +1,6 @@
 <resources>
     <string name="ok">확인</string>
+    <string name="no">닫기</string>
     <string name="cancel">취소</string>
     <string name="next_step">다음</string>
     <string name="en_ok">OK</string>
@@ -101,5 +102,21 @@
     <string name="home_no_recent_lectures_message">최근에 본 강의평이 없습니다.</string>
     <string name="home_title_recent_lectures">최근 본 강의</string>
     <string name="login_error_text">가입하지 않은 아이디거나, 잘못된 비밀번호 입니다.</string>
+    <string name="profile">프로필</string>
+    <string name="change_profile">내 정보 변경</string>
+    <string name="app_settings">앱 설정</string>
+    <string name="auto_login">자동로그인</string>
+    <string name="app_inform">앱 정보</string>
+    <string name="app_version">v 1.0 최신 버전입니다.</string>
+    <string name="questions">문의하기</string>
+    <string name="log_out">로그아웃</string>
+    <string name="delete_account">회원탈퇴</string>
+    <string name="profile_name">이름 (학번)</string>
+    <string name="profile_id">아이디</string>
+    <string name="profile_nickname">닉네임</string>
+    <string name="profile_edit_button">수정</string>
+    <string name="profile_logout_dialog_message">로그아웃 하시겠습니까?</string>
+    <string name="profile_delete_account_dialog_message">회원 탈퇴를 하시겠습니까?</string>
+    <string name="profile_major">전공</string>
 
 </resources>

@@ -1,7 +1,9 @@
 package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserRepository(
@@ -61,4 +63,26 @@ class UserRepository(
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return userRemoteDataSource.changePassword(portalAccount, password)
     }
+
+    override fun deleteAccount(): Single<CommonResponse> {
+        return userRemoteDataSource.deleteAccount()
+    }
+
+    override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
+        return userLocalDataSource.saveAutoLogin(isAutoLogin)
+    }
+
+    override fun getAutoLoginStatus(): Single<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getMyProfile(): Single<MyProfileResponse> {
+        return userRemoteDataSource.getMyProfile()
+    }
+
+    override fun saveProfile(name: String, nickName: String, major: Array<String>): Single<CommonResponse> {
+        return userRemoteDataSource.saveProfile(name, nickName, major)
+    }
+
+
 }
