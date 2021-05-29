@@ -34,8 +34,15 @@ object DateUtil {
                 period.months.toLong()
             }
             period.days != 0 -> {
-                stringBuilder.append(context.getString(R.string.date_day, abs(period.days)))
-                period.days.toLong()
+                with(abs(period.days)) {
+                    if(this >= 7) {
+                        stringBuilder.append(context.getString(R.string.date_week, this / 7))
+                        (period.days / 7).toLong()
+                    } else {
+                        stringBuilder.append(context.getString(R.string.date_day, abs(period.days)))
+                        period.days.toLong()
+                    }
+                }
             }
             duration.toHours() != 0L -> {
                 stringBuilder.append(context.getString(R.string.date_hour, abs(duration.toHours())))
