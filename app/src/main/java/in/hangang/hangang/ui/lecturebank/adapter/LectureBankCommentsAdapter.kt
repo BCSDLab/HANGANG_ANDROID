@@ -3,6 +3,7 @@ package `in`.hangang.hangang.ui.lecturebank.adapter
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.lecturebank.LectureBankComment
 import `in`.hangang.hangang.databinding.ItemLectureBankCommentBinding
+import `in`.hangang.hangang.util.DateUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -43,6 +44,9 @@ class LectureBankCommentsAdapter : PagingDataAdapter<LectureBankComment, Lecture
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(lectureBankComment: LectureBankComment) {
             binding.comment = lectureBankComment
+            binding.textViewDate.text = DateUtil.apiDateToPeriodString(
+                binding.root.context,
+                lectureBankComment.createdAt ?: DateUtil.getTodayApiDate())
             binding.executePendingBindings()
         }
     }

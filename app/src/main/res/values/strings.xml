@@ -19,6 +19,17 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="date_before">전</string>
+    <string name="date_after">후</string>
+
+    <string name="date_second">%1$d초</string>
+    <string name="date_minute">%1$d분</string>
+    <string name="date_hour">%1$d시</string>
+    <string name="date_day">%1$d일</string>
+    <string name="date_week">%1$d주</string>
+    <string name="date_month">%1$d월</string>
+    <string name="date_year">%1$d년</string>
+
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="password">비밀번호</string>
