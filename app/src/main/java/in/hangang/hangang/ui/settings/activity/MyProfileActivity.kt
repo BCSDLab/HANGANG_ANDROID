@@ -2,6 +2,7 @@ package `in`.hangang.hangang.ui.settings.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.util.DialogUtil
+import `in`.hangang.core.util.LogUtil
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityMyProfileBinding
 import `in`.hangang.hangang.ui.settings.viewmodel.MyProfileActivityViewModel
@@ -9,14 +10,22 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.widget.AdapterView
 import android.widget.TextView
-import androidx.core.view.isVisible
+import android.widget.Toast
 import kotlinx.android.synthetic.main.layout_simple_list_bottom_sheet.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
     override val layoutId = R.layout.activity_my_profile
     private val myProfileViewModel: MyProfileActivityViewModel by viewModel()
+    var majorClickListener: AdapterView.OnItemClickListener? =
+        object : AdapterView.OnItemClickListener {
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                var selectedMajor = resources.getTextArray(R.array.major_full).toList()[p2]
+                LogUtil.e(selectedMajor.toString())
+            }
+        }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +49,12 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
                 profileNicknameEditText.setText(vm.myProfile.value!!.nickname)
                 profileMajorTextview.text = vm.myProfile.value!!.major
             }
-            addMajor.setOnClickListener{
-                DialogUtil.makeListBottomSheet(this@MyProfileActivity, items)
+            addMajor.setOnClickListener {
+                DialogUtil.makeListBottomSheet(
+                    this@MyProfileActivity,
+                    resources.getTextArray(R.array.major_full).toList(), null, majorClickListener
+                ).show()
+
             }
 
         }
@@ -70,7 +83,7 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
                                     applyMyProfile(
                                         binding.nameText.text.toString(),
                                         binding.profileNicknameEditText.text.toString(),
-                                        majorArray.plus(binding.profileMajorTextview.text.toString())
+                                        resources.getStringArray(R.array.major_full)
                                     )
                                     editButton.isEnabled = false
 

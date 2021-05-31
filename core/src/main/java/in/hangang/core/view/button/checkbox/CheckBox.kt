@@ -4,12 +4,11 @@ import `in`.hangang.core.R
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.widget.CheckBox
 
-class CheckBox @JvmOverloads constructor(
-    context: Context,
-    attributeSet: AttributeSet? = null,
-    defStyleAttr: Int = 0
+open class CheckBox @JvmOverloads constructor(
+        context: Context,
+        attributeSet: AttributeSet? = null,
+        defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatCheckBox(context, attributeSet, defStyleAttr) {
 
     init {
@@ -21,7 +20,4 @@ class CheckBox @JvmOverloads constructor(
         gravity = Gravity.CENTER_VERTICAL
     }
 
-    override fun callOnClick(): Boolean {
-        return super.callOnClick()
-    }
 }

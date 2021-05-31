@@ -3,18 +3,19 @@ package `in`.hangang.hangang.data.source
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
+import `in`.hangang.hangang.data.source.source.UserDataSource
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserRepository(
-    private val userLocalDataSource: UserDataSource,
-    private val userRemoteDataSource: UserDataSource
+        private val userLocalDataSource: UserDataSource,
+        private val userRemoteDataSource: UserDataSource
 ) : UserDataSource {
     override fun signUp(
-        major: Array<String>,
-        nickName: String,
-        password: String,
-        portalAccount: String
+            major: Array<String>,
+            nickName: String,
+            password: String,
+            portalAccount: String
     ): Single<CommonResponse> {
         return userRemoteDataSource.signUp(major, nickName, password, portalAccount)
     }
@@ -25,12 +26,12 @@ class UserRepository(
 
     override fun login(portalID: String, password: String): Single<TokenResponse> {
         return userRemoteDataSource.login(portalID, password)
-            .flatMap { userLocalDataSource.saveToken(it.accessToken!!, it.refreshToken!!) }
+                .flatMap { userLocalDataSource.saveToken(it.accessToken!!, it.refreshToken!!) }
     }
 
     override fun updateToken(): Single<TokenResponse> {
         return userRemoteDataSource.updateToken()
-            .flatMap { userLocalDataSource.saveToken(it.accessToken!!, it.refreshToken!!) }
+                .flatMap { userLocalDataSource.saveToken(it.accessToken!!, it.refreshToken!!) }
     }
 
     override fun saveToken(accessToken: String, refreshToken: String): Single<TokenResponse> {
@@ -54,8 +55,8 @@ class UserRepository(
     }
 
     override fun emailPasswordConfig(
-        portalAccount: String,
-        secret: String
+            portalAccount: String,
+            secret: String
     ): Single<CommonResponse> {
         return userRemoteDataSource.emailPasswordConfig(portalAccount, secret)
     }

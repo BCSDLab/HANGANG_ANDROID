@@ -4,7 +4,6 @@ import `in`.hangang.core.R
 import android.content.Context
 import android.text.InputFilter
 import android.util.AttributeSet
-import android.view.inputmethod.EditorInfo
 
 class MaxLengthEditText @JvmOverloads constructor(
         context: Context,

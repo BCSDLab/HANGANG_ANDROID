@@ -1,9 +1,6 @@
 package `in`.hangang.hangang.ui.login
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.core.util.toSHA256
-import `in`.hangang.hangang.HangangApplication
-import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.source.UserRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
@@ -27,17 +24,17 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModelBase
     val password = MutableLiveData<String>()
 
 
-    fun loginButtonClick(portalID: String, password: String){
+    fun loginButtonClick(portalID: String, password: String) {
         userRepository.login(portalID, password)
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({ data ->
-                LogUtil.d(data.httpStatus)
-                _isLoginSuccess.value = true
-            }, { _ ->
-                _errorConfig.value = true
-            }).addTo(compositeDisposable)
+                .handleHttpException()
+                .handleProgress(this)
+                .withThread()
+                .subscribe({ data ->
+                    LogUtil.d(data.httpStatus)
+                    _isLoginSuccess.value = true
+                }, { _ ->
+                    _errorConfig.value = true
+                }).addTo(compositeDisposable)
 
 
     }

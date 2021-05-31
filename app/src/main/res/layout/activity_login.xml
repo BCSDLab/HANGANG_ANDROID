@@ -47,13 +47,13 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="@string/koreatech_email"
-            android:textSize="14sp"
             android:singleLine="true"
-            app:layout_constraintBottom_toTopOf="@id/underbar_name"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/underbar_first"
             app:layout_constraintStart_toStartOf="@id/guideline_left" />
 
         <View
-            android:id="@+id/underbar_name"
+            android:id="@+id/underbar_first"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="304dp"
@@ -69,7 +69,7 @@
             android:layout_height="21dp"
             android:text="\u0040koretech.ac.kr"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/underbar_name"
+            app:layout_constraintBottom_toTopOf="@id/underbar_first"
             app:layout_constraintEnd_toEndOf="@id/guideline_right" />
 
         <EditText
@@ -91,7 +91,7 @@
             android:background="@color/gray_100"
             app:layout_constraintEnd_toEndOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
-            app:layout_constraintTop_toTopOf="@id/underbar_name" />
+            app:layout_constraintTop_toTopOf="@id/underbar_first" />
 
         <TextView
             android:id="@+id/login_error_text"

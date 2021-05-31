@@ -6,10 +6,10 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RecyclerViewWithEmpty(
-    context: Context,
-    attributeSet: AttributeSet? = null,
-    defStyleAttr: Int = 0
+open class RecyclerViewWithEmpty(
+        context: Context,
+        attributeSet: AttributeSet? = null,
+        defStyleAttr: Int = 0
 ) : RecyclerView(context, attributeSet, defStyleAttr) {
     var emptyView: View? = null
 
