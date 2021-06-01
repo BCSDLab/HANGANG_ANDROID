@@ -10,35 +10,47 @@ import `in`.hangang.core.view.showPopupMenu
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ActivityLectureBankDetailBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.lecturebank.adapter.LectureBankCommentsAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankDetailActivityContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankDetailViewModel
+import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankUploadFileViewModel
+import `in`.hangang.hangang.util.file.FileDownloadUtil
+import `in`.hangang.hangang.util.file.FileUtil
+import `in`.hangang.hangang.util.withThread
 import android.app.AlertDialog
+import android.app.DownloadManager
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import io.reactivex.rxjava3.kotlin.addTo
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailBinding>() {
     override val layoutId = R.layout.activity_lecture_bank_detail
 
     private val lectureBankDetailViewModel: LectureBankDetailViewModel by viewModel()
+    private val lectureBankUploadFileViewModel: LectureBankUploadFileViewModel by viewModel()
+    private val fileUtil: FileUtil by inject()
     private var isShowingCommentField = false
 
-    private val lectureBankCommentsAdapter : LectureBankCommentsAdapter by lazy {
+    private val lectureBankCommentsAdapter: LectureBankCommentsAdapter by lazy {
         LectureBankCommentsAdapter()
     }
 
-    private val lectureBankFileAdapter : LectureBankFileAdapter by lazy {
+    private val lectureBankFileAdapter: LectureBankFileAdapter by lazy {
         LectureBankFileAdapter()
     }
+
+    private var lastClickedUploadFile: UploadFile? = null
+    private var lastClickedUploadFilePosition: Int? = null
+    private var lastClickedUploadFileDownloadUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +75,7 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
                     this.menu.findItem(R.id.menu_lecture_bank_scrap).isVisible = !isScraped
                     this.menu.findItem(R.id.menu_lecture_bank_unscrap).isVisible = isScraped
                     setOnMenuItemClickListener { item ->
-                        when(item.itemId) {
+                        when (item.itemId) {
                             R.id.menu_lecture_bank_scrap -> {
                                 lectureBankDetailViewModel.scrapLecture(
                                     lectureBankDetailViewModel.lectureBankDetail.value?.id ?: -1
@@ -85,7 +97,8 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             }
             editTextComment.filters = arrayOf(InputFilter.LengthFilter(COMMENT_MAX_TEXT_COUNT))
             editTextComment.addTextChangedListener {
-                textViewCommentTextCount.text = getString(R.string.lecture_bank_comment_text_count, it?.length ?: 0, COMMENT_MAX_TEXT_COUNT)
+                textViewCommentTextCount.text =
+                    getString(R.string.lecture_bank_comment_text_count, it?.length ?: 0, COMMENT_MAX_TEXT_COUNT)
                 imageViewCommentApply.isEnabled = !it.isNullOrBlank()
             }
             imageViewCommentApply.setOnClickListener {
@@ -95,10 +108,16 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             }
             recyclerViewCommentList.layoutManager = LinearLayoutManager(this@LectureBankDetailActivity)
             recyclerViewCommentList.adapter = lectureBankCommentsAdapter
-            recyclerViewAttachFileList.layoutManager = LinearLayoutManager(this@LectureBankDetailActivity, LinearLayoutManager.HORIZONTAL, false)
+            recyclerViewAttachFileList.layoutManager =
+                LinearLayoutManager(this@LectureBankDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             recyclerViewAttachFileList.adapter = lectureBankFileAdapter
             lectureBankCommentsAdapter.setOnItemClickListener { //Report button clicked
                 showLectureBankCommentReportDialog(commentId = it.id ?: 0)
+            }
+            lectureBankFileAdapter.setOnItemClickListener { i, uploadFile, b ->
+                if (!b) {
+                    lectureBankUploadFileViewModel.getDownloadUrlFromUploadFile(uploadFile)
+                }
             }
             textViewComment.setOnClickListener {
                 showCommentField()
@@ -115,7 +134,7 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
     private fun initViewModel() {
         with(lectureBankDetailViewModel) {
             isLoading.observe(this@LectureBankDetailActivity) {
-                if(it) showProgressDialog()
+                if (it) showProgressDialog()
                 else hideProgressDialog()
             }
             lectureBankDetail.observe(this@LectureBankDetailActivity) {
@@ -150,10 +169,32 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
                 lectureBankDetailViewModel.getLectureBankComments()
             }
         }
+        with(lectureBankUploadFileViewModel) {
+            downloadUrlEvent.observe(this@LectureBankDetailActivity, EventObserver {
+                fileUtil.downloadFile(it.downloadUrl, it.uploadFile)
+                    .withThread()
+                    .subscribe({ downloadStatus ->
+                        lectureBankFileAdapter.setDownloadStatus(
+                            downloadStatus.uploadFile,
+                            (downloadStatus.downloadedBytes / downloadStatus.totalBytes),
+                            when (downloadStatus.status) {
+                                DownloadManager.STATUS_PENDING -> -1
+                                DownloadManager.STATUS_RUNNING -> 100
+                                else -> -2
+                            }
+                        )
+                    }, {
+
+                    }, {
+                        lectureBankFileAdapter.setDownloadStatus(it.uploadFile, 0, -2)
+                    })
+                    .addTo(compositeDisposable)
+            })
+        }
     }
 
     override fun onBackPressed() {
-        if(isShowingCommentField) {
+        if (isShowingCommentField) {
             hideCommentField()
         } else
             super.onBackPressed()

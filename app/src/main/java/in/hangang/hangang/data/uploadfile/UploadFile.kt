@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.lecturebank
+package `in`.hangang.hangang.data.uploadfile
 
 import com.google.gson.annotations.SerializedName
 

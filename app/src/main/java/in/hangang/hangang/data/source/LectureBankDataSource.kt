@@ -43,4 +43,6 @@ interface LectureBankDataSource {
 
     fun reportLectureBank(lectureBankId: Int, reportId: Int) : Single<CommonResponse>
     fun reportLectureBankComment(commentId: Int, reportId: Int) : Single<CommonResponse>
+
+    fun downloadSingleFile(uploadFileId: Int) : Single<String>
 }

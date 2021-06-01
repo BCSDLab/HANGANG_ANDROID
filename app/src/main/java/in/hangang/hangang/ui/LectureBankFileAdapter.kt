@@ -2,20 +2,19 @@ package `in`.hangang.hangang.ui
 
 import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.lecturebank.UploadFile
+import `in`.hangang.hangang.data.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ItemLectureBankUploadFileBinding
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileAdapter.ViewHolder>() {
+class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewHolder>() {
 
     private val files = mutableListOf<UploadFile>()
+    private val downloadStatusMap : MutableMap<UploadFile, Pair<Int, Int>> = mutableMapOf()
 
     private val fileExtMap : Map<String, Pair<Int, Int>> by lazy { mapOf(
         "cell" to Pair(R.drawable.ic_cell_disabled, R.drawable.ic_cell),
@@ -37,6 +36,8 @@ class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileA
         notifyDataSetChanged()
     }
 
+    var onItemClickListener : OnItemClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             DataBindingUtil.bind(
@@ -48,8 +49,15 @@ class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileA
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        super.onBindViewHolder(holder, position)
         holder.bind(files[position])
+        downloadStatusMap[files[position]]?.let {
+            holder.setProgressBar(it.first, it.second)
+        } ?: holder.setProgressBar(-2, -2)
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.onItemClick(
+                position, files[position], downloadStatusMap[files[position]]?.second ?: -2 > -2
+            )
+        }
     }
 
     override fun getItemCount() = files.size
@@ -64,6 +72,27 @@ class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileA
         return files[position]
     }
 
+    fun setDownloadStatus(position: Int, progress: Int, max: Int) {
+        val beforeProgress = downloadStatusMap[files[position]]?.first ?: -1
+        val beforeMax = downloadStatusMap[files[position]]?.second ?: -2
+        downloadStatusMap[files[position]] = progress to max
+        if(if(beforeMax < 0) {
+            beforeMax != max
+        } else {
+            beforeMax != max ||
+            beforeProgress != progress
+        })
+            notifyItemChanged(position)
+    }
+
+    fun setDownloadStatus(uploadFile: UploadFile, progress: Int, max: Int) {
+        setDownloadStatus(findUploadFilePosition(uploadFile), progress, max)
+    }
+
+    fun findUploadFilePosition(uploadFile: UploadFile) : Int {
+        return files.indexOf(uploadFile)
+    }
+
     inner class ViewHolder(private val binding: ItemLectureBankUploadFileBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(uploadFile: UploadFile) {
@@ -76,7 +105,38 @@ class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileA
 
             binding.textViewFileName.text = uploadFile.fileName
         }
+
+        fun setProgressBar(progress: Int, max: Int) {
+            when {
+                max < PROGRESS_INDETERMINATE -> binding.layoutDownloading.visibility = View.GONE
+                max == PROGRESS_INDETERMINATE -> {
+                    binding.layoutDownloading.visibility = View.VISIBLE
+                    binding.progressBarDownload.isIndeterminate = true
+                }
+                else -> {
+                    binding.layoutDownloading.visibility = View.VISIBLE
+                    binding.progressBarDownload.max = max
+                    binding.progressBarDownload.progress = progress
+                    binding.progressBarDownload.isIndeterminate = false
+                }
+            }
+        }
     }
 
+    inline fun setOnItemClickListener(crossinline onItemClick: (Int, UploadFile, Boolean) -> Unit) {
+        onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(position: Int, uploadFile: UploadFile, isDownloading: Boolean) {
+                onItemClick(position, uploadFile, isDownloading)
+            }
+        }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int, uploadFile: UploadFile, isDownloading: Boolean)
+    }
+
+    companion object {
+        const val PROGRESS_INDETERMINATE = -1
+    }
 
 }

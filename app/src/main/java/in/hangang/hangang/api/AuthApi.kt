@@ -64,4 +64,7 @@ interface AuthApi {
     @POST(LECTURE_BANKS_REPORT_COMMENT)
     fun reportLectureBankComment(@Body lectureBankReportRequest: LectureBankReportRequest) : Single<CommonResponse>
 
+    @GET(LECTURE_BANKS_FILE)
+    fun downloadSingleFile(@Path("id") id: Int) : Single<String>
+
 }

@@ -86,4 +86,8 @@ class LectureBankRemoteDataSource(
             )
         )
     }
+
+    override fun downloadSingleFile(uploadFileId: Int): Single<String> {
+        return authApi.downloadSingleFile(uploadFileId)
+    }
 }

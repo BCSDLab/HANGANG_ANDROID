@@ -63,4 +63,8 @@ class LectureBankLocalDataSource : LectureBankDataSource {
     override fun reportLectureBankComment(commentId: Int, reportId: Int): Single<CommonResponse> {
         return Single.never()
     }
+
+    override fun downloadSingleFile(uploadFileId: Int): Single<String> {
+        return Single.never()
+    }
 }

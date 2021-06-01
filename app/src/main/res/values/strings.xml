@@ -153,5 +153,6 @@
     <string name="lecture_bank_comment_text_count">%1$d/%2$d자</string>
     <string name="lecture_bank_purchase_message">구매 시 사용한 포인트는 환불이 불가능하니  미리보기와 내용, 댓글을 확인한 후 구매해 주세요.\n\n자료를 무단으로 가공 및 유통, 재판매하는 경우 이용에 제한이 생길 수 있습니다.</string>
     <string name="lecture_bank_proceed_purchase">동의 후 구매</string>
+    <string name="download_complete_toast_message">%1$s 다운로드를 완료했습니다.</string>
 
 </resources>

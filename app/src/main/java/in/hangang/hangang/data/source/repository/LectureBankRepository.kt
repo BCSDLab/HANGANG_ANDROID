@@ -68,4 +68,8 @@ class LectureBankRepository(
         return lectureBankRemoteDataSource.reportLectureBankComment(commentId, reportId)
     }
 
+    override fun downloadSingleFile(uploadFileId: Int): Single<String> {
+        return lectureBankRemoteDataSource.downloadSingleFile(uploadFileId)
+    }
+
 }
