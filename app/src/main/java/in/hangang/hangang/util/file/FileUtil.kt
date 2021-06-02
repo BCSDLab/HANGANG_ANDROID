@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import java.net.URI
 import java.net.URL
 
 abstract class FileUtil(
@@ -57,7 +58,7 @@ abstract class FileUtil(
                             if(!cursor.moveToFirst()) return
                             if(cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
                                 Toast.makeText(context, context.getString(R.string.download_complete_toast_message, uploadFile.fileName), Toast.LENGTH_SHORT).show()
-                                Hawk.put(uploadFile.id.toString(), cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)))
+                                Hawk.put(uploadFile.id.toString(), cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_MEDIAPROVIDER_URI)))
                             }
                         }
                     }
@@ -85,7 +86,7 @@ abstract class FileUtil(
                 if(!cursor.moveToFirst())
                     break
 
-                Thread.sleep(1000)
+                Thread.sleep(500)
 
                 status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
                 reason = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON))

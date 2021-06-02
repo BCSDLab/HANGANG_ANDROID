@@ -17,14 +17,16 @@ import `in`.hangang.hangang.ui.lecturebank.adapter.LectureBankCommentsAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankDetailActivityContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankDetailViewModel
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankUploadFileViewModel
-import `in`.hangang.hangang.util.file.FileDownloadUtil
 import `in`.hangang.hangang.util.file.FileUtil
 import `in`.hangang.hangang.util.withThread
 import android.app.AlertDialog
 import android.app.DownloadManager
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -116,7 +118,7 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             }
             lectureBankFileAdapter.setOnItemClickListener { i, uploadFile, b ->
                 if (!b) {
-                    lectureBankUploadFileViewModel.getDownloadUrlFromUploadFile(uploadFile)
+                    lectureBankUploadFileViewModel.downloadOrOpenFile(this@LectureBankDetailActivity, uploadFile)
                 }
             }
             textViewComment.setOnClickListener {
@@ -176,10 +178,10 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
                     .subscribe({ downloadStatus ->
                         lectureBankFileAdapter.setDownloadStatus(
                             downloadStatus.uploadFile,
-                            (downloadStatus.downloadedBytes / downloadStatus.totalBytes),
+                            downloadStatus.downloadedBytes,
                             when (downloadStatus.status) {
                                 DownloadManager.STATUS_PENDING -> -1
-                                DownloadManager.STATUS_RUNNING -> 100
+                                DownloadManager.STATUS_RUNNING -> downloadStatus.totalBytes
                                 else -> -2
                             }
                         )
@@ -189,6 +191,17 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
                         lectureBankFileAdapter.setDownloadStatus(it.uploadFile, 0, -2)
                     })
                     .addTo(compositeDisposable)
+            })
+            openFileEvent.observe(this@LectureBankDetailActivity, EventObserver {
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, it))
+                } catch (activityNotFoundException: ActivityNotFoundException) {
+                    Toast.makeText(
+                        this@LectureBankDetailActivity,
+                        getString(R.string.upload_file_activity_not_found),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             })
         }
     }
