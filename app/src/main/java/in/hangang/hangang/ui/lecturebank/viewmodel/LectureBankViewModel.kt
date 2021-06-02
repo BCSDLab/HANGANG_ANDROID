@@ -5,6 +5,7 @@ import `in`.hangang.hangang.constant.LECTURE_BANKS_ORDER_BY_ID
 import `in`.hangang.hangang.data.lecturebank.LectureBank
 import `in`.hangang.hangang.data.lecturebank.LectureBankFilter
 import `in`.hangang.hangang.data.source.repository.LectureBankRepository
+import `in`.hangang.hangang.data.source.repository.UserRepository
 import `in`.hangang.hangang.di.repositoryModule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,13 +20,16 @@ class LectureBankViewModel(
     private val _keyword = MutableLiveData<String?>()
     private val _department = MutableLiveData<String?>()
     private val _lectureBankFilter = MutableLiveData<LectureBankFilter>()
+    private val _isLectureBankLoading = MutableLiveData<Boolean>()
 
     private val _lectureBankPagingData = MutableLiveData<PagingData<LectureBank>>()
 
     val lectureBankPagingData : LiveData<PagingData<LectureBank>> get() = _lectureBankPagingData
     val lectureBankFilter : LiveData<LectureBankFilter> get() = _lectureBankFilter
+    val isLectureBankLoading : LiveData<Boolean> get() = _isLectureBankLoading
 
     fun getLectureBanks() {
+        _isLectureBankLoading.postValue(true)
         lectureBankRepository.getLectureBanks(
             _lectureBankFilter.value?.categories,
             _department.value,
@@ -34,6 +38,7 @@ class LectureBankViewModel(
         )
             .cachedIn(viewModelScope)
             .subscribe {
+                _isLectureBankLoading.postValue(false)
                 _lectureBankPagingData.value = it
             }
             .addTo(compositeDisposable)

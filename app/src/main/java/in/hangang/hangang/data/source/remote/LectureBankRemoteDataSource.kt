@@ -13,6 +13,7 @@ import `in`.hangang.hangang.data.source.paging.LectureBankPagingSource
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import androidx.paging.rxjava3.flowable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
@@ -20,6 +21,9 @@ import io.reactivex.rxjava3.core.Single
 class LectureBankRemoteDataSource(
     private val authApi: AuthApi
 ) : LectureBankDataSource {
+
+    private var currentLectureBankCommentPagingSource : LectureBankCommentPagingSource? = null
+
     override fun getLectureBanks(
         categories: List<String>?,
         department: String?,
@@ -33,12 +37,22 @@ class LectureBankRemoteDataSource(
 
     override fun getLectureBankComments(lectureBankId: Int): Flowable<PagingData<LectureBankComment>> {
         return Pager(PagingConfig(pageSize = DEFAULT_LIMIT)) {
-            LectureBankCommentPagingSource(authApi, lectureBankId)
+            LectureBankCommentPagingSource(authApi, lectureBankId).also {
+                currentLectureBankCommentPagingSource = it
+            }
         }.flowable
     }
 
     override fun commentLectureBank(lectureBankId: Int, comment: String): Single<Int> {
         return authApi.commentLectureBank(lectureBankId, LectureBankComment(comments = comment))
+    }
+
+    override fun modifyLectureBankComment(lectureBankId: Int, commentId: Int, comment: String): Single<CommonResponse> {
+        return authApi.modifyLectureBankComment(lectureBankId, commentId, LectureBankComment(comments = comment))
+    }
+
+    override fun deleteLectureBankComment(lectureBankId: Int, commentId: Int): Single<CommonResponse> {
+        return authApi.deleteLectureBankComment(lectureBankId, commentId)
     }
 
     override fun getLectureBankDetail(id: Int): Single<LectureBankDetail> {

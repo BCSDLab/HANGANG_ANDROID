@@ -6,6 +6,7 @@ import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
+import `in`.hangang.hangang.data.user.User
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
@@ -40,7 +41,6 @@ class UserRemoteDataSource(
         return Single.never()
     }
 
-
     override fun emailCheck(portalAccount: String): Single<CommonResponse> {
         return noAuthApi.checkEmail(EmailRequest(0, portalAccount))
     }
@@ -64,4 +64,10 @@ class UserRemoteDataSource(
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return noAuthApi.passwordFind(PasswordFindRequest(portalAccount, password))
     }
+
+    override fun getUserInfo(): Single<User> {
+        return authApi.getUserInfo()
+    }
+
+    override fun saveUserInfo(user: User) {}
 }

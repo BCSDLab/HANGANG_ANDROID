@@ -185,19 +185,38 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_lecture_bank"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/lecture_bank_swipe_refresh_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:paddingTop="12dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scroll_view_majors"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:paddingBottom="80dp"
-            android:clipToPadding="false"/>
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_lecture_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="12dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="80dp"
+                    android:clipToPadding="false"/>
+
+                <include
+                    android:visibility="gone"
+                    android:id="@+id/recycler_view_empty_view"
+                    layout="@layout/layout_lecture_bank_list_empty"/>
+
+            </FrameLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

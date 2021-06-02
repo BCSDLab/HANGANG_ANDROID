@@ -14,11 +14,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/text_view_report"
+        <ImageView
+            android:id="@+id/image_view_more"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/lecture_bank_report"
+            android:src="@drawable/ic_more_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/text_view_modify_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/lecture_bank_modify_comment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="?android:attr/textColorSecondary"
@@ -50,7 +61,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/text_view_comment_nickname"
             app:layout_constraintBaseline_toBaselineOf="@id/text_view_comment_nickname"
-            app:layout_constraintEnd_toStartOf="@id/text_view_report"
+            app:layout_constraintEnd_toStartOf="@id/image_view_more"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="11sp"/>
 
@@ -70,6 +81,68 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:layout_marginBottom="16dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/field_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_comment_nickname"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/white"
+            android:layout_gravity="bottom">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/filled_edit_text_background"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="?android:attr/textColorTertiary"/>
+
+            <EditText
+                android:id="@+id/edit_text_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="8"
+                android:minHeight="56dp"
+                android:inputType="textMultiLine"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="4dp"
+                android:background="@null"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/text_view_comment_text_count"
+                android:padding="8dp"
+                android:hint="@string/lecture_bank_detail_comment_hint"
+                android:textSize="12sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:gravity="top"
+                tools:text="a"/>
+
+            <TextView
+                android:id="@+id/text_view_comment_text_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                tools:text="0/300자"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="12sp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:id="@+id/divider"

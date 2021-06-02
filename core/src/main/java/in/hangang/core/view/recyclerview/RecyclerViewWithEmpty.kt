@@ -12,10 +12,15 @@ class RecyclerViewWithEmpty(
     defStyleAttr: Int = 0
 ) : RecyclerView(context, attributeSet, defStyleAttr) {
     var emptyView: View? = null
+    var showEmptyView = false
+    set(value) {
+        emptyObserver.onChanged()
+        field = value
+    }
 
     private val emptyObserver: AdapterDataObserver = object : AdapterDataObserver() {
         override fun onChanged() {
-            if (adapter != null && emptyView != null) {
+            if (showEmptyView && adapter != null && emptyView != null) {
                 if (adapter!!.itemCount == 0) {
                     emptyView?.visibility = View.VISIBLE
                     this@RecyclerViewWithEmpty.visibility = View.GONE

@@ -8,6 +8,7 @@ import `in`.hangang.core.util.showKeyboard
 import `in`.hangang.core.util.toProperCapacityUnit
 import `in`.hangang.core.view.showPopupMenu
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.uploadfile.UploadFile
@@ -113,8 +114,30 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             recyclerViewAttachFileList.layoutManager =
                 LinearLayoutManager(this@LectureBankDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             recyclerViewAttachFileList.adapter = lectureBankFileAdapter
-            lectureBankCommentsAdapter.setOnItemClickListener { //Report button clicked
-                showLectureBankCommentReportDialog(commentId = it.id ?: 0)
+            lectureBankCommentsAdapter.setOnItemClickListener { view, lectureBankComment, position ->
+                view.showPopupMenu(
+                    if (lectureBankComment.userId == lectureBankDetailViewModel.userId) R.menu.menu_lecture_bank_my_comment
+                    else R.menu.menu_lecture_bank_comment
+                ).setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.item_menu_lecture_bank_comment_report -> {
+                            showLectureBankCommentReportDialog(commentId = lectureBankComment.id ?: 0)
+                            true
+                        }
+                        R.id.item_menu_lecture_bank_comment_edit -> {
+                            lectureBankCommentsAdapter.lectureBankCommentEditPosition = position
+                            true
+                        }
+                        R.id.item_menu_lecture_bank_comment_delete -> {
+                            showLectureBankDeleteCommentDialog(lectureBankComment)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+            lectureBankCommentsAdapter.setOnModifyButtonClickListener { _, lectureBankComment, s ->
+                lectureBankDetailViewModel.modifyLectureBankComment(lectureBankComment, s)
             }
             lectureBankFileAdapter.setOnItemClickListener { i, uploadFile, b ->
                 if (!b) {
@@ -167,7 +190,15 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
                     isEnabled = !it.first
                 }
             }
-            commentAppliedEvent.observe(this@LectureBankDetailActivity) {
+            lectureBankCommentAppliedEvent.observe(this@LectureBankDetailActivity) {
+                lectureBankDetailViewModel.getLectureBankComments()
+            }
+            lectureBankCommentModifiedEvent.observe(this@LectureBankDetailActivity) {
+                lectureBankCommentsAdapter.lectureBankCommentEditPosition = -1
+                lectureBankDetailViewModel.getLectureBankComments()
+            }
+            lectureBankCommentRemovedEvent.observe(this@LectureBankDetailActivity) {
+                lectureBankCommentsAdapter.lectureBankCommentEditPosition = -1
                 lectureBankDetailViewModel.getLectureBankComments()
             }
         }
@@ -252,6 +283,21 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             positiveButtonText = getString(R.string.lecture_bank_proceed_purchase),
             positiveButtonOnClickListener = { dialog, _ ->
                 lectureBankDetailViewModel.purchaseLectureBank()
+                dialog.dismiss()
+            },
+            negativeButtonText = getString(R.string.cancel),
+            negativeButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            }
+        )
+    }
+
+    private fun showLectureBankDeleteCommentDialog(lectureBankComment: LectureBankComment) {
+        showSimpleDialog(
+            message = getString(R.string.lecture_bank_delete_comment_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                lectureBankDetailViewModel.removeLectureBankComment(lectureBankComment)
                 dialog.dismiss()
             },
             negativeButtonText = getString(R.string.cancel),

@@ -18,33 +18,43 @@ import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankDetailActivityCon
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankFilterActivityContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankViewModel
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
     override val layoutId = R.layout.fragment_lecture_bank
 
-    private val departmentMap : Map<CheckBox, String> by lazy{ mapOf(
-        binding.radioButtonMajor0 to DEPARTMENT_HRD,
-        binding.radioButtonMajor1 to DEPARTMENT_LIBERAL,
-        binding.radioButtonMajor2 to DEPARTMENT_MECHANICAL,
-        binding.radioButtonMajor3 to DEPARTMENT_DESIGN,
-        binding.radioButtonMajor4 to DEPARTMENT_MECHATRONICS,
-        binding.radioButtonMajor5 to DEPARTMENT_INDUSTRIAL,
-        binding.radioButtonMajor6 to DEPARTMENT_ENERGY,
-        binding.radioButtonMajor7 to DEPARTMENT_CONVERGENCE,
-        binding.radioButtonMajor8 to DEPARTMENT_ELECTRONIC,
-        binding.radioButtonMajor9 to DEPARTMENT_COMPUTER
-    )}
+    private val departmentMap: Map<CheckBox, String> by lazy {
+        mapOf(
+            binding.radioButtonMajor0 to DEPARTMENT_HRD,
+            binding.radioButtonMajor1 to DEPARTMENT_LIBERAL,
+            binding.radioButtonMajor2 to DEPARTMENT_MECHANICAL,
+            binding.radioButtonMajor3 to DEPARTMENT_DESIGN,
+            binding.radioButtonMajor4 to DEPARTMENT_MECHATRONICS,
+            binding.radioButtonMajor5 to DEPARTMENT_INDUSTRIAL,
+            binding.radioButtonMajor6 to DEPARTMENT_ENERGY,
+            binding.radioButtonMajor7 to DEPARTMENT_CONVERGENCE,
+            binding.radioButtonMajor8 to DEPARTMENT_ELECTRONIC,
+            binding.radioButtonMajor9 to DEPARTMENT_COMPUTER
+        )
+    }
 
-    private val lectureBankViewModel : LectureBankViewModel by viewModel()
+    private val lectureBankViewModel: LectureBankViewModel by viewModel()
     private val lectureBankListAdapter by lazy { LectureBankListAdapter() }
 
     private val lectureBankFilterActivityContract = registerForActivityResult(LectureBankFilterActivityContract()) {
-        if(it != null) {
+        if (it != null) {
             lectureBankViewModel.setFilter(it)
             binding.recyclerViewLectureBank.smoothScrollToPosition(0)
         }
@@ -68,6 +78,9 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
             lectureBankPagingData.observe(viewLifecycleOwner) {
                 lectureBankListAdapter.submitData(lifecycle, it)
             }
+            isLectureBankLoading.observe(viewLifecycleOwner) {
+                binding.lectureBankSwipeRefreshLayout.isRefreshing = it
+            }
         }
     }
 
@@ -77,21 +90,36 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
             adapter = lectureBankListAdapter
         }
 
+        binding.lectureBankSwipeRefreshLayout.setOnRefreshListener {
+            lectureBankViewModel.getLectureBanks()
+        }
+
         binding.buttonLectureBankLectureFilter.setOnClickListener {
             lectureBankFilterActivityContract.launch(lectureBankViewModel.lectureBankFilter.value)
         }
 
-        departmentMap.keys.forEach { it.setOnClickListener { _ ->
-            if(it.isChecked) {
-                departmentMap.keys.forEach { key -> key.isChecked = false }
-                it.isChecked = true
+        departmentMap.keys.forEach {
+            it.setOnClickListener { _ ->
+                if (it.isChecked) {
+                    departmentMap.keys.forEach { key -> key.isChecked = false }
+                    it.isChecked = true
+                }
+                lectureBankViewModel.setDepartment(if (it.isChecked) departmentMap[it] else null)
+                binding.recyclerViewLectureBank.smoothScrollToPosition(0)
             }
-            lectureBankViewModel.setDepartment(if(it.isChecked) departmentMap[it] else null)
-            binding.recyclerViewLectureBank.smoothScrollToPosition(0)
-        }}
+        }
 
-        lectureBankListAdapter.setOnItemClickListener {
-            lectureBankDetailActivityContract.launch(it)
+        with(lectureBankListAdapter) {
+            setOnItemClickListener {
+                lectureBankDetailActivityContract.launch(it)
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                loadStateFlow.collectLatest {
+                        if(it.refresh is LoadState.NotLoading){
+                            binding.recyclerViewEmptyView.isVisible = itemCount < 1
+                        }
+                    }
+            }
         }
     }
 }

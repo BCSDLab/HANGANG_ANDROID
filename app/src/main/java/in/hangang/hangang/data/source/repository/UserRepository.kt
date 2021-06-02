@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source.repository
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
+import `in`.hangang.hangang.data.user.User
 import io.reactivex.rxjava3.core.Single
 
 class UserRepository(
@@ -61,5 +62,18 @@ class UserRepository(
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return userRemoteDataSource.changePassword(portalAccount, password)
+    }
+
+    override fun getUserInfo(): Single<User> {
+        return userLocalDataSource.getUserInfo()
+            .onErrorResumeNext {
+                userRemoteDataSource.getUserInfo().doOnSuccess {
+                    userLocalDataSource.saveUserInfo(it)
+                }
+            }
+    }
+
+    override fun saveUserInfo(user: User) {
+        throw IllegalAccessException("Cannot access saveUserInfo via repository.")
     }
 }

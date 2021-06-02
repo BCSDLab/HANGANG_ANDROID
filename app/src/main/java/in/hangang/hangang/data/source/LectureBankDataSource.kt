@@ -28,6 +28,15 @@ interface LectureBankDataSource {
         lectureBankId: Int,
         comment: String
     ): Single<Int>
+    fun modifyLectureBankComment(
+        lectureBankId: Int,
+        commentId: Int,
+        comment: String
+    ) : Single<CommonResponse>
+    fun deleteLectureBankComment(
+        lectureBankId: Int,
+        commentId: Int
+    ) : Single<CommonResponse>
 
     fun getLectureBankDetail(id: Int) : Single<LectureBankDetail>
 

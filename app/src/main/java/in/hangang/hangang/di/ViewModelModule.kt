@@ -35,6 +35,6 @@ val viewModelModule = module {
     viewModel { RankingLectureViewModel(get()) }
     //LectureBank
     viewModel { LectureBankViewModel(get()) }
-    viewModel { LectureBankDetailViewModel(get()) }
+    viewModel { LectureBankDetailViewModel(get(), get()) }
     viewModel { LectureBankUploadFileViewModel(get()) }
 }

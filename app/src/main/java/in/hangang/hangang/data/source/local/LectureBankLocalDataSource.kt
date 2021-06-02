@@ -28,6 +28,14 @@ class LectureBankLocalDataSource : LectureBankDataSource {
         return Single.never()
     }
 
+    override fun modifyLectureBankComment(lectureBankId: Int, commentId: Int, comment: String): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun deleteLectureBankComment(lectureBankId: Int, commentId: Int): Single<CommonResponse> {
+        return Single.never()
+    }
+
     override fun getLectureBankDetail(id: Int): Single<LectureBankDetail> {
         return Single.never()
     }

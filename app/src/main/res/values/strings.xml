@@ -155,5 +155,10 @@
     <string name="lecture_bank_proceed_purchase">동의 후 구매</string>
     <string name="download_complete_toast_message">%1$s 다운로드를 완료했습니다.</string>
     <string name="upload_file_activity_not_found">이 파일을 열 수 있는 앱이 없습니다</string>
+    <string name="lecture_bank_list_empty">검색결과가 없습니다</string>
+    <string name="lecture_bank_edit">수정</string>
+    <string name="lecture_bank_delete">삭제</string>
+    <string name="lecture_bank_delete_comment_message">댓글을 삭제하시겠습니까?</string>
+    <string name="lecture_bank_modify_comment">저장</string>
 
 </resources>

@@ -32,6 +32,14 @@ class LectureBankRepository(
         return lectureBankRemoteDataSource.commentLectureBank(lectureBankId, comment)
     }
 
+    override fun modifyLectureBankComment(lectureBankId: Int, commentId: Int, comment: String): Single<CommonResponse> {
+        return lectureBankRemoteDataSource.modifyLectureBankComment(lectureBankId, commentId, comment)
+    }
+
+    override fun deleteLectureBankComment(lectureBankId: Int, commentId: Int): Single<CommonResponse> {
+        return lectureBankRemoteDataSource.deleteLectureBankComment(lectureBankId, commentId)
+    }
+
     override fun getLectureBankDetail(id: Int): Single<LectureBankDetail> {
         return lectureBankRemoteDataSource.getLectureBankDetail(id)
     }

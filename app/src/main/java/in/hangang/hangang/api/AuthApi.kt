@@ -3,6 +3,7 @@ package `in`.hangang.hangang.api
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.user.User
 import `in`.hangang.hangang.data.request.LectureBankReportRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.LectureBankCommentResponse
@@ -67,4 +68,12 @@ interface AuthApi {
     @GET(LECTURE_BANKS_FILE)
     fun downloadSingleFile(@Path("id") id: Int) : Single<String>
 
+    @PUT(LECTURE_BANKS_COMMENT_WITH_ID)
+    fun modifyLectureBankComment(@Path("id") lectureBankId: Int, @Path("commentId") commentId: Int, @Body lectureBankComment: LectureBankComment) : Single<CommonResponse>
+
+    @DELETE(LECTURE_BANKS_COMMENT_WITH_ID)
+    fun deleteLectureBankComment(@Path("id") lectureBankId: Int, @Path("commentId") commentId: Int) : Single<CommonResponse>
+
+    @GET(USER_ME)
+    fun getUserInfo() : Single<User>
 }

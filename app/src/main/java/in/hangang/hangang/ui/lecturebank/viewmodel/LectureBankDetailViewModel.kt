@@ -7,6 +7,7 @@ import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.LectureBankRepository
+import `in`.hangang.hangang.data.source.repository.UserRepository
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
@@ -18,9 +19,11 @@ import androidx.paging.rxjava3.cachedIn
 import io.reactivex.rxjava3.kotlin.addTo
 
 class LectureBankDetailViewModel(
-    private val lectureBankRepository: LectureBankRepository
+    private val lectureBankRepository: LectureBankRepository,
+    private val userRepository: UserRepository
 ) : ViewModelBase() {
 
+    private var _userId = -1
     private var userScrapId = 0
 
     private val _lectureBankDetail = MutableLiveData<LectureBankDetail>()
@@ -29,7 +32,9 @@ class LectureBankDetailViewModel(
     private val _reportedEvent = MutableLiveData<Event<Boolean>>()
     private val _lectureBankCommentPagingData = MutableLiveData<PagingData<LectureBankComment>>()
     private val _errorEvent = MutableLiveData<Event<CommonResponse>>()
-    private val _commentAppliedEvent = MutableLiveData<Event<Int>>()
+    private val _lectureBankCommentAppliedEvent = MutableLiveData<Event<Int>>()
+    private val _lectureBankCommentRemovedEvent = MutableLiveData<Event<CommonResponse>>()
+    private val _lectureBankCommentModifiedEvent = MutableLiveData<Event<CommonResponse>>()
 
     val lectureBankDetail : LiveData<LectureBankDetail> get() = _lectureBankDetail
     val isScraped : LiveData<Boolean> get() = _isScraped
@@ -37,10 +42,19 @@ class LectureBankDetailViewModel(
     val reportedEvent : LiveData<Event<Boolean>> get() = _reportedEvent
     val lectureBankCommentPagingData : LiveData<PagingData<LectureBankComment>> get() = _lectureBankCommentPagingData
     val errorEvent : LiveData<Event<CommonResponse>> get() = _errorEvent
-    val commentAppliedEvent : LiveData<Event<Int>> get() = _commentAppliedEvent
+    val lectureBankCommentAppliedEvent : LiveData<Event<Int>> get() = _lectureBankCommentAppliedEvent
+    val lectureBankCommentRemovedEvent : LiveData<Event<CommonResponse>> get() =  _lectureBankCommentRemovedEvent
+    val lectureBankCommentModifiedEvent : LiveData<Event<CommonResponse>> get() =  _lectureBankCommentModifiedEvent
+    val userId : Int get() = _userId
 
     fun getLectureBankDetail(id: Int) {
-        lectureBankRepository.getLectureBankDetail(id)
+        userRepository.getUserInfo()
+            .doOnSuccess {
+                _userId = it.id
+            }
+            .flatMap {
+                lectureBankRepository.getLectureBankDetail(id)
+            }
             .withThread()
             .handleHttpException()
             .handleProgress(this)
@@ -61,6 +75,39 @@ class LectureBankDetailViewModel(
             .subscribe {
                 _lectureBankCommentPagingData.value = it
             }
+            .addTo(compositeDisposable)
+    }
+
+    fun modifyLectureBankComment(lectureBankComment: LectureBankComment, comment: String) {
+        lectureBankRepository.modifyLectureBankComment(
+            lectureBankId = lectureBankDetail.value?.id ?: -1,
+            commentId = lectureBankComment.id ?: -1,
+            comment = comment
+        )
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                 _lectureBankCommentModifiedEvent.value = Event(it)
+            }, {
+
+            })
+            .addTo(compositeDisposable)
+    }
+
+    fun removeLectureBankComment(lectureBankComment: LectureBankComment) {
+        lectureBankRepository.deleteLectureBankComment(
+            lectureBankId = lectureBankDetail.value?.id ?: -1,
+            commentId = lectureBankComment.id ?: -1
+        )
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lectureBankCommentRemovedEvent.value = Event(it)
+            }, {
+
+            })
             .addTo(compositeDisposable)
     }
 
@@ -136,7 +183,7 @@ class LectureBankDetailViewModel(
             .handleHttpException()
             .handleProgress(this)
             .subscribe( {
-                _commentAppliedEvent.value = Event(it)
+                _lectureBankCommentAppliedEvent.value = Event(it)
             }, this::postErrorViewModel)
             .addTo(compositeDisposable)
     }

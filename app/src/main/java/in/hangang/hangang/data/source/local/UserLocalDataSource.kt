@@ -5,10 +5,15 @@ import `in`.hangang.hangang.constant.REFRESH_TOKEN
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
+import `in`.hangang.hangang.data.user.User
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Single
+import java.lang.NullPointerException
 
 class UserLocalDataSource : UserDataSource {
+
+    private var user: User? = null
+
     override fun signUp(
         major: Array<String>,
         nickName: String,
@@ -70,5 +75,14 @@ class UserLocalDataSource : UserDataSource {
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return Single.never()
+    }
+
+    override fun getUserInfo(): Single<User> {
+        return if(user == null) Single.error(NullPointerException("User is null"))
+        else Single.just(user)
+    }
+
+    override fun saveUserInfo(user: User) {
+        this.user = user
     }
 }
