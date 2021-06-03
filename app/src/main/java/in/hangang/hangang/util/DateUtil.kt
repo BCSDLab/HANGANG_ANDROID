@@ -18,7 +18,7 @@ object DateUtil {
         val stringBuilder = StringBuilder()
         val apiDateTime = LocalDateTime.ofInstant(
             (SimpleDateFormat(API_DATE_FORMAT).parse(apiDate) ?: Date(System.currentTimeMillis())).toInstant(),
-            ZoneOffset.UTC
+            ZoneId.of("Asia/Seoul")
         )
         val nowDateTime = LocalDateTime.now()
 
