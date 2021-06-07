@@ -12,19 +12,17 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
-import android.widget.Toast
-import kotlinx.android.synthetic.main.layout_simple_list_bottom_sheet.*
+import androidx.core.content.ContextCompat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
     override val layoutId = R.layout.activity_my_profile
     private val myProfileViewModel: MyProfileActivityViewModel by viewModel()
     var majorClickListener: AdapterView.OnItemClickListener? =
-        object : AdapterView.OnItemClickListener {
-            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                var selectedMajor = resources.getTextArray(R.array.major_full).toList()[p2]
-                LogUtil.e(selectedMajor.toString())
-            }
+        AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
+            var selectedMajor = resources.getTextArray(R.array.major_full).toList()[p2]
+            LogUtil.e(selectedMajor.toString())
+
         }
 
 
@@ -46,8 +44,8 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
             myProfileViewModel.myProfile.observe(this@MyProfileActivity) {
                 nameText.setText(vm.myProfile.value?.name)
                 profileIdText.text = vm.myProfile.value!!.portalAccount
-                profileNicknameEditText.setText(vm.myProfile.value!!.nickname)
-                profileMajorTextview.text = vm.myProfile.value!!.major
+                profileNickNameEditText.setText(vm.myProfile.value!!.nickname)
+                ProfileMajorTextView.text = vm.myProfile.value!!.major
             }
             addMajor.setOnClickListener {
                 DialogUtil.makeListBottomSheet(
@@ -63,7 +61,7 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
     private fun initAppBar() {
         val editButton = TextView(this)
         editButton.text = "수정"
-        editButton.setTextColor(Color.parseColor("#238bfe"))
+        editButton.setTextColor(ContextCompat.getColor(this, R.color.blue_200))
         editButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
         editButton.isEnabled = false
         with(binding.appBar) {
@@ -71,15 +69,17 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
             setOnAppBarButtonClickListener(
                 onClickViewInRightContainer = { view, index ->
                     with(binding.vm) {
-                        appBarRightButton.observe(this@MyProfileActivity) {
+                        appBarRightButton?.observe(this@MyProfileActivity) {
                             when (it) {
                                 false -> {
-                                    editButton.text = "완료"
+                                    editButton.text = getString(R.string.edit_button_confirm)
                                     editButton.isEnabled = true
                                     binding.addMajor.visibility = View.VISIBLE
+
+
                                 }
                                 true -> {
-                                    editButton.text = "수정"
+                                    editButton.text = getString(R.string.profile_edit_button)
                                     applyMyProfile(
                                         binding.nameText.text.toString(),
                                         binding.profileNicknameEditText.text.toString(),

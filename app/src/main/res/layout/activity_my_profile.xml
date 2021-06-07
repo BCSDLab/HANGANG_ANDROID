@@ -162,7 +162,7 @@
             app:layout_constraintTop_toBottomOf="@id/underbar_nickname" />
 
         <TextView
-            android:id="@+id/profile_major_textview"
+            android:id="@+id/profile_major_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -175,14 +175,38 @@
 
 
         <View
-            android:id="@+id/underbar_major"
+            android:id="@+id/underbar_major_first"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="3dp"
             android:background="@color/gray_100"
             app:layout_constraintEnd_toEndOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@id/profile_major_textview" />
+            app:layout_constraintTop_toBottomOf="@id/profile_major_first" />
+
+        <TextView
+            android:id="@+id/profile_major_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            android:textColor="@color/black3"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/underbar_major_first"
+            android:visibility="gone"/>
+
+        <View
+            android:id="@+id/underbar_major_second"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/gray_100"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/profile_major_second"
+            android:visibility="gone"/>
+        
 
         <TextView
             android:id="@+id/add_major"
@@ -193,8 +217,8 @@
             android:textColor="@color/blue_500"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@+id/underbar_major"
-            android:visibility="invisible"/>
+            app:layout_constraintTop_toBottomOf="@+id/underbar_major_first"
+            android:visibility="gone"/>
 
 
 

@@ -19,6 +19,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
         binding.vm = settingsViewModel
 
         initView()
+        initViewModel()
     }
 
     private fun initView() {
@@ -39,7 +40,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
 
     private fun initViewModel() {
-        with(binding.vm) {
+        with(binding!!.vm) {
             deleteAccountResponse.observe(this@SettingsActivity){
                 showDeleteAccountDialog()
             }
@@ -65,7 +66,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
         showSimpleDialog(
             message = getString(R.string.profile_logout_dialog_message),
             positiveButtonText = getString(R.string.ok),
-            negativeButtonText = getString(R.string.no),
+            negativeButtonText = getString(R.string.close),
             positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
                 Intent(this, LoginActivity::class.java).apply {
@@ -81,7 +82,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
         showSimpleDialog(
             message = getString(R.string.profile_delete_account_dialog_message),
             positiveButtonText = getString(R.string.ok),
-            negativeButtonText = getString(R.string.no),
+            negativeButtonText = getString(R.string.close),
             positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
                 binding.vm.deleteAccount()

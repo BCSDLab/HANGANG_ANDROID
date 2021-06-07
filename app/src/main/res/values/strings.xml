@@ -261,4 +261,5 @@
     <string name="grade_portion_low">아쉽게주심</string>
     <string name="total_evaluation">총평</string>
     <string name="lecture_evaluation_write_complete">작성완료 (+30P)</string>
+    <string name="edit_button_confirm">완료</string>
 </resources>
