@@ -1,5 +1,6 @@
 package `in`.hangang.hangang
 
+import `in`.hangang.core.sharedpreference.LectureSearchSharedPreference
 import `in`.hangang.hangang.di.dataSourceModule
 import `in`.hangang.hangang.di.netWorkModule
 import `in`.hangang.hangang.di.repositoryModule
@@ -30,6 +31,7 @@ class HangangApplication : Application() {
             modules(repositoryModule)
             modules(viewModelModule)
         }
+        LectureSearchSharedPreference.init(this)
     }
 
     /**

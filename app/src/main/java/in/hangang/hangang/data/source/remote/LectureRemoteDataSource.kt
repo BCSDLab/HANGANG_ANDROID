@@ -8,6 +8,8 @@ import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationRequest
+import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureDataSource
@@ -105,7 +107,15 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
         return authApi.getLectureReviewItem(id)
     }
 
-    override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
+    override fun getLectureSemester(id: Int): Single<ArrayList<Int>> {
         return authApi.getLectureSemester(id)
+    }
+
+    override fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse> {
+        return authApi.reportLectureReview(lectureReviewReportRequest)
+    }
+
+    override fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse> {
+        return authApi.postEvaluation(lectureEvaluationRequest)
     }
 }

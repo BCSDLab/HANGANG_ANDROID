@@ -65,7 +65,7 @@ class LectureClassTimeAdapter :
                 oldItem: ClassLecture,
                 newItem: ClassLecture
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
         }
     }

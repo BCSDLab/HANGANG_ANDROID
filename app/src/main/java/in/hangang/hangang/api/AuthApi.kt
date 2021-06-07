@@ -3,9 +3,7 @@ package `in`.hangang.hangang.api
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.request.ReviewRecommendRequest
-import `in`.hangang.hangang.data.request.TimeTableRequest
-import `in`.hangang.hangang.data.request.UserTimeTableRequest
+import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
@@ -53,7 +51,13 @@ interface AuthApi {
     fun getLectureReviewItem(@Path("id") id: Int): Single<LectureReview>
 
     @GET(LECTURE_SEMESTER)
-    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<String>>
+    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<Int>>
+
+    @POST(REVIEW_REPORT)
+    fun reportLectureReview(@Body lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse>
+
+    @POST(EVALUATIONS)
+    fun postEvaluation(@Body lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse>
 
     @GET(TIMETABLE)
     fun getTimeTables(

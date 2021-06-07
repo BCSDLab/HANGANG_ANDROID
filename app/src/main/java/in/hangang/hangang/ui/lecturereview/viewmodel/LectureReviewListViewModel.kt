@@ -22,8 +22,20 @@ import kotlin.collections.ArrayList
 
 class LectureReviewListViewModel(private val lectureRepository: LectureRepository) :
     ViewModelBase() {
+    fun clear(){
+        selectedMajorList.clear()
+        filterSort = SORT_BY_TOTAL_RATING
+        filterType.clear()
+        filterHashTag.clear()
+        keyword = null
+        Arrays.fill(filterTypeIsChecked, false)
+        Arrays.fill(filterHashTagIsChecked, false)
+        searchList.clear()
+    }
     private val _rankingLectureList = MutableLiveData<PagingData<RankingLectureItem>>()
     val rankingLectureList: LiveData<PagingData<RankingLectureItem>> get() = _rankingLectureList
+    private val _lectureListItemCount = MutableLiveData<Int>()
+    val lectureLsitItemCount: LiveData<Int> get() = _lectureListItemCount
     var currentResult: Flowable<PagingData<RankingLectureItem>>? = null
     var selectedMajorList = ArrayList<String>()
     var selectedMajorListDefault = ArrayList<String>()
@@ -37,6 +49,8 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
     var filterTypeIsChecked = booleanArrayOf(false, false, false, false, false, false, false, false)
     var filterHashTagIsChecked =
         booleanArrayOf(false, false, false, false, false, false, false, false, false)
+
+    var searchList = ArrayList<String>()
 
     fun getTempFilterType(): ArrayList<String>{
         var tempFilterType = ArrayList<String>()
@@ -60,6 +74,8 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
         return selectedMajorList.size < 2
     }
 
+
+
     fun getLectureReviewList(majors: ArrayList<String>) {
         for (i in majors) {
             LogUtil.e(i.toString())
@@ -73,6 +89,17 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
             .subscribe {
                 _rankingLectureList.value = it
             }
+            .addTo(compositeDisposable)
+    }
+    fun getLectureReviewCount(majors: ArrayList<String>){
+        lectureRepository.getFilteredLectureList(majors,1,filterType, filterHashTag,filterSort, keyword)
+            .withThread()
+            .handleHttpException()
+            .subscribe({
+                _lectureListItemCount.value = it.count
+            },{
+                LogUtil.e(it.toCommonResponse().errorMessage)
+            })
             .addTo(compositeDisposable)
     }
 

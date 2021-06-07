@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity"></activity>
+        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan"></activity>
         <activity android:name=".ui.signup.activity.SignUpMajorActivity" />
         <activity android:name=".ui.signup.activity.SignUpActivity" />
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />

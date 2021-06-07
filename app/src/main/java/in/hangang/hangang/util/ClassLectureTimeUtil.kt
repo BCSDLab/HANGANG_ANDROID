@@ -45,5 +45,18 @@ class ClassLectureTimeUtil {
                 else ->"unknown"
             }
         }
+        fun getSemester(id: Int): String{
+            return when(id){
+                1 -> "2019년 1학기"
+                2 -> "2019년 2학기"
+                3 -> "2020년 1학기"
+                4 -> "2020년 2학기"
+                5 -> "2021년 1학기"
+                6 -> "2021년 2학기"
+                7 -> "2022년 1학기"
+                8 -> "2022년 2학기"
+                else -> "unknown"
+            }
+        }
     }
 }

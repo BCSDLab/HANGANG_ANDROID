@@ -25,6 +25,16 @@
             android:layout_marginTop="16dp"
             app:visibilityMode="ignore"
             />
+        <Constraint android:id="@+id/lecture_detail_order_popup"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/lecture_detail_sort_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:visibilityMode="ignore"/>
 
     </ConstraintSet>
 
@@ -50,6 +60,16 @@
             android:layout_marginTop="16dp"
             app:visibilityMode="ignore"
             />
+        <Constraint android:id="@+id/lecture_detail_order_popup"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/lecture_detail_sort_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:visibilityMode="ignore"/>
     </ConstraintSet>
 
     <Transition

@@ -3,6 +3,8 @@ package `in`.hangang.hangang.data.source
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationRequest
+import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
@@ -21,5 +23,7 @@ interface LectureDataSource {
     fun getLectureReview(id: Int, page: Int, keyword: String?, sort: String): Single<LectureReviewResult>
     fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse>
     fun getLectureReviewItem(id: Int): Single<LectureReview>
-    fun getLectureSemester(id: Int): Single<ArrayList<String>>
+    fun getLectureSemester(id: Int): Single<ArrayList<Int>>
+    fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse>
+    fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse>
 }

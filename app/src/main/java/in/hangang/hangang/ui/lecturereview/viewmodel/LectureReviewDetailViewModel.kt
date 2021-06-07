@@ -2,6 +2,7 @@ package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.evaluation.*
+import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
@@ -38,11 +39,27 @@ class LectureReviewDetailViewModel (private val lectureRepository: LectureReposi
     private val _reviewList = MutableLiveData<PagingData<LectureReview>>()
     val reviewList : LiveData<PagingData<LectureReview>> get() = _reviewList
 
+
+    private val _reportResult = MutableLiveData<CommonResponse>()
+    val reportResult: LiveData<CommonResponse> get() = _reportResult
+
+    val SORT_BY_LIKE_COUNT = "좋아요 순"
+    val SORT_BY_DATE_LATEST = "최신 순"
     var keyword: String? = null
-    var sort = "좋아요"
+    var sort: String = SORT_BY_LIKE_COUNT
     var commonResponse = MutableLiveData<CommonResponse>()
     var lectureReviewItem = MutableLiveData<LectureReview>()
 
+    fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest){
+        lectureRepository.reportLectureReview(lectureReviewReportRequest)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _reportResult.value = it
+            }, {LogUtil.e(it.message.toString())})
+            .addTo(compositeDisposable)
+    }
     fun getReviewList(id: Int, keyword: String?, sort: String){
         lectureRepository.getLectureReviewList(id,keyword,sort)
             .cachedIn(viewModelScope)
