@@ -76,7 +76,7 @@ class UserRepository(
     }
 
     override fun getPointRecords(): Single<List<PointRecord>> {
-        return userRemoteDataSource.getPointRecords().map { it.map { listOf(it, it, it, it, it) }.flatten() }
+        return userRemoteDataSource.getPointRecords()
     }
 
     override fun getPurchasedBanks(): Single<List<LectureBank>> {

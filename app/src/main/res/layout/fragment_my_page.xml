@@ -120,6 +120,19 @@
             tools:text="3" />
 
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_lecture_review"
+            app:layout_constraintEnd_toStartOf="@id/text_view_comment"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_bank"
+            app:layout_constraintTop_toTopOf="@id/text_view_lecture_review_count" />
+
+
         <TextView
             android:id="@+id/text_view_comment_count"
             android:layout_width="0dp"

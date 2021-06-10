@@ -3,7 +3,6 @@ package `in`.hangang.hangang.ui
 import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.UploadFile
-import `in`.hangang.hangang.databinding.ItemLectureBankBinding
 import `in`.hangang.hangang.databinding.ItemLectureBankUploadFileBinding
 import `in`.hangang.hangang.util.LectureBankUtil
 import android.content.Context
@@ -12,7 +11,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class LectureBankFileAdapter() : OnItemClickRecyclerViewAdapter<LectureBankFileAdapter.ViewHolder>() {
+class LectureBankFileAdapter : OnItemClickRecyclerViewAdapter<LectureBankFileAdapter.ViewHolder>() {
 
     private val files = mutableListOf<UploadFile>()
 

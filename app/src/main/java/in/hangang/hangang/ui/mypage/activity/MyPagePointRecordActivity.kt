@@ -9,6 +9,7 @@ import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import android.os.Bundle
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyPagePointRecordActivity : ViewBindingActivity<ActivityMyPagePointBinding>() {
@@ -44,7 +45,7 @@ class MyPagePointRecordActivity : ViewBindingActivity<ActivityMyPagePointBinding
         with(binding) {
             textViewPoint.text = "${(intent.extras?.getInt("point"))}P"
             recyclerViewPointRecord.apply {
-                layoutManager = LinearLayoutManager(this@MyPagePointRecordActivity)
+                layoutManager = LinearLayoutManager(this@MyPagePointRecordActivity, RecyclerView.VERTICAL, true)
                 adapter = myPagePointRecordAdapter
             }
         }

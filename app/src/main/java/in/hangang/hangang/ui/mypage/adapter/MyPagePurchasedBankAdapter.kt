@@ -20,12 +20,12 @@ class MyPagePurchasedBankAdapter : OnItemClickRecyclerViewAdapter<MyPagePurchase
             DataBindingUtil.bind(
                 LayoutInflater.from(parent.context).inflate(R.layout.item_my_page_purchased_bank, parent, false)
             )!!,
-            LinearLayoutManager(parent.context)
+            LinearLayoutManager(parent.context, RecyclerView.HORIZONTAL, false)
         )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(lectureBanks[position])
+        holder.bind(lectureBanks[holder.adapterPosition])
     }
 
     override fun getItemCount() = lectureBanks.size
