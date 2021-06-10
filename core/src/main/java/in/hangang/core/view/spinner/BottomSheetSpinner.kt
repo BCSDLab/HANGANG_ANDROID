@@ -6,8 +6,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import android.widget.AdapterView
+import android.widget.LinearLayout
+import android.widget.TextView
 
 class BottomSheetSpinner @JvmOverloads constructor(
         context: Context,
@@ -50,7 +51,7 @@ class BottomSheetSpinner @JvmOverloads constructor(
                 defStyleRes
         ).apply {
             val entries = getTextArray(R.styleable.BottomSheetSpinner_android_entries)
-            if(entries != null) {
+            if (entries != null) {
                 items = entries.toList()
             }
 

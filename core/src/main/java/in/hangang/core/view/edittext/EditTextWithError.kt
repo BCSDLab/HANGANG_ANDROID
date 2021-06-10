@@ -2,11 +2,8 @@ package `in`.hangang.core.view.edittext
 
 import `in`.hangang.core.R
 import android.content.Context
-import android.text.InputType
 import android.util.AttributeSet
-import android.widget.ImageButton
 import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
 
 
@@ -38,7 +35,7 @@ open class EditTextWithError @JvmOverloads constructor(
     var status = UNDEFINED
         set(value) {
             statusImageView.setImageDrawable(
-                    when(value) {
+                    when (value) {
                         CHECK -> checkIcon
                         ERROR -> errorIcon
                         else -> null

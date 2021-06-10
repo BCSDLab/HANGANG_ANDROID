@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.login
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.source.repository.UserRepository
+import `in`.hangang.hangang.data.source.UserRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
@@ -26,15 +26,15 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModelBase
 
     fun loginButtonClick(portalID: String, password: String) {
         userRepository.login(portalID, password)
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({ data ->
-                LogUtil.d(data.httpStatus)
-                _isLoginSuccess.value = true
-            }, { _ ->
-                _errorConfig.value = true
-            }).addTo(compositeDisposable)
+                .handleHttpException()
+                .handleProgress(this)
+                .withThread()
+                .subscribe({ data ->
+                    LogUtil.d(data.httpStatus)
+                    _isLoginSuccess.value = true
+                }, { _ ->
+                    _errorConfig.value = true
+                }).addTo(compositeDisposable)
 
 
     }

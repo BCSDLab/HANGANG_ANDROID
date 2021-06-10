@@ -8,16 +8,16 @@ import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
-import `in`.hangang.hangang.data.source.UserDataSource
+import `in`.hangang.hangang.data.source.source.UserDataSource
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Single
 
 class UserLocalDataSource : UserDataSource {
     override fun signUp(
-        major: Array<String>,
-        nickName: String,
-        password: String,
-        portalAccount: String
+            major: Array<String>,
+            nickName: String,
+            password: String,
+            portalAccount: String
     ): Single<CommonResponse> {
         return Single.never()
     }
@@ -66,8 +66,8 @@ class UserLocalDataSource : UserDataSource {
     }
 
     override fun emailPasswordConfig(
-        portalAccount: String,
-        secret: String
+            portalAccount: String,
+            secret: String
     ): Single<CommonResponse> {
         return Single.never()
     }

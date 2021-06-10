@@ -13,16 +13,16 @@ import `in`.hangang.hangang.data.source.UserDataSource
 import io.reactivex.rxjava3.core.Single
 
 class UserRemoteDataSource(
-    private val noAuthApi: NoAuthApi,
-    private val authApi: AuthApi,
-    private val refreshApi: AuthApi
+        private val noAuthApi: NoAuthApi,
+        private val authApi: AuthApi,
+        private val refreshApi: AuthApi
 ) :
-    UserDataSource {
+        UserDataSource {
     override fun signUp(
-        major: Array<String>,
-        nickName: String,
-        password: String,
-        portalAccount: String
+            major: Array<String>,
+            nickName: String,
+            password: String,
+            portalAccount: String
     ): Single<CommonResponse> {
         return noAuthApi.signUp(SignUpRequest(major, nickName, password, portalAccount))
     }

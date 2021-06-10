@@ -33,8 +33,8 @@ class LoginActivity : ViewBindingActivity<ActivityLoginBinding>() {
         with(binding) {
             loginButton.setOnClickListener {
                 loginViewModel.loginButtonClick(
-                    portalID = portalId.text.toString().plus(getString(R.string.email_koreatech)),
-                    password = portalPassword.text.toString().toSHA256()
+                        portalID = portalId.text.toString().plus(getString(R.string.email_koreatech)),
+                        password = portalPassword.text.toString().toSHA256()
                 )
             }
             findPassword.setOnClickListener {

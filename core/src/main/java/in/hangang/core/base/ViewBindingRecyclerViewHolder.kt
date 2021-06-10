@@ -6,5 +6,5 @@ import androidx.recyclerview.widget.RecyclerView
 open class ViewBindingRecyclerViewHolder<T : ViewDataBinding>(
         val binding: T
 ) : RecyclerView.ViewHolder(
-    binding.root
+        binding.root
 )

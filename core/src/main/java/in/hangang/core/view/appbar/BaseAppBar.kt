@@ -29,6 +29,7 @@ open class BaseAppBar @JvmOverloads constructor(
     private val container = view.findViewById<ConstraintLayout>(R.id.app_bar_container)
     protected val dividerContainer = view.findViewById<FrameLayout>(R.id.app_bar_divider_container)
     private val textViewTitle = view.findViewById<TextView>(R.id.app_bar_title)
+    private val rightTextView = view.findViewById<TextView>(R.id.base_appbar_right_button)
     private val backButton = view.findViewById<ImageButton>(R.id.app_bar_back_button).apply {
         setOnClickListener {
             if (backButtonOnClickListener == null) {
@@ -48,7 +49,11 @@ open class BaseAppBar @JvmOverloads constructor(
             textViewTitle.text = value
             field = value
         }
-
+    var rightText  = ""
+        set(value) {
+            rightTextView.text = value
+            field = value
+        }
     var centerTitle = true
         set(value) {
             if (value) {
@@ -85,13 +90,13 @@ open class BaseAppBar @JvmOverloads constructor(
             centerTitle = getBoolean(R.styleable.BaseAppBar_centerTitle, true)
             showDivider = getBoolean(R.styleable.BaseAppBar_showDivider, true)
             title = getString(R.styleable.BaseAppBar_titleText) ?: ""
-
+            rightText = getString(R.styleable.BaseAppBar_rightText) ?: ""
             recycle()
         }
     }
 
     fun addViewInLeft(view: View, index: Int = -1) {
-        if(view.layoutParams == null) view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, context.appBarHeight)
+        if (view.layoutParams == null) view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, context.appBarHeight)
         if (index > -1) leftContainer.addView(view, index)
         else leftContainer.addView(view)
 
@@ -101,7 +106,7 @@ open class BaseAppBar @JvmOverloads constructor(
     }
 
     fun addViewInRight(view: View, index: Int = -1) {
-        if(view.layoutParams == null) view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, context.appBarHeight)
+        if (view.layoutParams == null) view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, context.appBarHeight)
         if (index > -1) rightContainer.addView(view, index)
         else rightContainer.addView(view)
 
@@ -129,10 +134,13 @@ open class BaseAppBar @JvmOverloads constructor(
     fun removeViewInRight(index: Int) {
         rightContainer.removeViewAt(index)
     }
+    fun setRightButtonClickListener(listener: OnClickListener){
+        rightTextView.setOnClickListener(listener)
+    }
 
     inline fun setOnAppBarButtonClickListener(
-            crossinline onclickViewInLeftContainer : (view: View, index: Int) -> (Unit) = {_, _ ->},
-            crossinline onClickViewInRightContainer : (view: View, index: Int) -> (Unit) = {_, _ ->}
+            crossinline onclickViewInLeftContainer: (view: View, index: Int) -> (Unit) = { _, _ -> },
+            crossinline onClickViewInRightContainer: (view: View, index: Int) -> (Unit) = { _, _ -> }
     ) {
         onAppBarButtonButtonClickListener = object : OnAppBarButtonClickListener {
             override fun onClickViewInLeftContainer(view: View, index: Int) {

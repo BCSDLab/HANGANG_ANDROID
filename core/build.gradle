@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -64,6 +64,9 @@ dependencies {
     api project.androidxNavigationUi
     api project.androidxMaterial
     api project.androidxFragment
+    api project.androidxPagingRuntime
+    api project.androidxPagingCommon
+    api project.androidxPagingRxjava3
     /* Dependency - AndroidX lifecycle */
     api project.androidxLifecycleLivedata
     api project.androidLifecycleViewmodel
@@ -109,4 +112,5 @@ dependencies {
     /* Dependency - Hawk */
     api project.hawk
 
+    api project.prettyLogger
 }
