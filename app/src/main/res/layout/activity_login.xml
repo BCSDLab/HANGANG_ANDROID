@@ -47,8 +47,8 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="@string/koreatech_email"
-            android:textSize="14sp"
             android:singleLine="true"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/underbar_first"
             app:layout_constraintStart_toStartOf="@id/guideline_left" />
 

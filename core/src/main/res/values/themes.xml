@@ -11,6 +11,8 @@
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSurface</item>
+        <item name="android:popupMenuStyle">@style/HangangPopupMenu</item>
+        <item name="popupMenuStyle">@style/HangangPopupMenu</item>
     </style>
 
     <style name="Theme.Hangang" parent="Theme.Hangang.Base">
@@ -38,4 +40,14 @@
         <item name="android:background">@drawable/background_bottom_sheet</item>
     </style>
 
+    <style name="HangangPopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@drawable/background_popup_menu</item>
+        <item name="android:popupElevation">8dp</item>
+    </style>
+
+    <style name="HangangTimetableItem">
+        <item name="android:textColor">?attr/colorSurface</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:padding">4dp</item>
+    </style>
 </resources>

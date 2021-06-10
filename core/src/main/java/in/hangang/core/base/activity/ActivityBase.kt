@@ -4,12 +4,13 @@ import `in`.hangang.core.R
 import `in`.hangang.core.progressdialog.IProgressDialog
 import `in`.hangang.core.progressdialog.ProgressDialog
 import `in`.hangang.core.util.DialogUtil
+import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +18,12 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 
 open class ActivityBase : AppCompatActivity(), IProgressDialog {
-    protected val compositeDisposable = CompositeDisposable()
-    var progressDialog: ProgressDialog? = null
+    private val compositeDisposable = CompositeDisposable()
+    private val progressDialog: ProgressDialog by lazy { ProgressDialog(this, getString(R.string.loading)) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private var writeStorageActivityResultFunc: (() -> Unit)? = null
+    private val writeStoragePermissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if (it) writeStorageActivityResultFunc?.invoke()
     }
 
     fun addDisposable(vararg disposables: Disposable) {
@@ -53,20 +55,23 @@ open class ActivityBase : AppCompatActivity(), IProgressDialog {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        progressDialog.dismiss()
         if (!compositeDisposable.isDisposed)
             compositeDisposable.dispose()
+        super.onDestroy()
     }
 
     override fun showProgressDialog() {
-        progressDialog?.dismiss()
-        progressDialog = ProgressDialog(this, getString(R.string.loading))
-        progressDialog?.show()
+        progressDialog.show()
     }
 
     override fun hideProgressDialog() {
-        progressDialog?.dismiss()
-        progressDialog = null
+        progressDialog.hide()
+    }
+
+    fun requireWriteStorage(result: () -> Unit) {
+        writeStorageActivityResultFunc = result
+        writeStoragePermissionRequest.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 }
 

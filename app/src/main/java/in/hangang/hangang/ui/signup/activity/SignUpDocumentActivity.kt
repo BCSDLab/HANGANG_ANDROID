@@ -24,7 +24,7 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
     }
 
     private fun initCheckBox() {
-        with(binding){
+        with(binding) {
             agreeAllCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
                     binding.nextButton.isEnabled = isCheckBoxChecked()
@@ -48,7 +48,8 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
             }
         }
     }
-    private fun initEvent(){
+
+    private fun initEvent() {
         binding.nextButton.setOnClickListener {
             if (binding.nextButton.isEnabled) {
                 var intent = Intent(this, SignUpEmailActivity::class.java)

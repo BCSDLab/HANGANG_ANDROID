@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -16,18 +15,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <in.hangang.core.view.appbar.ProgressAppBar
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:progress="50" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
             android:orientation="vertical"
             tools:context=".ui.signup.activity.SignUpActivity">
-
 
 
             <TextView
@@ -45,8 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:focusableInTouchMode="false"
-                android:inputType="textEmailAddress"
-                />
+                android:inputType="textEmailAddress" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,6 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -151,16 +151,15 @@
                     android:id="@+id/sign_up_next_button"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginBottom="32dp"
                     android:backgroundTint="@color/color_state_button_blue"
                     android:enabled="false"
                     android:gravity="center"
-                    android:layout_marginBottom="32dp"
                     android:text="@string/next_step"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
-
 
 
     </LinearLayout>

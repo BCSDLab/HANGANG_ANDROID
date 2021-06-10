@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 
 
 open class ViewModelBase : ViewModel() {
-    protected val compositeDisposable = CompositeDisposable()
+    val compositeDisposable = CompositeDisposable()
     val isLoading = MutableLiveData<Boolean>()
 
     fun addDisposable(vararg disposables: Disposable) {

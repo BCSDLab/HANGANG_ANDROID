@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="lecture"
+            type="in.hangang.hangang.data.entity.LectureTimeTable" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_view_timetable_lecture_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="8dp"
+                android:text="@{lecture.name}"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="사랑의 역사" />
+
+            <ImageButton
+                android:id="@+id/image_button_goto_review"
+                android:layout_width="24dp"
+                android:layout_height="56dp"
+                android:background="@null"
+                android:src="@drawable/ic_chevron_right"
+                android:tint="?attr/colorPrimary"
+                app:layout_constraintStart_toEndOf="@id/text_view_timetable_lecture_detail_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/image_button_remove_lecture"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@null"
+                android:src="@drawable/ic_trash"
+                android:tint="?android:attr/textColorSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_timetable_lecture_detail_professor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="4dp"
+                android:text="@{lecture.professor}"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_timetable_lecture_detail_name"
+                tools:text="김사랑" />
+
+
+            <TextView
+                android:id="@+id/text_view_timetable_lecture_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="8dp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="11sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/text_view_timetable_lecture_detail_professor"
+                app:layout_constraintStart_toEndOf="@id/text_view_timetable_lecture_detail_professor"
+                tools:text="월 1A~3B" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#000"
+                android:backgroundTint="?android:attr/textColorTertiary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_timetable_lecture_detail_professor" />
+
+            <EditText
+                android:id="@+id/edit_text_memo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@null"
+                android:gravity="start|top"
+                android:hint="@string/timetable_lecture_detail_memo_hint"
+                android:padding="16dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/button_timetable_lecture_detail_save_memo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+            <in.hangang.core.view.button.RoundedCornerButton
+                android:id="@+id/button_timetable_lecture_detail_save_memo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="?android:attr/textColorSecondary"
+                android:paddingStart="14dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="4dp"
+                android:text="@string/save"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="12sp"
+                app:buttonAppearence="outlined"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_timetable_lecture_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+
+</layout>

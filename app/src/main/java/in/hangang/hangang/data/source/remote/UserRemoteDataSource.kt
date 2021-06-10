@@ -5,27 +5,26 @@ import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
-import `in`.hangang.hangang.data.source.UserDataSource
+import `in`.hangang.hangang.data.source.source.UserDataSource
 import `in`.hangang.hangang.data.user.User
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserRemoteDataSource(
-    private val noAuthApi: NoAuthApi,
-    private val authApi: AuthApi,
-    private val refreshApi: AuthApi
+        private val noAuthApi: NoAuthApi,
+        private val authApi: AuthApi,
+        private val refreshApi: AuthApi
 ) :
     UserDataSource {
     override fun signUp(
-        major: Array<String>,
-        nickName: String,
-        password: String,
-        portalAccount: String
+            major: Array<String>,
+            nickName: String,
+            password: String,
+            portalAccount: String
     ): Single<CommonResponse> {
         return noAuthApi.signUp(SignUpRequest(major, nickName, password, portalAccount))
     }
 
-    override fun checkAccessTokenValid(): Single<CommonResponse>{
+    override fun checkAccessTokenValid(): Single<CommonResponse> {
         return authApi.authCheck()
     }
 
@@ -49,11 +48,11 @@ class UserRemoteDataSource(
         return noAuthApi.configEmail(EmailConfigRequest(0, portalAccount, secret))
     }
 
-    override fun checkNickname(nickName: String): Single<CommonResponse>{
+    override fun checkNickname(nickName: String): Single<CommonResponse> {
         return noAuthApi.checkNickName(NickNameCheckRequest(nickName))
     }
 
-    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse>{
+    override fun emailPasswordCheck(portalAccount: String): Single<CommonResponse> {
         return noAuthApi.sendPasswordFindEmail(EmailRequest(1, portalAccount))
     }
 

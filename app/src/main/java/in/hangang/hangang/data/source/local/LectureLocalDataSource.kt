@@ -1,19 +1,75 @@
 package `in`.hangang.hangang.data.source.local
 
+import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.source.LectureDataSource
+import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.source.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
 class LectureLocalDataSource : LectureDataSource {
-    override fun getLectureRankingByTotalRating(major: String): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return Single.never()
     }
 
-    override fun getLectureRankingByReviewCount(major: String): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByReviewCount(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return Single.never()
     }
 
-    override fun getLectureRankingByLatestReview(major: String): Single<ArrayList<RankingLectureItem>> {
+    override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
+        return Single.never()
+    }
+
+    override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
+        return Single.never()
+    }
+
+    override fun getFilteredLectureList(
+        majors: ArrayList<String>,
+        page: Int,
+        filterType: ArrayList<String>?,
+        filterHashTag: ArrayList<Int>?,
+        sort: String,
+        keyword: String?
+    ): Single<RankingLectureResult> {
+        return Single.never()
+    }
+
+    override fun getEvaluationRating(id: Int): Single<ArrayList<Int>> {
+        return Single.never()
+    }
+
+    override fun getClassLecture(id: Int): Single<ArrayList<ClassLecture>> {
+        return Single.never()
+    }
+
+    override fun getEvaluationTotal(id: Int): Single<Evaluation> {
+        return Single.never()
+    }
+
+    override fun getRecommentedDocs(keyword: String): Single<LectureDocResult> {
+        return Single.never()
+    }
+
+    override fun getLectureReview(
+        id: Int,
+        page: Int,
+        keyword: String?,
+        sort: String
+    ): Single<LectureReviewResult> {
+        return Single.never()
+    }
+
+    override fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun getLectureReviewItem(id: Int): Single<LectureReview> {
+        return Single.never()
+    }
+
+    override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
         return Single.never()
     }
 }

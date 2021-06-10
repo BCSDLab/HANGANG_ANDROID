@@ -1,38 +1,46 @@
 package `in`.hangang.core.view
-
-import android.app.Activity
+import android.app.ProgressDialog.show
+import android.graphics.Rect
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.annotation.MenuRes
-import org.koin.core.qualifier._q
-import java.lang.IllegalStateException
-
-fun TextView.setMultiEllipsizeText(
-    ellipsizedTexts: Array<CharSequence>,
-    ellipsizedTextWeights : Array<Double>
-) {
-    if(ellipsizedTexts.size != ellipsizedTextWeights.size) throw IllegalStateException("ellipsizedTexts and ellipsizedTextWeights size must be same.")
-
-    val textPair = ellipsizedTexts.mapIndexed { index, charSequence ->
-        charSequence to ellipsizedTextWeights[index]
-    }
-
-    val ellipsizedTextsWidth = measuredWidth - textPair.filter { it.second < 0 }.sumByDouble { paint.measureText(it.first.toString()).toDouble() }
-
-    val texts = mutableListOf<String>()
-    val weightSum = ellipsizedTextWeights.filter { it >= 0 }.sum()
-    textPair.forEach {
-        if(it.second < 0) texts.add(it.first.toString())
-        else {
-
-        }
-    }
-}
+import kotlin.math.roundToInt
 
 fun View.showPopupMenu(@MenuRes menuId: Int) : PopupMenu {
     return PopupMenu(context, this).apply {
         inflate(menuId)
-        show()
+    }.also { it.show() }
+}
+
+fun View.dp2Px(dp: Float) = (dp * resources.displayMetrics.density).roundToInt()
+
+fun View.sp2Px(sp: Float): Int {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.displayMetrics).roundToInt()
+}
+
+fun View.setVisibility(visible: Boolean) {
+    visibility =
+            if (visible) View.VISIBLE
+            else View.GONE
+}
+
+fun calculateRectOnScreen(view: View): Rect {
+    val location = IntArray(2)
+    view.getLocationOnScreen(location)
+    return Rect(
+            location[0],
+            location[1],
+            location[0] + view.measuredWidth,
+            location[1] + view.measuredHeight
+    )
+}
+
+fun ViewGroup.childViews(): List<View> {
+    val list = mutableListOf<View>()
+    for (i in 0 until childCount) {
+        list.add(getChildAt(i))
     }
+    return list
 }

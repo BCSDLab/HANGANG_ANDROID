@@ -9,7 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
-class RecentLecturesRecyclerViewAdapter : OnItemClickRecyclerViewAdapter<RecentLecturesRecyclerViewAdapter.ViewHolder>() {
+class RecentLecturesRecyclerViewAdapter :
+        OnItemClickRecyclerViewAdapter<RecentLecturesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

@@ -19,13 +19,13 @@ class EmailAuthenticationFragmentViewModel(private val userRepository: UserRepos
     private val _finishEmailAuthResponse = MutableLiveData<CommonResponse>()
     private val _throwable = MutableLiveData<Throwable>()
 
-    val portalAccount : LiveData<String> get() = _portalAccount
+    val portalAccount: LiveData<String> get() = _portalAccount
     val sentEmailAuth: LiveData<Boolean> get() = _sentEmailAuth
-    val throwable : LiveData<Throwable> get() = _throwable
+    val throwable: LiveData<Throwable> get() = _throwable
 
-    val sendAuthNumberResponse : LiveData<CommonResponse> get() = _sendAuthNumberResponse
-    val resendAuthNumberResponse : LiveData<CommonResponse> get() = _resendAuthNumberResponse
-    val finishEmailAuthResponse : LiveData<CommonResponse> get() = _finishEmailAuthResponse
+    val sendAuthNumberResponse: LiveData<CommonResponse> get() = _sendAuthNumberResponse
+    val resendAuthNumberResponse: LiveData<CommonResponse> get() = _resendAuthNumberResponse
+    val finishEmailAuthResponse: LiveData<CommonResponse> get() = _finishEmailAuthResponse
 
     fun sendAuthNumber(portalAccount: String) {
         if (sentEmailAuth.value == true) {
