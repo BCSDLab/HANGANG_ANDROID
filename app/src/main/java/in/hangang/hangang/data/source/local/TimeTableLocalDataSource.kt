@@ -7,7 +7,7 @@ import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.source.TimeTableDataSource
+import `in`.hangang.hangang.data.source.TimeTableDataSource
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Single
 

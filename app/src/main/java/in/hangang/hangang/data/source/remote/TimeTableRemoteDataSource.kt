@@ -12,7 +12,7 @@ import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.source.TimeTableDataSource
+import `in`.hangang.hangang.data.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRemoteDataSource(

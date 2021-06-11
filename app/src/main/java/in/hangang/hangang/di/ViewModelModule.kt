@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.di
 
-import `in`.hangang.hangang.data.source.LectureRepository
-import `in`.hangang.hangang.data.source.TimeTableRepository
+import `in`.hangang.hangang.data.source.repository.LectureRepository
+import `in`.hangang.hangang.data.source.repository.TimeTableRepository
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
@@ -13,7 +13,6 @@ import `in`.hangang.hangang.ui.home.recentlectures.viewmodel.RecentLecturesFragm
 import `in`.hangang.hangang.ui.home.recommendedlectures.viewmodel.RecommendedLecturesFragmentViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureEvaluationViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
-import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel

@@ -1,11 +1,12 @@
 package `in`.hangang.hangang.data.source.local
 
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.source.LectureDataSource
+import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
 class LectureLocalDataSource : LectureDataSource {
@@ -21,7 +22,7 @@ class LectureLocalDataSource : LectureDataSource {
         return Single.never()
     }
 
-    override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
+    override fun getScrapedLecture(): Single<List<Lecture>> {
         return Single.never()
     }
 

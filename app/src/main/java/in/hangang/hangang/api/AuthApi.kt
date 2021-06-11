@@ -3,16 +3,13 @@ package `in`.hangang.hangang.api
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.entity.*
 import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimetableMemo
-import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
-import `in`.hangang.hangang.data.request.TimeTableRequest
-import `in`.hangang.hangang.data.request.TimetableMemoRequest
-import `in`.hangang.hangang.data.request.UserTimeTableRequest
+import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
@@ -116,9 +113,6 @@ interface AuthApi {
     fun unscrapLecture(
             @Body timeTableRequest: TimeTableRequest
     ): Single<CommonResponse>
-
-    @GET(LECTURE_SCRAPED)
-    fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>>
 
     @GET(EVALUATION_RATING)
     fun getEvaluationRating(@Path("id")id: Int): Single<ArrayList<Int>>
