@@ -1,12 +1,16 @@
 package `in`.hangang.hangang.data.source.source
 
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
+import androidx.paging.PagingData
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
+import retrofit2.http.Query
 
 interface LectureDataSource {
     fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<RankingLectureResult>
@@ -22,4 +26,11 @@ interface LectureDataSource {
     fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse>
     fun getLectureReviewItem(id: Int): Single<LectureReview>
     fun getLectureSemester(id: Int): Single<ArrayList<String>>
+    fun getLectureList(
+        classification: String? = null,
+        department: String? = null,
+        hashTag: Int? = null,
+        keyword: String? = null,
+        sort: String? = null
+    ): Flowable<PagingData<Lecture>>
 }

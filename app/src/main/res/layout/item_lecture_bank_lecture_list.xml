@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="lecture"
+            type="in.hangang.hangang.data.entity.Lecture"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_view_lecture_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{lecture.name}"
+            tools:text="강의제목"
+            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_view_lecture_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{lecture.code}"
+            tools:text="ABC1234"
+            android:paddingTop="16dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="16dp"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_title"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_title"/>
+
+        <TextView
+            android:id="@+id/text_view_lecture_professor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{lecture.professor}"
+            tools:text="교수명"
+            android:paddingTop="2dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="12sp"
+            android:paddingBottom="16dp"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_title"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_select_lecture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
+            android:text="@string/lecture_bank_lecture_list_select"
+            android:paddingTop="6dp"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp"
+            android:paddingBottom="6dp"
+            android:backgroundTint="@color/color_state_button_blue_gray"
+            android:textColor="@color/color_state_button_text_dark"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="?android:attr/textColorTertiary" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

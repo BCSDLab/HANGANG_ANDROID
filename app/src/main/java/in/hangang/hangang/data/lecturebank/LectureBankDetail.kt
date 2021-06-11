@@ -1,7 +1,8 @@
 package `in`.hangang.hangang.data.lecturebank
 
-import `in`.hangang.hangang.data.user.User
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.uploadfile.UploadFile
+import `in`.hangang.hangang.data.user.User
 import com.google.gson.annotations.SerializedName
 
 data class LectureBankDetail(

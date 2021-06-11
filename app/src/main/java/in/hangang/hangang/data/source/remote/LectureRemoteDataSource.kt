@@ -5,12 +5,21 @@ import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.constant.SORT_BY_LATEST_REVIEW
 import `in`.hangang.hangang.constant.SORT_BY_REVIEW_COUNT
 import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.source.paging.BaseRxPagingSource
+import `in`.hangang.hangang.data.source.paging.LectureBankPagingSource
+import `in`.hangang.hangang.data.source.paging.LectureListPagingSource
 import `in`.hangang.hangang.data.source.source.LectureDataSource
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.rxjava3.flowable
+import io.reactivex.rxjava3.core.Flowable
 
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
@@ -108,5 +117,17 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
 
     override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
         return authApi.getLectureSemester(id)
+    }
+
+    override fun getLectureList(
+        classification: String?,
+        department: String?,
+        hashTag: Int?,
+        keyword: String?,
+        sort: String?
+    ): Flowable<PagingData<Lecture>> {
+        return Pager(PagingConfig(pageSize = BaseRxPagingSource.DEFAULT_LIMIT)) {
+            LectureListPagingSource(noAuthApi, classification, department, hashTag, keyword, sort)
+        }.flowable
     }
 }

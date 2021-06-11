@@ -15,6 +15,7 @@ import `in`.hangang.hangang.constant.DEPARTMENT_ENERGY
 import `in`.hangang.hangang.databinding.FragmentLectureBankBinding
 import `in`.hangang.hangang.ui.lecturebank.adapter.LectureBankListAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankDetailActivityContract
+import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorActivityContract
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankFilterActivityContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankViewModel
 import android.os.Bundle
@@ -60,9 +61,11 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
         }
     }
 
-    private val lectureBankDetailActivityContract = registerForActivityResult(LectureBankDetailActivityContract()) {
+    private val lectureBankEditorActivityContract = registerForActivityResult(LectureBankEditorActivityContract()) {
 
     }
+
+    private val lectureBankDetailActivityContract = registerForActivityResult(LectureBankDetailActivityContract()) {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -120,6 +123,10 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
                         }
                     }
             }
+        }
+
+        binding.buttonNewLectureBank.setOnClickListener {
+            lectureBankEditorActivityContract.launch(null)
         }
     }
 }

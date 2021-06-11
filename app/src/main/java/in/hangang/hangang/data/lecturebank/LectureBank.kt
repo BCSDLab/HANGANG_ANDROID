@@ -1,8 +1,12 @@
 package `in`.hangang.hangang.data.lecturebank
 
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.user.User
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class LectureBank(
     val id: Int,
     @SerializedName("user_id") val userId : Int,
@@ -22,4 +26,4 @@ data class LectureBank(
     val thumbnail: String,
     val user : User,
     val lecture: Lecture
-)
+) : Parcelable

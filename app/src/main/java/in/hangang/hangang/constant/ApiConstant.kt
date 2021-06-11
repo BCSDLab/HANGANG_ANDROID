@@ -15,6 +15,7 @@ const val CONFIG_EMAIL = "/user/email/config"
 const val SEND_PASSWORD_FIND_EMAIL = "/user/email"
 const val SEND_PASSWORD_CONFIG_EMAIL = "/user/email/config"
 const val LECTURES_RANKING = "/lectures"
+const val LECTURES = "/lectures"
 const val SORT_BY_TOTAL_RATING = "평점순"
 const val SORT_BY_REVIEW_COUNT = "평가순"
 const val SORT_BY_LATEST_REVIEW = "최신순"
@@ -35,8 +36,6 @@ const val TIMETABLE_MAIN = "/timetable/main/lecture"
 const val TIMETABLE_MEMO = "/memo"
 const val TIMETABLE_SCRAP = "/timetable/scrap"
 
-const val LECTURES = "/lectures"
-
 const val API_ERROR_CODE_TIMETABLE_EXCEED = 24
 
 const val API_TIMETABLE_DEFAULT_LIMIT = 10
@@ -53,6 +52,7 @@ const val LECTURE_BANKS_COMMENT = "/lecture-banks/{id}/comment"
 const val LECTURE_BANKS_COMMENT_WITH_ID = "/lecture-banks/{id}/comment/{commentId}"
 const val LECTURE_BANKS_REPORT_COMMENT = "/lecture-banks/report/comment"
 const val LECTURE_BANKS_FILE = "/lecture-banks/file/download/{id}"
+const val LECTURE_BANKS_FILES = "/lecture-banks/files"
 const val LECTURE_BANKS_CATEGORY_PREVIOUS = "기출자료"
 const val LECTURE_BANKS_CATEGORY_WRITING = "필기자료"
 const val LECTURE_BANKS_CATEGORY_ASSIGNMENT = "과제자료"

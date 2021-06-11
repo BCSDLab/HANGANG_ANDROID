@@ -4,7 +4,6 @@ import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
-import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimeTable
@@ -22,6 +21,8 @@ import `in`.hangang.hangang.data.response.LectureBankCommentResponse
 import `in`.hangang.hangang.data.response.LectureBankResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
+import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface AuthApi {
@@ -214,6 +215,10 @@ interface AuthApi {
 
     @DELETE(LECTURE_BANKS_COMMENT_WITH_ID)
     fun deleteLectureBankComment(@Path("id") lectureBankId: Int, @Path("commentId") commentId: Int) : Single<CommonResponse>
+
+    @Multipart
+    @POST(LECTURE_BANKS_FILES)
+    fun uploadFile(@Part file : MultipartBody.Part) : Call<List<String>>
 
     @GET(USER_ME)
     fun getUserInfo() : Single<User>

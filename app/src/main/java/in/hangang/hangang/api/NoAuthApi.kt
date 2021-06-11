@@ -6,6 +6,7 @@ import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.LectureListResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
@@ -74,5 +75,5 @@ interface NoAuthApi {
             @Query("limit") limit: Int = 10,
             @Query("page") page: Int = 1,
             @Query("sort") sort: String? = null
-    ): Single<List<Lecture>>
+    ): Single<LectureListResponse>
 }

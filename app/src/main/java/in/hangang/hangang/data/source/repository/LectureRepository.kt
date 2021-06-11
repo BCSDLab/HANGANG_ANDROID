@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source.repository
 
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
@@ -99,5 +100,15 @@ class LectureRepository(
 
     override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
         return lectureRemoteDataSource.getLectureSemester(id)
+    }
+
+    override fun getLectureList(
+        classification: String?,
+        department: String?,
+        hashTag: Int?,
+        keyword: String?,
+        sort: String?
+    ): Flowable<PagingData<Lecture>> {
+        return lectureRemoteDataSource.getLectureList(classification, department, hashTag, keyword, sort)
     }
 }

@@ -1,11 +1,14 @@
 package `in`.hangang.hangang.data.source.local
 
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.LectureDataSource
+import androidx.paging.PagingData
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 
 class LectureLocalDataSource : LectureDataSource {
@@ -71,5 +74,15 @@ class LectureLocalDataSource : LectureDataSource {
 
     override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
         return Single.never()
+    }
+
+    override fun getLectureList(
+        classification: String?,
+        department: String?,
+        hashTag: Int?,
+        keyword: String?,
+        sort: String?
+    ): Flowable<PagingData<Lecture>> {
+        return Flowable.never()
     }
 }

@@ -1,5 +1,7 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.core.http.request.ProgressFileRequestBody
+import `in`.hangang.core.http.response.ResponseWithProgress
 import `in`.hangang.hangang.constant.LECTURE_BANKS_PURCHASE
 import `in`.hangang.hangang.constant.LECTURE_BANKS_PURCHASE_CHECK
 import `in`.hangang.hangang.data.lecturebank.LectureBank
@@ -8,10 +10,12 @@ import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
 import androidx.paging.PagingData
 import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.io.File
 
 interface LectureBankDataSource {
     fun getLectureBanks(
@@ -54,4 +58,5 @@ interface LectureBankDataSource {
     fun reportLectureBankComment(commentId: Int, reportId: Int) : Single<CommonResponse>
 
     fun downloadSingleFile(uploadFileId: Int) : Single<String>
+    fun uploadSingleFile(file: File, contentType: String) : Observable<ResponseWithProgress<String>>
 }

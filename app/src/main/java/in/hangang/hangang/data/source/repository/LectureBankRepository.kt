@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source.repository
 
+import `in`.hangang.core.http.response.ResponseWithProgress
 import `in`.hangang.hangang.data.lecturebank.LectureBank
 import `in`.hangang.hangang.data.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
@@ -7,7 +8,9 @@ import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureBankDataSource
 import androidx.paging.PagingData
 import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import java.io.File
 
 class LectureBankRepository(
     private val lectureBankLocalDataSource: LectureBankDataSource,
@@ -78,6 +81,10 @@ class LectureBankRepository(
 
     override fun downloadSingleFile(uploadFileId: Int): Single<String> {
         return lectureBankRemoteDataSource.downloadSingleFile(uploadFileId)
+    }
+
+    override fun uploadSingleFile(file: File, contentType: String): Observable<ResponseWithProgress<String>> {
+        return lectureBankRemoteDataSource.uploadSingleFile(file, contentType)
     }
 
 }

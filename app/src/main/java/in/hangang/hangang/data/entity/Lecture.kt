@@ -1,7 +1,10 @@
 package `in`.hangang.hangang.data.entity
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Lecture(
         val id: Int,
         @SerializedName("semester_data")
@@ -16,13 +19,13 @@ data class Lecture(
         @SerializedName("total_rating")
         val totalRating: Double,
         @SerializedName("last_reviewed_at")
-        val lastReviewedAt: String,
+        val lastReviewedAt: String?,
         @SerializedName("review_count")
-        val reviewCount: Int,
+        val reviewCount: Int?,
         @SerializedName("is_deleted")
         val isDeleted: Boolean,
         @SerializedName("created_at")
         val createdAt: String,
         @SerializedName("updated_at")
         val updatedAt: String
-)
+): Parcelable
