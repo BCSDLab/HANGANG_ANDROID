@@ -38,6 +38,8 @@ interface UserDataSource {
 
     fun deleteAccount(): Single<CommonResponse>
 
+    fun logoutAll(): Single<CommonResponse>
+
     fun saveAutoLogin(isAutoLogin: Boolean): Completable
 
     fun getAutoLoginStatus(): Single<Boolean>

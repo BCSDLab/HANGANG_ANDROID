@@ -73,6 +73,10 @@ class UserRemoteDataSource(
         return authApi.deleteAccount()
     }
 
+    override fun logoutAll(): Single<CommonResponse> {
+        return authApi.logoutAll()
+    }
+
     override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
         return Completable.never()
     }

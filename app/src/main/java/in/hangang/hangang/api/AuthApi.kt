@@ -167,4 +167,7 @@ interface AuthApi {
 
     @HTTP(method = "DELETE", path = Delete_Account, hasBody = true)
     fun deleteAccount(): Single<CommonResponse>
+
+    @PUT(Logout_All)
+    fun logoutAll() : Single<CommonResponse>
 }

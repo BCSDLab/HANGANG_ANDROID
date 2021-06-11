@@ -21,6 +21,10 @@ class SettingsActivityViewModel(private val userRepository: UserRepository) : Vi
     val deleteAccountResponse : LiveData<CommonResponse>
     get() = _deleteAccountResponse
 
+    private val _logoutAll = MutableLiveData<CommonResponse>()
+    val logoutAll : LiveData<CommonResponse>
+        get() = _logoutAll
+
     private val _throwable = MutableLiveData<Throwable>()
 
     fun saveAutoLoginStatus(isAutoLoginActive : Boolean){
@@ -39,6 +43,19 @@ class SettingsActivityViewModel(private val userRepository: UserRepository) : Vi
                 _deleteAccountResponse.value = it
             }, {
                 LogUtil.e("Error in delete account : ${it.toCommonResponse().errorMessage}")
+                _throwable.value = it
+            })
+    }
+
+    fun logoutAll(){
+        userRepository.logoutAll()
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _logoutAll.value = it
+            }, {
+                LogUtil.e("Error in logout : ${it.toCommonResponse().errorMessage}")
                 _throwable.value = it
             })
     }

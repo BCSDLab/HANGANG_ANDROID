@@ -38,6 +38,7 @@ const val LECTURES = "/lectures"
 const val MyProfile = "/user/me"
 const val SaveMyProfile = "/user/me"
 const val Delete_Account = "/user/me"
+const val Logout_All = "/user/me"
 
 const val API_ERROR_CODE_TIMETABLE_EXCEED = 24
 

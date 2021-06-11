@@ -78,6 +78,10 @@ class UserLocalDataSource : UserDataSource {
         return Single.never()
     }
 
+    override fun logoutAll(): Single<CommonResponse> {
+        return Single.never()
+    }
+
     override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
         TODO("Not yet implemented")
     }

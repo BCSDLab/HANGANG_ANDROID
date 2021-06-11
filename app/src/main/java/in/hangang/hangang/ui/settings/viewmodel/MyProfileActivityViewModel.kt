@@ -9,32 +9,24 @@ import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
-import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.addTo
 
 class MyProfileActivityViewModel(private val userRepository: UserRepository) : ViewModelBase() {
-    private var _changeNicknameResponse = MutableLiveData<CommonResponse>()
     private val _throwable = MutableLiveData<Throwable>()
-    private val _deleteAccountResponse = MutableLiveData<CommonResponse>()
     private val _myProfile = MutableLiveData<MyProfileResponse>()
     private val _isProfileEdited = MutableLiveData<Boolean>()
-    private val _nickNameEditStatus = MutableLiveData<CommonResponse>()
+    private val _nickNameEditStatus = MutableLiveData<Boolean>()
 
 
-    val changeNicknameResponse: LiveData<CommonResponse>
-        get() = _changeNicknameResponse
     val throwable: LiveData<Throwable>
         get() = _throwable
-    val deleteAccountResponse: MutableLiveData<CommonResponse>
-        get() = _deleteAccountResponse
     val myProfile: LiveData<MyProfileResponse>
         get() = _myProfile
     val appBarRightButton: LiveData<Boolean>
         get() = _isProfileEdited
-
-    val nickNameEditStutus: LiveData<CommonResponse>
+    val nickNameEditStatus: LiveData<Boolean>
         get() = _nickNameEditStatus
 
     fun init() {
@@ -57,21 +49,29 @@ class MyProfileActivityViewModel(private val userRepository: UserRepository) : V
     }
 
 
+    fun applyMyProfile(name: String, nickName: String, major: Array<String>) {
+        userRepository.checkNickname(nickName)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _nickNameEditStatus.value = true
+                userRepository.saveProfile(name, nickName, major)
+                    .handleHttpException()
+                    .handleProgress(this)
+                    .withThread()
+                    .subscribe({
+                        _isProfileEdited.value = true
+                    }, {
+                        _isProfileEdited.value = false
+                        LogUtil.e("Error in editing my profile : ${it.toCommonResponse().errorMessage}")
+                        _throwable.value = it
+                    })
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
 
+            })
 
-        fun applyMyProfile(name: String, nickName: String, major: Array<String>) {
-            userRepository.saveProfile(name, nickName, major)
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({
-                    _isProfileEdited.value = true
-                }, {
-                    _isProfileEdited.value = false
-                    _nickNameEditStatus.value = CommonResponse()
-                    LogUtil.e("Error in editing my profile : ${it.toCommonResponse().errorMessage}")
-                    _throwable.value = it
-                })
-        }
     }
+}
 

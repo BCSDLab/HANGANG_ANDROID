@@ -125,7 +125,21 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@id/underbar_second" />
+            app:layout_constraintTop_toBottomOf="@id/underbar_second"
+            />
+
+        <TextView
+            android:id="@+id/profile_nickname_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_nickname_error"
+            android:textSize="11sp"
+            android:textColor="@color/mango"
+            android:layout_marginTop="38dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/profile_nickname"
+            app:layout_constraintTop_toBottomOf="@id/underbar_second"
+            android:visibility="invisible"/>
 
         <EditText
             android:id="@+id/profile_nickname_edit_text"
@@ -138,6 +152,7 @@
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
             app:layout_constraintTop_toBottomOf="@id/profile_nickname" />
+
 
         <View
             android:id="@+id/underbar_nickname"

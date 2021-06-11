@@ -69,6 +69,10 @@ class UserRepository(
         return userRemoteDataSource.deleteAccount()
     }
 
+    override fun logoutAll(): Single<CommonResponse> {
+        return userRemoteDataSource.logoutAll()
+    }
+
     override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
         return userLocalDataSource.saveAutoLogin(isAutoLogin)
     }

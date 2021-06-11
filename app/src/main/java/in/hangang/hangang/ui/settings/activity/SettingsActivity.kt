@@ -20,6 +20,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
         initView()
         initViewModel()
+        initEvent()
     }
 
     private fun initView() {
@@ -27,9 +28,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
     private fun initEvent() {
         with(binding) {
-            logOutButton.setOnClickListener {
-                showLogoutDialog()
-            }
+
             changeProfileButton.setOnClickListener {
                 myProfileActivityStart()
             }
@@ -40,9 +39,12 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
 
     private fun initViewModel() {
-        with(binding!!.vm) {
+        with(settingsViewModel) {
             deleteAccountResponse.observe(this@SettingsActivity){
                 showDeleteAccountDialog()
+            }
+            logoutAll.observe(this@SettingsActivity){
+                showLogoutDialog()
             }
             autoLoginButtonResponse.observe(this@SettingsActivity){
                 if(it){
@@ -69,6 +71,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
             negativeButtonText = getString(R.string.close),
             positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
+                settingsViewModel.logoutAll()
                 Intent(this, LoginActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(this)
@@ -85,7 +88,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
             negativeButtonText = getString(R.string.close),
             positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
-                binding.vm.deleteAccount()
+                    settingsViewModel.deleteAccount()
                 Intent(this, LoginActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)

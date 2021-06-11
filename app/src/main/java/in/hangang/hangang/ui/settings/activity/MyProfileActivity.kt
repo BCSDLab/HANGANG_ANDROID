@@ -2,11 +2,9 @@ package `in`.hangang.hangang.ui.settings.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.util.DialogUtil
-import `in`.hangang.core.util.LogUtil
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityMyProfileBinding
 import `in`.hangang.hangang.ui.settings.viewmodel.MyProfileActivityViewModel
-import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -21,8 +19,7 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
     var majorClickListener: AdapterView.OnItemClickListener? =
         AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
             var selectedMajor = resources.getTextArray(R.array.major_full).toList()[p2]
-            LogUtil.e(selectedMajor.toString())
-
+            binding.profileMajorSecond.text = selectedMajor
         }
 
 
@@ -42,16 +39,19 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
     private fun initObserver() {
         with(binding) {
             myProfileViewModel.myProfile.observe(this@MyProfileActivity) {
-                nameText.setText(vm.myProfile.value?.name)
-                profileIdText.text = vm.myProfile.value!!.portalAccount
-                profileNickNameEditText.setText(vm.myProfile.value!!.nickname)
-                ProfileMajorTextView.text = vm.myProfile.value!!.major
+                nameText.setText(myProfileViewModel.myProfile.value?.name)
+                profileIdText.text = myProfileViewModel.myProfile.value!!.portalAccount
+                profileNicknameEditText.setText(myProfileViewModel.myProfile.value!!.nickname)
+                profileMajorFirst.text = myProfileViewModel.myProfile.value!!.major
             }
             addMajor.setOnClickListener {
                 DialogUtil.makeListBottomSheet(
                     this@MyProfileActivity,
                     resources.getTextArray(R.array.major_full).toList(), null, majorClickListener
                 ).show()
+
+            }
+            myProfileViewModel.nickNameEditStatus.observe(this@MyProfileActivity){
 
             }
 
@@ -68,13 +68,17 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
             addViewInRight(editButton)
             setOnAppBarButtonClickListener(
                 onClickViewInRightContainer = { view, index ->
-                    with(binding.vm) {
+                    with(myProfileViewModel) {
                         appBarRightButton?.observe(this@MyProfileActivity) {
                             when (it) {
                                 false -> {
                                     editButton.text = getString(R.string.edit_button_confirm)
                                     editButton.isEnabled = true
                                     binding.addMajor.visibility = View.VISIBLE
+                                    binding.underbarName.setBackgroundColor(ContextCompat.getColor(context,R.color.blue_200))
+                                    binding.underbarNickname.setBackgroundColor(ContextCompat.getColor(context,R.color.blue_200))
+                                    binding.underbarMajorFirst.setBackgroundColor(ContextCompat.getColor(context,R.color.blue_200))
+                                    binding.underbarMajorSecond.setBackgroundColor(ContextCompat.getColor(context,R.color.blue_200))
 
 
                                 }
