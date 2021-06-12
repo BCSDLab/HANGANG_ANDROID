@@ -36,7 +36,7 @@ fun BarChart.initScoreChart(context: Context, entries: ArrayList<BarEntry>) {
 
         xAxis.run {
             position = XAxis.XAxisPosition.BOTTOM//X축을 아래에다가 둔다.
-            setDrawAxisLine(true) // 축 그림
+            setDrawAxisLine(false) // 축 그림
             setDrawGridLines(false) // 격자
             textColor = ContextCompat.getColor(context, R.color.gray_500) //라벨 색상
             valueFormatter = object : ValueFormatter() {
@@ -47,7 +47,7 @@ fun BarChart.initScoreChart(context: Context, entries: ArrayList<BarEntry>) {
                     return values.getOrNull(value.toInt() - 1) ?: value.toString()
                 }
             }
-
+            granularity = 1f
             textSize = 10f // 텍스트 크기
         }
 

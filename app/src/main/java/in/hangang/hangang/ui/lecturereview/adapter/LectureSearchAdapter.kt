@@ -24,11 +24,12 @@ class LectureSearchAdapter : ListAdapter<String, LectureSearchAdapter.ViewHolder
         }else{
             LogUtil.e("error")
         }
+        var targetPosition = position
         holder.binding.lecrueSearchDeleteButton.setOnClickListener { v->
-            deleteClickListener.onClick(v, position, query)
+            deleteClickListener.onClick(v, targetPosition, query)
         }
         holder.binding.lectureSearchQuery.setOnClickListener { v->
-            queryClickListener.onClick(v, position, query)
+            queryClickListener.onClick(v, targetPosition, query)
         }
     }
     fun setClickQueryRecyclerViewListener(recyclerViewClickListener: RecyclerViewClickListener){

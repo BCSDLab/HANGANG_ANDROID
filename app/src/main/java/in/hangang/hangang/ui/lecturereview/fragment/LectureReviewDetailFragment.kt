@@ -37,13 +37,14 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     private val lectureClassTimeAdapter = LectureClassTimeAdapter()
     private val recommendedDocsAdapter = RecommendedDocsAdapter()
     private val lectureDetailReviewAdapter = LectureDetailReviewAdapter()
-    private val reportList = arrayOf("욕설/비하", "유출/사칭/저작권 위배", "허위/부적절한 정보", "광고/도배", "음란물")
+    private val reportList: Array<String> by lazy { resources.getStringArray(R.array.report_item) }
     private val navController: NavController by lazy {
         Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
     }
+    /* 신고하기 리스너 */
     private val reportClickListener = object : RecyclerViewClickListener{
         override fun onClick(view: View, position: Int, item: Any) {
-            val reportDialog = AlertDialog.Builder(requireContext(),android.R.style.Theme_DeviceDefault_Light_Dialog_Alert)
+            val reportDialog = AlertDialog.Builder(requireContext(),android.R.style.Theme_Material_Light_Dialog_Alert)
             reportDialog.setItems(reportList, DialogInterface.OnClickListener { dialog, which ->
                 LogUtil.e(which.toString())
                 val reportRequest = LectureReviewReportRequest((item as LectureReview).id, which+1)
@@ -53,6 +54,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                 .show()
         }
     }
+    /* 업지버튼 리스너 */
     private val recyclerViewClickListener = object : RecyclerViewClickListener {
         override fun onClick(view: View, position: Int, item: Any) {
             lectureReviewDetailViewModel.postReviewRecommend((item as LectureReview).id)
@@ -63,7 +65,6 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                 item.isLiked = true
                 item.likes += 1
             }
-            //item.isLiked = !(item as LectureReview).isLiked
 
             lectureReviewDetailViewModel.commonResponse.observe(viewLifecycleOwner, {
                 it?.let {
@@ -133,6 +134,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
 
         }
     }
+    /* 신고 완료 다이얼로그 생성 */
     fun makeReportResultDialog(title: String, message: String){
         DialogUtil.makeSimpleDialog(requireContext(),title,message,requireContext().getString(R.string.ok),
             null, object : DialogInterface.OnClickListener{
@@ -187,30 +189,10 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             lectureReviewDetailViewModel.getClassLectureList(it)
             lectureReviewDetailViewModel.getEvaluationRating(it)
             lectureReviewDetailViewModel.getEvaluationTotal(it)
-            lectureReviewDetailViewModel.getReviewList(
-                it,
-                lectureReviewDetailViewModel.keyword,
-                lectureReviewDetailViewModel.sort
-            )
+            lectureReviewDetailViewModel.getReviewList(it, lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
         }
         lecture.name.let {
             lectureReviewDetailViewModel.getRecommentedDocs(it)
         }
-        /*
-        var list: ArrayList<BarEntry> = ArrayList()
-        list.add(BarEntry(1f, 30f))
-        list.add(BarEntry(2f, 10f))
-        list.add(BarEntry(3f, 20f))
-        list.add(BarEntry(4f, 30f))
-        list.add(BarEntry(5f, 40f))
-        list.add(BarEntry(6f, 50f))
-        list.add(BarEntry(7f, 60f))
-        list.add(BarEntry(8f, 70f))
-        list.add(BarEntry(9f, 80f))
-        list.add(BarEntry(10f, 90f))
-        binding.lectureDetailBarchart.initScoreChart(requireContext(), list)
-
-         */
-
     }
 }

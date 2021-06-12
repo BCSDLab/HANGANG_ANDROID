@@ -23,7 +23,6 @@ import io.reactivex.rxjava3.kotlin.addTo
 
 class LectureReviewDetailViewModel (private val lectureRepository: LectureRepository, private val timeTableRepository: TimeTableRepository) :
     ViewModelBase() {
-    val REVIEW_RECOMMEND_KEY = "id"
     private val _classLectureList = MutableLiveData<ArrayList<ClassLecture>>()
     val classLectureList: LiveData<ArrayList<ClassLecture>> get() = _classLectureList
 

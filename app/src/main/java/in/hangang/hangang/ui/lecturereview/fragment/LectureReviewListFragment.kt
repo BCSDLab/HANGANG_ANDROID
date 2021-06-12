@@ -3,6 +3,7 @@ package `in`.hangang.hangang.ui.lecturereview.fragment
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.sharedpreference.LectureSearchSharedPreference
 import `in`.hangang.core.toast.shortToast
+import `in`.hangang.core.util.toEditable
 import `in`.hangang.core.view.appbar.SearchAppBar
 import `in`.hangang.core.view.button.checkbox.FilledCheckBox
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
@@ -39,23 +40,24 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
     private var lectureSearchAdapter = LectureSearchAdapter()
     private val fullMajors: Array<String> by lazy { resources.getStringArray(R.array.major_full) }
     private var majorIdx = 0
-    private var isComplete = false
+    private var isComplete = false      //viewModel이 가지고 있는 필터값을 초기화할지 여부를 판단하는 변수
     private lateinit var inputMethodManager: InputMethodManager
-    private val queryClickListener: RecyclerViewClickListener = object : RecyclerViewClickListener{
+    private val queryClickListener: RecyclerViewClickListener = object : RecyclerViewClickListener{     //검색창 검색 리스너
         override fun onClick(view: View, position: Int, item: Any) {
-            lectureReviewListViewModel.keyword = item as String
-            getLectureReviewList()
-            binding.lectureReviewRecyclerview.requestFocus()
+            lectureReviewListViewModel.keyword = item as String //검색 쿼리를 viewModel에 저장
+            getLectureReviewList()                              //강의 검색
+            binding.lectureReviewRecyclerview.requestFocus()    //포커스를 다른곳에 할당
+            binding.lectureReviewSearchbar.searchField.text = lectureReviewListViewModel.keyword!!.toEditable() //검색창에 쿼리를 표현
         }
     }
-    private val deleteQueryClickListener: RecyclerViewClickListener = object : RecyclerViewClickListener{
+
+    private val deleteQueryClickListener: RecyclerViewClickListener = object : RecyclerViewClickListener{       //최근검색어 삭제 리스너
         override fun onClick(view: View, position: Int, item: Any) {
-            LogUtil.e("click3")
-            lectureReviewListViewModel.searchList = LectureSearchSharedPreference.querys
-            lectureReviewListViewModel.searchList.removeAt(position)
-            LectureSearchSharedPreference.querys = lectureReviewListViewModel.searchList
-            lectureSearchAdapter.submitList(LectureSearchSharedPreference.querys)
-        }
+            lectureReviewListViewModel.searchList = LinkedList(LectureSearchSharedPreference.querys) //sharedPreference로부터 최근 검색어리스트를 가져와 ViewModel에 할당
+            lectureReviewListViewModel.searchList.removeAt(position)                                 //선택한 검색어 삭제
+            LectureSearchSharedPreference.querys = ArrayList(lectureReviewListViewModel.searchList)  //sharePreference에 변경된 최근 검색어 리스트를 저장
+            lectureSearchAdapter.submitList(LectureSearchSharedPreference.querys)                    //recyclerview adapter에 최근 검색어 리스트 적용
+       }
     }
     private val navController: NavController by lazy {
         Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
@@ -83,24 +85,6 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        LogUtil.e("onstart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        LogUtil.e("onresume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        LogUtil.e("onpause")
-    }
-
-
-
-
     private fun init() {
         inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         lectureReviewAdapter = LectureReviewAdapter(requireActivity())
@@ -112,30 +96,33 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
             reviewcheckboxButtons[id] = binding.root.findViewById(checkboxButtonId[id])
         }
 
-        initSelecteMajor()
-        //lectureReviewListViewModel.getScrapList()
-
+        initSelecteMajor()  // [메인화면-학부별 탐색]으로 들어올 경우와 [필터화면을 갔다온 경우], [바텀네비게이션-강의평]으로 들어올 경우 분기처리
     }
+
+    /**
+     * 선택한 학부 버튼을 체크상태로 변경하는 함
+     */
     private fun setMajorButton(){
         for(i in 0..9){
             reviewcheckboxButtons[i]?.isChecked = lectureReviewListViewModel.selectedMajorList.contains(fullMajors[i])
         }
     }
     private fun initSelecteMajor(){
+        /* [바텀네비게이션-강의평]으로 들어온 경우 */
         if (arguments == null && lectureReviewListViewModel.selectedMajorList.size == 0) {
             lectureReviewListViewModel.selectedMajorList.clear()
             getLectureReviewList()
-        } else if(arguments == null && lectureReviewListViewModel.selectedMajorList.size >= 0){
-            setMajorButton()
+        } else if (arguments == null && lectureReviewListViewModel.selectedMajorList.size >= 0){ // [필터 화면을 갔다가 돌아온 경우]
+            setMajorButton()        //선택된 학부버튼 파란색으로 변경
             getLectureReviewList()
-        }
-        else {
+        } else {                                                                                    //[바텀네비게이션-강의평]으로 들어온 경우
             majorIdx = arguments?.getInt("major")!!
             if(!reviewcheckboxButtons[majorIdx]?.isChecked!!) {
                 lectureReviewListViewModel.selectedMajorList.add(fullMajors[majorIdx])
             }
-            setMajorButton()
+            setMajorButton()        //선택된 학부버튼 파란색으로 변경
             getLectureReviewList()
+            /*선택된 학부 버튼으로 스크*/
             reviewcheckboxButtons[majorIdx]?.let {
                 lifecycleScope.launch {
                     focusOnViewAsync(binding.lectureReviewHorizontalScrollview, it)
@@ -147,6 +134,7 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
 
 
     private fun initEvent() {
+        /* 학부버튼 리스너 */
         for (id in 0..9) {
             reviewcheckboxButtons[id]?.setOnClickListener {
                 if ((it as FilledCheckBox).isChecked) {
@@ -163,10 +151,12 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
                 }
             }
         }
+        /* 필터버튼 리스너 */
         binding.buttonReviewLectureFilter.setOnClickListener {
                 navController.navigate(R.id.action_navigation_evaluation_to_lecture_review_filter)
             isComplete = true
         }
+        /* searchbar 백버튼 리스너 */
         binding.lectureReviewSearchbar.onBackButtonClickListener = object : View.OnClickListener{
             override fun onClick(v: View?) {
                 binding.lectureReviewSearchbar.showBackButton = false
@@ -175,61 +165,58 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
 
             }
         }
+        /* searchbar editText 리스너 */
         binding.lectureReviewSearchbar.searchField.setOnClickListener {
-            LogUtil.e("focus")
             binding.lectureReviewRecyclerview.requestFocus()
             binding.lectureReviewSearchbar.searchField.requestFocus()
         }
+        /* searchbar 포커스변경 리스너 */
         binding.lectureReviewSearchbar.searchField.onFocusChangeListener = object : View.OnFocusChangeListener{
             override fun onFocusChange(v: View?, hasFocus: Boolean) {
                 binding.lectureReviewSearchbar.showBackButton = hasFocus
-
                 if(hasFocus) {
-                    LogUtil.e(hasFocus.toString())
-                    binding.recentlySearchlistConstraintLayout.visibility = View.VISIBLE
-                    binding.lectureReviewTopConstraintlayout.visibility = View.INVISIBLE
-                    //lectureSearchAdapter.currentList.clear()
-                    var a = LectureSearchSharedPreference.querys
-                    LogUtil.e(a.size.toString())
-                    lectureSearchAdapter.submitList(a)
+                    changeSearchbarFocusUi(true)
+                    var querys = LectureSearchSharedPreference.querys
+                    lectureSearchAdapter.submitList(querys)
 
-                }
-                else {
-                    LogUtil.e(hasFocus.toString())
-                    binding.recentlySearchlistConstraintLayout.visibility = View.GONE
-                    binding.lectureReviewTopConstraintlayout.visibility = View.VISIBLE
+                } else {
+                    changeSearchbarFocusUi(false)
                 }
             }
         }
+        /* searchbar 서치 리스너 */
         binding.lectureReviewSearchbar.searchListener = object : SearchAppBar.SearchListener {
             override fun onSearch(keyword: String) {
-                LogUtil.e("click2")
-                lectureReviewListViewModel.searchList = LectureSearchSharedPreference.querys
-                if(!keyword.equals("")) {
-                    for(i in 0 until lectureReviewListViewModel.searchList.size){
+                lectureReviewListViewModel.searchList = LinkedList(LectureSearchSharedPreference.querys)
+                if(!keyword.equals("")) {       //검색어를 입력해야만 검색 가능
+                    for(i in 0 until lectureReviewListViewModel.searchList.size){   //최근검색어 리스트에 검색어가 있는경우 최근검색어 리스트에서 삭제
                         if(lectureReviewListViewModel.searchList[i].equals(keyword)){
                             lectureReviewListViewModel.searchList.removeAt(i)
+                            break
                         }
                     }
-                    lectureReviewListViewModel.searchList.add(keyword)
+                    lectureReviewListViewModel.searchList.addFirst(keyword)     //최근 검색한 keyword를 검색어리스트의 가장 앞에 배치
 
-                    Collections.reverse(lectureReviewListViewModel.searchList)
-
-                    LectureSearchSharedPreference.querys = lectureReviewListViewModel.searchList
-                    //lectureSearchAdapter.currentList.clear()
+                    LectureSearchSharedPreference.querys = ArrayList(lectureReviewListViewModel.searchList)//sharedpreference에 최근검색어 리스트 저장
                     lectureReviewListViewModel.keyword = keyword
                     getLectureReviewList()
-                    binding.recentlySearchlistConstraintLayout.visibility = View.GONE
-                    binding.lectureReviewTopConstraintlayout.visibility = View.VISIBLE
+                    changeSearchbarFocusUi(false)
                     hideKeyboard()
                 }
-
-
-
-
             }
         }
 
+
+    }
+    /* 최근검색어 layout을 노출여부를 설 */
+    private fun changeSearchbarFocusUi(isVisible: Boolean){
+        if(isVisible) {
+            binding.recentlySearchlistConstraintLayout.visibility = View.VISIBLE
+            binding.lectureReviewTopConstraintlayout.visibility = View.INVISIBLE
+        } else {
+            binding.recentlySearchlistConstraintLayout.visibility = View.GONE
+            binding.lectureReviewTopConstraintlayout.visibility = View.VISIBLE
+        }
 
     }
     private fun hideKeyboard(){
@@ -238,7 +225,7 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
             0
         )
     }
-
+    /* 스크롤 함수 */
     private fun CoroutineScope.focusOnViewAsync(
         scroll: HorizontalScrollView,
         view: FilledCheckBox
@@ -271,30 +258,12 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
         LogUtil.e("onstop")
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        LogUtil.e("ondestroyview")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        LogUtil.e("onDestroy")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        LogUtil.e("onDetach()")
-    }
-
 
     private fun getLectureReviewList() {
-        for (i in lectureReviewListViewModel.selectedMajorList) {
-            LogUtil.e(i)
-        }
-        if (lectureReviewListViewModel.selectedMajorList.size == 0) {
+        if (lectureReviewListViewModel.selectedMajorList.size == 0) {       //선택한 학부가 없는 경우
             lectureReviewListViewModel.getLectureReviewList(lectureReviewListViewModel.selectedMajorListDefault)
             lectureReviewListViewModel.getLectureReviewCount(lectureReviewListViewModel.selectedMajorListDefault)
-        } else {
+        } else {                                                            //선택한 학부가 있는 경우
             lectureReviewListViewModel.getLectureReviewList(lectureReviewListViewModel.selectedMajorList)
             lectureReviewListViewModel.getLectureReviewCount(lectureReviewListViewModel.selectedMajorListDefault)
         }
