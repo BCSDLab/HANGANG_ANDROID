@@ -1,18 +1,18 @@
 package `in`.hangang.hangang
 
 import `in`.hangang.core.sharedpreference.LectureSearchSharedPreference
-import `in`.hangang.hangang.di.dataSourceModule
-import `in`.hangang.hangang.di.netWorkModule
-import `in`.hangang.hangang.di.repositoryModule
-import `in`.hangang.hangang.di.viewModelModule
+import `in`.hangang.hangang.di.*
 import `in`.hangang.hangang.util.LogUtil
 import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import com.orhanobut.hawk.Hawk
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+
 
 class HangangApplication : Application() {
     private val hangangApplicationContext: Context = this
@@ -24,12 +24,18 @@ class HangangApplication : Application() {
         instance = this
         Hawk.init(hangangApplicationContext).build()
         LogUtil.isLoggable = isApplicationDebug
+        Logger.addLogAdapter(object : AndroidLogAdapter() {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                return BuildConfig.DEBUG
+            }
+        })
         startKoin {
             androidContext(this@HangangApplication)
             modules(netWorkModule)
             modules(dataSourceModule)
             modules(repositoryModule)
             modules(viewModelModule)
+            modules(fileModule)
         }
         LectureSearchSharedPreference.init(this)
     }
@@ -39,9 +45,9 @@ class HangangApplication : Application() {
      */
     private fun isApplicationDebug(context: Context): Boolean {
         var debuggable = false
-        val pm: PackageManager = context.getPackageManager()
+        val pm: PackageManager = context.packageManager
         try {
-            val appinfo = pm.getApplicationInfo(context.getPackageName(), 0)
+            val appinfo = pm.getApplicationInfo(context.packageName, 0)
             debuggable = 0 != appinfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
         } catch (e: PackageManager.NameNotFoundException) {
         }

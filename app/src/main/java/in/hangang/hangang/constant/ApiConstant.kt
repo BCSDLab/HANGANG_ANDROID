@@ -30,3 +30,15 @@ const val TIMETABLE_LECTURE = "/timetable/lecture"
 const val REVIEW_RECOMMEND = "/review/recommend"
 const val REVIEW_REPORT = "/review/report"
 const val EVALUATIONS = "/reviews"
+const val TIMETABLE_CUSTOM_LECTURE = "/timetable/custom/lecture"
+const val TIMETABLE_LECTURE_LIST = "/timetable/lecture/list"
+const val TIMETABLE_MAIN = "/timetable/main/lecture"
+const val TIMETABLE_MEMO = "/memo"
+const val TIMETABLE_SCRAP = "/timetable/scrap"
+
+const val LECTURES = "/lectures"
+
+const val API_ERROR_CODE_TIMETABLE_EXCEED = 24
+
+const val API_TIMETABLE_DEFAULT_LIMIT = 10
+const val API_TIMETABLE_DEFAULT_PAGE = 1

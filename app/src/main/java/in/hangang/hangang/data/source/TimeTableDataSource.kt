@@ -1,9 +1,7 @@
 package `in`.hangang.hangang.data.source
 
-import `in`.hangang.hangang.data.evaluation.LectureTimeTable
-import `in`.hangang.hangang.data.evaluation.TimeTable
-import `in`.hangang.hangang.data.evaluation.TimeTableWithLecture
-import `in`.hangang.hangang.data.evaluation.TimetableMemo
+import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single

@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.evaluation
+package `in`.hangang.hangang.data.entity
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

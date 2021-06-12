@@ -3,12 +3,11 @@ package `in`.hangang.core.view.button
 import `in`.hangang.core.R
 import android.content.Context
 import android.util.AttributeSet
-import androidx.core.content.ContextCompat
 
 class RoundedCornerButton @JvmOverloads constructor(
-    context: Context,
-    attributeSet: AttributeSet? = null,
-    defStyleAttr: Int = 0
+        context: Context,
+        attributeSet: AttributeSet? = null,
+        defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatButton(context, attributeSet, defStyleAttr) {
 
     companion object {
@@ -40,10 +39,10 @@ class RoundedCornerButton @JvmOverloads constructor(
 
     init {
         context.theme.obtainStyledAttributes(
-            attributeSet,
-            R.styleable.RoundedCornerButton,
-            defStyleAttr,
-            0
+                attributeSet,
+                R.styleable.RoundedCornerButton,
+                defStyleAttr,
+                0
         ).apply {
             appearence = getInteger(R.styleable.RoundedCornerButton_buttonAppearence, 0)
 

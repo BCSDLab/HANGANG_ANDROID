@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.evaluation
+package `in`.hangang.hangang.data.entity
 
 data class TimeTableWithLecture(
     val id: Int,
@@ -8,7 +8,7 @@ data class TimeTableWithLecture(
 )
 
 fun TimeTableWithLecture.toTimeTable() = TimeTable(
-    id = this.id,
-    name = this.tableName,
-    semesterDateId = this.tableSemesterDate.toInt()
+        id = this.id,
+        name = this.tableName,
+        semesterDateId = this.tableSemesterDate.toInt()
 )

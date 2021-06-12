@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.source.source.LectureDataSource
 import `in`.hangang.hangang.util.handleHttpException
 import androidx.compose.runtime.key
 import androidx.paging.PagingState

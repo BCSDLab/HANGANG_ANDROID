@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="major_simple_0">교양</string>
     <string name="major_simple_1">HRD</string>
     <string name="major_simple_2">기계</string>

@@ -59,4 +59,10 @@
     <declare-styleable name="ViewPager">
         <attr name="pagingEnabled" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="PickerView">
+        <attr name="android:entries" />
+    </declare-styleable>
+
+    <attr name="textArray" format="reference" />
 </resources>
