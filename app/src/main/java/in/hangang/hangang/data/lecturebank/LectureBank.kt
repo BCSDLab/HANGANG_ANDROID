@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.data.lecturebank
 
 import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.uploadfile.UploadFile
 import `in`.hangang.hangang.data.user.User
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -25,5 +26,6 @@ data class LectureBank(
     @SerializedName("is_purchase") val isPurchased : Boolean,
     val thumbnail: String,
     val user : User,
-    val lecture: Lecture
+    val lecture: Lecture,
+    val uploadFiles : List<UploadFile>
 ) : Parcelable

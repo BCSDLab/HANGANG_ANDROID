@@ -8,6 +8,7 @@ import `in`.hangang.hangang.data.lecturebank.LectureBank
 import `in`.hangang.hangang.data.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
+import android.net.Uri
 import androidx.paging.PagingData
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
@@ -58,5 +59,5 @@ interface LectureBankDataSource {
     fun reportLectureBankComment(commentId: Int, reportId: Int) : Single<CommonResponse>
 
     fun downloadSingleFile(uploadFileId: Int) : Single<String>
-    fun uploadSingleFile(file: File, contentType: String) : Observable<ResponseWithProgress<String>>
+    fun uploadSingleFile(uri: Uri) : Observable<ResponseWithProgress<String>>
 }

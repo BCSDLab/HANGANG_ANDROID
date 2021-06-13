@@ -1,5 +1,8 @@
 package `in`.hangang.core.http.request
 
+import `in`.hangang.core.util.getSize
+import android.content.Context
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import okhttp3.MediaType
@@ -10,22 +13,23 @@ import java.io.FileInputStream
 import java.lang.Exception
 
 class ProgressFileRequestBody(
-    private val file: File,
-    private val contentType: String?,
+    private val context: Context,
+    private val uri: Uri,
+    private val mimeType: String?,
     private val callback: ProgressRequestBodyCallback
 ) : RequestBody() {
 
     private fun progressUpdater(uploadedBytes: Long, totalBytes: Long) = Runnable {
-        callback.onProgress((100 * uploadedBytes / totalBytes).toInt())
+        callback.onProgress((100 * uploadedBytes.toDouble() / totalBytes).toInt())
     }
 
-    override fun contentType(): MediaType? = contentType?.let { MediaType.parse("$contentType/*") }
-    override fun contentLength(): Long = file.length()
+    override fun contentType(): MediaType? = mimeType?.let { MediaType.parse(mimeType) }
+    override fun contentLength(): Long = uri.getSize(context) ?: 0L
 
     override fun writeTo(sink: BufferedSink) {
         val contentLength = contentLength()
         val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-        val fileInputStream = FileInputStream(file)
+        val fileInputStream = context.contentResolver.openInputStream(uri) ?: return
         val handler = Handler(Looper.getMainLooper())
 
         var uploadedBytes = 0L

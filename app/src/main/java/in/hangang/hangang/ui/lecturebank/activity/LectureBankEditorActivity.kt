@@ -1,21 +1,37 @@
 package `in`.hangang.hangang.ui.lecturebank.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.util.LogUtil
+import `in`.hangang.core.util.getDisplayName
+import `in`.hangang.core.util.getSize
+import `in`.hangang.core.util.toProperCapacityUnit
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.lecturebank.LectureBank
+import `in`.hangang.hangang.data.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ActivityLectureBankEditorBinding
+import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorActivityContract
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorSelectLectureActivityContract
+import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankImagePickerContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankEditorViewModel
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
+import android.util.Log
 import android.util.TypedValue
+import android.webkit.MimeTypeMap
+import android.widget.CheckBox
+import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.text.bold
 import androidx.core.text.color
 import androidx.core.text.inSpans
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorBinding>() {
@@ -23,11 +39,45 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
 
     private val lectureBankEditorViewModel: LectureBankEditorViewModel by viewModel()
 
+    private val categoryMap: Map<CheckBox, String> by lazy {
+        mapOf(
+            binding.checkBoxLectureBankCategoryPreviousBank to LECTURE_BANKS_CATEGORY_PREVIOUS,
+            binding.checkBoxLectureBankCategoryWritingBank to LECTURE_BANKS_CATEGORY_WRITING,
+            binding.checkBoxLectureBankCategoryAssignmentBank to LECTURE_BANKS_CATEGORY_ASSIGNMENT,
+            binding.checkBoxLectureBankCategoryLectureBank to LECTURE_BANKS_CATEGORY_LECTURE,
+            binding.checkBoxLectureBankCategoryEtcBank to LECTURE_BANKS_CATEGORY_ETC
+        )
+    }
+
     private val lectureBankEditorSelectActivityContract = registerForActivityResult(
         LectureBankEditorSelectLectureActivityContract()
     ) {
         if (it.resultCode == RESULT_OK)
             lectureBankEditorViewModel.setLecture(it.lecture)
+    }
+
+    private val lectureBankEditorGetContentContract = registerForActivityResult(
+        LectureBankImagePickerContract()
+    ) {
+        Log.d("Selected files", it.joinToString("\n"))
+        val uri = it[0]
+        lectureBankEditorViewModel.uploadSingleFile(
+            uploadFile = UploadFile(
+                0, 0,
+                fileName = uri.getDisplayName(applicationContext) ?: "",
+                ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri)) ?: "*",
+                size = uri.getSize(applicationContext) ?: 0L,
+                url = ""
+            ),
+            uri = uri,
+            contentType = contentResolver.getType(uri) ?: "*/*"
+        )
+    }
+
+    private val lectureBankEditorUploadFileAdapter: LectureBankFileAdapter by lazy {
+        LectureBankFileAdapter().apply {
+            isEnabled = true
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,61 +91,102 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
 
     private fun initWithLectureBank(lectureBank: LectureBank?) {
         with(binding) {
-            buttonLectureBankSearchLecture.setOnClickListener {
-                lectureBankEditorSelectActivityContract.launch(lectureBankEditorViewModel.lecture.value)
-            }
-
             if (lectureBank != null) {
                 editTextLectureBankTitle.setText(lectureBank.title)
-                textViewLectureBankLecture.text = SpannableStringBuilder()
-                    .inSpans(
-                        ForegroundColorSpan(
-                            TypedValue().apply {
-                                this@LectureBankEditorActivity.theme.resolveAttribute(
-                                    android.R.attr.textColorPrimary,
-                                    this,
-                                    true
-                                )
-                            }.data
-                        ),
-                        RelativeSizeSpan(14f / 12f)
-                    ) {
-                        append(lectureBank.lecture.name)
-                        append(" ")
-                    }
-                    .inSpans(
-                        ForegroundColorSpan(
-                            TypedValue().apply {
-                                this@LectureBankEditorActivity.theme.resolveAttribute(
-                                    android.R.attr.textColorSecondary,
-                                    this,
-                                    true
-                                )
-                            }.data
-                        )
-                    ) {
-                        append(lectureBank.lecture.professor)
-                    }
-
+                setLectureTextView(lectureBank.lecture)
             }
-        }
 
+            lectureBankEditorViewModel.setUploadFiles(lectureBank?.uploadFiles ?: emptyList())
+        }
     }
 
     private fun initViewModel() {
         with(lectureBankEditorViewModel) {
             lecture.observe(this@LectureBankEditorActivity) {
-                binding.textViewLectureBankLecture.text = it?.name ?: ""
+                setLectureTextView(it)
+                binding.spinnerLectureBankSemester.items = it?.semesters ?: emptyList()
             }
             uploadFiles.observe(this@LectureBankEditorActivity) {
-                binding.recyclerViewListFiles.isVisible = !it.isNullOrEmpty()
+                binding.recyclerViewListFiles.apply {
+                    isVisible = !it.isNullOrEmpty()
+                    lectureBankEditorUploadFileAdapter.setFiles(it)
+                }
                 binding.textViewPlzUploadFile.isVisible = it.isNullOrEmpty()
-                binding.textViewFileCountCapacity
+                binding.textViewFileCountCapacity.apply {
+                    isVisible = !it.isNullOrEmpty()
+                    text = this@LectureBankEditorActivity.getString(
+                        R.string.lecture_bank_editor_file_info,
+                        it.size,
+                        it.sumOf { it.size }.toProperCapacityUnit(),
+                        "50MB"
+                    )
+                }
+            }
+            fileUploadStatus.observe(this@LectureBankEditorActivity) {
+                lectureBankEditorUploadFileAdapter.setDownloadStatus(it.mapValues { it.value to 100 })
             }
         }
     }
 
     private fun initView() {
-        binding.spinnerLectureBankSemester.items
+        binding.buttonLectureBankSearchLecture.setOnClickListener {
+            lectureBankEditorSelectActivityContract.launch(lectureBankEditorViewModel.lecture.value)
+        }
+
+        binding.spinnerLectureBankSemester.spinnerLayout.background = null
+        binding.textViewLectureBankSemester.setOnClickListener {
+            binding.spinnerLectureBankSemester.callOnClick()
+        }
+
+        categoryMap.keys.forEach { checkBox ->
+            checkBox.setOnClickListener {
+                if (checkBox.isChecked) {
+                    categoryMap.keys.forEach { key -> key.isChecked = false }
+                    checkBox.isChecked = true
+                }
+            }
+        }
+
+        binding.recyclerViewListFiles.apply {
+            layoutManager = LinearLayoutManager(this@LectureBankEditorActivity, RecyclerView.HORIZONTAL, false)
+            adapter = lectureBankEditorUploadFileAdapter
+        }
+
+        binding.buttonLectureBankNewImage.setOnClickListener {
+            lectureBankEditorGetContentContract.launch(null)
+        }
+    }
+
+    private fun setLectureTextView(lecture: Lecture?) {
+        if (lecture == null) binding.textViewLectureBankLecture.text = ""
+        else binding.textViewLectureBankLecture.text = SpannableStringBuilder()
+            .inSpans(
+                ForegroundColorSpan(
+                    TypedValue().apply {
+                        this@LectureBankEditorActivity.theme.resolveAttribute(
+                            android.R.attr.textColorPrimary,
+                            this,
+                            true
+                        )
+                    }.data
+                )
+            ) {
+                append(lecture.name)
+                append(" ")
+            }
+            .inSpans(
+                ForegroundColorSpan(
+                    TypedValue().apply {
+                        this@LectureBankEditorActivity.theme.resolveAttribute(
+                            android.R.attr.textColorSecondary,
+                            this,
+                            true
+                        )
+                    }.data
+                ),
+                RelativeSizeSpan(12f / 14f)
+            ) {
+                append(lecture.professor)
+            }
     }
 }

@@ -21,6 +21,6 @@ val dataSourceModule = module {
     single { LectureLocalDataSource() }
     single { TimeTableRemoteDataSource(get(named(AUTH))) }
     single { TimeTableLocalDataSource() }
-    single { LectureBankRemoteDataSource(get(named(AUTH))) }
+    single { LectureBankRemoteDataSource(get(), get(named(AUTH))) }
     single { LectureBankLocalDataSource() }
 }

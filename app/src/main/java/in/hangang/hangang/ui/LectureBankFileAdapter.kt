@@ -89,6 +89,16 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
         setDownloadStatus(findUploadFilePosition(uploadFile), progress, max)
     }
 
+    fun setDownloadStatus(downloadStatusMap : Map<UploadFile, Pair<Int, Int>>) {
+        this.downloadStatusMap.apply {
+            clear()
+            downloadStatusMap.forEach {
+                this[it.key] = it.value
+            }
+        }
+        notifyDataSetChanged()
+    }
+
     fun findUploadFilePosition(uploadFile: UploadFile) : Int {
         return files.indexOf(uploadFile)
     }
@@ -137,6 +147,7 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
 
     companion object {
         const val PROGRESS_INDETERMINATE = -1
+        const val PROGRESS_NONE = -2
     }
 
 }

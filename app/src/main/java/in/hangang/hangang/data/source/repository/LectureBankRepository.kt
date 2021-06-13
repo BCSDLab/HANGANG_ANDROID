@@ -6,11 +6,11 @@ import `in`.hangang.hangang.data.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureBankDataSource
+import android.net.Uri
 import androidx.paging.PagingData
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import java.io.File
 
 class LectureBankRepository(
     private val lectureBankLocalDataSource: LectureBankDataSource,
@@ -83,8 +83,8 @@ class LectureBankRepository(
         return lectureBankRemoteDataSource.downloadSingleFile(uploadFileId)
     }
 
-    override fun uploadSingleFile(file: File, contentType: String): Observable<ResponseWithProgress<String>> {
-        return lectureBankRemoteDataSource.uploadSingleFile(file, contentType)
+    override fun uploadSingleFile(uri: Uri): Observable<ResponseWithProgress<String>> {
+        return lectureBankRemoteDataSource.uploadSingleFile(uri)
     }
 
 }

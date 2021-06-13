@@ -251,7 +251,7 @@
                     android:background="@null"
                     android:minHeight="54dp"
                     android:textSize="14sp"
-                    android:gravity="center_vertical"
+                    android:gravity="top"
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider4"
@@ -300,6 +300,7 @@
                 android:padding="16dp"
                 tools:visibility="gone"
                 tools:text="총 4개 ( 852KB / 50MB )"
+                android:text="@string/lecture_bank_editor_file_info"
                 android:textColor="?android:attr/textColorSecondary"
                 android:gravity="end|center_vertical"/>
 

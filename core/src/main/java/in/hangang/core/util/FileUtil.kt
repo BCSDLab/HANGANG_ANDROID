@@ -1,5 +1,9 @@
 package `in`.hangang.core.util
 
+import android.content.Context
+import android.database.Cursor
+import android.net.Uri
+import android.provider.OpenableColumns
 import java.text.DecimalFormat
 import kotlin.math.roundToLong
 
@@ -38,3 +42,39 @@ fun Long.toProperCapacityUnit(round: Int = 0, startUnit: Int = UNIT_BYTE, maxUni
         }
     }"
 }
+
+private fun <T> Uri.query(context: Context, func : (Cursor) -> Unit, error: () -> T) {
+    context.contentResolver.query(this, null, null, null, null).use {
+        if(it == null) error()
+        if(!it!!.moveToFirst()) {
+            it.close()
+            error()
+        }
+
+        func(it)
+        it.close()
+    }
+}
+
+fun Uri.getDisplayName(context: Context): String? {
+    var displayName : String? = null
+    query(context, {
+        displayName = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+    }, {
+        displayName = null
+    })
+
+    return displayName
+}
+
+fun Uri.getSize(context: Context): Long? {
+    var size : Long? = null
+    query(context, {
+        size = it.getLong(it.getColumnIndex(OpenableColumns.SIZE))
+    }, {
+        size = null
+    })
+
+    return size
+}
+

@@ -300,5 +300,7 @@
     <string name="lecture_bank_delete_comment_message">댓글을 삭제하시겠습니까?</string>
     <string name="lecture_bank_modify_comment">저장</string>
     <string name="lecture_bank_lecture_list_select">선택</string>
+    <string name="lecture_bank_editor_file_info">총 %1$d개 ( %2$s / %3$s )</string>
+    <string name="description_image_chooser">Choose image</string>
 
 </resources>
