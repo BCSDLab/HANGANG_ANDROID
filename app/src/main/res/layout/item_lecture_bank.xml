@@ -7,7 +7,7 @@
 
         <variable
             name="bank"
-            type="in.hangang.hangang.data.lecturebank.LectureBank"/>
+            type="in.hangang.hangang.data.entity.lecturebank.LectureBank"/>
     </data>
 
     <androidx.cardview.widget.CardView

@@ -9,8 +9,8 @@ import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.core.view.edittext.SingleLineEditText
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel

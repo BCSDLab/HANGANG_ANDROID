@@ -26,6 +26,11 @@ fun <T> Observable<T>.withThread(): Observable<T> {
         .observeOn(AndroidSchedulers.mainThread())
 }
 
+fun <T> Flowable<T>.withThread(): Flowable<T> {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+
 fun <T> Single<T>.handleUpdateAccessToken(): Single<T> {
     return this.compose(retryOnNotAuthorized<T>())
 }

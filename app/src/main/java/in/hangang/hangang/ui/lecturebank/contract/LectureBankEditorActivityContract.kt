@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.ui.lecturebank.contract
 
-import `in`.hangang.hangang.data.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.ui.lecturebank.activity.LectureBankEditorActivity
 import android.content.Context
 import android.content.Intent

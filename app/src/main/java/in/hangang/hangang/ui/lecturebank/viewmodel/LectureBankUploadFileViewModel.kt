@@ -2,24 +2,19 @@ package `in`.hangang.hangang.ui.lecturebank.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
-import `in`.hangang.hangang.data.lecturebank.DownloadFileInfo
+import `in`.hangang.hangang.data.entity.lecturebank.DownloadFileInfo
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.uploadfile.UploadFile
+import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.data.source.repository.LectureBankRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.withThread
-import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
-import android.os.ParcelFileDescriptor
-import android.provider.MediaStore
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orhanobut.hawk.Hawk
 import java.lang.Exception
-import java.net.URI
 
 class LectureBankUploadFileViewModel(
     private val lectureBankRepository: LectureBankRepository

@@ -3,7 +3,7 @@ package `in`.hangang.hangang.ui.lecturebank.activity
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.lecturebank.LectureBankFilter
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankFilter
 import `in`.hangang.hangang.databinding.ActivityLectureBankFilterBinding
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankFilterActivityContract
 import android.content.Intent

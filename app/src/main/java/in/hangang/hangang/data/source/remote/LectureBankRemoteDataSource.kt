@@ -5,9 +5,9 @@ import `in`.hangang.core.http.request.ProgressRequestBodyCallback
 import `in`.hangang.core.http.response.ResponseWithProgress
 import `in`.hangang.core.util.getDisplayName
 import `in`.hangang.hangang.api.AuthApi
-import `in`.hangang.hangang.data.lecturebank.LectureBank
-import `in`.hangang.hangang.data.lecturebank.LectureBankComment
-import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.request.LectureBankReportRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureBankDataSource
@@ -17,7 +17,6 @@ import `in`.hangang.hangang.data.source.paging.LectureBankPagingSource
 import `in`.hangang.hangang.util.withThread
 import android.content.Context
 import android.net.Uri
-import android.webkit.MimeTypeMap
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -27,7 +26,8 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import okhttp3.MultipartBody
 import retrofit2.HttpException
-import java.lang.Exception
+import java.io.File
+import java.io.InputStream
 
 class LectureBankRemoteDataSource(
     private val context: Context,
@@ -120,11 +120,19 @@ class LectureBankRemoteDataSource(
     override fun uploadSingleFile(uri: Uri): Observable<ResponseWithProgress<String>> {
         return Observable.create<ResponseWithProgress<String>?> { emitter ->
             try {
+                val file = File.createTempFile(uri.getDisplayName(context) ?: uri.toString(), ".tmp").apply {
+                    deleteOnExit()
+                }
                 val mimeType = context.contentResolver.getType(uri)
+
+                context.contentResolver.openInputStream(uri)?.let {
+                    copyToFile(it, file)
+                } ?: emitter.onError(NullPointerException())
+
                 val progressFileRequestBody =
                     ProgressFileRequestBody(context, uri, mimeType, object : ProgressRequestBodyCallback() {
                         override fun onProgress(percentage: Int) {
-                            if (emitter.isDisposed)
+                            if (!emitter.isDisposed)
                                 emitter.onNext(
                                     ResponseWithProgress(percentage, null)
                                 )
@@ -134,10 +142,19 @@ class LectureBankRemoteDataSource(
                             emitter.onError(t)
                         }
                     })
-                val filePart =
-                    MultipartBody.Part.createFormData(FILE_MULTIPART_NAME, uri.getDisplayName(context), progressFileRequestBody)
-                val response = authApi.uploadFile(filePart).execute()
+
+                val builder = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart(
+                        "files",
+                        uri.getDisplayName(context) ?: FILE_MULTIPART_NAME,
+                        progressFileRequestBody
+                    )
+
+                val response = authApi.uploadFile(builder.build()).execute()
+
                 if (emitter.isDisposed) return@create
+
                 if (response.isSuccessful && !response.body().isNullOrEmpty()) {
                     emitter.onNext(
                         ResponseWithProgress(100, response.body()!![0])
@@ -150,6 +167,20 @@ class LectureBankRemoteDataSource(
                 emitter.onError(e)
             }
         }.withThread()
+    }
+
+    private fun copyToFile(inputStream: InputStream, dest : File) {
+        try {
+            val fileOutputStream = dest.outputStream()
+            var read: Int
+            val bytes = ByteArray(1024)
+
+            while (inputStream.read(bytes).also { read = it } != -1) {
+                fileOutputStream.write(bytes, 0, read)
+            }
+        } catch (e: Exception) {
+
+        }
     }
 
     companion object {

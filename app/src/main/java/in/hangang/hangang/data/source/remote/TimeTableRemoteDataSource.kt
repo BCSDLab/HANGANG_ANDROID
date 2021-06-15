@@ -3,16 +3,16 @@ package `in`.hangang.hangang.data.source.remote
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_SEMESTER_ID
 import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_TIMETABLE_NAME
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
 import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.source.TimeTableDataSource
+import `in`.hangang.hangang.data.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRemoteDataSource(

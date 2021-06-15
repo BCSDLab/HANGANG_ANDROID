@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.ui.timetable.contract
 
-import `in`.hangang.hangang.data.entity.LectureFilter
+import `in`.hangang.hangang.data.entity.timetable.LectureFilter
 import `in`.hangang.hangang.ui.timetable.activity.TimetableLectureFilterActivity
 import android.app.Activity.RESULT_OK
 import android.content.Context

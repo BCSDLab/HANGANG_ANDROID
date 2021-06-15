@@ -1,15 +1,14 @@
 package `in`.hangang.hangang.ui.lecturebank.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
-import `in`.hangang.core.util.LogUtil
 import `in`.hangang.core.util.getDisplayName
 import `in`.hangang.core.util.getSize
 import `in`.hangang.core.util.toProperCapacityUnit
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.Lecture
-import `in`.hangang.hangang.data.lecturebank.LectureBank
-import `in`.hangang.hangang.data.uploadfile.UploadFile
+import `in`.hangang.hangang.data.entity.timetable.Lecture
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ActivityLectureBankEditorBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorActivityContract
@@ -24,10 +23,6 @@ import android.util.Log
 import android.util.TypedValue
 import android.webkit.MimeTypeMap
 import android.widget.CheckBox
-import android.widget.LinearLayout
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.text.bold
-import androidx.core.text.color
 import androidx.core.text.inSpans
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,23 +55,28 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
         LectureBankImagePickerContract()
     ) {
         Log.d("Selected files", it.joinToString("\n"))
-        val uri = it[0]
-        lectureBankEditorViewModel.uploadSingleFile(
-            uploadFile = UploadFile(
-                0, 0,
-                fileName = uri.getDisplayName(applicationContext) ?: "",
-                ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri)) ?: "*",
-                size = uri.getSize(applicationContext) ?: 0L,
-                url = ""
-            ),
-            uri = uri,
-            contentType = contentResolver.getType(uri) ?: "*/*"
-        )
+        it.forEach { uri ->
+            lectureBankEditorViewModel.uploadSingleFile(
+                uploadFile = UploadFile(
+                    0, 0,
+                    fileName = uri.getDisplayName(applicationContext) ?: "",
+                    ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri)) ?: "*",
+                    size = uri.getSize(applicationContext) ?: 0L,
+                    url = ""
+                ),
+                uri = uri
+            )
+        }
     }
 
     private val lectureBankEditorUploadFileAdapter: LectureBankFileAdapter by lazy {
         LectureBankFileAdapter().apply {
             isEnabled = true
+            isRemovable = true
+            setOnItemClickListener { position, uploadFile ->
+                lectureBankEditorUploadFileAdapter.removeUploadFile(position)
+                lectureBankEditorViewModel.removeUploadFile(uploadFile)
+            }
         }
     }
 
@@ -123,7 +123,7 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
                 }
             }
             fileUploadStatus.observe(this@LectureBankEditorActivity) {
-                lectureBankEditorUploadFileAdapter.setDownloadStatus(it.mapValues { it.value to 100 })
+                lectureBankEditorUploadFileAdapter.setDownloadStatus(it.first, it.second, if(it.second >= 0) 100 else it.second )
             }
         }
     }

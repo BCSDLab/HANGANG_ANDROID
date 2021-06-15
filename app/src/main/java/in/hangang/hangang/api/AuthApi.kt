@@ -1,27 +1,27 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.evaluation.*
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.evaluation.*
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
 import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
-import `in`.hangang.hangang.data.lecturebank.LectureBankComment
-import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
-import `in`.hangang.hangang.data.user.User
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.request.LectureBankReportRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.LectureBankCommentResponse
 import `in`.hangang.hangang.data.response.LectureBankResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
-import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -216,9 +216,8 @@ interface AuthApi {
     @DELETE(LECTURE_BANKS_COMMENT_WITH_ID)
     fun deleteLectureBankComment(@Path("id") lectureBankId: Int, @Path("commentId") commentId: Int) : Single<CommonResponse>
 
-    @Multipart
     @POST(LECTURE_BANKS_FILES)
-    fun uploadFile(@Part file : MultipartBody.Part) : Call<List<String>>
+    fun uploadFile(@Body file : RequestBody) : Call<List<String>>
 
     @GET(USER_ME)
     fun getUserInfo() : Single<User>

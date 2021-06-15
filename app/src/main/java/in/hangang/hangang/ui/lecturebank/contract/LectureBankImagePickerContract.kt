@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.contract
 
 import `in`.hangang.hangang.R
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -27,6 +28,8 @@ class LectureBankImagePickerContract : ActivityResultContract<Void?, List<Uri>>(
                 )
             }
             list.toList()
+        } ?: intent?.data?.let {
+            listOf(it)
         } ?: emptyList()
     }
 }

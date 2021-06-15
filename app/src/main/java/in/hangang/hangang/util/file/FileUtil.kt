@@ -1,8 +1,8 @@
 package `in`.hangang.hangang.util.file
 
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.uploadfile.DownloadStatus
-import `in`.hangang.hangang.data.uploadfile.UploadFile
+import `in`.hangang.hangang.data.entity.uploadfile.DownloadStatus
+import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -16,8 +16,6 @@ import android.widget.Toast
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import java.net.URI
-import java.net.URL
 
 abstract class FileUtil(
     private val context: Context

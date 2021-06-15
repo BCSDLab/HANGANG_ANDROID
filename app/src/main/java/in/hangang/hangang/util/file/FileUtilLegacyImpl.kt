@@ -1,12 +1,10 @@
 package `in`.hangang.hangang.util.file
 
-import `in`.hangang.hangang.data.uploadfile.DownloadStatus
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
 import androidx.core.net.toUri
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import java.io.File
 import java.io.FileOutputStream

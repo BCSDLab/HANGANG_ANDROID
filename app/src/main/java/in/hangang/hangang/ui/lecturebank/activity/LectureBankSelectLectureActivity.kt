@@ -2,15 +2,12 @@ package `in`.hangang.hangang.ui.lecturebank.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.lecturebank.LectureBank
 import `in`.hangang.hangang.databinding.ActivityLectureBankSelectLectureBinding
 import `in`.hangang.hangang.ui.lecturebank.adapter.LectureBankLectureListAdapter
-import `in`.hangang.hangang.ui.lecturebank.adapter.LectureBankListAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorSelectLectureActivityContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankSelectLectureViewModel
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

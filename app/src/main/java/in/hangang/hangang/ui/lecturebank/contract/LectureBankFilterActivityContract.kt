@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.ui.lecturebank.contract
 
-import `in`.hangang.hangang.data.lecturebank.LectureBankFilter
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankFilter
 import `in`.hangang.hangang.ui.lecturebank.activity.LectureBankFilterActivity
 import android.app.Activity.RESULT_OK
 import android.content.Context

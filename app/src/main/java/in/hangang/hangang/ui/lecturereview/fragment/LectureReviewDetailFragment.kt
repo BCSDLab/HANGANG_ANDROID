@@ -3,18 +3,15 @@ package `in`.hangang.hangang.ui.lecturereview.fragment
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.evaluation.Chart
-import `in`.hangang.hangang.data.evaluation.LectureReview
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.evaluation.LectureReview
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.FragmentLectureReviewDetailBinding
 import `in`.hangang.hangang.ui.lecturereview.activity.LectureEvaluationActivity
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureClassTimeAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureDetailReviewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.RecommendedDocsAdapter
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
-import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewListViewModel
 import `in`.hangang.hangang.util.LogUtil
-import `in`.hangang.hangang.util.bindImageFromUrl
 import `in`.hangang.hangang.util.initScoreChart
 import android.app.Activity
 import android.content.Intent
@@ -22,8 +19,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.github.mikephil.charting.data.BarEntry
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDetailBinding>() {

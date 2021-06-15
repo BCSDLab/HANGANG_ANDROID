@@ -5,11 +5,13 @@ import android.content.Context
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import com.orhanobut.logger.Logger
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okio.BufferedSink
 import java.io.File
 import java.io.FileInputStream
+import java.io.InputStream
 import java.lang.Exception
 
 class ProgressFileRequestBody(
@@ -19,41 +21,54 @@ class ProgressFileRequestBody(
     private val callback: ProgressRequestBodyCallback
 ) : RequestBody() {
 
-    private fun progressUpdater(uploadedBytes: Long, totalBytes: Long) = Runnable {
-        callback.onProgress((100 * uploadedBytes.toDouble() / totalBytes).toInt())
-    }
+    private var wrote = false
 
     override fun contentType(): MediaType? = mimeType?.let { MediaType.parse(mimeType) }
     override fun contentLength(): Long = uri.getSize(context) ?: 0L
 
     override fun writeTo(sink: BufferedSink) {
-        val contentLength = contentLength()
-        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-        val fileInputStream = context.contentResolver.openInputStream(uri) ?: return
         val handler = Handler(Looper.getMainLooper())
-
-        var uploadedBytes = 0L
-
+        val fileInputStream : InputStream
         try {
+            val contentLength = contentLength()
+            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+            fileInputStream = context.contentResolver.openInputStream(uri)!!
+
+            var uploadedBytes = 0L
+
             var read: Int
 
             while (fileInputStream.read(buffer).also { read = it } != -1) {
-
-                // update progress on UI thread
-                handler.post(progressUpdater(uploadedBytes, contentLength))
+                setProgress(handler, uploadedBytes, contentLength)
                 uploadedBytes += read
                 sink.write(buffer, 0, read)
             }
 
-            handler.post {
-                callback.onFinish()
-            }
+            fileInputStream.close()
+            finish(handler)
         } catch (e: Exception) {
             handler.post {
                 callback.onError(e)
             }
-        } finally {
-            fileInputStream.close()
+        }
+    }
+
+    @Synchronized
+    fun finish(handler: Handler) {
+        handler.post {
+            if (!wrote) {
+                callback.onFinish()
+                wrote = true
+            }
+        }
+    }
+
+    @Synchronized
+    fun setProgress(handler: Handler, uploadedBytes: Long, contentLength: Long) {
+        handler.post {
+            if (!wrote) {
+                callback.onProgress((100 * uploadedBytes.toDouble() / contentLength).toInt())
+            }
         }
     }
 

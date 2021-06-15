@@ -1,14 +1,5 @@
 package `in`.hangang.hangang.util.file
 
-import `in`.hangang.hangang.data.uploadfile.DownloadStatus
-import `in`.hangang.hangang.data.uploadfile.UploadFile
-import android.app.DownloadManager
-import android.content.*
-import android.net.Uri
-import com.orhanobut.hawk.Hawk
-import io.reactivex.rxjava3.core.Observable
-import java.lang.IllegalArgumentException
-
 object FileDownloadUtil {
 
     /*fun downloadFile(context: Context, fileUtil: FileUtil, uploadFile: UploadFile, url: String) : Observable<DownloadStatus> {

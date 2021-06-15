@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.adapter
 
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.entity.timetable.Lecture
 import `in`.hangang.hangang.databinding.ItemLectureBankLectureListBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,9 +1,9 @@
 package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.core.http.response.ResponseWithProgress
-import `in`.hangang.hangang.data.lecturebank.LectureBank
-import `in`.hangang.hangang.data.lecturebank.LectureBankComment
-import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureBankDataSource
 import android.net.Uri

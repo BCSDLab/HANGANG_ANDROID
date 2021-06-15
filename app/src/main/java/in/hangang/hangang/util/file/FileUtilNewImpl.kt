@@ -1,18 +1,9 @@
 package `in`.hangang.hangang.util.file
 
-import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.uploadfile.DownloadStatus
-import android.app.DownloadManager
 import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import java.io.OutputStream
 

@@ -1,13 +1,13 @@
 package `in`.hangang.hangang.ui
 
-import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.uploadfile.UploadFile
+import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ItemLectureBankUploadFileBinding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
@@ -36,6 +36,12 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
         notifyDataSetChanged()
     }
 
+    var isRemovable = false
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
+
     var onItemClickListener : OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -57,6 +63,9 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
             onItemClickListener?.onItemClick(
                 position, files[position], downloadStatusMap[files[position]]?.second ?: -2 > -2
             )
+        }
+        holder.binding.imageViewRemove.setOnClickListener {
+            onItemClickListener?.onRemoveButtonClick(holder.absoluteAdapterPosition, files[position])
         }
     }
 
@@ -103,7 +112,12 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
         return files.indexOf(uploadFile)
     }
 
-    inner class ViewHolder(private val binding: ItemLectureBankUploadFileBinding) :
+    fun removeUploadFile(position: Int) {
+        files.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    inner class ViewHolder(val binding: ItemLectureBankUploadFileBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(uploadFile: UploadFile) {
             fileExtMap[uploadFile.ext]?.let {
@@ -114,6 +128,7 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
             }
 
             binding.textViewFileName.text = uploadFile.fileName
+            binding.imageViewRemove.isVisible = isRemovable
         }
 
         fun setProgressBar(progress: Int, max: Int) {
@@ -138,11 +153,43 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
             override fun onItemClick(position: Int, uploadFile: UploadFile, isDownloading: Boolean) {
                 onItemClick(position, uploadFile, isDownloading)
             }
+
+            override fun onRemoveButtonClick(position: Int, uploadFile: UploadFile) {
+
+            }
+        }
+    }
+
+    inline fun setOnItemClickListener(
+        crossinline onRemoveButtonClick: (Int, UploadFile) -> Unit) {
+        onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(position: Int, uploadFile: UploadFile, isDownloading: Boolean) {
+
+            }
+
+            override fun onRemoveButtonClick(position: Int, uploadFile: UploadFile) {
+                onRemoveButtonClick(position, uploadFile)
+            }
+        }
+    }
+
+    inline fun setOnItemClickListener(
+        crossinline onItemClick: (Int, UploadFile, Boolean) -> Unit,
+        crossinline onRemoveButtonClick: (Int, UploadFile) -> Unit) {
+        onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(position: Int, uploadFile: UploadFile, isDownloading: Boolean) {
+                onItemClick(position, uploadFile, isDownloading)
+            }
+
+            override fun onRemoveButtonClick(position: Int, uploadFile: UploadFile) {
+                onRemoveButtonClick(position, uploadFile)
+            }
         }
     }
 
     interface OnItemClickListener {
         fun onItemClick(position: Int, uploadFile: UploadFile, isDownloading: Boolean)
+        fun onRemoveButtonClick(position: Int, uploadFile: UploadFile)
     }
 
     companion object {

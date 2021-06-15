@@ -7,7 +7,7 @@
 
         <variable
             name="bank"
-            type="in.hangang.hangang.data.lecturebank.LectureBankDetail"/>
+            type="in.hangang.hangang.data.entity.lecturebank.LectureBankDetail"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.adapter
 
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.lecturebank.LectureBankComment
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
 import `in`.hangang.hangang.databinding.ItemLectureBankCommentBinding
 import `in`.hangang.hangang.ui.lecturebank.activity.LectureBankDetailActivity
 import `in`.hangang.hangang.util.DateUtil

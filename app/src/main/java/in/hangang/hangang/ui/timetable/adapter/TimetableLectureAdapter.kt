@@ -3,7 +3,7 @@ package `in`.hangang.hangang.ui.timetable.adapter
 import `in`.hangang.core.view.setVisibility
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.TIMETABLE_EMPTY_POSITION
-import `in`.hangang.hangang.data.entity.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableLectureBinding
 import `in`.hangang.hangang.ui.customview.timetable.TimetableUtil
 import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener

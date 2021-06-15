@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="4dp"
@@ -17,7 +17,7 @@
             android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_xls" />
+            tools:src="@drawable/ic_xls"/>
 
         <TextView
             android:id="@+id/text_view_file_name"
@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="엑셀파일.xls" />
+            tools:text="엑셀파일.xls"/>
 
         <FrameLayout
             android:id="@+id/layout_downloading"
@@ -55,6 +55,16 @@
                 tools:progress="50"/>
 
         </FrameLayout>
+
+        <ImageView
+            android:id="@+id/image_view_remove"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_x"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?android:attr/textColorSecondary"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

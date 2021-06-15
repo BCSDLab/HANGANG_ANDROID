@@ -2,8 +2,8 @@ package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
-import `in`.hangang.hangang.data.entity.LectureFilter
-import `in`.hangang.hangang.data.entity.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.LectureFilter
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.TimeTableRepository

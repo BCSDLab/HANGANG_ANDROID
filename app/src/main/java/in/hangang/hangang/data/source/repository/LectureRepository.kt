@@ -1,14 +1,14 @@
 package `in`.hangang.hangang.data.source.repository
 
-import `in`.hangang.hangang.data.entity.Lecture
-import `in`.hangang.hangang.data.evaluation.*
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.timetable.Lecture
+import `in`.hangang.hangang.data.entity.evaluation.*
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureReviewPagingSource
 import `in`.hangang.hangang.data.source.ReviewPagingSource
-import `in`.hangang.hangang.data.source.source.LectureDataSource
+import `in`.hangang.hangang.data.source.LectureDataSource
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData

@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.ui.timetable.contract
 
-import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.ui.timetable.activity.TimetableListActivity
 import android.content.Context
 import android.content.Intent
@@ -14,9 +14,9 @@ class TimetableListActivityContract : ActivityResultContract<TimeTable, Timetabl
     }
 
     class Result(
-            val resultCode: Int,
-            val selectedTimetable: TimeTable?,
-            val timetableListChanged: Boolean = false
+        val resultCode: Int,
+        val selectedTimetable: TimeTable?,
+        val timetableListChanged: Boolean = false
     )
 
     override fun createIntent(context: Context, input: TimeTable): Intent {

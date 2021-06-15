@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.data.source.paging
 
 import `in`.hangang.hangang.api.AuthApi
-import `in`.hangang.hangang.data.lecturebank.LectureBankComment
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
 
 class LectureBankCommentPagingSource(
     private val authApi: AuthApi,

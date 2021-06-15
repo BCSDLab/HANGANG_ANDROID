@@ -8,10 +8,10 @@ import `in`.hangang.core.util.showKeyboard
 import `in`.hangang.core.util.toProperCapacityUnit
 import `in`.hangang.core.view.showPopupMenu
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.lecturebank.LectureBankComment
-import `in`.hangang.hangang.data.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.uploadfile.UploadFile
+import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ActivityLectureBankDetailBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.lecturebank.adapter.LectureBankCommentsAdapter
