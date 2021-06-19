@@ -139,4 +139,8 @@ class TimeTableRepository(
     override fun removeMemo(timetableLectureId: Int): Single<CommonResponse> {
         return timeTableRemoteDataSource.removeMemo(timetableLectureId)
     }
+
+    override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return timeTableRemoteDataSource.getUserTimeTables(semesterId)
+    }
 }

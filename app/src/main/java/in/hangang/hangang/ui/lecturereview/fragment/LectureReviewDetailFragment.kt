@@ -5,6 +5,7 @@ import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.evaluation.Chart
+import `in`.hangang.hangang.data.evaluation.ClassLecture
 import `in`.hangang.hangang.data.evaluation.LectureReview
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
@@ -13,6 +14,7 @@ import `in`.hangang.hangang.databinding.FragmentLectureReviewDetailBinding
 import `in`.hangang.hangang.ui.lecturereview.activity.LectureEvaluationActivity
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureClassTimeAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureDetailReviewAdapter
+import `in`.hangang.hangang.ui.lecturereview.adapter.ListDialogRecyclerViewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.RecommendedDocsAdapter
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewListViewModel
@@ -34,15 +36,36 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDetailBinding>() {
     override val layoutId = R.layout.fragment_lecture_review_detail
     lateinit var lecture: RankingLectureItem
-    private val lectureClassTimeAdapter = LectureClassTimeAdapter()
+    private lateinit var lectureClassTimeAdapter: LectureClassTimeAdapter
     private val recommendedDocsAdapter = RecommendedDocsAdapter()
     private val lectureDetailReviewAdapter = LectureDetailReviewAdapter()
+    private val listDialogRecyclerViewAdapter = ListDialogRecyclerViewAdapter()
+    private lateinit var listDialog: ListDialog
     private val reportList: Array<String> by lazy { resources.getStringArray(R.array.report_item) }
     private val navController: NavController by lazy {
         Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
     }
+
+    private val positiveButtonClickListener = View.OnClickListener {
+        LogUtil.e("click")
+    }
+    /* 시간표 리스너 */
+    private val classClickListener = object : RecyclerViewClickListener {
+        override fun onClick(view: View, position: Int, item: Any) {
+            val classLecture = (item as ClassLecture)
+            lectureReviewDetailViewModel.setDialogCheckButton(classLecture.id)
+            listDialog.show(parentFragmentManager,"asdf")
+
+        }
+    }
+    private val checkClickListener = object : RecyclerViewClickListener {
+        override fun onClick(view: View, position: Int, item: Any) {
+            LogUtil.e("click2")
+        }
+    }
+
     /* 신고하기 리스너 */
-    private val reportClickListener = object : RecyclerViewClickListener{
+    private val reportClickListener = object : RecyclerViewClickListener {
         override fun onClick(view: View, position: Int, item: Any) {
             val reportDialog = AlertDialog.Builder(requireContext(),android.R.style.Theme_Material_Light_Dialog_Alert)
             reportDialog.setItems(reportList, DialogInterface.OnClickListener { dialog, which ->
@@ -91,7 +114,8 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     fun initViewModel() {
         with(lectureReviewDetailViewModel) {
             classLectureList.observe(viewLifecycleOwner, {
-                it?.let { lectureClassTimeAdapter.submitList(it) }
+                it?.let { lectureClassTimeAdapter.submitList(it)
+                }
             })
             chartList.observe(viewLifecycleOwner, {
                 binding.lectureDetailBarchart.initScoreChart(requireContext(), it)
@@ -130,6 +154,19 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                 }else{
                     makeReportResultDialog(requireContext().getString(R.string.report_dialog_title), it.message!!)
                 }
+            })
+            userTimeTableList.observe(viewLifecycleOwner, {
+                it.let { listDialogRecyclerViewAdapter.submitList(it)
+                    listDialog = ListDialog(listDialogRecyclerViewAdapter)
+                    lectureReviewDetailViewModel.getTimetable()
+                    //listDialog.show(parentFragmentManager,"asdf")
+                }
+            })
+            classWithLecture.observe(viewLifecycleOwner, {
+                lectureClassTimeAdapter.setCheckList(it)
+                for(i in it)
+                    LogUtil.e(i.toString())
+                lectureClassTimeAdapter.notifyDataSetChanged()
             })
 
         }
@@ -175,15 +212,19 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         }
 
 
+
     }
 
 
     fun init() {
+        lectureClassTimeAdapter = LectureClassTimeAdapter(requireContext())
         binding.lectureDetailClassTimeRecyclerview.adapter = lectureClassTimeAdapter
         binding.lectureDetailRecommendRecyclerview.adapter = recommendedDocsAdapter
         binding.lectureDetailReviewRecyclerview.adapter = lectureDetailReviewAdapter
         lectureDetailReviewAdapter.setRecyclerViewListener(recyclerViewClickListener)
         lectureDetailReviewAdapter.setReportClickListener(reportClickListener)
+        lectureClassTimeAdapter.setClassClickListener(classClickListener)
+        listDialogRecyclerViewAdapter.setCheckClickListener(checkClickListener)
         binding.lectureDetailSortType.text = lectureReviewDetailViewModel.sort
         lecture.id.let {
             lectureReviewDetailViewModel.getClassLectureList(it)
@@ -191,6 +232,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             lectureReviewDetailViewModel.getEvaluationTotal(it)
             lectureReviewDetailViewModel.getReviewList(it, lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
         }
+        lectureReviewDetailViewModel.getUserTimeTables(5)
         lecture.name.let {
             lectureReviewDetailViewModel.getRecommentedDocs(it)
         }

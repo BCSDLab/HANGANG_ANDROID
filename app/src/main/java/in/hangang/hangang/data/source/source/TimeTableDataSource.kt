@@ -60,4 +60,5 @@ interface TimeTableDataSource {
     fun removeMemo(
             timetableLectureId: Int
     ): Single<CommonResponse>
+    fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>>
 }

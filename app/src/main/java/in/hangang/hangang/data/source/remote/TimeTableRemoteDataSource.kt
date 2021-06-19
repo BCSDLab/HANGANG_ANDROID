@@ -196,4 +196,8 @@ class TimeTableRemoteDataSource(
                     Single.just(list)
             }
     }
+
+    override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return authApi.getTimeTables(semesterId)
+    }
 }

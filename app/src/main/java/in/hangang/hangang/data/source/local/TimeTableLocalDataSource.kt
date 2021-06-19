@@ -128,4 +128,8 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         else
             mutableSetOf()
     }
+
+    override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return Single.never()
+    }
 }
