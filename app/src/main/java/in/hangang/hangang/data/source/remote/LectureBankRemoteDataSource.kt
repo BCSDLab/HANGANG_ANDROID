@@ -8,6 +8,7 @@ import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankPostRequest
 import `in`.hangang.hangang.data.request.LectureBankReportRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureBankDataSource
@@ -24,8 +25,11 @@ import androidx.paging.rxjava3.flowable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import okhttp3.Callback
 import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.File
 import java.io.InputStream
 
@@ -45,6 +49,26 @@ class LectureBankRemoteDataSource(
         return Pager(PagingConfig(pageSize = DEFAULT_LIMIT)) {
             LectureBankPagingSource(authApi, categories, department, keyword, order)
         }.flowable
+    }
+
+    override fun uploadLectureBank(
+        title: String,
+        content: String,
+        category: String,
+        files: List<String>,
+        lectureId: Int,
+        semesterId: Int
+    ): Single<CommonResponse> {
+        return authApi.createLectureBank(
+            LectureBankPostRequest(
+                category = listOf(category),
+                title = title,
+                content = content,
+                files = files,
+                lectureId = lectureId,
+                semesterDateId = semesterId
+            )
+        )
     }
 
     override fun getLectureBankComments(lectureBankId: Int): Flowable<PagingData<LectureBankComment>> {
@@ -120,14 +144,7 @@ class LectureBankRemoteDataSource(
     override fun uploadSingleFile(uri: Uri): Observable<ResponseWithProgress<String>> {
         return Observable.create<ResponseWithProgress<String>?> { emitter ->
             try {
-                val file = File.createTempFile(uri.getDisplayName(context) ?: uri.toString(), ".tmp").apply {
-                    deleteOnExit()
-                }
                 val mimeType = context.contentResolver.getType(uri)
-
-                context.contentResolver.openInputStream(uri)?.let {
-                    copyToFile(it, file)
-                } ?: emitter.onError(NullPointerException())
 
                 val progressFileRequestBody =
                     ProgressFileRequestBody(context, uri, mimeType, object : ProgressRequestBodyCallback() {
@@ -167,20 +184,6 @@ class LectureBankRemoteDataSource(
                 emitter.onError(e)
             }
         }.withThread()
-    }
-
-    private fun copyToFile(inputStream: InputStream, dest : File) {
-        try {
-            val fileOutputStream = dest.outputStream()
-            var read: Int
-            val bytes = ByteArray(1024)
-
-            while (inputStream.read(bytes).also { read = it } != -1) {
-                fileOutputStream.write(bytes, 0, read)
-            }
-        } catch (e: Exception) {
-
-        }
     }
 
     companion object {

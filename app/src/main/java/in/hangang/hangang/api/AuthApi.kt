@@ -14,6 +14,7 @@ import `in`.hangang.hangang.data.request.TimetableMemoRequest
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankPostRequest
 import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.request.LectureBankReportRequest
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -170,6 +171,9 @@ interface AuthApi {
     @Query("order") order: String,
     @Query("page") page : Int) : Single<LectureBankResponse>
 
+    @POST(LECTURE_BANKS)
+    fun createLectureBank(@Body lectureBankPostRequest: LectureBankPostRequest) : Single<CommonResponse>
+
     @GET("$LECTURE_BANKS/{id}")
     fun getLectureBankDetail(@Path("id") id: Int) : Single<LectureBankDetail>
 
@@ -221,4 +225,5 @@ interface AuthApi {
 
     @GET(USER_ME)
     fun getUserInfo() : Single<User>
+
 }

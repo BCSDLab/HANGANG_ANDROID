@@ -62,7 +62,9 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
     }
 
     private val lectureBankEditorActivityContract = registerForActivityResult(LectureBankEditorActivityContract()) {
-
+        when(it) {
+            LectureBankEditorActivityContract.RESULT_UPLOADED -> lectureBankViewModel.getLectureBanks()
+        }
     }
 
     private val lectureBankDetailActivityContract = registerForActivityResult(LectureBankDetailActivityContract()) {}

@@ -23,6 +23,17 @@ class LectureBankLocalDataSource : LectureBankDataSource {
         return Flowable.never()
     }
 
+    override fun uploadLectureBank(
+        title: String,
+        content: String,
+        category: String,
+        files: List<String>,
+        lectureId: Int,
+        semesterId: Int
+    ): Single<CommonResponse> {
+        return Single.never()
+    }
+
     override fun getLectureBankComments(lectureBankId: Int): Flowable<PagingData<LectureBankComment>> {
         return Flowable.never()
     }

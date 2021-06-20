@@ -27,6 +27,17 @@ class LectureBankRepository(
         )
     }
 
+    override fun uploadLectureBank(
+        title: String,
+        content: String,
+        category: String,
+        files: List<String>,
+        lectureId: Int,
+        semesterId: Int
+    ): Single<CommonResponse> {
+        return lectureBankRemoteDataSource.uploadLectureBank(title, content, category, files, lectureId, semesterId)
+    }
+
     override fun getLectureBankComments(lectureBankId: Int): Flowable<PagingData<LectureBankComment>> {
         return lectureBankRemoteDataSource.getLectureBankComments(lectureBankId)
     }

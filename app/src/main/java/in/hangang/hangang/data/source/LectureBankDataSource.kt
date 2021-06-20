@@ -19,6 +19,15 @@ interface LectureBankDataSource {
         order: String
     ) : Flowable<PagingData<LectureBank>>
 
+    fun uploadLectureBank(
+        title: String,
+        content: String,
+        category: String,
+        files: List<String>,
+        lectureId: Int,
+        semesterId: Int
+    ) : Single<CommonResponse>
+
     fun getLectureBankComments(
         lectureBankId: Int
     ) : Flowable<PagingData<LectureBankComment>>

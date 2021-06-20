@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.progressdialog.ProgressDialog
 import `in`.hangang.core.util.getDisplayName
 import `in`.hangang.core.util.getSize
 import `in`.hangang.core.util.toProperCapacityUnit
@@ -34,6 +35,13 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
 
     private val lectureBankEditorViewModel: LectureBankEditorViewModel by viewModel()
 
+    private val selectedCategory: CheckBox
+        get() {
+            categoryMap.keys.forEach {
+                if (it.isChecked) return it
+            }
+            return binding.checkBoxLectureBankCategoryPreviousBank
+        }
     private val categoryMap: Map<CheckBox, String> by lazy {
         mapOf(
             binding.checkBoxLectureBankCategoryPreviousBank to LECTURE_BANKS_CATEGORY_PREVIOUS,
@@ -41,6 +49,13 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
             binding.checkBoxLectureBankCategoryAssignmentBank to LECTURE_BANKS_CATEGORY_ASSIGNMENT,
             binding.checkBoxLectureBankCategoryLectureBank to LECTURE_BANKS_CATEGORY_LECTURE,
             binding.checkBoxLectureBankCategoryEtcBank to LECTURE_BANKS_CATEGORY_ETC
+        )
+    }
+
+    private val uploadRequestProgressDialog: ProgressDialog by lazy {
+        ProgressDialog(
+            this,
+            getString(R.string.lecture_bank_pending_upload)
         )
     }
 
@@ -121,9 +136,26 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
                         "50MB"
                     )
                 }
+                checkUploadAvailability()
             }
             fileUploadStatus.observe(this@LectureBankEditorActivity) {
-                lectureBankEditorUploadFileAdapter.setDownloadStatus(it.first, it.second, if(it.second >= 0) 100 else it.second )
+                lectureBankEditorUploadFileAdapter.setDownloadStatus(
+                    it.first,
+                    it.second,
+                    if (it.second >= 0) 100 else it.second
+                )
+            }
+            lectureBankUploadRequested.observe(this@LectureBankEditorActivity) {
+                if (it) uploadRequestProgressDialog.show()
+                else uploadRequestProgressDialog.hide()
+            }
+            lectureBankUploaded.observe(this@LectureBankEditorActivity) {
+                setResult(LectureBankEditorActivityContract.RESULT_UPLOADED)
+                finish()
+            }
+            isLoading.observe(this@LectureBankEditorActivity) {
+                if (it) showProgressDialog()
+                else hideProgressDialog()
             }
         }
     }
@@ -154,6 +186,15 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
 
         binding.buttonLectureBankNewImage.setOnClickListener {
             lectureBankEditorGetContentContract.launch(null)
+        }
+
+        binding.buttonLectureBankNewFinish.setOnClickListener {
+            lectureBankEditorViewModel.uploadLectureBank(
+                title = binding.editTextLectureBankTitle.text.toString(),
+                content = binding.editTextLectureBankContent.text.toString(),
+                semesterDate = binding.spinnerLectureBankSemester.selectedItem.toString(),
+                category = selectedCategory.text.toString()
+            )
         }
     }
 
@@ -188,5 +229,12 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
             ) {
                 append(lecture.professor)
             }
+    }
+
+    private fun checkUploadAvailability() {
+        binding.buttonLectureBankNewFinish.isEnabled =
+            binding.editTextLectureBankTitle.text.isNotBlank() &&
+                    binding.editTextLectureBankContent.text.isNotBlank() &&
+                    binding.spinnerLectureBankSemester.items.isNotEmpty()
     }
 }

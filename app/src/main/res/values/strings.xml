@@ -302,5 +302,6 @@
     <string name="lecture_bank_lecture_list_select">선택</string>
     <string name="lecture_bank_editor_file_info">총 %1$d개 ( %2$s / %3$s )</string>
     <string name="description_image_chooser">Choose image</string>
+    <string name="lecture_bank_pending_upload">첨부파일 업로드 중...</string>
 
 </resources>

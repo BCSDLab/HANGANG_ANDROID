@@ -35,12 +35,12 @@ class BottomSheetSpinner @JvmOverloads constructor(
 
             field = value
         }
-    private var _textViewSelectedItem: TextView
+    private var _textViewSelectedItem: TextView = view.findViewById(R.id.text_view_spinner_selected_item)
+    val selectedItem : CharSequence? get() = items.getOrNull(position)
 
     val textViewSelectedItem: TextView get() = _textViewSelectedItem
 
     init {
-        _textViewSelectedItem = view.findViewById(R.id.text_view_spinner_selected_item)
 
         this.setOnClickListener { showBottomSheet() }
         view.setOnClickListener { showBottomSheet() }

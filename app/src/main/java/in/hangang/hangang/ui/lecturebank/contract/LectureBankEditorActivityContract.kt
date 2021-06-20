@@ -19,5 +19,7 @@ class LectureBankEditorActivityContract : ActivityResultContract<LectureBank?, I
 
     companion object {
         const val LECTURE_BANK = "LECTURE_BANK"
+
+        const val RESULT_UPLOADED = 101
     }
 }
