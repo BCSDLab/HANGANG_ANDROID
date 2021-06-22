@@ -53,8 +53,9 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     private val classClickListener = object : RecyclerViewClickListener {
         override fun onClick(view: View, position: Int, item: Any) {
             val classLecture = (item as ClassLecture)
-            lectureReviewDetailViewModel.setDialogCheckButton(classLecture.id)
-            listDialog.show(parentFragmentManager,"asdf")
+            lectureReviewDetailViewModel.fetchDialogData(5,classLecture.id)
+            //lectureReviewDetailViewModel.setDialogCheckButton(classLecture.id)
+
 
         }
     }
@@ -158,15 +159,8 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             userTimeTableList.observe(viewLifecycleOwner, {
                 it.let { listDialogRecyclerViewAdapter.submitList(it)
                     listDialog = ListDialog(listDialogRecyclerViewAdapter)
-                    lectureReviewDetailViewModel.getTimetable()
-                    //listDialog.show(parentFragmentManager,"asdf")
+                    listDialog.show(parentFragmentManager,"asdf")
                 }
-            })
-            classWithLecture.observe(viewLifecycleOwner, {
-                lectureClassTimeAdapter.setCheckList(it)
-                for(i in it)
-                    LogUtil.e(i.toString())
-                lectureClassTimeAdapter.notifyDataSetChanged()
             })
 
         }
@@ -227,12 +221,11 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         listDialogRecyclerViewAdapter.setCheckClickListener(checkClickListener)
         binding.lectureDetailSortType.text = lectureReviewDetailViewModel.sort
         lecture.id.let {
-            lectureReviewDetailViewModel.getClassLectureList(it)
+            lectureReviewDetailViewModel.fetchClassLectureList(it, 5)
             lectureReviewDetailViewModel.getEvaluationRating(it)
             lectureReviewDetailViewModel.getEvaluationTotal(it)
             lectureReviewDetailViewModel.getReviewList(it, lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
         }
-        lectureReviewDetailViewModel.getUserTimeTables(5)
         lecture.name.let {
             lectureReviewDetailViewModel.getRecommentedDocs(it)
         }

@@ -143,4 +143,12 @@ class TimeTableRepository(
     override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
         return timeTableRemoteDataSource.getUserTimeTables(semesterId)
     }
+
+    override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {
+        return timeTableRemoteDataSource.fetchLectureListFromTimeTable(timetableId)
+    }
+
+    override suspend fun fetchTimeTables(semesterDateId: Long?): List<TimeTable> {
+        return timeTableRemoteDataSource.fetchTimeTables(semesterDateId)
+    }
 }

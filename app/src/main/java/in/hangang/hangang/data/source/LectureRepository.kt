@@ -108,4 +108,12 @@ class LectureRepository(
     override fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse> {
         return lectureRemoteDataSource.postEvaluation(lectureEvaluationRequest)
     }
+
+    override suspend fun getLectureClass(id: Int): ArrayList<ClassLecture> {
+        return lectureRemoteDataSource.getLectureClass(id)
+    }
+
+    override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
+        return lectureRemoteDataSource.fetchClassLectures(id)
+    }
 }

@@ -24,6 +24,7 @@ import androidx.paging.rxjava3.cachedIn
 import com.github.mikephil.charting.data.BarEntry
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.addTo
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -33,8 +34,8 @@ class LectureReviewDetailViewModel(
     private val timeTableRepository: TimeTableRepository
 ) :
     ViewModelBase() {
-    private val _classLectureList = MutableLiveData<ArrayList<ClassLecture>>()
-    val classLectureList: LiveData<ArrayList<ClassLecture>> get() = _classLectureList
+    private val _classLectureList = MutableLiveData<List<ClassLecture>>()
+    val classLectureList: LiveData<List<ClassLecture>> get() = _classLectureList
 
     private val _chartList = MutableLiveData<ArrayList<BarEntry>>()
     val chartList: LiveData<ArrayList<BarEntry>> get() = _chartList
@@ -54,14 +55,9 @@ class LectureReviewDetailViewModel(
     private val _reportResult = MutableLiveData<CommonResponse>()
     val reportResult: LiveData<CommonResponse> get() = _reportResult
 
-    private val _timeTableWithLectureList = MutableLiveData<TimeTableWithLecture>()
-    val timeTableWithLectureList: LiveData<TimeTableWithLecture> get() = _timeTableWithLectureList
-
-    private val _classWithLecture = MutableLiveData<ArrayList<Boolean>>()
-    val classWithLecture: LiveData<ArrayList<Boolean>> get() = _classWithLecture
 
 
-    val classWithTimeTableList = HashMap<Int, List<LectureTimeTable>>()
+
 
 
 
@@ -130,20 +126,6 @@ class LectureReviewDetailViewModel(
             })
             .addTo(compositeDisposable)
     }
-
-    fun getClassLectureList(id: Int) {
-        lectureRepository.getClassLecture(id)
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({
-                _classLectureList.value = it
-            }, {
-                LogUtil.e(it.message.toString())
-            })
-            .addTo(compositeDisposable)
-    }
-
     fun getBarEntryList(list: ArrayList<Int>): ArrayList<BarEntry> {
         var barEntryList = ArrayList<BarEntry>()
         for (i in 0..9) {
@@ -182,75 +164,37 @@ class LectureReviewDetailViewModel(
             .addTo(compositeDisposable)
     }
 
-    fun getUserTimeTables(semesterId: Long) {
-        timeTableRepository.getUserTimeTables(semesterId)
-            .handleHttpException()
-            .handleProgress(this)
-            .withThread()
-            .subscribe({
-                _userTimeTableList.value = it
-            }, {
-                LogUtil.e(it.message.toString())
-            })
-            .addTo(compositeDisposable)
-    }
-
-    fun getTimetable() {
-
-        for(id in _userTimeTableList.value!!) {
-            timeTableRepository.getTimetable(id.id)
-                .handleHttpException()
-                .handleProgress(this)
-                .withThread()
-                .subscribe({
-                    classWithTimeTableList.put(it.id, it.lectureList)
-                    checkClassAndTimeTable()
-                }, {
-                    LogUtil.e(it.message.toString())
-                })
-                .addTo(compositeDisposable)
-
+    fun fetchDialogData(semesterId: Long, lectureId: Int) {
+        var userTimeTableList = emptyList<TimeTable>()
+        viewModelScope.launch {
+            userTimeTableList = timeTableRepository.fetchTimeTables(semesterId) // 해당학기에 생성한 시간표 가져오기
+            for(timetable in userTimeTableList) {
+                val lectureList = timeTableRepository.fetchLectureListFromTimeTable(timetable.id).lectureList
+                for(lecture in lectureList) {
+                    timetable.isChecked = lecture.lectureId == lectureId
+                }
+            }
+            _userTimeTableList.postValue(userTimeTableList)
         }
 
+
+
     }
-    fun setDialogCheckButton(id: Int){
-        val list = ArrayList<TimeTable>()
-        _userTimeTableList.value?.let { list.addAll(it) }
-        var keys = classWithTimeTableList.keys
-        var idx = 0
-        for(key in keys){
-            val target = classWithTimeTableList.get(key)
-            if(target != null){
-                for(targetId in target){
-                    if(targetId.lectureId == id) {
-                        list[idx].isChecked = true
-                        break
-                    } else {
-                        list[idx].isChecked = false
+
+    fun fetchClassLectureList(id: Int, semesterId: Long) {
+        var lectureList = emptyList<ClassLecture>()
+        viewModelScope.launch {
+            lectureList = lectureRepository.fetchClassLectures(id)
+            var userTimeTableList = timeTableRepository.fetchTimeTables(semesterId) // 해당학기에 생성한 시간표 가져오기
+            for(lecture in lectureList) {
+                for (timetable in userTimeTableList) {
+                    val userLectureList = timeTableRepository.fetchLectureListFromTimeTable(timetable.id).lectureList
+                    for (userLecture in userLectureList) {
+                        lecture.isChecked = lecture.id == userLecture.lectureId
                     }
                 }
             }
-            idx++
+            _classLectureList.postValue(lectureList)
         }
-        _userTimeTableList.value = list
-    }
-    fun checkClassAndTimeTable(){
-        val list = ArrayList<Boolean>()
-        for(classId in _classLectureList.value!!){
-            for(key in classWithTimeTableList.keys) {
-                val target = classWithTimeTableList.get(key)
-                if (target != null) {
-                    for(targetId in target){
-                        if (targetId.lectureId == classId.id){
-                            list.add(true)
-                        } else {
-                            list.add(false)
-                        }
-                    }
-                }
-            }
-
-        }
-        _classWithLecture.value = list
     }
 }

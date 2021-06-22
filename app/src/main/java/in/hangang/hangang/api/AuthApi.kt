@@ -25,6 +25,12 @@ interface AuthApi {
             @Query("semesterDateId") semesterDateId: Long? = null
     ): Single<List<TimeTable>>
 
+    @GET(TIMETABLE)
+    suspend fun fetchTimeTables(
+        @Query("semesterDateId") semesterDateId: Long? = null
+    ): List<TimeTable>
+
+
     @POST(TIMETABLE)
     fun makeTimeTable(
             @Body userTimeTableRequest: UserTimeTableRequest
@@ -54,6 +60,12 @@ interface AuthApi {
     fun getLectureListFromTimeTable(
         @Query("timeTableId") timetableId: Int
     ): Single<TimeTableWithLecture>
+
+    @GET(TIMETABLE_LECTURE)
+    suspend fun fetchLectureListFromTimeTable(
+        @Query("timeTableId") timetableId: Int
+    ): TimeTableWithLecture
+
 
     @POST(TIMETABLE_CUSTOM_LECTURE)
     fun addCustomLectureInTimetable(
@@ -123,6 +135,13 @@ interface AuthApi {
 
     @GET(CLASS_LECTURES)
     fun getClassLectures(@Path("id") id: Int): Single<ArrayList<ClassLecture>>
+
+    @GET(CLASS_LECTURES)
+    suspend fun fetchClassLectures(@Path("id") id: Int): List<ClassLecture>
+
+    @GET(CLASS_LECTURES)
+    suspend fun getLectureClass(@Path("id") id: Int): ArrayList<ClassLecture>
+
 
     @GET(LECTURE_REVIEWS)
     fun getLectureReview(@Path("id") id: Int,

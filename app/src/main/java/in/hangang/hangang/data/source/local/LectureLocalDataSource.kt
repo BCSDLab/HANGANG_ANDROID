@@ -82,4 +82,12 @@ class LectureLocalDataSource : LectureDataSource {
     override fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse> {
         return Single.never()
     }
+
+    override suspend fun getLectureClass(id: Int): ArrayList<ClassLecture> {
+        return arrayListOf()
+    }
+
+    override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
+        return emptyList()
+    }
 }

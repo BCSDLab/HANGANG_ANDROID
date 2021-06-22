@@ -132,4 +132,12 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
         return Single.never()
     }
+
+    override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {
+        return TimeTableWithLecture.EMPTY
+    }
+
+    override suspend fun fetchTimeTables(semesterDateId: Long?): List<TimeTable> {
+        return emptyList()
+    }
 }

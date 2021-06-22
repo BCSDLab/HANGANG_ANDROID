@@ -119,4 +119,12 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse> {
         return authApi.postEvaluation(lectureEvaluationRequest)
     }
+
+    override suspend fun getLectureClass(id: Int): ArrayList<ClassLecture> {
+        return authApi.getLectureClass(id)
+    }
+
+    override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
+        return authApi.fetchClassLectures(id)
+    }
 }

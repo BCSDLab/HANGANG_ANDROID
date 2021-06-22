@@ -200,4 +200,12 @@ class TimeTableRemoteDataSource(
     override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
         return authApi.getTimeTables(semesterId)
     }
+
+    override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {
+        return authApi.fetchLectureListFromTimeTable(timetableId)
+    }
+
+    override suspend fun fetchTimeTables(semesterDateId: Long?): List<TimeTable> {
+        return authApi.fetchTimeTables(semesterDateId)
+    }
 }

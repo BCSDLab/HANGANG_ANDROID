@@ -9,6 +9,7 @@ import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
+import retrofit2.http.Path
 
 interface LectureDataSource {
     fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<RankingLectureResult>
@@ -26,4 +27,6 @@ interface LectureDataSource {
     fun getLectureSemester(id: Int): Single<ArrayList<Int>>
     fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse>
     fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse>
+    suspend fun getLectureClass(id: Int): ArrayList<ClassLecture>
+    suspend fun fetchClassLectures(id: Int): List<ClassLecture>
 }
