@@ -47,6 +47,10 @@ class LectureBankViewModel(
         getLectureBanks()
     }
 
+    fun setKeyword(keyword: String) {
+        _keyword.postValue(keyword)
+    }
+
     fun setDepartment(department: String?) {
         _department.value = department
         getLectureBanks()

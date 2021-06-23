@@ -95,6 +95,11 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
             adapter = lectureBankListAdapter
         }
 
+        binding.appBar.setSearchListener {
+            lectureBankViewModel.setKeyword(it)
+            lectureBankViewModel.getLectureBanks()
+        }
+
         binding.lectureBankSwipeRefreshLayout.setOnRefreshListener {
             lectureBankViewModel.getLectureBanks()
         }
