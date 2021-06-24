@@ -25,13 +25,8 @@ import androidx.paging.rxjava3.flowable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import okhttp3.Callback
 import okhttp3.MultipartBody
-import retrofit2.Call
 import retrofit2.HttpException
-import retrofit2.Response
-import java.io.File
-import java.io.InputStream
 
 class LectureBankRemoteDataSource(
     private val context: Context,
@@ -95,8 +90,8 @@ class LectureBankRemoteDataSource(
         return authApi.getLectureBankDetail(id)
     }
 
-    override fun hitLectureBank(lectureBankId: Int): Single<CommonResponse> {
-        return authApi.hitLectureBank(lectureBankId)
+    override fun toggleHitLectureBank(lectureBankId: Int): Single<CommonResponse> {
+        return authApi.toggleHitLectureBank(lectureBankId)
     }
 
     override fun purchaseLectureBank(lectureBankId: Int): Single<CommonResponse> {

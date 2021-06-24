@@ -153,6 +153,9 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             buttonPurchase.setOnClickListener {
                 showLectureBankPurchaseDialog()
             }
+            layoutThumbsCount.setOnClickListener {
+                lectureBankDetailViewModel.toggleHitLectureBank()
+            }
         }
     }
 
@@ -200,6 +203,13 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             lectureBankCommentRemovedEvent.observe(this@LectureBankDetailActivity) {
                 lectureBankCommentsAdapter.lectureBankCommentEditPosition = -1
                 lectureBankDetailViewModel.getLectureBankComments()
+            }
+            hitChanged.observe(this@LectureBankDetailActivity) {
+                with(binding.textViewThumbsUpCount) {
+                    text = (this.text.toString().toInt() + (if(this.isSelected) -1 else 1)).toString()
+                    isSelected = !this.isSelected
+                }
+                binding.imageViewThumbsUp.isSelected = !binding.imageViewThumbsUp.isSelected
             }
         }
         with(lectureBankUploadFileViewModel) {

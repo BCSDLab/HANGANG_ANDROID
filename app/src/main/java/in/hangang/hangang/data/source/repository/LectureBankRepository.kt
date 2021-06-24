@@ -58,8 +58,8 @@ class LectureBankRepository(
         return lectureBankRemoteDataSource.getLectureBankDetail(id)
     }
 
-    override fun hitLectureBank(lectureBankId: Int): Single<CommonResponse> {
-        return lectureBankRemoteDataSource.hitLectureBank(lectureBankId)
+    override fun toggleHitLectureBank(lectureBankId: Int): Single<CommonResponse> {
+        return lectureBankRemoteDataSource.toggleHitLectureBank(lectureBankId)
     }
 
     override fun purchaseLectureBank(lectureBankId: Int): Single<CommonResponse> {

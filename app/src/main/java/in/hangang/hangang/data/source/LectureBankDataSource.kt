@@ -47,7 +47,7 @@ interface LectureBankDataSource {
 
     fun getLectureBankDetail(id: Int) : Single<LectureBankDetail>
 
-    fun hitLectureBank(lectureBankId: Int) : Single<CommonResponse>
+    fun toggleHitLectureBank(lectureBankId: Int) : Single<CommonResponse>
 
     fun purchaseLectureBank(lectureBankId: Int) : Single<CommonResponse>
 

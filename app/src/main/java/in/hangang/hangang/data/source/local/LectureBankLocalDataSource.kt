@@ -54,7 +54,7 @@ class LectureBankLocalDataSource : LectureBankDataSource {
         return Single.never()
     }
 
-    override fun hitLectureBank(lectureBankId: Int): Single<CommonResponse> {
+    override fun toggleHitLectureBank(lectureBankId: Int): Single<CommonResponse> {
         return Single.never()
     }
 

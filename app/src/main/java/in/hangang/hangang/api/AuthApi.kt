@@ -177,8 +177,8 @@ interface AuthApi {
     @GET("$LECTURE_BANKS/{id}")
     fun getLectureBankDetail(@Path("id") id: Int) : Single<LectureBankDetail>
 
-    @GET(LECTURE_BANKS_HIT)
-    fun hitLectureBank(@Path("id") id: Int) : Single<CommonResponse>
+    @POST("$LECTURE_BANKS_HIT/{id}")
+    fun toggleHitLectureBank(@Path("id") id: Int) : Single<CommonResponse>
 
     @POST(LECTURE_BANKS_PURCHASE)
     fun purchaseLectureBank(@Path("id") id: Int) : Single<CommonResponse>

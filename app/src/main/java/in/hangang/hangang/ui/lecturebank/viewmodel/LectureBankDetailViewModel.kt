@@ -35,6 +35,7 @@ class LectureBankDetailViewModel(
     private val _lectureBankCommentAppliedEvent = MutableLiveData<Event<Int>>()
     private val _lectureBankCommentRemovedEvent = MutableLiveData<Event<CommonResponse>>()
     private val _lectureBankCommentModifiedEvent = MutableLiveData<Event<CommonResponse>>()
+    private val _hitChanged = MutableLiveData<Event<CommonResponse>>()
 
     val lectureBankDetail : LiveData<LectureBankDetail> get() = _lectureBankDetail
     val isScraped : LiveData<Boolean> get() = _isScraped
@@ -45,6 +46,7 @@ class LectureBankDetailViewModel(
     val lectureBankCommentAppliedEvent : LiveData<Event<Int>> get() = _lectureBankCommentAppliedEvent
     val lectureBankCommentRemovedEvent : LiveData<Event<CommonResponse>> get() =  _lectureBankCommentRemovedEvent
     val lectureBankCommentModifiedEvent : LiveData<Event<CommonResponse>> get() =  _lectureBankCommentModifiedEvent
+    val hitChanged : LiveData<Event<CommonResponse>> get() = _hitChanged
     val userId : Int get() = _userId
 
     fun getLectureBankDetail(id: Int) {
@@ -186,6 +188,20 @@ class LectureBankDetailViewModel(
                 _lectureBankCommentAppliedEvent.value = Event(it)
             }, this::postErrorViewModel)
             .addTo(compositeDisposable)
+    }
+
+    fun toggleHitLectureBank() {
+        lectureBankRepository.toggleHitLectureBank(
+            lectureBankDetail.value?.id ?: -1
+        )
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _hitChanged.postValue(Event(it))
+            }, {
+
+            })
     }
 
     private fun postErrorViewModel(t: Throwable) {

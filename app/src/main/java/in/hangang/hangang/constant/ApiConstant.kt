@@ -42,7 +42,7 @@ const val API_TIMETABLE_DEFAULT_LIMIT = 10
 const val API_TIMETABLE_DEFAULT_PAGE = 1
 
 const val LECTURE_BANKS = "/lecture-banks"
-const val LECTURE_BANKS_HIT = "/lecture-banks/hit/{id}"
+const val LECTURE_BANKS_HIT = "/lecture-banks/hit"
 const val LECTURE_BANKS_PURCHASE = "/lecture-banks/purchase/{id}"
 const val LECTURE_BANKS_PURCHASE_CHECK = "/lecture-banks/purchase/check/{id}"
 const val LECTURE_BANKS_REPORT = "/lecture-banks/report/"
