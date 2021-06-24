@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.progressdialog.ProgressDialog
 import `in`.hangang.core.util.getDisplayName
 import `in`.hangang.core.util.getSize
@@ -14,8 +15,11 @@ import `in`.hangang.hangang.databinding.ActivityLectureBankEditorBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorActivityContract
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorSelectLectureActivityContract
+import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankFilePickerContract
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankImagePickerContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankEditorViewModel
+import android.content.DialogInterface
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -66,23 +70,13 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
             lectureBankEditorViewModel.setLecture(it.lecture)
     }
 
-    private val lectureBankEditorGetContentContract = registerForActivityResult(
-        LectureBankImagePickerContract()
-    ) {
-        Log.d("Selected files", it.joinToString("\n"))
-        it.forEach { uri ->
-            lectureBankEditorViewModel.uploadSingleFile(
-                uploadFile = UploadFile(
-                    0, 0,
-                    fileName = uri.getDisplayName(applicationContext) ?: "",
-                    ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri)) ?: "*",
-                    size = uri.getSize(applicationContext) ?: 0L,
-                    url = ""
-                ),
-                uri = uri
-            )
-        }
-    }
+    private val lectureBankEditorImagePickerContract = registerForActivityResult(
+        LectureBankImagePickerContract(), this::uploadSelectedUris
+    )
+
+    private val lectureBankEditorFilePickerContract = registerForActivityResult(
+        LectureBankFilePickerContract(), this::uploadSelectedUris
+    )
 
     private val lectureBankEditorUploadFileAdapter: LectureBankFileAdapter by lazy {
         LectureBankFileAdapter().apply {
@@ -185,7 +179,11 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
         }
 
         binding.buttonLectureBankNewImage.setOnClickListener {
-            lectureBankEditorGetContentContract.launch(null)
+            lectureBankEditorImagePickerContract.launch(null)
+        }
+
+        binding.buttonLectureBankNewFile.setOnClickListener {
+            lectureBankEditorFilePickerContract.launch(null)
         }
 
         binding.buttonLectureBankNewFinish.setOnClickListener {
@@ -236,5 +234,41 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
             binding.editTextLectureBankTitle.text.isNotBlank() &&
                     binding.editTextLectureBankContent.text.isNotBlank() &&
                     binding.spinnerLectureBankSemester.items.isNotEmpty()
+    }
+
+    private fun uploadSelectedUris(uris: List<Uri>) {
+        val uploadedFileSize = lectureBankEditorViewModel.uploadFiles.value?.sumOf { it.size } ?: 0L
+        val urisSize = uris.sumOf { it.getSize(applicationContext) ?: 0L }
+        if (uploadedFileSize + urisSize > FILE_50MB)
+            showFileSizeExceedDialog()
+        else {
+            uris.forEach { uri ->
+                lectureBankEditorViewModel.uploadSingleFile(
+                    uploadFile = UploadFile(
+                        0, 0,
+                        fileName = uri.getDisplayName(applicationContext) ?: "",
+                        ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri)) ?: "*",
+                        size = uri.getSize(applicationContext) ?: 0L,
+                        url = ""
+                    ),
+                    uri = uri
+                )
+            }
+        }
+    }
+
+    private fun showFileSizeExceedDialog() {
+        showSimpleDialog(
+            title = getString(R.string.lecture_bank_title_file_size_exceed),
+            message = getString(R.string.lecture_bank_message_file_size_exceed),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, which ->
+                dialog.dismiss()
+            }
+        )
+    }
+
+    companion object {
+        private const val FILE_50MB = 50 * 1024 * 1024
     }
 }

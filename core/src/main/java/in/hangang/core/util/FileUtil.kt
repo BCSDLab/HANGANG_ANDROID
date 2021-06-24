@@ -77,4 +77,3 @@ fun Uri.getSize(context: Context): Long? {
 
     return size
 }
-

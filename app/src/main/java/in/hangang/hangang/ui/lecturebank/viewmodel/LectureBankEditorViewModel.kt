@@ -21,7 +21,6 @@ class LectureBankEditorViewModel(
     private val lectureBankRepository: LectureBankRepository
 ) : ViewModelBase() {
 
-    private var uploadRequested = false
     private lateinit var title: String
     private lateinit var content: String
     private lateinit var category: String
@@ -70,13 +69,13 @@ class LectureBankEditorViewModel(
             }, {
                 _fileUploadError.postValue(Event(uploadFile to it))
                 fileIsUploading.remove(uploadFile)
-                uploadRequested = false
                 _lectureBankUploadRequested.postValue(false)
             }, {
                 fileUploadStatusMap[uploadFile] = LectureBankFileAdapter.PROGRESS_NONE
                 _fileUploadStatus.postValue(uploadFile to LectureBankFileAdapter.PROGRESS_NONE)
                 fileIsUploading.remove(uploadFile)
-                if(uploadRequested) uploadLectureBank(title, content, category, semesterDate)
+                if(_lectureBankUploadRequested.value == true)
+                    uploadLectureBankRx(title, content, category, semesterDate)
             })
             .addTo(compositeDisposable)
     }
@@ -100,21 +99,26 @@ class LectureBankEditorViewModel(
     }
 
     fun uploadLectureBank(title: String, content: String, category: String, semesterDate: String) {
-        _lectureBankUploadRequested.postValue(true)
         if(fileIsUploading.isEmpty()) {
-            _lectureBankUploadRequested.postValue(false)
-            lectureBankRepository.uploadLectureBank(
-                title, content, category, uploadedFile.values.toList(), _lecture.value?.id ?: -1, getLectureBankId(semesterDate)
-            )
-                .withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    _lectureBankUploaded.postValue(Event(it))
-                }, {
-                    _lectureBankUploadError.postValue(Event(it))
-                })
+            uploadLectureBankRx(title, content, category, semesterDate)
+        } else {
+            _lectureBankUploadRequested.postValue(true)
         }
+    }
+
+    private fun uploadLectureBankRx(title: String, content: String, category: String, semesterDate: String) {
+        _lectureBankUploadRequested.postValue(false)
+        lectureBankRepository.uploadLectureBank(
+            title, content, category, uploadedFile.values.toList(), _lecture.value?.id ?: -1, getLectureBankId(semesterDate)
+        )
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lectureBankUploaded.postValue(Event(it))
+            }, {
+                _lectureBankUploadError.postValue(Event(it))
+            })
     }
 
     private fun getLectureBankId(semesterDate: String) : Int = semesterDateList.indexOf(semesterDate) + 1
