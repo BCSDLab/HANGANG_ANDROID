@@ -1,11 +1,14 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.repository
 
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.source.LectureDataSource
+import `in`.hangang.hangang.data.source.LectureDataSource
+import `in`.hangang.hangang.data.source.LectureReviewPagingSource
+import `in`.hangang.hangang.data.source.ReviewPagingSource
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -17,6 +20,18 @@ class LectureRepository(
     private val lectureLocalDataSource: LectureDataSource,
     private val lectureRemoteDataSource: LectureDataSource
 ) : LectureDataSource {
+    override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
+        return lectureRemoteDataSource.scrapLecture(lectureId)
+    }
+
+    override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
+        return lectureRemoteDataSource.unscrapLecture(*lectureId)
+    }
+
+    override fun getScrapedLecture(): Single<List<Lecture>> {
+        return lectureRemoteDataSource.getScrapedLecture()
+    }
+
     override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return lectureRemoteDataSource.getLectureRankingByTotalRating(majors, page)
     }
@@ -27,10 +42,6 @@ class LectureRepository(
 
     override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return lectureRemoteDataSource.getLectureRankingByLatestReview(majors, page)
-    }
-
-    override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
-        return lectureRemoteDataSource.getScrapedLecture()
     }
 
     override fun getFilteredLectureList(
@@ -54,7 +65,7 @@ class LectureRepository(
         filterHashTag: ArrayList<Int>?,
         sort: String,
         keyword: String?
-    ):Flowable<PagingData<RankingLectureItem>> {
+    ): Flowable<PagingData<RankingLectureItem>> {
         return Pager(PagingConfig(pageSize = 20)){
             LectureReviewPagingSource(lectureRemoteDataSource,majors, filterType, filterHashTag, keyword, sort)
         }.flowable
@@ -81,7 +92,7 @@ class LectureRepository(
         return lectureRemoteDataSource.getLectureReview(id, page, keyword, sort)
     }
 
-    fun getLectureReviewList(id: Int, keyword: String?, sort: String):Flowable<PagingData<LectureReview>> {
+    fun getLectureReviewList(id: Int, keyword: String?, sort: String): Flowable<PagingData<LectureReview>> {
         return Pager(PagingConfig(pageSize = 20)){
             ReviewPagingSource(lectureRemoteDataSource,id, keyword, sort)
         }.flowable

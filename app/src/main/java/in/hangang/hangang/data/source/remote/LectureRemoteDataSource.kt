@@ -5,15 +5,16 @@ import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.constant.SORT_BY_LATEST_REVIEW
 import `in`.hangang.hangang.constant.SORT_BY_REVIEW_COUNT
 import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.request.ScrapLectureRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.source.LectureDataSource
+import `in`.hangang.hangang.data.source.LectureDataSource
 
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.Body
 
 class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val authApi: AuthApi) :
     LectureDataSource {
@@ -51,7 +52,7 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
         )
     }
 
-    override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
+    override fun getScrapedLecture(): Single<List<Lecture>> {
         return authApi.getScrapedLecture()
     }
 
@@ -108,5 +109,15 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
 
     override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
         return authApi.getLectureSemester(id)
+    }
+
+	override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
+        return authApi.addScrapLecture(
+            ScrapLectureRequest(id = lectureId)
+        )
+    }
+
+    override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
+        return authApi.removeScrapLecture(lectureId.toList())
     }
 }

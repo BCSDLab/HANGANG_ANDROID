@@ -1,5 +1,9 @@
-package `in`.hangang.hangang.data.source.source
+package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.entity.LectureBank
+import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.data.entity.User
+import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
@@ -45,4 +49,12 @@ interface UserDataSource {
     fun getAutoLoginStatus(): Single<Boolean>
 
     fun getMyProfile(): Single<MyProfileResponse>
+
+    fun getUserInformation(): Single<User>
+
+    fun getUserCounts(): Single<UserCount>
+
+    fun getPointRecords(): Single<List<PointRecord>>
+
+    fun getPurchasedBanks(): Single<List<LectureBank>>
 }

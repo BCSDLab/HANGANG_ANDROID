@@ -2,10 +2,10 @@ package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
+import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.LectureRepository
-import `in`.hangang.hangang.data.source.LectureReviewPagingSource
+import `in`.hangang.hangang.data.source.repository.LectureRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
@@ -29,7 +29,7 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
     var selectedMajorListDefault = ArrayList<String>()
     private val _isGetScrapList = MutableLiveData<Boolean>()
     val isGetScrapList: LiveData<Boolean> get() = _isGetScrapList
-    var scrapLectureList = ArrayList<RankingLectureItem>()
+    var scrapLectureList = ArrayList<Lecture>()
     var filterSort = SORT_BY_TOTAL_RATING
     var filterType = ArrayList<String>()
     var filterHashTag = ArrayList<Int>()
@@ -82,7 +82,7 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
             .handleHttpException()
             .handleProgress(this)
             .subscribe({ scrapList ->
-                scrapLectureList = scrapList
+                scrapLectureList = scrapList as ArrayList<Lecture>
                 _isGetScrapList.value = true
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)

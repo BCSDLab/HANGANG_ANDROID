@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.repository
 
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
@@ -7,7 +7,7 @@ import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.source.TimeTableDataSource
+import `in`.hangang.hangang.data.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRepository(

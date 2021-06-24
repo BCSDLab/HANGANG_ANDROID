@@ -1,10 +1,15 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.repository
 
+import `in`.hangang.hangang.data.entity.LectureBank
+import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.data.entity.User
+import `in`.hangang.hangang.data.entity.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.source.UserDataSource
 import io.reactivex.rxjava3.core.Completable
+import `in`.hangang.hangang.data.source.UserDataSource
 import io.reactivex.rxjava3.core.Single
 
 class UserRepository(
@@ -63,6 +68,22 @@ class UserRepository(
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return userRemoteDataSource.changePassword(portalAccount, password)
+    }
+
+    override fun getUserInformation(): Single<User> {
+        return userRemoteDataSource.getUserInformation()
+    }
+
+    override fun getUserCounts(): Single<UserCount> {
+        return userRemoteDataSource.getUserCounts()
+    }
+
+    override fun getPointRecords(): Single<List<PointRecord>> {
+        return userRemoteDataSource.getPointRecords()
+    }
+
+    override fun getPurchasedBanks(): Single<List<LectureBank>> {
+        return userRemoteDataSource.getPurchasedBanks()
     }
 
     override fun deleteAccount(): Single<CommonResponse> {

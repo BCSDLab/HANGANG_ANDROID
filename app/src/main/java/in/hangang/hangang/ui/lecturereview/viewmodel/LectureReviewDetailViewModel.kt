@@ -5,9 +5,8 @@ import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.LectureRepository
-import `in`.hangang.hangang.data.source.TimeTableRepository
-import `in`.hangang.hangang.di.repositoryModule
+import `in`.hangang.hangang.data.source.repository.LectureRepository
+import `in`.hangang.hangang.data.source.repository.TimeTableRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress

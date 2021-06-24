@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="lecture"
+            type="in.hangang.hangang.data.entity.Lecture" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/background_scraped_lecture">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorSecondary" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@{lecture.name}"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="문명과 역사" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_review_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:text="@{String.format(`(%d)`, lecture.reviewCount)}"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="11sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_title"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_title"
+            tools:text="(0)" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_classification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:text="@{lecture.classification}"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="교양필수" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_professor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:text="@{lecture.professor}"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/text_view_lecture_title"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_title"
+            tools:text="김유진" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_rating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="end"
+            android:text="@{String.format(`%1.01f`, lecture.totalRating)}"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_hashtag_3"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_professor"
+            tools:text="3.5" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_hashtag_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_rating"
+            app:layout_constraintEnd_toStartOf="@id/text_view_lecture_rating"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_hashtag_2"
+            tools:text="# 교수님좋음" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_hashtag_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_rating"
+            app:layout_constraintEnd_toStartOf="@id/text_view_lecture_hashtag_3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_hashtag_1"
+            tools:text="# 진심수면제" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_hashtag_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_rating"
+            app:layout_constraintEnd_toStartOf="@id/text_view_lecture_hashtag_2"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@id/text_view_lecture_title"
+            tools:text="# 배운거많음" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

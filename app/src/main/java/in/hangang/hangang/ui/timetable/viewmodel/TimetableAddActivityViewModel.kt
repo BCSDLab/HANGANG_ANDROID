@@ -6,7 +6,7 @@ import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_SEMESTER_ID
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.TimeTableRepository
+import `in`.hangang.hangang.data.source.repository.TimeTableRepository
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread

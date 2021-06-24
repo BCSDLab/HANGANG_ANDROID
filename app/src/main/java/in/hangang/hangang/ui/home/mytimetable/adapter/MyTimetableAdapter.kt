@@ -13,12 +13,12 @@ class MyTimetableAdapter : OnItemClickRecyclerViewAdapter<MyTimetableAdapter.Vie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_home_my_timetable_list,
-                        parent,
-                        false
-                )
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_home_my_timetable_list,
+                parent,
+                false
+            )
         )
     }
 
@@ -32,5 +32,5 @@ class MyTimetableAdapter : OnItemClickRecyclerViewAdapter<MyTimetableAdapter.Vie
     override fun getItemCount(): Int = 0
 
     class ViewHolder(itemHomeMyTimetableListBinding: ItemHomeMyTimetableListBinding) :
-            ViewBindingRecyclerViewHolder<ItemHomeMyTimetableListBinding>(itemHomeMyTimetableListBinding)
+        ViewBindingRecyclerViewHolder<ItemHomeMyTimetableListBinding>(itemHomeMyTimetableListBinding)
 }
