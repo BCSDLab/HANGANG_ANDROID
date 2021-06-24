@@ -6,6 +6,9 @@ import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_AUTH
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
+import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.toCommonResponse
+import androidx.lifecycle.MutableLiveData
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.*
@@ -78,4 +81,15 @@ private fun <T> retryOnNotAuthorized(): SingleTransformer<T, T> {
                 Single.error(throwable)
         }
     }
+}
+
+inline fun Single<CommonResponse>.subscribeWithCommonResponseError(
+    crossinline onSuccess: (CommonResponse) -> Unit,
+    crossinline onError: (CommonResponse) -> Unit
+) {
+    subscribe({
+        onSuccess(it)
+    }, {
+        onError(it.toCommonResponse())
+    })
 }

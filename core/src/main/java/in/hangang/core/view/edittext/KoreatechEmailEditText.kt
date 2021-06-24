@@ -11,13 +11,14 @@ class KoreatechEmailEditText @JvmOverloads constructor(
         attributeSet: AttributeSet? = null,
         defStyleAttr: Int = 0,
         defStyleRes: Int = 0
-) : SingleLineEditText(context, attributeSet, defStyleAttr, defStyleRes) {
+) : EditTextWithError(context, attributeSet, defStyleAttr, defStyleRes) {
 
-    val koreatechEmailTextView = TextView(context, attributeSet, defStyleAttr, defStyleRes).apply {
+    val koreatechEmailTextView = TextView(context, null, defStyleAttr, defStyleRes).apply {
+        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         text = "@koreatech.ac.kr"
-        container.addView(this)
+        includeFontPadding = false
         setPadding(0, 0, 0, 0)
-        gravity = Gravity.END
+        container.addView(this)
     }
 
     override var inputType: Int

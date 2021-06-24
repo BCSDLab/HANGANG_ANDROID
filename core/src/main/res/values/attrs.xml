@@ -3,7 +3,7 @@
     <attr name="showBackButton" format="boolean" />
 
     <declare-styleable name="RoundedCornerButton">
-        <attr name="buttonAppearence" format="enum">
+        <attr name="buttonAppearence" format="integer">
             <enum name="filled" value="0" />
             <enum name="outlined" value="1" />
         </attr>
@@ -43,7 +43,7 @@
     </declare-styleable>
 
     <declare-styleable name="EditTextWithError">
-        <attr name="status" format="enum">
+        <attr name="status" format="integer">
             <enum name="undefined" value="0" />
             <enum name="check" value="1" />
             <enum name="error" value="2" />

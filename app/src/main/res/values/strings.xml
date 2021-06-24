@@ -3,6 +3,7 @@
     <string name="cancel">취소</string>
     <string name="next_step">다음</string>
     <string name="en_ok">OK</string>
+    <string name="unknown_error">알 수 없는 오류</string>
 
     <string name="credit">%1$s학점</string>
     <string name="grade">%1$s학년</string>
@@ -71,9 +72,12 @@
     <string name="reset_password_regex_error_too_short">비밀번호는 8자 이상이어야 합니다.</string>
     <string name="reset_password_regex_error_too_long">비밀번호는 15자 이하여야 합니다.</string>
 
+    <string name="reset_password_confirm_error">비밀번호가 일치하지 않습니다.</string>
+
     <string name="reset_password_finished_title">비밀번호가 변경되었습니다</string>
     <string name="reset_password_finished_message">%1$s님!\n한기대의 강의평가를 보러 가볼까요?</string>
     <string name="reset_password_finished_positive_button">로그인하러 가기</string>
+    <string name="string_goto_portal">아우누리 바로가기</string>
 
     <string name="mechanical_engineering">기계공학부</string>
     <string name="design_engineering">디자인·건축공학부</string>
