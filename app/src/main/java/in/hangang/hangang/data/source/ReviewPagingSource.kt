@@ -35,6 +35,7 @@ class ReviewPagingSource (
             .subscribeOn(Schedulers.io())
             .map{
                 LECTURE_REVIEW_TOTAL = (it.count / 20) + 1
+                PERSONAL_REVIEW_COUNT = it.count
                 toLoadResult(it.result, nextPageNumber)
             }
             .onErrorReturn { LoadResult.Error(it) }
@@ -53,5 +54,6 @@ class ReviewPagingSource (
     }
     companion object{
         var LECTURE_REVIEW_TOTAL: Int = 30
+        var PERSONAL_REVIEW_COUNT: Int = 0
     }
 }

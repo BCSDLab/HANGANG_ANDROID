@@ -88,6 +88,9 @@ class LectureRepository(
             ReviewPagingSource(lectureRemoteDataSource,id, keyword, sort)
         }.flowable
     }
+    fun getLectureReviewPersonalCount(id: Int, keyword: String?, sort: String):Single<LectureReviewResult> {
+        return lectureRemoteDataSource.getLectureReview(id, 1, keyword, sort)
+    }
 
     override fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse> {
         return lectureRemoteDataSource.postReviewRecommend(reviewRecommendRequest)

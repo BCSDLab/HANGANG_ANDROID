@@ -80,7 +80,7 @@ class TimeTableRemoteDataSource(
         return authApi.getLectureListFromTimeTable(timetableId)
     }
 
-    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable> {
         return authApi.addLectureInTimeTable(
                 TimeTableRequest(lectureId, timetableId)
         )

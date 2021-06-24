@@ -26,7 +26,7 @@ class ListDialogRecyclerViewAdapter :
             LogUtil.e("error")
         }
         var targetPosition = position
-        holder.binding.listDialogCheck.setOnClickListener { v->
+        holder.binding.listDialogConstraintlayout.setOnClickListener { v->
             timeTableClickListener.onClick(v, targetPosition, timeTable)
         }
     }

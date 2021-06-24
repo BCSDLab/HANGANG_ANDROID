@@ -49,7 +49,7 @@ interface AuthApi {
     @POST(TIMETABLE_LECTURE)
     fun addLectureInTimeTable(
             @Body timeTableRequest: TimeTableRequest
-    ): Single<CommonResponse>
+    ): Single<LectureTimeTable>
 
     @HTTP(method = "DELETE", path = TIMETABLE_LECTURE, hasBody = true)
     fun removeLectureInTimeTable(

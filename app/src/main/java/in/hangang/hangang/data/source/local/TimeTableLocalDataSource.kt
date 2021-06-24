@@ -52,7 +52,7 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         return Single.never()
     }
 
-    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable> {
         return Single.never()
     }
 

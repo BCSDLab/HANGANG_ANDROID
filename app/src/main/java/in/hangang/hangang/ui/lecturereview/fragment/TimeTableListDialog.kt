@@ -18,7 +18,7 @@ import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 
-class ListDialog(val recyclerviewAdapter: ListDialogRecyclerViewAdapter): DialogFragment() {
+class TimeTableListDialog(val recyclerviewAdapter: ListDialogRecyclerViewAdapter, val dialogClickListener: TimeTableListDialogClickListener ) : DialogFragment() {
     private lateinit var binding: DialogListViewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,23 +27,34 @@ class ListDialog(val recyclerviewAdapter: ListDialogRecyclerViewAdapter): Dialog
     }
 
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DialogListViewBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.listDialogButtonNegative.setOnClickListener {
-            dismiss()
-        }
+        initEvent()
         binding.listDialogRecyclerview.adapter = recyclerviewAdapter
+    }
+    private fun initEvent() {
+        binding.listDialogButtonNegative.setOnClickListener {
+            dialogClickListener.onCancelClick(this)
+            //dismiss()
+        }
+        binding.listDialogButtonPositive.setOnClickListener {
+            dialogClickListener.onConfirmClick(this)
+            //dismiss()
+        }
+    }
+    interface TimeTableListDialogClickListener {
+        fun onConfirmClick(view: DialogFragment)
+        fun onCancelClick(view: DialogFragment)
     }
 
 }

@@ -88,7 +88,7 @@ class LectureClassTimeAdapter(private val context: Context) :
                 oldItem: ClassLecture,
                 newItem: ClassLecture
             ): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.isChecked == newItem.isChecked
             }
         }
     }

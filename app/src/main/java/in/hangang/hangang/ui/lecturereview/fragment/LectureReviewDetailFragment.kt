@@ -4,12 +4,13 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.evaluation.Chart
+import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.evaluation.ClassLecture
 import `in`.hangang.hangang.data.evaluation.LectureReview
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.source.ReviewPagingSource.Companion.LECTURE_REVIEW_TOTAL
+import `in`.hangang.hangang.data.source.ReviewPagingSource.Companion.PERSONAL_REVIEW_COUNT
 import `in`.hangang.hangang.databinding.FragmentLectureReviewDetailBinding
 import `in`.hangang.hangang.ui.lecturereview.activity.LectureEvaluationActivity
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureClassTimeAdapter
@@ -17,9 +18,7 @@ import `in`.hangang.hangang.ui.lecturereview.adapter.LectureDetailReviewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.ListDialogRecyclerViewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.RecommendedDocsAdapter
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
-import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewListViewModel
 import `in`.hangang.hangang.util.LogUtil
-import `in`.hangang.hangang.util.bindImageFromUrl
 import `in`.hangang.hangang.util.initScoreChart
 import android.app.Activity
 import android.app.AlertDialog
@@ -27,10 +26,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.github.mikephil.charting.data.BarEntry
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDetailBinding>() {
@@ -40,19 +38,31 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     private val recommendedDocsAdapter = RecommendedDocsAdapter()
     private val lectureDetailReviewAdapter = LectureDetailReviewAdapter()
     private val listDialogRecyclerViewAdapter = ListDialogRecyclerViewAdapter()
-    private lateinit var listDialog: ListDialog
+    private lateinit var timeTableListDialog: TimeTableListDialog
+    private var classLectureId: Int = 0
+    private var timeTableId: Int = 0
+
     private val reportList: Array<String> by lazy { resources.getStringArray(R.array.report_item) }
     private val navController: NavController by lazy {
         Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
     }
 
-    private val positiveButtonClickListener = View.OnClickListener {
-        LogUtil.e("click")
+    private val timeTableListDialogClickListener = object: TimeTableListDialog.TimeTableListDialogClickListener {
+        override fun onConfirmClick(view: DialogFragment) {
+            view.dismiss()
+            lectureReviewDetailViewModel.fetchClassLectureList(lecture.id,5)
+            LogUtil.e("diatlogclick")
+        }
+
+        override fun onCancelClick(view: DialogFragment) {
+            view.dismiss()
+        }
     }
-    /* 시간표 리스너 */
+    /* 시간표 담기/뺴기 리스 */
     private val classClickListener = object : RecyclerViewClickListener {
         override fun onClick(view: View, position: Int, item: Any) {
             val classLecture = (item as ClassLecture)
+            classLectureId = classLecture.id
             lectureReviewDetailViewModel.fetchDialogData(5,classLecture.id)
             //lectureReviewDetailViewModel.setDialogCheckButton(classLecture.id)
 
@@ -61,7 +71,20 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     }
     private val checkClickListener = object : RecyclerViewClickListener {
         override fun onClick(view: View, position: Int, item: Any) {
-            LogUtil.e("click2")
+            var timeTable = (item as TimeTable)
+            timeTableId = timeTable.id
+            if(timeTable.isChecked){
+                timeTable.isChecked = false
+                //timeTableCheckList.remove(timeTableId)
+                listDialogRecyclerViewAdapter.notifyItemChanged(position)
+                lectureReviewDetailViewModel.deleteLectureInTimeTable(classLectureId, timeTableId)
+            } else {
+                //timeTableCheckList.add(timeTableId)
+                timeTable.isChecked = true
+                listDialogRecyclerViewAdapter.notifyItemChanged(position)
+                lectureReviewDetailViewModel.addLectureInTimeTable(classLectureId, timeTableId)
+
+            }
         }
     }
 
@@ -139,7 +162,6 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             reviewList.observe(viewLifecycleOwner, {
                 it?.let {
                     lectureDetailReviewAdapter.submitData(lifecycle, it)
-                    binding.lectureDetailPersonalEvaluation.text = LECTURE_REVIEW_TOTAL.toString()
                 }
             })
             isLoading.observe(viewLifecycleOwner, {
@@ -158,9 +180,12 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             })
             userTimeTableList.observe(viewLifecycleOwner, {
                 it.let { listDialogRecyclerViewAdapter.submitList(it)
-                    listDialog = ListDialog(listDialogRecyclerViewAdapter)
-                    listDialog.show(parentFragmentManager,"asdf")
+                    timeTableListDialog = TimeTableListDialog(listDialogRecyclerViewAdapter, timeTableListDialogClickListener)
+                    timeTableListDialog.show(parentFragmentManager,"asdf")
                 }
+            })
+            reviewCount.observe(viewLifecycleOwner, {
+                it.let { binding.lectureDetailPersonalEvaluation.text = it.toString() }
             })
 
         }
@@ -225,9 +250,14 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             lectureReviewDetailViewModel.getEvaluationRating(it)
             lectureReviewDetailViewModel.getEvaluationTotal(it)
             lectureReviewDetailViewModel.getReviewList(it, lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
+            lectureReviewDetailViewModel.getPersonalReviewCount(it,lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
         }
         lecture.name.let {
             lectureReviewDetailViewModel.getRecommentedDocs(it)
+        }
+        lecture.isScraped.let {
+            binding.lectureDetailBookmark.background = requireContext().getDrawable(R.drawable.ic_bookmark)
+
         }
     }
 }

@@ -7,6 +7,7 @@ import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.LectureRepository
@@ -49,6 +50,10 @@ class LectureReviewDetailViewModel(
     private val _reviewList = MutableLiveData<PagingData<LectureReview>>()
     val reviewList: LiveData<PagingData<LectureReview>> get() = _reviewList
 
+    private val _reviewCount = MutableLiveData<Int>()
+    val reviewCount: LiveData<Int> get() = _reviewCount
+
+
     private val _userTimeTableList = MutableLiveData<List<TimeTable>>()
     val userTimeTableList: LiveData<List<TimeTable>> get() = _userTimeTableList
 
@@ -78,7 +83,17 @@ class LectureReviewDetailViewModel(
             }, { LogUtil.e(it.message.toString()) })
             .addTo(compositeDisposable)
     }
-
+    fun getPersonalReviewCount(id:Int, keyword: String?, sort: String) {
+        lectureRepository.getLectureReviewPersonalCount(id,keyword, sort)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _reviewCount.value = it.count
+            }, {
+                LogUtil.e(it.message.toString())
+            })
+    }
     fun getReviewList(id: Int, keyword: String?, sort: String) {
         lectureRepository.getLectureReviewList(id, keyword, sort)
             .cachedIn(viewModelScope)
@@ -165,14 +180,25 @@ class LectureReviewDetailViewModel(
     }
 
     fun fetchDialogData(semesterId: Long, lectureId: Int) {
+        LogUtil.e(lectureId.toString())
         var userTimeTableList = emptyList<TimeTable>()
         viewModelScope.launch {
             userTimeTableList = timeTableRepository.fetchTimeTables(semesterId) // 해당학기에 생성한 시간표 가져오기
             for(timetable in userTimeTableList) {
                 val lectureList = timeTableRepository.fetchLectureListFromTimeTable(timetable.id).lectureList
                 for(lecture in lectureList) {
-                    timetable.isChecked = lecture.lectureId == lectureId
+                    var a = lecture
+                    if(timetable.isChecked)
+                        continue
+                    else {
+                        timetable.isChecked = lecture.lectureTimetableId == lectureId
+                        LogUtil.e(timetable.isChecked.toString())
+                    }
                 }
+
+            }
+            for(id in userTimeTableList) {
+                LogUtil.e(id.isChecked.toString())
             }
             _userTimeTableList.postValue(userTimeTableList)
         }
@@ -182,6 +208,7 @@ class LectureReviewDetailViewModel(
     }
 
     fun fetchClassLectureList(id: Int, semesterId: Long) {
+        LogUtil.e(id.toString())
         var lectureList = emptyList<ClassLecture>()
         viewModelScope.launch {
             lectureList = lectureRepository.fetchClassLectures(id)
@@ -190,11 +217,42 @@ class LectureReviewDetailViewModel(
                 for (timetable in userTimeTableList) {
                     val userLectureList = timeTableRepository.fetchLectureListFromTimeTable(timetable.id).lectureList
                     for (userLecture in userLectureList) {
-                        lecture.isChecked = lecture.id == userLecture.lectureId
+                        if(lecture.isChecked)
+                            continue
+                        else
+                            lecture.isChecked = lecture.id == userLecture.lectureTimetableId
                     }
+
+                }
+                for(id in lectureList) {
+                    LogUtil.e(id.isChecked.toString())
                 }
             }
             _classLectureList.postValue(lectureList)
         }
+    }
+    fun addLectureInTimeTable(classLectureId: Int, timetableId: Int) {
+        timeTableRepository.addLectureInTimeTable(classLectureId, timetableId)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                //commonResponse.value = it
+            }, {
+                LogUtil.e(it.message.toString())
+            })
+            .addTo(compositeDisposable)
+    }
+    fun deleteLectureInTimeTable(classLectureId: Int, timetableId: Int) {
+        timeTableRepository.removeLectureFromTimeTable(classLectureId, timetableId)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                commonResponse.value = it
+            }, {
+                LogUtil.e(it.message.toString())
+            })
+            .addTo(compositeDisposable)
     }
 }

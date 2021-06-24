@@ -65,7 +65,7 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.getTimetable(timetableId)
     }
 
-    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable> {
         return timeTableRemoteDataSource.addLectureInTimeTable(lectureId, timetableId)
     }
 
