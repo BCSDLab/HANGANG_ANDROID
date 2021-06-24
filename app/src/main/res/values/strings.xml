@@ -50,6 +50,7 @@
     <string name="reset_password_send_auth_number">인증번호 전송</string>
     <string name="reset_password_resend_auth_number">재전송</string>
     <string name="reset_password_finish_email_auth">인증 완료</string>
+    <string name="goto_aunuri">아우누리 바로가기</string>
     <string name="reset_password_new_password">새 비밀번호</string>
     <string name="reset_password_confirm_new_password">새 비밀번호 확인</string>
     <string name="reset_password_new_password_hint">영문, 숫자, 특수기호 반드시 포함 8자~15자</string>
