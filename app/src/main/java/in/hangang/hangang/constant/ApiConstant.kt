@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.constant
 
-const val STAGE_SERVER_BASE_URL = "https://hangang.in"
-const val PRODUCTION_SERVER_BASE_URL = "https://hangang.in"
+const val STAGE_SERVER_BASE_URL = "https://api.hangang.in"
+const val PRODUCTION_SERVER_BASE_URL = "https://api.hangang.in"
 
 const val AUTH_TEST = "/user/auth-test"
 const val SIGN_UP = "/user/sign-up"

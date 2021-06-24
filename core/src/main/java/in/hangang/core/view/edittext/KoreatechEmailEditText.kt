@@ -3,7 +3,9 @@ package `in`.hangang.core.view.edittext
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.LinearLayout
 import android.widget.TextView
 
 class KoreatechEmailEditText @JvmOverloads constructor(

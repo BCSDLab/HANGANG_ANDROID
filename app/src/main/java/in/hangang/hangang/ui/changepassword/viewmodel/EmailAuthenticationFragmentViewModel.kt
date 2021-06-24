@@ -2,7 +2,7 @@ package `in`.hangang.hangang.ui.changepassword.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.UserRepository
+import `in`.hangang.hangang.data.source.repository.UserRepository
 import `in`.hangang.hangang.util.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -8,6 +8,8 @@ import `in`.hangang.hangang.ui.mypage.contract.MyPagePointRecordActivityContract
 import `in`.hangang.hangang.ui.mypage.contract.MyPagePurchasedBankActivityContract
 import `in`.hangang.hangang.ui.mypage.contract.MyScrapActivityContract
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
+import `in`.hangang.hangang.ui.settings.activity.SettingsActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,7 +63,10 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
     private fun initView() {
         with(binding) {
             imageButtonGotoSettings.setOnClickListener {
-                //TODO go to settings activity
+                val intent = Intent(activity, SettingsActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
             textViewPurchasedBank.setOnClickListener {
                 myPagePurchasedBankActivityContract.launch(null)

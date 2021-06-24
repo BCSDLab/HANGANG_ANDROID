@@ -28,9 +28,14 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
     private fun initEvent() {
         with(binding) {
-
             changeProfileButton.setOnClickListener {
                 myProfileActivityStart()
+            }
+            logOutButton.setOnClickListener {
+                showLogoutDialog()
+            }
+            deleteAccountButton.setOnClickListener {
+                showDeleteAccountDialog()
             }
         }
 
@@ -40,12 +45,6 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
     private fun initViewModel() {
         with(settingsViewModel) {
-            deleteAccountResponse.observe(this@SettingsActivity){
-                showDeleteAccountDialog()
-            }
-            logoutAll.observe(this@SettingsActivity){
-                showLogoutDialog()
-            }
             autoLoginButtonResponse.observe(this@SettingsActivity){
                 if(it){
                     saveAutoLoginStatus(true)
@@ -76,8 +75,11 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(this)
                 }
-
+            },
+            negativeButtonOnClickListener = {dialog, _ ->
+                dialog.dismiss()
             }
+
         )
     }
 
@@ -93,6 +95,9 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
                 }
+            },
+            negativeButtonOnClickListener = {dialog, _ ->
+                dialog.dismiss()
             }
         )
     }
