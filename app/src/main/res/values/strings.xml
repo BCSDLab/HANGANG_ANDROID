@@ -306,5 +306,6 @@
     <string name="description_file_chooser">Choose files</string>
     <string name="lecture_bank_title_file_size_exceed">파일 크기가 초과되었습니다!</string>
     <string name="lecture_bank_message_file_size_exceed">파일첨부는 최대 50MB까지 가능합니다.</string>
+    <string name="lecture_bank_purchased_my_lecture_bank">구입불가</string>
 
 </resources>

@@ -179,18 +179,21 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
                 showErrorDialog(it)
             })
             isPurchased.observe(this@LectureBankDetailActivity) {
-                lectureBankFileAdapter.isEnabled = it.first
+                lectureBankFileAdapter.isEnabled = it.first != LectureBankDetailViewModel.PurchaseStatus.NOT_PURCHASED
                 binding.buttonPurchase.apply {
                     text =
-                        if (it.first) {
-                            getString(R.string.lecture_bank_purchased)
-                        } else {
-                            getString(
-                                R.string.lecture_bank_detail_purchase_with_point,
-                                it.second.toString()
-                            )
+                        when(it.first) {
+                            LectureBankDetailViewModel.PurchaseStatus.NOT_PURCHASED ->
+                                getString(
+                                    R.string.lecture_bank_detail_purchase_with_point,
+                                    it.second.toString()
+                                )
+                            LectureBankDetailViewModel.PurchaseStatus.PURCHASED ->
+                                getString(R.string.lecture_bank_purchased)
+                            LectureBankDetailViewModel.PurchaseStatus.MY_LECTURE_BANK ->
+                                getString(R.string.lecture_bank_purchased_my_lecture_bank)
                         }
-                    isEnabled = !it.first
+                    isEnabled = it.first == LectureBankDetailViewModel.PurchaseStatus.NOT_PURCHASED
                 }
             }
             lectureBankCommentAppliedEvent.observe(this@LectureBankDetailActivity) {

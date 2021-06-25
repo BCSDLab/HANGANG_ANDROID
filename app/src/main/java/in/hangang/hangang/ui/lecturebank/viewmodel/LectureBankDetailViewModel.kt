@@ -28,7 +28,7 @@ class LectureBankDetailViewModel(
 
     private val _lectureBankDetail = MutableLiveData<LectureBankDetail>()
     private val _isScraped = MutableLiveData<Boolean>()
-    private val _isPurchased = MutableLiveData<Pair<Boolean, Int>>()
+    private val _isPurchased = MutableLiveData<Pair<PurchaseStatus, Int>>()
     private val _reportedEvent = MutableLiveData<Event<Boolean>>()
     private val _lectureBankCommentPagingData = MutableLiveData<PagingData<LectureBankComment>>()
     private val _errorEvent = MutableLiveData<Event<CommonResponse>>()
@@ -37,17 +37,17 @@ class LectureBankDetailViewModel(
     private val _lectureBankCommentModifiedEvent = MutableLiveData<Event<CommonResponse>>()
     private val _hitChanged = MutableLiveData<Event<CommonResponse>>()
 
-    val lectureBankDetail : LiveData<LectureBankDetail> get() = _lectureBankDetail
-    val isScraped : LiveData<Boolean> get() = _isScraped
-    val isPurchased : LiveData<Pair<Boolean, Int>> get() = _isPurchased
-    val reportedEvent : LiveData<Event<Boolean>> get() = _reportedEvent
-    val lectureBankCommentPagingData : LiveData<PagingData<LectureBankComment>> get() = _lectureBankCommentPagingData
-    val errorEvent : LiveData<Event<CommonResponse>> get() = _errorEvent
-    val lectureBankCommentAppliedEvent : LiveData<Event<Int>> get() = _lectureBankCommentAppliedEvent
-    val lectureBankCommentRemovedEvent : LiveData<Event<CommonResponse>> get() =  _lectureBankCommentRemovedEvent
-    val lectureBankCommentModifiedEvent : LiveData<Event<CommonResponse>> get() =  _lectureBankCommentModifiedEvent
-    val hitChanged : LiveData<Event<CommonResponse>> get() = _hitChanged
-    val userId : Int get() = _userId
+    val lectureBankDetail: LiveData<LectureBankDetail> get() = _lectureBankDetail
+    val isScraped: LiveData<Boolean> get() = _isScraped
+    val isPurchased: LiveData<Pair<PurchaseStatus, Int>> get() = _isPurchased
+    val reportedEvent: LiveData<Event<Boolean>> get() = _reportedEvent
+    val lectureBankCommentPagingData: LiveData<PagingData<LectureBankComment>> get() = _lectureBankCommentPagingData
+    val errorEvent: LiveData<Event<CommonResponse>> get() = _errorEvent
+    val lectureBankCommentAppliedEvent: LiveData<Event<Int>> get() = _lectureBankCommentAppliedEvent
+    val lectureBankCommentRemovedEvent: LiveData<Event<CommonResponse>> get() = _lectureBankCommentRemovedEvent
+    val lectureBankCommentModifiedEvent: LiveData<Event<CommonResponse>> get() = _lectureBankCommentModifiedEvent
+    val hitChanged: LiveData<Event<CommonResponse>> get() = _hitChanged
+    val userId: Int get() = _userId
 
     fun getLectureBankDetail(id: Int) {
         userRepository.getUserInfo()
@@ -60,10 +60,10 @@ class LectureBankDetailViewModel(
             .withThread()
             .handleHttpException()
             .handleProgress(this)
-            .subscribe( {
+            .subscribe({
                 _lectureBankDetail.value = it
                 _isScraped.value = it.userScrapId > 0
-                _isPurchased.value = it.isPurchased to it.pointPrice
+                _isPurchased.value = getPurchaseStatus(_userId, it) to it.pointPrice
                 userScrapId = it.userScrapId
             }, this::postErrorViewModel)
             .addTo(compositeDisposable)
@@ -90,7 +90,7 @@ class LectureBankDetailViewModel(
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
-                 _lectureBankCommentModifiedEvent.value = Event(it)
+                _lectureBankCommentModifiedEvent.value = Event(it)
             }, {
 
             })
@@ -118,7 +118,7 @@ class LectureBankDetailViewModel(
             .withThread()
             .handleHttpException()
             .handleProgress(this)
-            .subscribe( {
+            .subscribe({
                 userScrapId = it
                 _isScraped.value = true
             }, this::postErrorViewModel)
@@ -126,15 +126,15 @@ class LectureBankDetailViewModel(
     }
 
     fun unscrapLecture() {
-        if(userScrapId > 0)
-        lectureBankRepository.unscrapLectureBank(userScrapId)
-            .withThread()
-            .handleHttpException()
-            .handleProgress(this)
-            .subscribe( {
-                _isScraped.value = false
-            }, this::postErrorViewModel)
-            .addTo(compositeDisposable)
+        if (userScrapId > 0)
+            lectureBankRepository.unscrapLectureBank(userScrapId)
+                .withThread()
+                .handleHttpException()
+                .handleProgress(this)
+                .subscribe({
+                    _isScraped.value = false
+                }, this::postErrorViewModel)
+                .addTo(compositeDisposable)
     }
 
     fun purchaseLectureBank() {
@@ -142,8 +142,8 @@ class LectureBankDetailViewModel(
             .withThread()
             .handleHttpException()
             .handleProgress(this)
-            .subscribe( {
-                _isPurchased.value = true to (lectureBankDetail.value?.pointPrice ?: 0)
+            .subscribe({
+                _isPurchased.value = PurchaseStatus.PURCHASED to (lectureBankDetail.value?.pointPrice ?: 0)
             }, this::postErrorViewModel)
             .addTo(compositeDisposable)
     }
@@ -156,7 +156,7 @@ class LectureBankDetailViewModel(
             .withThread()
             .handleHttpException()
             .handleProgress(this)
-            .subscribe( {
+            .subscribe({
                 _reportedEvent.value = Event(true)
             }, this::postErrorViewModel)
             .addTo(compositeDisposable)
@@ -170,7 +170,7 @@ class LectureBankDetailViewModel(
             .withThread()
             .handleHttpException()
             .handleProgress(this)
-            .subscribe( {
+            .subscribe({
                 _reportedEvent.value = Event(true)
             }, this::postErrorViewModel)
             .addTo(compositeDisposable)
@@ -184,7 +184,7 @@ class LectureBankDetailViewModel(
             .withThread()
             .handleHttpException()
             .handleProgress(this)
-            .subscribe( {
+            .subscribe({
                 _lectureBankCommentAppliedEvent.value = Event(it)
             }, this::postErrorViewModel)
             .addTo(compositeDisposable)
@@ -206,5 +206,17 @@ class LectureBankDetailViewModel(
 
     private fun postErrorViewModel(t: Throwable) {
         _errorEvent.postValue(Event(t.toCommonResponse()))
+    }
+
+    private fun getPurchaseStatus(userId: Int, lectureBankDetail: LectureBankDetail) = when {
+        userId == lectureBankDetail.userId -> PurchaseStatus.MY_LECTURE_BANK
+        lectureBankDetail.isPurchased -> PurchaseStatus.PURCHASED
+        else -> PurchaseStatus.NOT_PURCHASED
+    }
+
+    enum class PurchaseStatus {
+        NOT_PURCHASED,
+        PURCHASED,
+        MY_LECTURE_BANK
     }
 }
