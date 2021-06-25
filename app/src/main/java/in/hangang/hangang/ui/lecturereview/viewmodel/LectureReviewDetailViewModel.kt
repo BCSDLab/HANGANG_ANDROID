@@ -5,6 +5,7 @@ import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.evaluation.*
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.request.TimeTableRequest
@@ -60,6 +61,8 @@ class LectureReviewDetailViewModel(
     private val _reportResult = MutableLiveData<CommonResponse>()
     val reportResult: LiveData<CommonResponse> get() = _reportResult
 
+    private val _scrapResult = MutableLiveData<CommonResponse>()
+    val scrapResult: LiveData<CommonResponse> get() = _scrapResult
 
 
 
@@ -71,7 +74,7 @@ class LectureReviewDetailViewModel(
     var keyword: String? = null
     var sort: String = SORT_BY_LIKE_COUNT
     var commonResponse = MutableLiveData<CommonResponse>()
-    var lectureReviewItem = MutableLiveData<LectureReview>()
+    //var lectureReviewItem = MutableLiveData<LectureReview>()
 
     fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest) {
         lectureRepository.reportLectureReview(lectureReviewReportRequest)
@@ -165,7 +168,7 @@ class LectureReviewDetailViewModel(
             })
             .addTo(compositeDisposable)
     }
-
+/*
     fun getReviewLectureItem(id: Int) {
         lectureRepository.getLectureReviewItem(id)
             .handleHttpException()
@@ -179,6 +182,8 @@ class LectureReviewDetailViewModel(
             .addTo(compositeDisposable)
     }
 
+
+ */
     fun fetchDialogData(semesterId: Long, lectureId: Int) {
         LogUtil.e(lectureId.toString())
         var userTimeTableList = emptyList<TimeTable>()
@@ -252,6 +257,34 @@ class LectureReviewDetailViewModel(
                 commonResponse.value = it
             }, {
                 LogUtil.e(it.message.toString())
+            })
+            .addTo(compositeDisposable)
+    }
+    fun postScrap(id: Int) {
+        var scrapedLecture: LectureEvaluationIdRequest = LectureEvaluationIdRequest(id)
+        lectureRepository.postScrapedLecture(scrapedLecture)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _scrapResult.value = it
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage.toString())
+            })
+            .addTo(compositeDisposable)
+    }
+    fun deleteScrap(id: Int) {
+        var scrapedLecture = ArrayList<Int>()
+        scrapedLecture.add(id)
+
+        lectureRepository.deleteScrapedLecture(scrapedLecture)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _scrapResult.value = it
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage.toString())
             })
             .addTo(compositeDisposable)
     }

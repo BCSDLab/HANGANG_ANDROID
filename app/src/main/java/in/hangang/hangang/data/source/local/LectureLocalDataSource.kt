@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source.local
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
@@ -89,5 +90,13 @@ class LectureLocalDataSource : LectureDataSource {
 
     override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
         return emptyList()
+    }
+
+    override fun postScrapedLecture(scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse> {
+        return Single.never()
     }
 }

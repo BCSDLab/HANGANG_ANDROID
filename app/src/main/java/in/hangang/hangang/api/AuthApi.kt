@@ -1,12 +1,10 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.entity.*
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
@@ -127,6 +125,12 @@ interface AuthApi {
     @GET(LECTURE_SCRAPED)
     fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>>
 
+    @POST(LECTURE_SCRAPED)
+    fun postScrapedLecture(@Body scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = LECTURE_SCRAPED, hasBody = true)
+    fun deleteScrapedLecture(@Body scrapedLecture: ArrayList<Int>): Single<CommonResponse>
+
     @GET(EVALUATION_RATING)
     fun getEvaluationRating(@Path("id")id: Int): Single<ArrayList<Int>>
 
@@ -174,7 +178,16 @@ interface AuthApi {
     @POST(EVALUATIONS)
     fun postEvaluation(@Body lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse>
 
-
+    @GET(LECTURES_RANKING)
+    fun getLectureRanking(
+        @Query("classification") classification: ArrayList<String>? = null,
+        @Query("department") department: ArrayList<String>? = null,
+        @Query("hash_tag") hashTag: ArrayList<Int>? = null,
+        @Query("keyword") keyword: String? = null,
+        @Query("limit") limit: Int = 20,
+        @Query("page") page: Int? = null,
+        @Query("sort") sort: String? = null
+    ): Single<RankingLectureResult>
 
 
 }

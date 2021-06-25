@@ -187,6 +187,13 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             reviewCount.observe(viewLifecycleOwner, {
                 it.let { binding.lectureDetailPersonalEvaluation.text = it.toString() }
             })
+            isLoading.observe(viewLifecycleOwner, {
+                if(it) {
+                    showProgressDialog()
+                } else {
+                    hideProgressDialog()
+                }
+            })
 
         }
     }
@@ -229,6 +236,12 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         binding.lectureDetailSortTypeIcon.setOnClickListener {
             binding.lectureDetailOrderPopup.visibility = View.VISIBLE
         }
+        binding.lectureDetailBookmark.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked)
+                lectureReviewDetailViewModel.postScrap(lecture.id)
+            else
+                lectureReviewDetailViewModel.deleteScrap(lecture.id)
+        }
 
 
 
@@ -256,8 +269,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             lectureReviewDetailViewModel.getRecommentedDocs(it)
         }
         lecture.isScraped.let {
-            binding.lectureDetailBookmark.background = requireContext().getDrawable(R.drawable.ic_bookmark)
-
+            binding.lectureDetailBookmark.isChecked = it
         }
     }
 }

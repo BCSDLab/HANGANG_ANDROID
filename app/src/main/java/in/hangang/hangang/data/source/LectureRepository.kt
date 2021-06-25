@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
@@ -118,5 +119,13 @@ class LectureRepository(
 
     override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
         return lectureRemoteDataSource.fetchClassLectures(id)
+    }
+
+    override fun postScrapedLecture(scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse> {
+        return lectureRemoteDataSource.postScrapedLecture(scrapedLecture)
+    }
+
+    override fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse> {
+        return lectureRemoteDataSource.deleteScrapedLecture(scrapedLecture)
     }
 }

@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source.source
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
@@ -29,4 +30,6 @@ interface LectureDataSource {
     fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse>
     suspend fun getLectureClass(id: Int): ArrayList<ClassLecture>
     suspend fun fetchClassLectures(id: Int): List<ClassLecture>
+    fun postScrapedLecture(scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse>
+    fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse>
 }
