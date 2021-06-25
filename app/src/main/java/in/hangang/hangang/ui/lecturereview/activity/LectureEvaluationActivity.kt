@@ -125,7 +125,6 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
             hashTagCheckBox[id] = binding.root.findViewById(hashTagTypeId[id])
         }
         lectureEvaluationViewModel.getLectureSemester(lectureId)
-        LogUtil.e(binding.lectureEvaluationRatingBar.rating.toString())
 
         binding.lectureEvaluationRatingBar.rating = lectureEvaluationViewModel.rating
         binding.lectureEvaluationRatingBar.setOnRatingBarChangeListener(LectureEvaluateRatingbarChangeListener())

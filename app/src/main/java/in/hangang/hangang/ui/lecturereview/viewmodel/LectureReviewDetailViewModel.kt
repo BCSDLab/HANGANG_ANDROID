@@ -185,7 +185,6 @@ class LectureReviewDetailViewModel(
 
  */
     fun fetchDialogData(semesterId: Long, lectureId: Int) {
-        LogUtil.e(lectureId.toString())
         var userTimeTableList = emptyList<TimeTable>()
         viewModelScope.launch {
             userTimeTableList = timeTableRepository.fetchTimeTables(semesterId) // 해당학기에 생성한 시간표 가져오기
@@ -197,13 +196,9 @@ class LectureReviewDetailViewModel(
                         continue
                     else {
                         timetable.isChecked = lecture.lectureTimetableId == lectureId
-                        LogUtil.e(timetable.isChecked.toString())
                     }
                 }
 
-            }
-            for(id in userTimeTableList) {
-                LogUtil.e(id.isChecked.toString())
             }
             _userTimeTableList.postValue(userTimeTableList)
         }
@@ -213,7 +208,6 @@ class LectureReviewDetailViewModel(
     }
 
     fun fetchClassLectureList(id: Int, semesterId: Long) {
-        LogUtil.e(id.toString())
         var lectureList = emptyList<ClassLecture>()
         viewModelScope.launch {
             lectureList = lectureRepository.fetchClassLectures(id)
@@ -228,9 +222,6 @@ class LectureReviewDetailViewModel(
                             lecture.isChecked = lecture.id == userLecture.lectureTimetableId
                     }
 
-                }
-                for(id in lectureList) {
-                    LogUtil.e(id.isChecked.toString())
                 }
             }
             _classLectureList.postValue(lectureList)

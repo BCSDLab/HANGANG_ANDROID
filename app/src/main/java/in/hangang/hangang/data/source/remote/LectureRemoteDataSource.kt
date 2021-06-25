@@ -136,4 +136,8 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse> {
         return authApi.deleteScrapedLecture(scrapedLecture)
     }
+
+    override fun getLecturesId(id: Int): Single<RankingLectureItem> {
+        return authApi.getLecturesId(id)
+    }
 }

@@ -146,6 +146,9 @@ interface AuthApi {
     @GET(CLASS_LECTURES)
     suspend fun getLectureClass(@Path("id") id: Int): ArrayList<ClassLecture>
 
+    @GET(LECTURES_ID)
+    fun getLecturesId(@Path("id") id: Int): Single<RankingLectureItem>
+
 
     @GET(LECTURE_REVIEWS)
     fun getLectureReview(@Path("id") id: Int,

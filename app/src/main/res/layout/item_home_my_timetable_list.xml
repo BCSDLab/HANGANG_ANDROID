@@ -3,7 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="timetable"
+            type="in.hangang.hangang.data.entity.LectureTimeTable" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_my_timetable_constraintlayout"
         android:layout_width="match_parent"
         android:layout_height="62dp"
         tools:context=".ui.home.ranking.fragment.RankingListFragment">
@@ -20,7 +32,8 @@
             android:paddingTop="5dp"
             android:paddingEnd="8dp"
             android:paddingBottom="5dp"
-            android:text="평가완료"
+            android:text="@{timetable.reviewed? @string/complete_timetable_evaluation : @string/go_to_timetable_evaluation}"
+            android:enabled="@{!timetable.reviewed}"
             android:textColor="@color/color_state_button_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
+            android:text="@{timetable.name}"
             tools:text="사랑의 역사" />
 
         <TextView
@@ -53,6 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/item_my_timetable_title"
             app:layout_constraintVertical_chainStyle="packed"
+            android:text="@{timetable.professor}"
             tools:text="김사랑" />
 
         <View

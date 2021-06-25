@@ -128,4 +128,8 @@ class LectureRepository(
     override fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse> {
         return lectureRemoteDataSource.deleteScrapedLecture(scrapedLecture)
     }
+
+    override fun getLecturesId(id: Int): Single<RankingLectureItem> {
+        return lectureRemoteDataSource.getLecturesId(id)
+    }
 }

@@ -99,4 +99,8 @@ class LectureLocalDataSource : LectureDataSource {
     override fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse> {
         return Single.never()
     }
+
+    override fun getLecturesId(id: Int): Single<RankingLectureItem> {
+        return Single.never()
+    }
 }

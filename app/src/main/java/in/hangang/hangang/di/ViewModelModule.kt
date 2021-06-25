@@ -41,7 +41,7 @@ val viewModelModule = module {
     viewModel { EmailAuthenticationFragmentViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     //Home
-    viewModel { MyTimetableFragmentViewModel() }
+    viewModel { MyTimetableFragmentViewModel(get(), get()) }
     viewModel { RecommendedLecturesFragmentViewModel() }
     viewModel { RecentLecturesFragmentViewModel() }
     viewModel { RankingLectureViewModel(get()) }

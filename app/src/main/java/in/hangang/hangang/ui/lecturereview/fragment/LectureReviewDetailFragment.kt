@@ -9,8 +9,6 @@ import `in`.hangang.hangang.data.evaluation.ClassLecture
 import `in`.hangang.hangang.data.evaluation.LectureReview
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
-import `in`.hangang.hangang.data.source.ReviewPagingSource.Companion.LECTURE_REVIEW_TOTAL
-import `in`.hangang.hangang.data.source.ReviewPagingSource.Companion.PERSONAL_REVIEW_COUNT
 import `in`.hangang.hangang.databinding.FragmentLectureReviewDetailBinding
 import `in`.hangang.hangang.ui.lecturereview.activity.LectureEvaluationActivity
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureClassTimeAdapter
@@ -18,14 +16,15 @@ import `in`.hangang.hangang.ui.lecturereview.adapter.LectureDetailReviewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.ListDialogRecyclerViewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.RecommendedDocsAdapter
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
-import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.initScoreChart
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -51,7 +50,6 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         override fun onConfirmClick(view: DialogFragment) {
             view.dismiss()
             lectureReviewDetailViewModel.fetchClassLectureList(lecture.id,5)
-            LogUtil.e("diatlogclick")
         }
 
         override fun onCancelClick(view: DialogFragment) {
@@ -93,7 +91,6 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         override fun onClick(view: View, position: Int, item: Any) {
             val reportDialog = AlertDialog.Builder(requireContext(),android.R.style.Theme_Material_Light_Dialog_Alert)
             reportDialog.setItems(reportList, DialogInterface.OnClickListener { dialog, which ->
-                LogUtil.e(which.toString())
                 val reportRequest = LectureReviewReportRequest((item as LectureReview).id, which+1)
                 lectureReviewDetailViewModel.reportLectureReview(reportRequest)
             })
@@ -166,7 +163,6 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             })
             isLoading.observe(viewLifecycleOwner, {
                 if (it) {
-                    LogUtil.e(it.toString())
                     showProgressDialog()
                 } else
                     hideProgressDialog()
@@ -211,11 +207,15 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     fun initEvent() {
         binding.lectureDetailAppbar.setRightButtonClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                LogUtil.e("click")
                 val intent = Intent(activity, LectureEvaluationActivity::class.java)
                 intent.putExtra("lectureId",lecture.id)
                 intent.putExtra("lectureName",lecture.name)
                 startActivity(intent)
+            }
+        })
+        binding.lectureDetailAppbar.backButtonOnClickListener = (object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                navController.navigate(R.id.action_lecture_review_detail_to_navigation_home)
             }
         })
         binding.lectureDetailOrderByLike.setOnClickListener {
@@ -272,4 +272,15 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             binding.lectureDetailBookmark.isChecked = it
         }
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navController.navigate(R.id.action_lecture_review_detail_to_navigation_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback);
+    }
+
 }
