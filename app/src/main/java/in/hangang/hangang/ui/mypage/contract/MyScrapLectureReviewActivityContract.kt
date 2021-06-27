@@ -1,13 +1,13 @@
 package `in`.hangang.hangang.ui.mypage.contract
 
-import `in`.hangang.hangang.ui.mypage.activity.MyScrapActivity
+import `in`.hangang.hangang.ui.mypage.activity.MyScrapLectureReviewActivity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 
-class MyScrapActivityContract : ActivityResultContract<Void, Int>() {
+class MyScrapLectureReviewActivityContract : ActivityResultContract<Void, Int>() {
     override fun createIntent(context: Context, input: Void?): Intent {
-        return Intent(context, MyScrapActivity::class.java)
+        return Intent(context, MyScrapLectureReviewActivity::class.java)
     }
 
     override fun parseResult(resultCode: Int, intent: Intent?): Int {

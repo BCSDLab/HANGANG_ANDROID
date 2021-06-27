@@ -194,7 +194,7 @@
     <string name="my_point_usage_point_kinds_4">- 강의자료 구입</string>
     <string name="my_point_usage_point_kind_values_4">- 100P</string>
     <string name="my_page_purchased_bank_app_bar_title">구입한 자료</string>
-    <string name="my_scrap_app_bar_title">내 스크랩</string>
+    <string name="my_scrap_lecture_review_app_bar_title">강의평 스크랩</string>
     <string name="edit">편집</string>
     <string name="my_scrap_edit_finish">완료</string>
     <string name="my_scrap_select_all">전체선택</string>
@@ -267,4 +267,7 @@
     <string name="grade_portion_low">아쉽게주심</string>
     <string name="total_evaluation">총평</string>
     <string name="lecture_evaluation_write_complete">작성완료 (+30P)</string>
+    <string name="my_page_my_scrap_lecture_review">강의평 스크랩</string>
+    <string name="my_page_my_scrap_lecture_bank">강의자료 스크랩</string>
+    <string name="my_scrap_lecture_bank_app_bar_title">강의자료 스크랩</string>
 </resources>

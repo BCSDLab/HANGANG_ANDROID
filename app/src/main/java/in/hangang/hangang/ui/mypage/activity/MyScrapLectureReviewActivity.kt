@@ -1,25 +1,25 @@
 package `in`.hangang.hangang.ui.mypage.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
-import `in`.hangang.core.util.dp2Px
 import `in`.hangang.core.view.appbar.appBarTextButton
+import `in`.hangang.core.view.dp2Px
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.databinding.ActivityMyScrapBinding
-import `in`.hangang.hangang.ui.mypage.adapter.MyScrapAdapter
+import `in`.hangang.hangang.databinding.ActivityMyScrapLectureReviewBinding
+import `in`.hangang.hangang.ui.mypage.adapter.MyScrapLectureReviewAdapter
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapViewModel
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MyScrapActivity : ViewBindingActivity<ActivityMyScrapBinding>() {
+class MyScrapLectureReviewActivity : ViewBindingActivity<ActivityMyScrapLectureReviewBinding>() {
 
-    override val layoutId = R.layout.activity_my_scrap
+    override val layoutId = R.layout.activity_my_scrap_lecture_review
 
     private val myScrapViewModel: MyScrapViewModel by viewModel()
 
-    private val myScrapAdapter: MyScrapAdapter by lazy {
-        MyScrapAdapter().apply {
+    private val myScrapLectureReviewAdapter: MyScrapLectureReviewAdapter by lazy {
+        MyScrapLectureReviewAdapter().apply {
             setOnItemClickListener { parent, view, position ->
                 if (myScrapViewModel.isEditMode.value == true) {
                     toggleLectureSelection(position)
@@ -53,18 +53,18 @@ class MyScrapActivity : ViewBindingActivity<ActivityMyScrapBinding>() {
 
     private fun initViewModel() {
         with(myScrapViewModel) {
-            isLoading.observe(this@MyScrapActivity) {
+            isLoading.observe(this@MyScrapLectureReviewActivity) {
                 if (it) showProgressDialog()
                 else hideProgressDialog()
             }
-            myScrapLecture.observe(this@MyScrapActivity) {
-                myScrapAdapter.setLectures(it)
+            myScrapLecture.observe(this@MyScrapLectureReviewActivity) {
+                myScrapLectureReviewAdapter.setLectures(it)
             }
-            canRemoveLecture.observe(this@MyScrapActivity) {
+            canRemoveLecture.observe(this@MyScrapLectureReviewActivity) {
                 binding.buttonRemoveSelectedLecture.isEnabled = it
             }
-            isEditMode.observe(this@MyScrapActivity) {
-                myScrapAdapter.isEditMode = it
+            isEditMode.observe(this@MyScrapLectureReviewActivity) {
+                myScrapLectureReviewAdapter.isEditMode = it
                 if (it) {
                     editButton.visibility = View.GONE
                     finishButton.visibility = View.VISIBLE
@@ -108,18 +108,18 @@ class MyScrapActivity : ViewBindingActivity<ActivityMyScrapBinding>() {
             })
         }
         with(binding.recyclerViewMyScrap) {
-            layoutManager = LinearLayoutManager(this@MyScrapActivity)
-            adapter = myScrapAdapter
+            layoutManager = LinearLayoutManager(this@MyScrapLectureReviewActivity)
+            adapter = myScrapLectureReviewAdapter
         }
         binding.buttonSelectAll.setOnClickListener {
-            with(myScrapAdapter) {
+            with(myScrapLectureReviewAdapter) {
                 if (isSelectedAll()) unselectAllLecture()
                 else selectAllLecture()
-                myScrapViewModel.changeRemoveButtonState(myScrapAdapter.isLeastOneSelected())
+                myScrapViewModel.changeRemoveButtonState(myScrapLectureReviewAdapter.isLeastOneSelected())
             }
         }
         binding.buttonRemoveSelectedLecture.setOnClickListener {
-            myScrapViewModel.unscrapLecture(*myScrapAdapter.getSelectedLectures().toTypedArray())
+            myScrapViewModel.unscrapLecture(*myScrapLectureReviewAdapter.getSelectedLectures().toTypedArray())
         }
     }
 

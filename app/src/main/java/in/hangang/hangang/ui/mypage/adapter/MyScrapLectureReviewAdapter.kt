@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class MyScrapAdapter : OnItemClickRecyclerViewAdapter<MyScrapAdapter.ViewHolder>() {
+class MyScrapLectureReviewAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectureReviewAdapter.ViewHolder>() {
     private val lectures = mutableListOf<Lecture>()
     private val selectedLectures = SparseBooleanArray()
     var isEditMode = false

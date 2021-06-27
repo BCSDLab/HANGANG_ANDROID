@@ -150,6 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_bookmark"
+            app:tint="?attr/colorSecondary"
             android:visibility="@{lectureReviewItem.scraped ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

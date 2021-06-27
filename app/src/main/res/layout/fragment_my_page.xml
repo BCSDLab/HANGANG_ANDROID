@@ -200,12 +200,12 @@
             app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank" />
 
         <TextView
-            android:id="@+id/text_view_my_scrap"
+            android:id="@+id/text_view_my_scrap_lecture_review"
             android:layout_width="0dp"
             android:layout_height="72dp"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="@string/my_page_my_scrap"
+            android:text="@string/my_page_my_scrap_lecture_review"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -229,7 +229,39 @@
             android:backgroundTint="?android:attr/textColorTertiary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_my_scrap" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_my_scrap_lecture_review" />
+
+        <TextView
+            android:id="@+id/text_view_my_scrap_lecture_bank"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="@string/my_page_my_scrap_lecture_bank"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_section_2_3" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_section_2_3"
+            app:tint="?android:attr/textColorPrimary" />
+
+        <View
+            android:id="@+id/divider_section_3_4"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_my_scrap_lecture_bank" />
 
 
         <TextView
@@ -244,7 +276,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_section_2_3" />
+            app:layout_constraintTop_toBottomOf="@id/divider_section_3_4" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -253,7 +285,7 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_chevron_right"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_section_2_3"
+            app:layout_constraintTop_toBottomOf="@id/divider_section_3_4"
             app:tint="?android:attr/textColorPrimary" />
 
         <androidx.recyclerview.widget.RecyclerView

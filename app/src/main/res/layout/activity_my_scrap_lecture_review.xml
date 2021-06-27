@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.mypage.activity.MyScrapActivity">
+        tools:context=".ui.mypage.activity.MyScrapLectureReviewActivity">
 
         <in.hangang.core.view.appbar.BaseAppBar
             android:id="@+id/app_bar"
@@ -15,7 +15,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:titleText="@string/my_scrap_app_bar_title" />
+            app:titleText="@string/my_scrap_lecture_review_app_bar_title" />
 
         <LinearLayout
             android:id="@+id/button_select_all"
