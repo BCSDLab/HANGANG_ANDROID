@@ -1,14 +1,15 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.TimetableListResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
@@ -49,7 +50,7 @@ interface AuthApi {
     @POST(TIMETABLE_LECTURE)
     fun addLectureInTimeTable(
             @Body timeTableRequest: TimeTableRequest
-    ): Single<LectureTimeTable>
+    ): Single<CommonResponse>
 
     @HTTP(method = "DELETE", path = TIMETABLE_LECTURE, hasBody = true)
     fun removeLectureInTimeTable(
@@ -60,12 +61,6 @@ interface AuthApi {
     fun getLectureListFromTimeTable(
         @Query("timeTableId") timetableId: Int
     ): Single<TimeTableWithLecture>
-
-    @GET(TIMETABLE_LECTURE)
-    suspend fun fetchLectureListFromTimeTable(
-        @Query("timeTableId") timetableId: Int
-    ): TimeTableWithLecture
-
 
     @POST(TIMETABLE_CUSTOM_LECTURE)
     fun addCustomLectureInTimetable(
@@ -81,7 +76,7 @@ interface AuthApi {
             @Query("limit") limit: Int = API_TIMETABLE_DEFAULT_LIMIT,
             @Query("page") page: Int = API_TIMETABLE_DEFAULT_PAGE,
             @Query("semesterDateId") semesterDateId: Int
-    ): Single<List<LectureTimeTable>>
+    ): Single<TimetableListResponse>
 
     @GET(TIMETABLE_MAIN)
     fun getMainTimeTable(): Single<TimeTableWithLecture>

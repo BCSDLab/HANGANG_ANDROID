@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.entity
+package `in`.hangang.hangang.data.entity.timetable
 
 import com.google.gson.annotations.SerializedName
 
@@ -6,6 +6,8 @@ data class LectureTimeTable(
         val id: Int = 0,
         @SerializedName("lecture_id")
         val lectureId: Int = 0,
+        @SerializedName("lecture_timetable_id")
+        val lectureTimetableId: Int = 0,
         @SerializedName("is_custom")
         val isCustom: Boolean = false,
         @SerializedName("semester_date")
@@ -32,9 +34,7 @@ data class LectureTimeTable(
         val createdAt: String? = null,
         @SerializedName("updated_at")
         val updatedAt: String? = null,
-        val rating: Double = 0.0,
-        @SerializedName("lecture_timetable_id")
-        val lectureTimetableId: Int? = null
+        val rating: Double = 0.0
 ) {
     override fun equals(other: Any?): Boolean {
         return this.lectureId == ((other as? LectureTimeTable)?.lectureId ?: -1)

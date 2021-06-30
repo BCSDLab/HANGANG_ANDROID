@@ -3,7 +3,7 @@ package `in`.hangang.hangang.ui.timetable.activity
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.LectureFilter
+import `in`.hangang.hangang.data.entity.timetable.LectureFilter
 import `in`.hangang.hangang.databinding.ActivityTimetableLectureFilterBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableLectureFilterActivityContract.Companion.TIMETABLE_LECTURE_FILTER
 import android.content.Intent

@@ -5,7 +5,6 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentHomeRankingListBinding
 import `in`.hangang.hangang.ui.home.ranking.adapter.RankingListAdapter
 import `in`.hangang.hangang.ui.home.ranking.viewmodel.RankingLectureViewModel
-import `in`.hangang.hangang.util.LogUtil
 import android.os.Bundle
 import android.view.View
 import io.reactivex.rxjava3.exceptions.UndeliverableException
@@ -60,11 +59,9 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
 
     private fun initViewModel() {
         with(rankingLectureViewModel) {
-            rankingLectureList.observe(viewLifecycleOwner, {
+            rankingLectureList.observe(viewLifecycleOwner) {
                 it?.let { adapter.submitList(it) }
-
-            })
-
+            }
         }
     }
 

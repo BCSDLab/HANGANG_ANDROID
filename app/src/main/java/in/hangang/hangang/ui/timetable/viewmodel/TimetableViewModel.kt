@@ -2,13 +2,13 @@ package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
-import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.toTimeTable
+import `in`.hangang.hangang.data.entity.timetable.CustomTimetableTimestamp
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.toTimeTable
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.TimeTableRepository
+import `in`.hangang.hangang.data.source.repository.TimeTableRepository
 import `in`.hangang.hangang.ui.customview.timetable.TimetableUtil
 import `in`.hangang.hangang.util.*
 import android.graphics.Bitmap
