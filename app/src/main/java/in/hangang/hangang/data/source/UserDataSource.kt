@@ -1,5 +1,6 @@
-package `in`.hangang.hangang.data.source.source
+package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
@@ -31,4 +32,6 @@ interface UserDataSource {
     fun emailPasswordConfig(portalAccount: String, secret: String): Single<CommonResponse>
 
     fun changePassword(portalAccount: String, password: String): Single<CommonResponse>
+
+    fun getLectureBankHit(): Single<List<LectureDoc>>
 }

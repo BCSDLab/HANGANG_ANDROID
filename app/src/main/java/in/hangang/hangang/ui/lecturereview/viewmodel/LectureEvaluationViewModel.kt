@@ -1,13 +1,16 @@
 package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.evaluation.ClassLecture
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.LectureRepository
+import `in`.hangang.hangang.data.source.repository.LectureRepository
 import `in`.hangang.hangang.util.*
+import `in`.hangang.hangang.util.LogUtil
+import `in`.hangang.hangang.util.handleHttpException
+import `in`.hangang.hangang.util.handleProgress
+import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.addTo
@@ -29,8 +32,8 @@ class LectureEvaluationViewModel(private val lectureRepository: LectureRepositor
     var rating = 0.5f
     var semesterId = 5
 
-    var postCommonResponse = MutableLiveData<CommonResponse>()
-
+    private val _postCommonResponse = MutableLiveData<String>()
+    val postCommonResponse: LiveData<String> get() = _postCommonResponse
     fun getLectureSemester(id: Int){
         lectureRepository.getLectureSemester(id)
             .handleHttpException()
@@ -79,8 +82,14 @@ class LectureEvaluationViewModel(private val lectureRepository: LectureRepositor
             .handleHttpException()
             .handleProgress(this)
             .withThread()
+            .onErrorReturn {
+                return@onErrorReturn it.toCommonResponse()
+            }
             .subscribe({
-                       postCommonResponse.value = it
+                if(!it.errorMessage.isNullOrEmpty())
+                       _postCommonResponse.value = it.errorMessage
+                else
+                    _postCommonResponse.value = it.message
             },{
                 LogUtil.e(it.message)
                 //LogUtil.e("Error : ${it.toCommonResponse().errorMessage}")

@@ -5,13 +5,14 @@
         <import type="android.view.View"/>
         <variable
             name="rankingLectureItem"
-            type="in.hangang.hangang.data.ranking.RankingLectureItem" />
+            type="in.hangang.hangang.data.entity.ranking.RankingLectureItem" />
         <variable
             name="ranking"
             type="int" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ranking_item_constraintlayout"
         android:layout_width="match_parent"
         android:layout_height="62dp"
         tools:context=".ui.home.ranking.fragment.RankingListFragment">
@@ -78,7 +79,7 @@
             android:layout_height="1dp"
             android:background="#000"
             android:backgroundTint="?android:attr/textColorTertiary"
-            android:visibility="@{ranking == 4 ? View.GONE : View.VISIBLE}"
+            android:visibility="@{ranking == 5 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

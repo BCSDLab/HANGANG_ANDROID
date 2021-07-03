@@ -2,9 +2,10 @@ package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
-import `in`.hangang.hangang.data.source.source.UserDataSource
+import `in`.hangang.hangang.data.source.UserDataSource
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Single
 
@@ -69,6 +70,10 @@ class UserLocalDataSource : UserDataSource {
     }
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun getLectureBankHit(): Single<List<LectureDoc>> {
         return Single.never()
     }
 }

@@ -1,6 +1,4 @@
-package `in`.hangang.hangang.data.entity
-
-import java.util.*
+package `in`.hangang.hangang.data.entity.timetable
 
 data class TimeTableWithLecture(
     val id: Int,

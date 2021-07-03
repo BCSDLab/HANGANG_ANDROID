@@ -8,10 +8,10 @@
 
         <variable
             name="lecture"
-            type="in.hangang.hangang.data.ranking.RankingLectureItem" />
+            type="in.hangang.hangang.data.entity.ranking.RankingLectureItem" />
         <variable
             name="evaluation"
-            type="in.hangang.hangang.data.evaluation.Evaluation"/>
+            type="in.hangang.hangang.data.entity.evaluation.Evaluation"/>
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -119,12 +119,14 @@
                 android:background="@color/gray_100"
                 app:layout_constraintTop_toBottomOf="@+id/lecture_detail_semester" />
 
-            <ImageView
+            <ToggleButton
                 android:id="@+id/lecture_detail_bookmark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_empty_bookmark"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/selector_bookmark"
                 app:layout_constraintBottom_toBottomOf="@+id/lecture_detail_semester"
                 app:layout_constraintEnd_toEndOf="parent" />
 

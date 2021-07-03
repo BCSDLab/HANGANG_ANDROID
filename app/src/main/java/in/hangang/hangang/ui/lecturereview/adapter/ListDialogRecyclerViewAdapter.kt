@@ -3,8 +3,7 @@ package `in`.hangang.hangang.ui.lecturereview.adapter
 import `in`.hangang.core.databinding.ListDialogItemBinding
 import `in`.hangang.core.util.LogUtil
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.evaluation.LectureDoc
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
