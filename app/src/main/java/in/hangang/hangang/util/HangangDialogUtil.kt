@@ -3,7 +3,7 @@ package `in`.hangang.hangang.util
 import `in`.hangang.core.R
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.timetable.CustomTimetableTimestamp
+import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,9 +14,9 @@ import androidx.core.view.children
 object HangangDialogUtil {
 
     fun makeTimetableCustomLectureTimePickerDialog(
-        context: Context,
-        customTimetableTimestamp: CustomTimetableTimestamp? = null,
-        listener: (week: Int, startTime: Pair<Int, Int>, endTime: Pair<Int, Int>) -> Unit
+            context: Context,
+            customTimetableTimestamp: CustomTimetableTimestamp? = null,
+            listener: (week: Int, startTime: Pair<Int, Int>, endTime: Pair<Int, Int>) -> Unit
     ): Dialog {
         val pickerView = LayoutInflater.from(context).inflate(R.layout.layout_time_picker, null)
 

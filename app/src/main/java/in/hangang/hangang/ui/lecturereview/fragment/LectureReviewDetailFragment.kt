@@ -4,11 +4,13 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.lecturereview.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.evaluation.ClassLecture
 import `in`.hangang.hangang.data.evaluation.LectureReview
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
+import `in`.hangang.hangang.data.source.ReviewPagingSource.Companion.LECTURE_REVIEW_TOTAL
+import `in`.hangang.hangang.data.source.ReviewPagingSource.Companion.PERSONAL_REVIEW_COUNT
 import `in`.hangang.hangang.databinding.FragmentLectureReviewDetailBinding
 import `in`.hangang.hangang.ui.lecturereview.activity.LectureEvaluationActivity
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureClassTimeAdapter
@@ -110,7 +112,6 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                 item.isLiked = true
                 item.likes += 1
             }
-            //item.isLiked = !(item as LectureReview).isLiked
 
             lectureReviewDetailViewModel.commonResponse.observe(viewLifecycleOwner, {
                 it?.let {

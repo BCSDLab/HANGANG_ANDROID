@@ -6,8 +6,8 @@ import `in`.hangang.core.view.button.checkbox.FilledCheckBox
 import `in`.hangang.core.view.childViews
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.timetable.LectureFilter
-import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.LectureFilter
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableLectureListBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableLectureFilterActivityContract
@@ -16,7 +16,6 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -160,9 +159,7 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                 binding.recyclerViewProgress.isRefreshing = it
             }
             lectures.observe(viewLifecycleOwner) {
-                binding.recyclerViewTimetableLectures.isVisible = it.isNotEmpty()
-                binding.recyclerViewEmpty.isVisible = it.isEmpty()
-                if(it.isNotEmpty()) timetableLectureAdapter.updateItem(it)
+                timetableLectureAdapter.updateItem(it)
             }
             timetableLectureChanged.observe(viewLifecycleOwner, EventObserver {
                 timetableViewModel.displayingTimeTable.value?.let { timeTable ->

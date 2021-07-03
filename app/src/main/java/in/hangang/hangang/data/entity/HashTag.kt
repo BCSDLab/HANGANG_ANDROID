@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.entity.timetable
+package `in`.hangang.hangang.data.entity
 
 data class HashTag(
         val id: Int,

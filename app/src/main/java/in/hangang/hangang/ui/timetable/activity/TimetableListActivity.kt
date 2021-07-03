@@ -9,7 +9,7 @@ import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.TIMETABLE_MAX_TIMETABLES
-import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.ActivityTimetableListBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableTimetablesAdapter
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableAddActivityContract

@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.ui.timetable.listener
 
-import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 
 interface TimetableLectureListener {
     fun onCheckedChange(position: Int, lectureTimeTable: LectureTimeTable)

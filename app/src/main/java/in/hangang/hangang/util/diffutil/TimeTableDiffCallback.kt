@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.util.diffutil
 
-import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTable
 import androidx.recyclerview.widget.DiffUtil
 
 class TimeTableDiffCallback(

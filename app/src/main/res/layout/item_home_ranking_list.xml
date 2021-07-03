@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable
             name="rankingLectureItem"
-            type="in.hangang.hangang.data.entity.ranking.RankingLectureItem" />
+            type="in.hangang.hangang.data.ranking.RankingLectureItem" />
         <variable
             name="ranking"
             type="int" />

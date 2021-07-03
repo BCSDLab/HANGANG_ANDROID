@@ -7,7 +7,7 @@
 
         <variable
             name="lecture"
-            type="in.hangang.hangang.data.entity.timetable.LectureTimeTable" />
+            type="in.hangang.hangang.data.entity.LectureTimeTable" />
     </data>
 
     <FrameLayout

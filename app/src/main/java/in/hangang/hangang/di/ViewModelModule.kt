@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.di
 
-import `in`.hangang.hangang.data.source.repository.LectureRepository
-import `in`.hangang.hangang.data.source.repository.TimeTableRepository
+import `in`.hangang.hangang.data.source.LectureRepository
+import `in`.hangang.hangang.data.source.TimeTableRepository
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel

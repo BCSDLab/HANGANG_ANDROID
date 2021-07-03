@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.customview.timetable
 
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.timetable.CustomTimetableTimestamp
+import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
 import android.content.Context
 import java.util.*
 

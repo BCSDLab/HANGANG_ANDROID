@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.ui.timetable.listener
 
-import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTable
 
 interface TimetableListRecyclerViewOnItemClickListener {
     fun onSemesterItemClick(semesterDateId: Int, semesterDateString: String) {}
