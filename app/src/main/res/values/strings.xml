@@ -255,4 +255,5 @@
     <string name="lecture_evaluation_write_guide_message">이 강의에 대한 총평을 자유롭게 적어주세요!\n(시험정보, 과제정보, 팁 등)\n\n허위사실이나 지나친 비방 내용을 작성할 시,\n승인이 불가할 수 있습니다.\n\n강의평 작성이 완료될 시, 수정이나 삭제가 불가합니다. </string>
     <string name="lecture_search_no_result_text">검색결과가 없습니다.</string>
     <string name="recently_query">최근 검색어</string>
+    <string name="complete_write_review_message">리뷰가 정상적으로 작성되었습니다.</string>
 </resources>
