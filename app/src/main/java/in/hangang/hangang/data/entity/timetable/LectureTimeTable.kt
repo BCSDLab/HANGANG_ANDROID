@@ -7,7 +7,7 @@ data class LectureTimeTable(
         @SerializedName("lecture_id")
         val lectureId: Int = 0,
         @SerializedName("lecture_timetable_id")
-        val lectureTimetableId: Int = 0,
+        val lectureTimetableId: Int? = null,
         @SerializedName("is_custom")
         val isCustom: Boolean = false,
         @SerializedName("semester_date")
