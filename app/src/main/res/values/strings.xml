@@ -193,6 +193,7 @@
     <string name="profile_id">아이디</string>
     <string name="profile_nickname">닉네임</string>
     <string name="profile_edit_button">수정</string>
+    <string name="profile_done_button">완료</string>
     <string name="profile_logout_dialog_message">로그아웃 하시겠습니까?</string>
     <string name="profile_delete_account_dialog_message">회원 탈퇴를 하시겠습니까?</string>
     <string name="profile_major">전공</string>

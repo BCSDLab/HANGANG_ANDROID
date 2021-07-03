@@ -8,6 +8,7 @@ import `in`.hangang.hangang.ui.login.LoginActivity
 import `in`.hangang.hangang.ui.settings.viewmodel.SettingsActivityViewModel
 import android.content.Intent
 import android.os.Bundle
+import android.util.EventLog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
@@ -28,11 +29,11 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
     private fun initEvent() {
         with(binding) {
-            changeProfileButton.setOnClickListener {
-                myProfileActivityStart()
-            }
             logOutButton.setOnClickListener {
                 showLogoutDialog()
+            }
+            changeProfileButton.setOnClickListener {
+                myProfileActivityStart()
             }
             deleteAccountButton.setOnClickListener {
                 showDeleteAccountDialog()
@@ -93,7 +94,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
                     settingsViewModel.deleteAccount()
                 Intent(this, LoginActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
+                    startActivity(this)
                 }
             },
             negativeButtonOnClickListener = {dialog, _ ->

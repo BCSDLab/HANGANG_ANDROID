@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.settings.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.UserRepository
@@ -31,6 +32,7 @@ class SettingsActivityViewModel(private val userRepository: UserRepository) : Vi
         userRepository.saveAutoLogin(isAutoLoginActive)
             .subscribe {
                 _autoLoginButtonResponse.value = isAutoLoginActive
+                _autoLoginButtonResponse.postValue(isAutoLoginActive)
             }
     }
 

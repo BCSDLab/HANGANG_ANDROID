@@ -30,7 +30,7 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
 
-        <in.hangang.core.view.appbar.ProgressAppBar
+        <in.hangang.core.view.appbar.BaseAppBar
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

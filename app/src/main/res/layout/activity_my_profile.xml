@@ -51,7 +51,7 @@
 
         <EditText
             android:id="@+id/name_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@null"
@@ -59,7 +59,10 @@
             android:textColor="@color/black3"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            android:enabled="false"
+            android:singleLine="true"/>
 
         <View
             android:id="@+id/underbar_name"
@@ -99,7 +102,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="mina2019@koreatech.ac.kr"
             android:textColor="@color/black3"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
@@ -139,19 +141,33 @@
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@id/profile_nickname"
             app:layout_constraintTop_toBottomOf="@id/underbar_second"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            />
 
         <EditText
             android:id="@+id/profile_nickname_edit_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@null"
-            android:text="도미는김이정"
             android:textColor="@color/black3"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@id/profile_nickname" />
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/profile_nickname"
+            android:enabled="false"
+            android:singleLine="true"/>
+
+        <ImageView
+            android:id="@+id/nickname_error_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_exclamation"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/profile_nickname"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            android:visibility="gone"
+            />
 
 
         <View
@@ -182,11 +198,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@null"
-            android:text="디자인공학과"
             android:textColor="@color/black3"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@id/profile_major" />
+            app:layout_constraintTop_toBottomOf="@id/profile_major"
+            android:focusable="false"/>
 
 
         <View
@@ -210,6 +226,20 @@
             app:layout_constraintStart_toStartOf="@id/guideline_left"
             app:layout_constraintTop_toBottomOf="@id/underbar_major_first"
             android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/profile_major_second_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            android:textColor="@color/gray_500"
+            android:textSize="14sp"
+            android:text="@string/remove"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/underbar_major_first"
+            android:visibility="gone"
+            />
 
         <View
             android:id="@+id/underbar_major_second"

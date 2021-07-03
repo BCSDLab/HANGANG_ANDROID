@@ -38,7 +38,7 @@ interface UserDataSource {
 
     fun changePassword(portalAccount: String, password: String): Single<CommonResponse>
 
-    fun saveProfile(name: String, nickName: String, major: Array<String>): Single<CommonResponse>
+    fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse>
 
     fun deleteAccount(): Single<CommonResponse>
 

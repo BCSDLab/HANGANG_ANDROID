@@ -5,24 +5,26 @@ import `in`.hangang.hangang.data.source.repository.TimeTableRepository
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
-import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewListViewModel
-import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.home.mytimetable.viewmodel.MyTimetableFragmentViewModel
 import `in`.hangang.hangang.ui.home.ranking.viewmodel.RankingLectureViewModel
 import `in`.hangang.hangang.ui.home.recentlectures.viewmodel.RecentLecturesFragmentViewModel
 import `in`.hangang.hangang.ui.home.recommendedlectures.viewmodel.RecommendedLecturesFragmentViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureEvaluationViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
+import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewListViewModel
+import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapViewModel
+import `in`.hangang.hangang.ui.settings.viewmodel.MyProfileActivityViewModel
+import `in`.hangang.hangang.ui.settings.viewmodel.SettingsActivityViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
+import `in`.hangang.hangang.ui.splash.SplashViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableAddActivityViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
-import `in`.hangang.hangang.ui.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -48,15 +50,23 @@ val viewModelModule = module {
     viewModel { RecommendedLecturesFragmentViewModel() }
     viewModel { RecentLecturesFragmentViewModel() }
     viewModel { RankingLectureViewModel(get()) }
-    viewModel { LectureReviewDetailViewModel(get() as LectureRepository, get() as TimeTableRepository) }
+    viewModel {
+        LectureReviewDetailViewModel(
+            get() as LectureRepository,
+            get() as TimeTableRepository
+        )
+    }
     viewModel { LectureEvaluationViewModel(get()) }
+    viewModel { SettingsActivityViewModel(get()) }
+    viewModel { MyProfileActivityViewModel(get()) }
 
     //Timetable
     viewModel { TimetableViewModel(get()) }
     viewModel { TimetableLectureListViewModel(get()) }
     viewModel { TimetableAddActivityViewModel(get()) }
     viewModel { TimetableLectureDetailViewModel(get()) }
-    viewModel { SplashViewModel(get())}
+    viewModel { SplashViewModel(get()) }
+
     //Mypage
     viewModel { MyPageViewModel(get()) }
     viewModel { MyScrapViewModel(get()) }

@@ -114,7 +114,7 @@ class UserLocalDataSource : UserDataSource {
         return Single.never()
     }
 
-    override fun saveProfile(name: String, nickName: String, major: Array<String>): Single<CommonResponse> {
+    override fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse> {
         return  Single.never()
     }
 }

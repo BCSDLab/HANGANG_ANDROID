@@ -64,8 +64,6 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
         with(binding) {
             imageButtonGotoSettings.setOnClickListener {
                 val intent = Intent(activity, SettingsActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }
             textViewPurchasedBank.setOnClickListener {

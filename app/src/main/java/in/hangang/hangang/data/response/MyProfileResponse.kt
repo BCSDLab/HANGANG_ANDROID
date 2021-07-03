@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class MyProfileResponse(
     @SerializedName("portal_account")
-    var portalAccount: String? = null,
+    var portalAccount: String,
 
     @SerializedName("nickname")
-    var nickname: String? = null,
+    var nickname: String,
 
     @SerializedName("major")
-    var major: String? = null,
+    var major: Array<String>,
 
     @SerializedName("name")
     var name: String? = null
