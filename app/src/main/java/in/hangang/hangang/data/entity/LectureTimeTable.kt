@@ -34,7 +34,10 @@ data class LectureTimeTable(
         val updatedAt: String? = null,
         val rating: Double = 0.0,
         @SerializedName("lecture_timetable_id")
-        val lectureTimetableId: Int? = null
+        val lectureTimetableId: Int? = null,
+        @SerializedName("is_reviewed")
+        val isReviewed: Boolean = false
+
 ) {
     override fun equals(other: Any?): Boolean {
         return this.lectureId == ((other as? LectureTimeTable)?.lectureId ?: -1)

@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source.remote
 
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
+import `in`.hangang.hangang.data.evaluation.LectureDoc
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
@@ -62,5 +63,9 @@ class UserRemoteDataSource(
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return noAuthApi.passwordFind(PasswordFindRequest(portalAccount, password))
+    }
+
+    override fun getLectureBankHit(): Single<List<LectureDoc>> {
+        return noAuthApi.getLectureBankHit()
     }
 }

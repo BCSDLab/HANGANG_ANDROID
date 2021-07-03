@@ -29,8 +29,8 @@ class LectureEvaluationViewModel(private val lectureRepository: LectureRepositor
     var rating = 0.5f
     var semesterId = 5
 
-    var postCommonResponse = MutableLiveData<CommonResponse>()
-
+    private val _postCommonResponse = MutableLiveData<String>()
+    val postCommonResponse: LiveData<String> get() = _postCommonResponse
     fun getLectureSemester(id: Int){
         lectureRepository.getLectureSemester(id)
             .handleHttpException()
@@ -79,8 +79,14 @@ class LectureEvaluationViewModel(private val lectureRepository: LectureRepositor
             .handleHttpException()
             .handleProgress(this)
             .withThread()
+            .onErrorReturn {
+                return@onErrorReturn it.toCommonResponse()
+            }
             .subscribe({
-                       postCommonResponse.value = it
+                if(!it.errorMessage.isNullOrEmpty())
+                       _postCommonResponse.value = it.errorMessage
+                else
+                    _postCommonResponse.value = it.message
             },{
                 LogUtil.e(it.message)
                 //LogUtil.e("Error : ${it.toCommonResponse().errorMessage}")

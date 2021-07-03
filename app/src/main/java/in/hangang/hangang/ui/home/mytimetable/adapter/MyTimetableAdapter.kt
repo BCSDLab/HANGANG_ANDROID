@@ -1,36 +1,78 @@
 package `in`.hangang.hangang.ui.home.mytimetable.adapter
 
 import `in`.hangang.core.base.ViewBindingRecyclerViewHolder
+import `in`.hangang.core.view.button.RoundedCornerButton
 import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
+import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.data.entity.LectureTimeTable
+import `in`.hangang.hangang.data.evaluation.ClassLecture
 import `in`.hangang.hangang.databinding.ItemHomeMyTimetableListBinding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 
-class MyTimetableAdapter : OnItemClickRecyclerViewAdapter<MyTimetableAdapter.ViewHolder>() {
+class MyTimetableAdapter :
+    ListAdapter<LectureTimeTable, MyTimetableAdapter.ViewHolder>(timeTableDiffUtil) {
+    lateinit var myTimeTableClickListener: RecyclerViewClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_home_my_timetable_list,
-                        parent,
-                        false
-                )
+            ItemHomeMyTimetableListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.itemMyTimetableTitle.text = "사랑의 역사"
-        holder.binding.itemMyTimetableProfessor.text = "김사랑"
-
-        if (position == itemCount - 1) holder.binding.divider.visibility = View.GONE
+        val timeTable = getItem(position)
+        if(timeTable != null) {
+            holder.bind(timeTable)
+            holder.binding.itemMyTimetableConstraintlayout.setOnClickListener {
+                myTimeTableClickListener.onClick(it as ConstraintLayout, position, timeTable as LectureTimeTable)
+            }
+            if(holder.binding.itemMyTimetableButtonEvaluate.isEnabled) {
+                holder.binding.itemMyTimetableButtonEvaluate.setOnClickListener {
+                    myTimeTableClickListener.onClick(it as RoundedCornerButton, position, timeTable as LectureTimeTable)
+                }
+            }
+        }
+    }
+    fun setClickListener(listener: RecyclerViewClickListener) {
+        myTimeTableClickListener = listener
+    }
+    class ViewHolder(val binding: ItemHomeMyTimetableListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: LectureTimeTable) {
+            binding.apply {
+                timetable = item
+                executePendingBindings()
+            }
+        }
     }
 
-    override fun getItemCount(): Int = 0
+    companion object {
+        val timeTableDiffUtil = object : DiffUtil.ItemCallback<LectureTimeTable>() {
+            override fun areItemsTheSame(
+                oldItem: LectureTimeTable,
+                newItem: LectureTimeTable
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    class ViewHolder(itemHomeMyTimetableListBinding: ItemHomeMyTimetableListBinding) :
-            ViewBindingRecyclerViewHolder<ItemHomeMyTimetableListBinding>(itemHomeMyTimetableListBinding)
+            override fun areContentsTheSame(
+                oldItem: LectureTimeTable,
+                newItem: LectureTimeTable
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 }

@@ -67,7 +67,6 @@ class LectureClassTimeAdapter(private val context: Context) :
                         timeList[0],
                         timeList[timeList.size - 1]
                     )
-                    LogUtil.e(text)
                     lectureDetailClassTimeTextview.text = text
                 }
                 executePendingBindings()
