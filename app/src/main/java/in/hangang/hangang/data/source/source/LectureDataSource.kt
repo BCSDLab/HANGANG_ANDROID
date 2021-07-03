@@ -33,4 +33,5 @@ interface LectureDataSource {
     fun postScrapedLecture(scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse>
     fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse>
     fun getLecturesId(id: Int): Single<RankingLectureItem>
+    fun getRecentlyLectureList(): ArrayList<RankingLectureItem>
 }

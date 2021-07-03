@@ -139,36 +139,14 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         super.onViewCreated(view, savedInstanceState)
         lecture = arguments?.getParcelable<RankingLectureItem>("lecture")!!
         binding.lecture = lecture
+        lectureReviewDetailViewModel.saveRecentlyReadLectureReviews(lecture)
         //lecture?.id?.let { lectureReviewDetailViewModel.getEvaluationRating(it) }
         init()
         initViewModel()
         initEvent()
-        initSharedPreference()
 
     }
 
-    private fun initSharedPreference() {
-        var isDuplicated = false
-        var recentlyReadLectureReview =
-            Hawk.get(RECENTLY_READ_LECTURE_REVIEW, ArrayList<RankingLectureItem>())
-        for(idx in recentlyReadLectureReview.indices) {
-            if(recentlyReadLectureReview[idx].id == lecture.id){
-                isDuplicated = true
-                recentlyReadLectureReview.removeAt(idx)
-                recentlyReadLectureReview.add(0, lecture)
-                break
-            }
-        }
-        if(!isDuplicated) {
-            recentlyReadLectureReview.add(0, lecture)
-            if (recentlyReadLectureReview.size > 5) {
-                recentlyReadLectureReview.removeLast()
-            }
-        }
-        Hawk.put(RECENTLY_READ_LECTURE_REVIEW, recentlyReadLectureReview)
-
-
-    }
 
     private fun initViewModel() {
         with(lectureReviewDetailViewModel) {

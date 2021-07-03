@@ -1,10 +1,12 @@
 package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
+import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
 import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.evaluation.*
+import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
@@ -24,6 +26,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
 import com.github.mikephil.charting.data.BarEntry
+import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.addTo
 import kotlinx.coroutines.launch
@@ -278,5 +281,27 @@ class LectureReviewDetailViewModel(
                 LogUtil.e(it.toCommonResponse().errorMessage.toString())
             })
             .addTo(compositeDisposable)
+    }
+
+    fun saveRecentlyReadLectureReviews(lecture: RankingLectureItem) {
+        viewModelScope.launch {
+            var isDuplicated = false
+            var list = lectureRepository.getRecentlyLectureList()
+            for(idx in list.indices) {
+                if(list[idx].id == lecture.id){
+                    isDuplicated = true
+                    list.removeAt(idx)
+                    list.add(0, lecture)
+                    break
+                }
+            }
+            if(!isDuplicated) {
+                list.add(0, lecture)
+                if (list.size > 5) {
+                    list.removeLast()
+                }
+            }
+            Hawk.put(RECENTLY_READ_LECTURE_REVIEW, list)
+        }
     }
 }

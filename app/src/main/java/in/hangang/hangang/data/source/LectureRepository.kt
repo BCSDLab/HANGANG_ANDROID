@@ -132,4 +132,8 @@ class LectureRepository(
     override fun getLecturesId(id: Int): Single<RankingLectureItem> {
         return lectureRemoteDataSource.getLecturesId(id)
     }
+
+    override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
+        return lectureLocalDataSource.getRecentlyLectureList()
+    }
 }

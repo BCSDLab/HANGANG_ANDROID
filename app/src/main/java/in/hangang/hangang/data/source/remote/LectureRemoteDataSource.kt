@@ -140,4 +140,8 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun getLecturesId(id: Int): Single<RankingLectureItem> {
         return authApi.getLecturesId(id)
     }
+
+    override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
+        return ArrayList()
+    }
 }

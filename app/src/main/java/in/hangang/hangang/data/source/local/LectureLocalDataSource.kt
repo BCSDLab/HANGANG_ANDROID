@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source.local
 
+import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
@@ -9,6 +10,7 @@ import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.LectureDataSource
+import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Single
 
 class LectureLocalDataSource : LectureDataSource {
@@ -102,5 +104,10 @@ class LectureLocalDataSource : LectureDataSource {
 
     override fun getLecturesId(id: Int): Single<RankingLectureItem> {
         return Single.never()
+    }
+
+    override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
+        return Hawk.get(RECENTLY_READ_LECTURE_REVIEW, ArrayList<RankingLectureItem>())
+
     }
 }

@@ -43,7 +43,7 @@ val viewModelModule = module {
     //Home
     viewModel { MyTimetableFragmentViewModel(get(), get()) }
     viewModel { RecommendedLecturesFragmentViewModel(get()) }
-    viewModel { RecentLecturesFragmentViewModel() }
+    viewModel { RecentLecturesFragmentViewModel(get()) }
     viewModel { RankingLectureViewModel(get()) }
     viewModel { LectureReviewDetailViewModel(get() as LectureRepository, get() as TimeTableRepository) }
     viewModel { LectureEvaluationViewModel(get()) }

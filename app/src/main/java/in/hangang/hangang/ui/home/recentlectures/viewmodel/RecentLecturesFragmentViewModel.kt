@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RecentLecturesFragmentViewModel() : ViewModelBase() {
+class RecentLecturesFragmentViewModel(private val lectureRepository: LectureRepository) : ViewModelBase() {
     private val _timetableCount = MutableLiveData(0)
     val timetableCount: LiveData<Int> get() = _timetableCount
 
@@ -27,9 +27,7 @@ class RecentLecturesFragmentViewModel() : ViewModelBase() {
 
     fun getLectureList() {
         viewModelScope.launch {
-            if (Hawk.contains(RECENTLY_READ_LECTURE_REVIEW)) {
-                _lectureList.value = Hawk.get(RECENTLY_READ_LECTURE_REVIEW)
-            }
+            _lectureList.value = lectureRepository.getRecentlyLectureList()
         }
     }
 }
