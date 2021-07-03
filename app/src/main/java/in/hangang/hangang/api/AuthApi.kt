@@ -1,18 +1,13 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.entity.LectureTimeTable
+import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.request.ReviewRecommendRequest
-import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimetableMemo
-import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
-import `in`.hangang.hangang.data.request.TimeTableRequest
-import `in`.hangang.hangang.data.request.TimetableMemoRequest
-import `in`.hangang.hangang.data.request.UserTimeTableRequest
+import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
@@ -29,6 +24,12 @@ interface AuthApi {
     fun getTimeTables(
             @Query("semesterDateId") semesterDateId: Long? = null
     ): Single<List<TimeTable>>
+
+    @GET(TIMETABLE)
+    suspend fun fetchTimeTables(
+        @Query("semesterDateId") semesterDateId: Long? = null
+    ): List<TimeTable>
+
 
     @POST(TIMETABLE)
     fun makeTimeTable(
@@ -48,7 +49,7 @@ interface AuthApi {
     @POST(TIMETABLE_LECTURE)
     fun addLectureInTimeTable(
             @Body timeTableRequest: TimeTableRequest
-    ): Single<CommonResponse>
+    ): Single<LectureTimeTable>
 
     @HTTP(method = "DELETE", path = TIMETABLE_LECTURE, hasBody = true)
     fun removeLectureInTimeTable(
@@ -59,6 +60,12 @@ interface AuthApi {
     fun getLectureListFromTimeTable(
         @Query("timeTableId") timetableId: Int
     ): Single<TimeTableWithLecture>
+
+    @GET(TIMETABLE_LECTURE)
+    suspend fun fetchLectureListFromTimeTable(
+        @Query("timeTableId") timetableId: Int
+    ): TimeTableWithLecture
+
 
     @POST(TIMETABLE_CUSTOM_LECTURE)
     fun addCustomLectureInTimetable(
@@ -129,6 +136,13 @@ interface AuthApi {
     @GET(CLASS_LECTURES)
     fun getClassLectures(@Path("id") id: Int): Single<ArrayList<ClassLecture>>
 
+    @GET(CLASS_LECTURES)
+    suspend fun fetchClassLectures(@Path("id") id: Int): List<ClassLecture>
+
+    @GET(CLASS_LECTURES)
+    suspend fun getLectureClass(@Path("id") id: Int): ArrayList<ClassLecture>
+
+
     @GET(LECTURE_REVIEWS)
     fun getLectureReview(@Path("id") id: Int,
                          @Query("limit") limit: Int = 20,
@@ -152,7 +166,17 @@ interface AuthApi {
     fun getLectureReviewItem(@Path("id") id: Int): Single<LectureReview>
 
     @GET(LECTURE_SEMESTER)
-    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<String>>
+    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<Int>>
+
+    @POST(REVIEW_REPORT)
+    fun reportLectureReview(@Body lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse>
+
+    @POST(EVALUATIONS)
+    fun postEvaluation(@Body lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse>
+
+
+
+
 }
 
 

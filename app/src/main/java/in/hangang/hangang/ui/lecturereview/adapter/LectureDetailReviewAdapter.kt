@@ -14,20 +14,29 @@ import androidx.recyclerview.widget.RecyclerView
 
 class LectureDetailReviewAdapter: PagingDataAdapter<LectureReview, LectureDetailReviewAdapter.ViewHolder>(
     lectureDetailReviewDiffUtil)  {
-    private lateinit var recyclerviewClickListner: RecyclerViewClickListener
+    private lateinit var thumUpClickListner: RecyclerViewClickListener
+    private lateinit var reportClickListener: RecyclerViewClickListener
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val lectureReview = getItem(position)
         if(lectureReview != null){
             holder.bind(lectureReview)
             holder.binding.lectureDetailThumbUp.setOnClickListener { v ->
-                if (recyclerviewClickListner != null) {
-                    recyclerviewClickListner.onClick(v, position, lectureReview)
+                if (thumUpClickListner != null) {
+                    thumUpClickListner.onClick(v, position, lectureReview)
+                }
+            }
+            holder.binding.lectureDetailReport.setOnClickListener { v ->
+                if(reportClickListener != null){
+                    reportClickListener.onClick(v, position, lectureReview)
                 }
             }
         }
     }
     fun setRecyclerViewListener(recyclerviewClickListner: RecyclerViewClickListener){
-        this.recyclerviewClickListner = recyclerviewClickListner
+        this.thumUpClickListner = recyclerviewClickListner
+    }
+    fun setReportClickListener(recyclerviewClickListner: RecyclerViewClickListener){
+        this.reportClickListener = recyclerviewClickListner
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

@@ -19,6 +19,7 @@ data class ClassLecture(
     val selectedTableId: ArrayList<String>,
     @SerializedName("target")
     val target: String,
+    var isChecked: Boolean = false
 
 
 

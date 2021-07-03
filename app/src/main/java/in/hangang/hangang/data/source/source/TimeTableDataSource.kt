@@ -7,6 +7,7 @@ import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
+import retrofit2.http.Query
 
 interface TimeTableDataSource {
     fun getTimeTables(): Single<Map<Int, List<TimeTable>>>
@@ -26,7 +27,7 @@ interface TimeTableDataSource {
     fun setMainTimeTable(timetableId: Int): Single<CommonResponse>
     fun getMainTimeTable(): Single<TimeTableWithLecture>
     fun getTimetable(timetableId: Int): Single<TimeTableWithLecture>
-    fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
+    fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable>
     fun removeLectureFromTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
     fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
@@ -60,4 +61,9 @@ interface TimeTableDataSource {
     fun removeMemo(
             timetableLectureId: Int
     ): Single<CommonResponse>
+    fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>>
+
+    suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture
+    suspend fun fetchTimeTables(semesterDateId: Long? = null): List<TimeTable>
+
 }

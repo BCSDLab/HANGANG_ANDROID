@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="showBackButton" format="boolean" />
-
     <declare-styleable name="RoundedCornerButton">
         <attr name="buttonAppearence" format="enum">
             <enum name="filled" value="0" />
@@ -10,7 +8,7 @@
     </declare-styleable>
 
     <declare-styleable name="BaseAppBar">
-        <attr name="showBackButton"/>
+        <attr name="showBackButton" format="boolean" />
         <attr name="titleText" format="string|reference" />
         <attr name="rightText" format="string|reference" />
         <attr name="centerTitle" format="boolean" />

@@ -50,6 +50,7 @@
     <string name="reset_password_send_auth_number">인증번호 전송</string>
     <string name="reset_password_resend_auth_number">재전송</string>
     <string name="reset_password_finish_email_auth">인증 완료</string>
+    <string name="goto_aunuri">아우누리 바로가기</string>
     <string name="reset_password_new_password">새 비밀번호</string>
     <string name="reset_password_confirm_new_password">새 비밀번호 확인</string>
     <string name="reset_password_new_password_hint">영문, 숫자, 특수기호 반드시 포함 8자~15자</string>
@@ -245,4 +246,12 @@
     <string name="grade_portion_low">아쉽게주심</string>
     <string name="total_evaluation">총평</string>
     <string name="lecture_evaluation_write_complete">작성완료 (+30P)</string>
+    <string name="like_order">좋아요 순</string>
+    <string name="latest_order">최신 순</string>인
+    <string name="report_dialog_title">신고해주셔서 감사합니다.</string>
+    <string name="report_dialog_messge">회원님의 의견은 한강 서비스를\n안전하게 유지하기 위해 사용하겠습니다.</string>
+    <string name="noti_uncompleted_review">아직 작성이 완료되지 않았습니다.</string>
+    <string name="lecture_evaluation_write_guide_message">이 강의에 대한 총평을 자유롭게 적어주세요!\n(시험정보, 과제정보, 팁 등)\n\n허위사실이나 지나친 비방 내용을 작성할 시,\n승인이 불가할 수 있습니다.\n\n강의평 작성이 완료될 시, 수정이나 삭제가 불가합니다. </string>
+    <string name="lecture_search_no_result_text">검색결과가 없습니다.</string>
+    <string name="recently_query">최근 검색어</string>
 </resources>

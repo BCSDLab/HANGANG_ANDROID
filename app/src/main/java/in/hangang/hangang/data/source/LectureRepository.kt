@@ -3,6 +3,8 @@ package `in`.hangang.hangang.data.source
 import `in`.hangang.hangang.data.evaluation.*
 import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationRequest
+import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.source.LectureDataSource
@@ -86,6 +88,9 @@ class LectureRepository(
             ReviewPagingSource(lectureRemoteDataSource,id, keyword, sort)
         }.flowable
     }
+    fun getLectureReviewPersonalCount(id: Int, keyword: String?, sort: String):Single<LectureReviewResult> {
+        return lectureRemoteDataSource.getLectureReview(id, 1, keyword, sort)
+    }
 
     override fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse> {
         return lectureRemoteDataSource.postReviewRecommend(reviewRecommendRequest)
@@ -95,7 +100,23 @@ class LectureRepository(
         return lectureRemoteDataSource.getLectureReviewItem(id)
     }
 
-    override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
+    override fun getLectureSemester(id: Int): Single<ArrayList<Int>> {
         return lectureRemoteDataSource.getLectureSemester(id)
+    }
+
+    override fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse> {
+        return lectureRemoteDataSource.reportLectureReview(lectureReviewReportRequest)
+    }
+
+    override fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse> {
+        return lectureRemoteDataSource.postEvaluation(lectureEvaluationRequest)
+    }
+
+    override suspend fun getLectureClass(id: Int): ArrayList<ClassLecture> {
+        return lectureRemoteDataSource.getLectureClass(id)
+    }
+
+    override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
+        return lectureRemoteDataSource.fetchClassLectures(id)
     }
 }

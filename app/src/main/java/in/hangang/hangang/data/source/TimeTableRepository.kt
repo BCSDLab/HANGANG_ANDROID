@@ -65,7 +65,7 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.getTimetable(timetableId)
     }
 
-    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable> {
         return timeTableRemoteDataSource.addLectureInTimeTable(lectureId, timetableId)
     }
 
@@ -138,5 +138,17 @@ class TimeTableRepository(
 
     override fun removeMemo(timetableLectureId: Int): Single<CommonResponse> {
         return timeTableRemoteDataSource.removeMemo(timetableLectureId)
+    }
+
+    override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return timeTableRemoteDataSource.getUserTimeTables(semesterId)
+    }
+
+    override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {
+        return timeTableRemoteDataSource.fetchLectureListFromTimeTable(timetableId)
+    }
+
+    override suspend fun fetchTimeTables(semesterDateId: Long?): List<TimeTable> {
+        return timeTableRemoteDataSource.fetchTimeTables(semesterDateId)
     }
 }

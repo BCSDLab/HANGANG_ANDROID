@@ -80,7 +80,7 @@ class TimeTableRemoteDataSource(
         return authApi.getLectureListFromTimeTable(timetableId)
     }
 
-    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable> {
         return authApi.addLectureInTimeTable(
                 TimeTableRequest(lectureId, timetableId)
         )
@@ -195,5 +195,17 @@ class TimeTableRemoteDataSource(
                 } else
                     Single.just(list)
             }
+    }
+
+    override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return authApi.getTimeTables(semesterId)
+    }
+
+    override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {
+        return authApi.fetchLectureListFromTimeTable(timetableId)
+    }
+
+    override suspend fun fetchTimeTables(semesterDateId: Long?): List<TimeTable> {
+        return authApi.fetchTimeTables(semesterDateId)
     }
 }
