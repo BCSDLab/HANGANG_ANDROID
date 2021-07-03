@@ -98,11 +98,11 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun addCustomLectureInTimetable(
-            classTime: String?,
-            name: String?,
-            professor: String?,
-            userTimetableId: Int
-    ): Single<CommonResponse> {
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
+    ): Single<LectureTimeTable> {
         return Single.never()
     }
 

@@ -41,7 +41,7 @@ interface TimeTableDataSource {
             name: String?,
             professor: String?,
             userTimetableId: Int
-    ): Single<CommonResponse>
+    ): Single<LectureTimeTable>
 
     fun getMemo(
             timetableLectureId: Int

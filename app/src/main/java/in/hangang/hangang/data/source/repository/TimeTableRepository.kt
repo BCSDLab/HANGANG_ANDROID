@@ -93,11 +93,11 @@ class TimeTableRepository(
     }
 
     override fun addCustomLectureInTimetable(
-            classTime: String?,
-            name: String?,
-            professor: String?,
-            userTimetableId: Int
-    ): Single<CommonResponse> {
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
+    ): Single<LectureTimeTable> {
         return timeTableRemoteDataSource.addCustomLectureInTimetable(
                 classTime, name, professor, userTimetableId
         )

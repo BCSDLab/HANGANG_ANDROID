@@ -229,7 +229,7 @@ class TimetableViewModel(
 
     fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
         timeTableRepository.removeLectureFromTimeTable(
-            lectureId = lectureTimeTable.lectureTimetableId  ?: 0,
+            lectureId = lectureTimeTable.lectureTimetableId ?: 0,
             timetableId = timetable.id
         ).flatMap {
             timeTableRepository.getTimetable(timetable.id)
