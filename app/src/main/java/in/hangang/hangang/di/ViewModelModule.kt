@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.di
 
-import `in`.hangang.hangang.data.source.LectureRepository
-import `in`.hangang.hangang.data.source.TimeTableRepository
+import `in`.hangang.hangang.data.source.repository.LectureRepository
+import `in`.hangang.hangang.data.source.repository.TimeTableRepository
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordActivityViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.ChangePasswordFragmentViewModel
 import `in`.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel
@@ -41,9 +41,9 @@ val viewModelModule = module {
     viewModel { EmailAuthenticationFragmentViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     //Home
-    viewModel { MyTimetableFragmentViewModel() }
-    viewModel { RecommendedLecturesFragmentViewModel() }
-    viewModel { RecentLecturesFragmentViewModel() }
+    viewModel { MyTimetableFragmentViewModel(get(), get()) }
+    viewModel { RecommendedLecturesFragmentViewModel(get()) }
+    viewModel { RecentLecturesFragmentViewModel(get()) }
     viewModel { RankingLectureViewModel(get()) }
     viewModel { LectureReviewDetailViewModel(get() as LectureRepository, get() as TimeTableRepository) }
     viewModel { LectureEvaluationViewModel(get()) }

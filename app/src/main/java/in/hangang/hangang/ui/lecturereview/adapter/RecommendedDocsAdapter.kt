@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.ui.lecturereview.adapter
 
-import `in`.hangang.hangang.data.evaluation.LectureDoc
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.databinding.ItemRecommendedLectureDocsBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup

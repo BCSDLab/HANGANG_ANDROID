@@ -193,10 +193,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scroll_view_majors">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_timetable_lectures"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/recycler_view_empty"
+                    layout="@layout/layout_list_empty" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_timetable_lectures"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
+
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

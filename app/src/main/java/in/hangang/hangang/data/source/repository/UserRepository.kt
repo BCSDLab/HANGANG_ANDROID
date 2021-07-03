@@ -1,13 +1,14 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.repository
 
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
-import `in`.hangang.hangang.data.source.source.UserDataSource
+import `in`.hangang.hangang.data.source.UserDataSource
 import io.reactivex.rxjava3.core.Single
 
 class UserRepository(
-        private val userLocalDataSource: UserDataSource,
-        private val userRemoteDataSource: UserDataSource
+    private val userLocalDataSource: UserDataSource,
+    private val userRemoteDataSource: UserDataSource
 ) : UserDataSource {
     override fun signUp(
             major: Array<String>,
@@ -61,5 +62,9 @@ class UserRepository(
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return userRemoteDataSource.changePassword(portalAccount, password)
+    }
+
+    override fun getLectureBankHit(): Single<List<LectureDoc>> {
+        return userRemoteDataSource.getLectureBankHit()
     }
 }

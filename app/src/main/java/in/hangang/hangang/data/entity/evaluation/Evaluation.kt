@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.evaluation
+package `in`.hangang.hangang.data.entity.evaluation
 
 import com.google.gson.annotations.SerializedName
 
@@ -72,9 +72,9 @@ class Evaluation(
     }
     fun gradePortionToString(): String{
         return when(gradePortion) {
-            1 -> "아쉽게주심"
-            2 -> "적당히주심"
-            3 -> "후하게주심"
+            1 -> "하"
+            2 -> "중"
+            3 -> "상"
             else -> "unkown"
         }
     }

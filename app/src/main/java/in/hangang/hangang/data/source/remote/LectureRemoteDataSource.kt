@@ -5,14 +5,19 @@ import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.constant.SORT_BY_LATEST_REVIEW
 import `in`.hangang.hangang.constant.SORT_BY_REVIEW_COUNT
 import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
-import `in`.hangang.hangang.data.evaluation.*
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
+import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
+import `in`.hangang.hangang.data.entity.evaluation.Evaluation
+import `in`.hangang.hangang.data.entity.evaluation.LectureDocResult
+import `in`.hangang.hangang.data.entity.evaluation.LectureReview
+import `in`.hangang.hangang.data.entity.evaluation.LectureReviewResult
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.source.LectureDataSource
+import `in`.hangang.hangang.data.source.LectureDataSource
 
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
@@ -65,7 +70,7 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
         sort: String,
         keyword: String?
     ): Single<RankingLectureResult> {
-        return noAuthApi.getLectureRanking(
+        return authApi.getLectureRanking(
             department = majors,
             sort = sort,
             classification = filterType,
@@ -126,5 +131,21 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
 
     override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
         return authApi.fetchClassLectures(id)
+    }
+
+    override fun postScrapedLecture(scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse> {
+        return authApi.postScrapedLecture(scrapedLecture)
+    }
+
+    override fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse> {
+        return authApi.deleteScrapedLecture(scrapedLecture)
+    }
+
+    override fun getLecturesId(id: Int): Single<RankingLectureItem> {
+        return authApi.getLecturesId(id)
+    }
+
+    override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
+        return ArrayList()
     }
 }

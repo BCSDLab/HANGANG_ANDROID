@@ -1,9 +1,8 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.paging
 
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.source.source.LectureDataSource
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.source.LectureDataSource
 import `in`.hangang.hangang.util.handleHttpException
-import androidx.compose.runtime.key
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
 import io.reactivex.rxjava3.core.Single

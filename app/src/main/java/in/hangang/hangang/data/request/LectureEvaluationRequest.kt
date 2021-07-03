@@ -1,6 +1,5 @@
 package `in`.hangang.hangang.data.request
 
-import `in`.hangang.hangang.data.evaluation.Assignment
 import com.google.gson.annotations.SerializedName
 
 class LectureEvaluationRequest(

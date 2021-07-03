@@ -1,21 +1,18 @@
 package `in`.hangang.hangang.ui.lecturereview.adapter
 
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.databinding.ItemHomeRankingListBinding
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.ItemLectureReviewBinding
 import `in`.hangang.hangang.util.LogUtil
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class LectureReviewAdapter(val context: Context) :

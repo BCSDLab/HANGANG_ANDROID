@@ -51,9 +51,6 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
         portalAccount = signUpMajorViewModel.portalAccount.plus(getString(R.string.email_koreatech))
         nickName = signUpMajorViewModel.nickName
         password = signUpMajorViewModel.password
-        LogUtil.e(portalAccount)
-        LogUtil.e(password)
-        LogUtil.e(nickName)
         initAppBar()
         initCheckBox()
         initEditText()

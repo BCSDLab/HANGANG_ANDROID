@@ -3,7 +3,6 @@ package `in`.hangang.hangang.ui.lecturereview.fragment
 import `in`.hangang.core.R
 import `in`.hangang.core.databinding.DialogListViewBinding
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
-import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.ui.lecturereview.adapter.ListDialogRecyclerViewAdapter
 import android.app.AlertDialog
 import android.app.Dialog

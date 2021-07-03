@@ -1,13 +1,16 @@
-package `in`.hangang.hangang.data.source
+package `in`.hangang.hangang.data.source.repository
 
-import `in`.hangang.hangang.data.evaluation.*
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.evaluation.*
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.source.LectureDataSource
+import `in`.hangang.hangang.data.source.LectureDataSource
+import `in`.hangang.hangang.data.source.paging.LectureReviewPagingSource
+import `in`.hangang.hangang.data.source.paging.ReviewPagingSource
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -118,5 +121,21 @@ class LectureRepository(
 
     override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
         return lectureRemoteDataSource.fetchClassLectures(id)
+    }
+
+    override fun postScrapedLecture(scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse> {
+        return lectureRemoteDataSource.postScrapedLecture(scrapedLecture)
+    }
+
+    override fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse> {
+        return lectureRemoteDataSource.deleteScrapedLecture(scrapedLecture)
+    }
+
+    override fun getLecturesId(id: Int): Single<RankingLectureItem> {
+        return lectureRemoteDataSource.getLecturesId(id)
+    }
+
+    override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
+        return lectureLocalDataSource.getRecentlyLectureList()
     }
 }

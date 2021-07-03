@@ -1,18 +1,17 @@
 package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.evaluation.*
+import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
+import `in`.hangang.hangang.data.entity.evaluation.*
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
-import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.LectureRepository
-import `in`.hangang.hangang.data.source.TimeTableRepository
-import `in`.hangang.hangang.di.repositoryModule
+import `in`.hangang.hangang.data.source.repository.LectureRepository
+import `in`.hangang.hangang.data.source.repository.TimeTableRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
@@ -23,12 +22,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
 import com.github.mikephil.charting.data.BarEntry
+import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.addTo
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class LectureReviewDetailViewModel(
     private val lectureRepository: LectureRepository,
@@ -60,6 +59,8 @@ class LectureReviewDetailViewModel(
     private val _reportResult = MutableLiveData<CommonResponse>()
     val reportResult: LiveData<CommonResponse> get() = _reportResult
 
+    private val _scrapResult = MutableLiveData<CommonResponse>()
+    val scrapResult: LiveData<CommonResponse> get() = _scrapResult
 
 
 
@@ -71,7 +72,7 @@ class LectureReviewDetailViewModel(
     var keyword: String? = null
     var sort: String = SORT_BY_LIKE_COUNT
     var commonResponse = MutableLiveData<CommonResponse>()
-    var lectureReviewItem = MutableLiveData<LectureReview>()
+    //var lectureReviewItem = MutableLiveData<LectureReview>()
 
     fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest) {
         lectureRepository.reportLectureReview(lectureReviewReportRequest)
@@ -165,7 +166,7 @@ class LectureReviewDetailViewModel(
             })
             .addTo(compositeDisposable)
     }
-
+/*
     fun getReviewLectureItem(id: Int) {
         lectureRepository.getLectureReviewItem(id)
             .handleHttpException()
@@ -179,8 +180,9 @@ class LectureReviewDetailViewModel(
             .addTo(compositeDisposable)
     }
 
+
+ */
     fun fetchDialogData(semesterId: Long, lectureId: Int) {
-        LogUtil.e(lectureId.toString())
         var userTimeTableList = emptyList<TimeTable>()
         viewModelScope.launch {
             userTimeTableList = timeTableRepository.fetchTimeTables(semesterId) // 해당학기에 생성한 시간표 가져오기
@@ -192,13 +194,9 @@ class LectureReviewDetailViewModel(
                         continue
                     else {
                         timetable.isChecked = lecture.lectureTimetableId == lectureId
-                        LogUtil.e(timetable.isChecked.toString())
                     }
                 }
 
-            }
-            for(id in userTimeTableList) {
-                LogUtil.e(id.isChecked.toString())
             }
             _userTimeTableList.postValue(userTimeTableList)
         }
@@ -208,7 +206,6 @@ class LectureReviewDetailViewModel(
     }
 
     fun fetchClassLectureList(id: Int, semesterId: Long) {
-        LogUtil.e(id.toString())
         var lectureList = emptyList<ClassLecture>()
         viewModelScope.launch {
             lectureList = lectureRepository.fetchClassLectures(id)
@@ -223,9 +220,6 @@ class LectureReviewDetailViewModel(
                             lecture.isChecked = lecture.id == userLecture.lectureTimetableId
                     }
 
-                }
-                for(id in lectureList) {
-                    LogUtil.e(id.isChecked.toString())
                 }
             }
             _classLectureList.postValue(lectureList)
@@ -254,5 +248,55 @@ class LectureReviewDetailViewModel(
                 LogUtil.e(it.message.toString())
             })
             .addTo(compositeDisposable)
+    }
+    fun postScrap(id: Int) {
+        var scrapedLecture: LectureEvaluationIdRequest = LectureEvaluationIdRequest(id)
+        lectureRepository.postScrapedLecture(scrapedLecture)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _scrapResult.value = it
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage.toString())
+            })
+            .addTo(compositeDisposable)
+    }
+    fun deleteScrap(id: Int) {
+        var scrapedLecture = ArrayList<Int>()
+        scrapedLecture.add(id)
+
+        lectureRepository.deleteScrapedLecture(scrapedLecture)
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _scrapResult.value = it
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage.toString())
+            })
+            .addTo(compositeDisposable)
+    }
+
+    fun saveRecentlyReadLectureReviews(lecture: RankingLectureItem) {
+        viewModelScope.launch {
+            var isDuplicated = false
+            var list = lectureRepository.getRecentlyLectureList()
+            for(idx in list.indices) {
+                if(list[idx].id == lecture.id){
+                    isDuplicated = true
+                    list.removeAt(idx)
+                    list.add(0, lecture)
+                    break
+                }
+            }
+            if(!isDuplicated) {
+                list.add(0, lecture)
+                if (list.size > 5) {
+                    list.removeLast()
+                }
+            }
+            Hawk.put(RECENTLY_READ_LECTURE_REVIEW, list)
+        }
     }
 }

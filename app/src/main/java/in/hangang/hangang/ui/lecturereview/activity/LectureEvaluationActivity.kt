@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.lecturereview.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.toast.shortToast
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.button.RoundedCornerButton
@@ -11,6 +12,7 @@ import `in`.hangang.hangang.databinding.ActivityLectureEvaluationBinding
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureEvaluationViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
 import `in`.hangang.hangang.util.LogUtil
+import android.content.DialogInterface
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +24,9 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.RatingBar
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
@@ -68,7 +73,24 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
                 binding.lectureEvaluationSemesterSpinner.onItemClickListener = onSemesterClickListener
             })
             postCommonResponse.observe(this@LectureEvaluationActivity,{
-                shortToast { it.message.toString() }
+                it.let {
+                    if(it == getString(R.string.complete_write_review_message)) {
+                        showSimpleDialog(message = it,
+                            positiveButtonOnClickListener = object : DialogInterface.OnClickListener {
+                                override fun onClick(dialog: DialogInterface?, which: Int) {
+                                    lifecycleScope.launch {
+                                        delay(1000)
+                                        finish()
+                                    }
+                                }
+                            },
+                            cancelable = false
+                        )
+                    } else {
+                        shortToast { it }
+                    }
+                }
+
             })
         }
     }
@@ -78,21 +100,15 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
         lectureEvaluationViewModel.lectureId = lectureId
         binding.root.getViewTreeObserver().addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener{
             override fun onGlobalLayout() {
-
-                //뷰가 불러지고 나서 처리할 코드 입력
-
                 var r = Rect() // 키보드 위로 보여지는 공간
                 binding.root.getWindowVisibleDisplayFrame(r)
                 var screenHeight = binding.root.getRootView().getHeight() // rootView에 대한 전체 높이
-
 
                 // 키보드가 보여지면 현재 보여지는 rootView의 범위가 전체 rootView의 범위보다 작아지므로 전체 크기에서 현재 보여지는 크기를 빼면 키보드의 크기가 됨.
 
                 var keypadHeight = screenHeight -r.bottom;
 
-
-
-                if (keypadBaseHeight == 0) { // 기기마다 소프트 키보드가 구현되는 방식이 다름. 화면 아래에 숨어있거나 invisible로 구현되어 있음. 그차이로 인해 기기마다 약간씩 레이아웃이 틀어지는데 그것을 방지하기 위해 필요함.
+                if (keypadBaseHeight == 0) {
                     keypadBaseHeight = keypadHeight
                 }
 
@@ -101,9 +117,6 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
                     // 키보드 열렸을 때
                     if (!isKeyboardShowing) {
                         isKeyboardShowing = true
-                        //params.height = keypadHeight;
-                        //onKeyboardVisibilityChanged(true);
-
                         binding.root.setPadding(0, 0, 0, keypadHeight)
                         var height = keypadHeight -keypadBaseHeight
 
@@ -125,7 +138,6 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
             hashTagCheckBox[id] = binding.root.findViewById(hashTagTypeId[id])
         }
         lectureEvaluationViewModel.getLectureSemester(lectureId)
-        LogUtil.e(binding.lectureEvaluationRatingBar.rating.toString())
 
         binding.lectureEvaluationRatingBar.rating = lectureEvaluationViewModel.rating
         binding.lectureEvaluationRatingBar.setOnRatingBarChangeListener(LectureEvaluateRatingbarChangeListener())

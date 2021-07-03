@@ -1,15 +1,14 @@
-package `in`.hangang.hangang.data.source.source
+package `in`.hangang.hangang.data.source
 
-import `in`.hangang.hangang.data.evaluation.*
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
+import `in`.hangang.hangang.data.entity.evaluation.*
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.Body
-import retrofit2.http.Path
 
 interface LectureDataSource {
     fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<RankingLectureResult>
@@ -29,4 +28,8 @@ interface LectureDataSource {
     fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse>
     suspend fun getLectureClass(id: Int): ArrayList<ClassLecture>
     suspend fun fetchClassLectures(id: Int): List<ClassLecture>
+    fun postScrapedLecture(scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse>
+    fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse>
+    fun getLecturesId(id: Int): Single<RankingLectureItem>
+    fun getRecentlyLectureList(): ArrayList<RankingLectureItem>
 }
