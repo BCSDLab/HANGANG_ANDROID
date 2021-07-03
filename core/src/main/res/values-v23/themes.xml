@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Hangang.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Hangang.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary Hangang color(Blue). -->
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryVariant">@color/blue_100</item>
