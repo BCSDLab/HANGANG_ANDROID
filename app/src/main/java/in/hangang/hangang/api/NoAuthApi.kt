@@ -1,10 +1,10 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.ranking.RankingLectureResult
-import `in`.hangang.hangang.data.entity.Lecture
-import `in`.hangang.hangang.data.evaluation.LectureDoc
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
+
+import `in`.hangang.hangang.data.entity.timetable.Lecture
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse

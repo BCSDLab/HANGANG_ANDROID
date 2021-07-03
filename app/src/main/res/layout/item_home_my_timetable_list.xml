@@ -11,7 +11,7 @@
 
         <variable
             name="timetable"
-            type="in.hangang.hangang.data.entity.LectureTimeTable" />
+            type="in.hangang.hangang.data.entity.timetable.LectureTimeTable" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

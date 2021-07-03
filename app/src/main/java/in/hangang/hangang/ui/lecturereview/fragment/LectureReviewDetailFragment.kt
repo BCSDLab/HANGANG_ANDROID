@@ -5,10 +5,10 @@ import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.evaluation.ClassLecture
-import `in`.hangang.hangang.data.evaluation.LectureReview
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
+import `in`.hangang.hangang.data.entity.evaluation.LectureReview
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.databinding.FragmentLectureReviewDetailBinding
 import `in`.hangang.hangang.ui.lecturereview.activity.LectureEvaluationActivity
@@ -122,6 +122,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                 item.isLiked = true
                 item.likes += 1
             }
+            //item.isLiked = !(item as LectureReview).isLiked
 
             lectureReviewDetailViewModel.commonResponse.observe(viewLifecycleOwner, {
                 it?.let {

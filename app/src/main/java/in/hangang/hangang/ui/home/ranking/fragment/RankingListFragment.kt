@@ -3,11 +3,10 @@ package `in`.hangang.hangang.ui.home.ranking.fragment
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.FragmentHomeRankingListBinding
 import `in`.hangang.hangang.ui.home.ranking.adapter.RankingListAdapter
 import `in`.hangang.hangang.ui.home.ranking.viewmodel.RankingLectureViewModel
-import `in`.hangang.hangang.util.LogUtil
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
@@ -72,11 +71,9 @@ class RankingListFragment : ViewBindingFragment<FragmentHomeRankingListBinding>(
     private fun initViewModel() {
         adapter.setClickListener(rankingItemClickListener)
         with(rankingLectureViewModel) {
-            rankingLectureList.observe(viewLifecycleOwner, {
+            rankingLectureList.observe(viewLifecycleOwner) {
                 it?.let { adapter.submitList(it) }
-
-            })
-
+            }
         }
     }
     private fun goToRead(item: RankingLectureItem) {

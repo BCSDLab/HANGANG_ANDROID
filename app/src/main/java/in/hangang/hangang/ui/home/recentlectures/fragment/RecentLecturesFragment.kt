@@ -3,10 +3,9 @@ package `in`.hangang.hangang.ui.home.recentlectures.fragment
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.FragmentHomeRecentLecturesBinding
 import `in`.hangang.hangang.ui.home.ranking.adapter.RankingListAdapter
-import `in`.hangang.hangang.ui.home.recentlectures.adapter.RecentLecturesRecyclerViewAdapter
 import `in`.hangang.hangang.ui.home.recentlectures.viewmodel.RecentLecturesFragmentViewModel
 import android.os.Bundle
 import android.view.View

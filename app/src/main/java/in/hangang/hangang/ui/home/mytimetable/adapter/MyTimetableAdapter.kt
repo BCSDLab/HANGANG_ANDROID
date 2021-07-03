@@ -1,18 +1,12 @@
 package `in`.hangang.hangang.ui.home.mytimetable.adapter
 
-import `in`.hangang.core.base.ViewBindingRecyclerViewHolder
 import `in`.hangang.core.view.button.RoundedCornerButton
-import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
-import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.evaluation.ClassLecture
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.databinding.ItemHomeMyTimetableListBinding
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView

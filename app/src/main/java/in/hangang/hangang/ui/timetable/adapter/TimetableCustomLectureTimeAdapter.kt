@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.timetable.adapter
 
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
+import `in`.hangang.hangang.data.entity.timetable.CustomTimetableTimestamp
 import `in`.hangang.hangang.databinding.ItemTimetableCustomLectureTimestampBinding
 import `in`.hangang.hangang.ui.timetable.listener.OnItemClickListener
 import `in`.hangang.hangang.util.diffutil.CustomTimetableTimestampDiffCallback

@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.home.ranking.adapter
 
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.ItemHomeRankingListBinding
 import `in`.hangang.hangang.util.LogUtil
 import android.view.LayoutInflater

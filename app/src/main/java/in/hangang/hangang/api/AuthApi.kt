@@ -2,11 +2,16 @@ package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.*
-import `in`.hangang.hangang.data.evaluation.*
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.evaluation.*
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.TimetableListResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
@@ -68,7 +73,7 @@ interface AuthApi {
     @POST(TIMETABLE_CUSTOM_LECTURE)
     fun addCustomLectureInTimetable(
             @Body timeTableCustomLectureRequest: TimeTableCustomLectureRequest
-    ): Single<CommonResponse>
+    ): Single<LectureTimeTable>
 
     @GET(TIMETABLE_LECTURE_LIST)
     fun getTimetableLectureList(
@@ -79,7 +84,7 @@ interface AuthApi {
             @Query("limit") limit: Int = API_TIMETABLE_DEFAULT_LIMIT,
             @Query("page") page: Int = API_TIMETABLE_DEFAULT_PAGE,
             @Query("semesterDateId") semesterDateId: Int
-    ): Single<List<LectureTimeTable>>
+    ): Single<TimetableListResponse>
 
     @GET(TIMETABLE_MAIN)
     fun getMainTimeTable(): Single<TimeTableWithLecture>
@@ -91,7 +96,7 @@ interface AuthApi {
 
     @GET(TIMETABLE_MEMO)
     fun getTimetableMemo(
-            @Query("timeTableId") timetableId: Int
+            @Query("timetableComponentId") timetableId: Int
     ): Single<TimetableMemo>
 
     @POST(TIMETABLE_MEMO)

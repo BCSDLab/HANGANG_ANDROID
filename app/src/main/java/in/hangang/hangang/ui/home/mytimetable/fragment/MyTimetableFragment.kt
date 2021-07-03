@@ -3,14 +3,12 @@ package `in`.hangang.hangang.ui.home.mytimetable.fragment
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.databinding.FragmentHomeMyTimetableBinding
 import `in`.hangang.hangang.ui.home.mytimetable.adapter.MyTimetableAdapter
 import `in`.hangang.hangang.ui.home.mytimetable.viewmodel.MyTimetableFragmentViewModel
 import `in`.hangang.hangang.ui.lecturereview.activity.LectureEvaluationActivity
-import `in`.hangang.hangang.util.LogUtil
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -18,7 +16,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.rxjava3.core.CompletableOnSubscribe
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyTimetableFragment : ViewBindingFragment<FragmentHomeMyTimetableBinding>() {
