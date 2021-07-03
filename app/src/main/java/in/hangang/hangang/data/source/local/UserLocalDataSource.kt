@@ -4,8 +4,8 @@ import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
 import `in`.hangang.hangang.data.entity.LectureBank
 import `in`.hangang.hangang.data.entity.PointRecord
-import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
+import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource

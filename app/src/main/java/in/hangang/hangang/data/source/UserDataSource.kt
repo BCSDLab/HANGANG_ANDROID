@@ -2,8 +2,8 @@ package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.entity.LectureBank
 import `in`.hangang.hangang.data.entity.PointRecord
-import `in`.hangang.hangang.data.entity.User
 import `in`.hangang.hangang.data.entity.UserCount
+import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single

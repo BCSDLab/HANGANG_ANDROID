@@ -1,7 +1,11 @@
 package `in`.hangang.hangang.ui.mypage.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.entity.*
+import `in`.hangang.hangang.data.entity.LectureBank
+import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.data.entity.UploadFile
+import `in`.hangang.hangang.data.entity.UserCount
+import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.UserRepository
 import `in`.hangang.hangang.util.LogUtil
