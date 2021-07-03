@@ -12,14 +12,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class EmailAuthenticationFragmentViewModel(private val userRepository: UserRepository) : ViewModelBase() {
-    private val _portalAccount = MutableLiveData("")
     private val _sentEmailAuth = MutableLiveData(false)
     private val _sendAuthNumberResponse = MutableLiveData<CommonResponse>()
     private val _resendAuthNumberResponse = MutableLiveData<CommonResponse>()
     private val _finishEmailAuthResponse = MutableLiveData<CommonResponse>()
     private val _throwable = MutableLiveData<Throwable>()
 
-    val portalAccount: LiveData<String> get() = _portalAccount
+    var portalAccount: String = ""
     val sentEmailAuth: LiveData<Boolean> get() = _sentEmailAuth
     val throwable: LiveData<Throwable> get() = _throwable
 
@@ -28,6 +27,7 @@ class EmailAuthenticationFragmentViewModel(private val userRepository: UserRepos
     val finishEmailAuthResponse: LiveData<CommonResponse> get() = _finishEmailAuthResponse
 
     fun sendAuthNumber(portalAccount: String) {
+        this.portalAccount = portalAccount
         if (sentEmailAuth.value == true) {
             resendAuthNumber(portalAccount)
         } else {

@@ -38,6 +38,7 @@
                 android:layout_height="12dp" />
 
             <TextView
+                android:id="@+id/agree_all_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -60,6 +61,7 @@
                 android:layout_height="12dp" />
 
             <TextView
+                android:id="@+id/agree_personal_info_first_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -70,6 +72,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/agree_personal_info_second_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="46dp"
@@ -80,6 +83,7 @@
             android:textStyle="normal" />
 
         <TextView
+            android:id="@+id/agree_personal_info_third_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="46dp"
@@ -89,6 +93,7 @@
             android:textStyle="normal" />
 
         <TextView
+            android:id="@+id/agree_personal_info_fourth_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="46dp"
@@ -98,6 +103,7 @@
             android:textStyle="normal" />
 
         <TextView
+            android:id="@+id/agree_personal_info_fifth_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="46dp"
@@ -121,6 +127,7 @@
                 />
 
             <TextView
+                android:id="@+id/community_rule_first_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -131,6 +138,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/community_rule_second_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="46dp"
@@ -141,6 +149,7 @@
             android:textStyle="normal" />
 
         <TextView
+            android:id="@+id/community_rule_third_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="46dp"
@@ -150,6 +159,7 @@
             android:textStyle="normal" />
 
         <TextView
+            android:id="@+id/community_rule_fourth_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="46dp"
@@ -159,6 +169,7 @@
             android:textStyle="normal" />
 
         <TextView
+            android:id="@+id/community_rule_fifth_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="46dp"

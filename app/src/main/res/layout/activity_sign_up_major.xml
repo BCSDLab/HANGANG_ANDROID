@@ -41,7 +41,8 @@
                     android:layout_height="12dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/mechanical_engineering_text_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:text="@string/mechanical_engineering"
@@ -62,7 +63,8 @@
                     android:layout_height="12dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/design_engineering_text_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:text="@string/design_engineering"
@@ -83,7 +85,8 @@
                     android:layout_height="12dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/mechatronics_engineering_text_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:text="@string/mechatronics_engineering"
@@ -104,7 +107,8 @@
                     android:layout_height="12dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/industry_management_text_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:text="@string/industrial_management"
@@ -125,6 +129,7 @@
                     android:layout_height="12dp" />
 
                 <TextView
+                    android:id="@+id/energy_engineering_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
@@ -146,6 +151,7 @@
                     android:layout_height="12dp" />
 
                 <TextView
+                    android:id="@+id/electronic_engineering_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
@@ -167,6 +173,7 @@
                     android:layout_height="12dp" />
 
                 <TextView
+                    android:id="@+id/computer_engineering_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"

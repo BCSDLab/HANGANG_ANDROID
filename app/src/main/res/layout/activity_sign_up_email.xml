@@ -55,6 +55,9 @@
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:hint="@string/write_school_email"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="16dp" />
@@ -72,17 +75,17 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_margin="16dp"
             android:orientation="horizontal">
 
             <in.hangang.core.view.edittext.SingleLineEditText
                 android:id="@+id/authnum_edit_text"
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:hint="@string/send_authnum_school_email"
                 android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/authnum_send_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

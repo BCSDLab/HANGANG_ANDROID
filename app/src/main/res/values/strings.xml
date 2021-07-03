@@ -73,7 +73,7 @@
     <string name="reset_password_regex_error_too_long">비밀번호는 15자 이하여야 합니다.</string>
 
     <string name="reset_password_finished_title">비밀번호가 변경되었습니다</string>
-    <string name="reset_password_finished_message">%1$s님!\n한기대의 강의평가를 보러 가볼까요?</string>
+    <string name="reset_password_finished_message">한기대의 강의평가를 보러 가볼까요?</string>
     <string name="reset_password_finished_positive_button">로그인하러 가기</string>
 
     <string name="mechanical_engineering">기계공학부</string>
