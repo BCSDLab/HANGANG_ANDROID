@@ -2,7 +2,7 @@ package `in`.hangang.hangang.ui.timetable.adapter
 
 import `in`.hangang.core.view.setVisibility
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.databinding.ItemTimetableTimetableTextBinding
 import `in`.hangang.hangang.ui.timetable.listener.TimetableListRecyclerViewOnItemClickListener
 import `in`.hangang.hangang.util.SemesterUtil

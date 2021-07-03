@@ -11,7 +11,7 @@
 
         <variable
             name="lectureReviewItem"
-            type="in.hangang.hangang.data.entity.ranking.RankingLectureItem" />
+            type="in.hangang.hangang.data.ranking.RankingLectureItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

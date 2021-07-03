@@ -4,8 +4,8 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.TIMETABLE_INVALID_TIMETABLE_ID
-import `in`.hangang.hangang.data.entity.timetable.CustomTimetableTimestamp
-import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableCustomLectureBinding
 import `in`.hangang.hangang.ui.customview.timetable.TimetableUtil
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableCustomLectureTimeAdapter

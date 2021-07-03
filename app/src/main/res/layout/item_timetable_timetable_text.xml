@@ -5,7 +5,7 @@
 
         <variable
             name="timetable"
-            type="in.hangang.hangang.data.entity.timetable.TimeTable" />
+            type="in.hangang.hangang.data.entity.TimeTable" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

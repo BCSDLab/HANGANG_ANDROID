@@ -1,18 +1,18 @@
-package `in`.hangang.hangang.data.source.repository
+package `in`.hangang.hangang.data.source
 
-import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
-import `in`.hangang.hangang.data.entity.timetable.TimeTable
-import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
+import `in`.hangang.hangang.data.entity.LectureTimeTable
+import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.TimeTableDataSource
+import `in`.hangang.hangang.data.source.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRepository(
-    private val timeTableLocalDataSource: TimeTableDataSource,
-    private val timeTableRemoteDataSource: TimeTableDataSource
+        private val timeTableLocalDataSource: TimeTableDataSource,
+        private val timeTableRemoteDataSource: TimeTableDataSource
 ) : TimeTableDataSource {
     override fun getTimeTables(): Single<Map<Int, List<TimeTable>>> {
         return timeTableRemoteDataSource.getTimeTables()
@@ -93,11 +93,11 @@ class TimeTableRepository(
     }
 
     override fun addCustomLectureInTimetable(
-        classTime: String?,
-        name: String?,
-        professor: String?,
-        userTimetableId: Int
-    ): Single<LectureTimeTable> {
+            classTime: String?,
+            name: String?,
+            professor: String?,
+            userTimetableId: Int
+    ): Single<CommonResponse> {
         return timeTableRemoteDataSource.addCustomLectureInTimetable(
                 classTime, name, professor, userTimetableId
         )

@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.data.response
 
-import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.LectureTimeTable
 
 data class MainTimeTableResponse(
         val id: Int,

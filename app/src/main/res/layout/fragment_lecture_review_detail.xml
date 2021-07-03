@@ -8,10 +8,10 @@
 
         <variable
             name="lecture"
-            type="in.hangang.hangang.data.entity.ranking.RankingLectureItem" />
+            type="in.hangang.hangang.data.ranking.RankingLectureItem" />
         <variable
             name="evaluation"
-            type="in.hangang.hangang.data.entity.evaluation.Evaluation"/>
+            type="in.hangang.hangang.data.evaluation.Evaluation"/>
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

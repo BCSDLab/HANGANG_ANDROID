@@ -5,7 +5,7 @@ import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
-import `in`.hangang.hangang.data.source.UserDataSource
+import `in`.hangang.hangang.data.source.source.UserDataSource
 import io.reactivex.rxjava3.core.Single
 
 class UserRemoteDataSource(

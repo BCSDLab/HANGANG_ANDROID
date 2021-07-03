@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.entity.timetable
+package `in`.hangang.hangang.data.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

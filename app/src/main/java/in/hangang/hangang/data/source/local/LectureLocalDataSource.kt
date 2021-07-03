@@ -1,15 +1,13 @@
 package `in`.hangang.hangang.data.source.local
 
-import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
-import `in`.hangang.hangang.data.entity.evaluation.Evaluation
-import `in`.hangang.hangang.data.entity.evaluation.LectureDocResult
-import `in`.hangang.hangang.data.entity.evaluation.LectureReview
-import `in`.hangang.hangang.data.entity.evaluation.LectureReviewResult
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.evaluation.*
+import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.LectureEvaluationRequest
+import `in`.hangang.hangang.data.request.LectureReviewReportRequest
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.source.LectureDataSource
+import `in`.hangang.hangang.data.source.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
 class LectureLocalDataSource : LectureDataSource {
@@ -73,7 +71,23 @@ class LectureLocalDataSource : LectureDataSource {
         return Single.never()
     }
 
-    override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
+    override fun getLectureSemester(id: Int): Single<ArrayList<Int>> {
         return Single.never()
+    }
+
+    override fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override suspend fun getLectureClass(id: Int): ArrayList<ClassLecture> {
+        return arrayListOf()
+    }
+
+    override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
+        return emptyList()
     }
 }

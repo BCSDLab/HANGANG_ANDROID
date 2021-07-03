@@ -3,7 +3,7 @@ package `in`.hangang.hangang.ui.signup.viewmodel
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.util.toSHA256
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.repository.UserRepository
+import `in`.hangang.hangang.data.source.UserRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
@@ -13,10 +13,10 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.addTo
 
 class SignUpMajorViewModel(
-    private val userRepository: UserRepository,
-    private val _portalAccount: String,
-    private val _nickName: String,
-    private val _password: String
+        private val userRepository: UserRepository,
+        private val _portalAccount: String,
+        private val _nickName: String,
+        private val _password: String
 ) : ViewModelBase() {
     private val _signUpMessage = MutableLiveData<String>()
     val signUpMessage: LiveData<String>

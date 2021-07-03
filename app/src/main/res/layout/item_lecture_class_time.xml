@@ -11,7 +11,7 @@
 
         <variable
             name="lectureClassItem"
-            type="in.hangang.hangang.data.entity.evaluation.ClassLecture" />
+            type="in.hangang.hangang.data.evaluation.ClassLecture" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
