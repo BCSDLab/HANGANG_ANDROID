@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.evaluation.LectureDoc
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.source.UserDataSource
@@ -61,5 +62,9 @@ class UserRepository(
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return userRemoteDataSource.changePassword(portalAccount, password)
+    }
+
+    override fun getLectureBankHit(): Single<List<LectureDoc>> {
+        return userRemoteDataSource.getLectureBankHit()
     }
 }

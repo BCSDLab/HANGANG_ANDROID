@@ -38,6 +38,7 @@ const val TIMETABLE_SCRAP = "/timetable/scrap"
 
 const val LECTURES = "/lectures"
 const val LECTURES_ID = "/lectures/{id}"
+const val LECTURE_BANK_HIT = "/lecture-banks/hit"
 const val API_ERROR_CODE_TIMETABLE_EXCEED = 24
 
 const val API_TIMETABLE_DEFAULT_LIMIT = 10

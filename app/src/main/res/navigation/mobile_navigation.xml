@@ -59,10 +59,7 @@
             app:destination="@id/navigation_evaluation" />
         <action
             android:id="@+id/action_lecture_review_detail_to_navigation_home"
-            app:destination="@id/navigation_home"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/navigation_home"
-            app:popUpToInclusive="true" />
+            app:destination="@id/navigation_home" />
     </fragment>
 
     <fragment

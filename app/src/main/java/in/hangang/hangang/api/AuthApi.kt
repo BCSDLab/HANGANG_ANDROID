@@ -192,6 +192,8 @@ interface AuthApi {
         @Query("sort") sort: String? = null
     ): Single<RankingLectureResult>
 
+    @GET(LECTURE_BANK_HIT)
+    fun getLectureBankHit(): Single<List<LectureDoc>>
 
 }
 

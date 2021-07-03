@@ -89,14 +89,15 @@ class MyTimetableFragment : ViewBindingFragment<FragmentHomeMyTimetableBinding>(
 
     private fun initEvent() {
         binding.homeEmptyTimetableButtonNewTimetable.setOnClickListener {
-            navController.navigate(R.id.action_navigation_home_to_navigation_evaluation)
+            navController.navigate(R.id.action_navigation_home_to_navigation_timetable)
         }
+
     }
     private fun goToRead(item: RankingLectureItem) {
         val bundle = Bundle()
         bundle.putParcelable("lecture", item)
         navController.navigate(
-            R.id.action_navigation_home_to_lecture_review_detail,
+            R.id.action_navigation_home_to_navigation_evaluation,
             bundle
         )
     }

@@ -4,6 +4,7 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
+import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.evaluation.ClassLecture
 import `in`.hangang.hangang.data.evaluation.LectureReview
@@ -16,6 +17,7 @@ import `in`.hangang.hangang.ui.lecturereview.adapter.LectureDetailReviewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.ListDialogRecyclerViewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.RecommendedDocsAdapter
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
+import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.initScoreChart
 import android.app.Activity
 import android.app.AlertDialog
@@ -28,7 +30,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.orhanobut.hawk.Hawk
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.ClassCastException
+import java.util.*
+import kotlin.collections.ArrayList
 
 class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDetailBinding>() {
     override val layoutId = R.layout.fragment_lecture_review_detail
@@ -46,22 +52,24 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
     }
 
-    private val timeTableListDialogClickListener = object: TimeTableListDialog.TimeTableListDialogClickListener {
-        override fun onConfirmClick(view: DialogFragment) {
-            view.dismiss()
-            lectureReviewDetailViewModel.fetchClassLectureList(lecture.id,5)
+    private val timeTableListDialogClickListener =
+        object : TimeTableListDialog.TimeTableListDialogClickListener {
+            override fun onConfirmClick(view: DialogFragment) {
+                view.dismiss()
+                lectureReviewDetailViewModel.fetchClassLectureList(lecture.id, 5)
+            }
+
+            override fun onCancelClick(view: DialogFragment) {
+                view.dismiss()
+            }
         }
 
-        override fun onCancelClick(view: DialogFragment) {
-            view.dismiss()
-        }
-    }
     /* 시간표 담기/뺴기 리스 */
     private val classClickListener = object : RecyclerViewClickListener {
         override fun onClick(view: View, position: Int, item: Any) {
             val classLecture = (item as ClassLecture)
             classLectureId = classLecture.id
-            lectureReviewDetailViewModel.fetchDialogData(5,classLecture.id)
+            lectureReviewDetailViewModel.fetchDialogData(5, classLecture.id)
             //lectureReviewDetailViewModel.setDialogCheckButton(classLecture.id)
 
 
@@ -71,7 +79,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         override fun onClick(view: View, position: Int, item: Any) {
             var timeTable = (item as TimeTable)
             timeTableId = timeTable.id
-            if(timeTable.isChecked){
+            if (timeTable.isChecked) {
                 timeTable.isChecked = false
                 //timeTableCheckList.remove(timeTableId)
                 listDialogRecyclerViewAdapter.notifyItemChanged(position)
@@ -89,15 +97,20 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     /* 신고하기 리스너 */
     private val reportClickListener = object : RecyclerViewClickListener {
         override fun onClick(view: View, position: Int, item: Any) {
-            val reportDialog = AlertDialog.Builder(requireContext(),android.R.style.Theme_Material_Light_Dialog_Alert)
+            val reportDialog = AlertDialog.Builder(
+                requireContext(),
+                android.R.style.Theme_Material_Light_Dialog_Alert
+            )
             reportDialog.setItems(reportList, DialogInterface.OnClickListener { dialog, which ->
-                val reportRequest = LectureReviewReportRequest((item as LectureReview).id, which+1)
+                val reportRequest =
+                    LectureReviewReportRequest((item as LectureReview).id, which + 1)
                 lectureReviewDetailViewModel.reportLectureReview(reportRequest)
             })
                 .setCancelable(true)
                 .show()
         }
     }
+
     /* 업지버튼 리스너 */
     private val recyclerViewClickListener = object : RecyclerViewClickListener {
         override fun onClick(view: View, position: Int, item: Any) {
@@ -130,12 +143,38 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         init()
         initViewModel()
         initEvent()
+        initSharedPreference()
+
     }
 
-    fun initViewModel() {
+    private fun initSharedPreference() {
+        var isDuplicated = false
+        var recentlyReadLectureReview =
+            Hawk.get(RECENTLY_READ_LECTURE_REVIEW, ArrayList<RankingLectureItem>())
+        for(idx in recentlyReadLectureReview.indices) {
+            if(recentlyReadLectureReview[idx].id == lecture.id){
+                isDuplicated = true
+                recentlyReadLectureReview.removeAt(idx)
+                recentlyReadLectureReview.add(0, lecture)
+                break
+            }
+        }
+        if(!isDuplicated) {
+            recentlyReadLectureReview.add(0, lecture)
+            if (recentlyReadLectureReview.size > 5) {
+                recentlyReadLectureReview.removeLast()
+            }
+        }
+        Hawk.put(RECENTLY_READ_LECTURE_REVIEW, recentlyReadLectureReview)
+
+
+    }
+
+    private fun initViewModel() {
         with(lectureReviewDetailViewModel) {
             classLectureList.observe(viewLifecycleOwner, {
-                it?.let { lectureClassTimeAdapter.submitList(it)
+                it?.let {
+                    lectureClassTimeAdapter.submitList(it)
                 }
             })
             chartList.observe(viewLifecycleOwner, {
@@ -167,24 +206,34 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                 } else
                     hideProgressDialog()
             })
-            reportResult.observe(viewLifecycleOwner,{
-                if(it.httpStatus == "OK"){
-                    makeReportResultDialog(requireContext().getString(R.string.report_dialog_title),requireContext().getString(R.string.report_dialog_messge))
-                }else{
-                    makeReportResultDialog(requireContext().getString(R.string.report_dialog_title), it.message!!)
+            reportResult.observe(viewLifecycleOwner, {
+                if (it.httpStatus == "OK") {
+                    makeReportResultDialog(
+                        requireContext().getString(R.string.report_dialog_title),
+                        requireContext().getString(R.string.report_dialog_messge)
+                    )
+                } else {
+                    makeReportResultDialog(
+                        requireContext().getString(R.string.report_dialog_title),
+                        it.message!!
+                    )
                 }
             })
             userTimeTableList.observe(viewLifecycleOwner, {
-                it.let { listDialogRecyclerViewAdapter.submitList(it)
-                    timeTableListDialog = TimeTableListDialog(listDialogRecyclerViewAdapter, timeTableListDialogClickListener)
-                    timeTableListDialog.show(parentFragmentManager,"asdf")
+                it.let {
+                    listDialogRecyclerViewAdapter.submitList(it)
+                    timeTableListDialog = TimeTableListDialog(
+                        listDialogRecyclerViewAdapter,
+                        timeTableListDialogClickListener
+                    )
+                    timeTableListDialog.show(parentFragmentManager, "asdf")
                 }
             })
             reviewCount.observe(viewLifecycleOwner, {
                 it.let { binding.lectureDetailPersonalEvaluation.text = it.toString() }
             })
             isLoading.observe(viewLifecycleOwner, {
-                if(it) {
+                if (it) {
                     showProgressDialog()
                 } else {
                     hideProgressDialog()
@@ -193,42 +242,58 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
 
         }
     }
+
     /* 신고 완료 다이얼로그 생성 */
-    fun makeReportResultDialog(title: String, message: String){
-        DialogUtil.makeSimpleDialog(requireContext(),title,message,requireContext().getString(R.string.ok),
-            null, object : DialogInterface.OnClickListener{
+    private fun makeReportResultDialog(title: String, message: String) {
+        DialogUtil.makeSimpleDialog(requireContext(),
+            title,
+            message,
+            requireContext().getString(R.string.ok),
+            null,
+            object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface?, which: Int) {
                     dialog?.dismiss()
                 }
 
-            }, null, true).show()
+            },
+            null,
+            true
+        ).show()
     }
 
-    fun initEvent() {
+    private fun initEvent() {
         binding.lectureDetailAppbar.setRightButtonClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val intent = Intent(activity, LectureEvaluationActivity::class.java)
-                intent.putExtra("lectureId",lecture.id)
-                intent.putExtra("lectureName",lecture.name)
+                intent.putExtra("lectureId", lecture.id)
+                intent.putExtra("lectureName", lecture.name)
                 startActivity(intent)
             }
         })
         binding.lectureDetailAppbar.backButtonOnClickListener = (object : View.OnClickListener {
             override fun onClick(v: View?) {
-                navController.navigate(R.id.action_lecture_review_detail_to_navigation_home)
+                navController.navigate(R.id.action_lecture_review_detail_to_navigation_evaluation)
             }
         })
         binding.lectureDetailOrderByLike.setOnClickListener {
             lectureReviewDetailViewModel.sort = lectureReviewDetailViewModel.SORT_BY_LIKE_COUNT
             binding.lectureDetailSortType.text = lectureReviewDetailViewModel.sort
             binding.lectureDetailOrderPopup.visibility = View.GONE
-            lectureReviewDetailViewModel.getReviewList(lecture.id, lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
+            lectureReviewDetailViewModel.getReviewList(
+                lecture.id,
+                lectureReviewDetailViewModel.keyword,
+                lectureReviewDetailViewModel.sort
+            )
         }
         binding.lectureDetailOrderByLatest.setOnClickListener {
             lectureReviewDetailViewModel.sort = lectureReviewDetailViewModel.SORT_BY_DATE_LATEST
             binding.lectureDetailSortType.text = lectureReviewDetailViewModel.sort
             binding.lectureDetailOrderPopup.visibility = View.GONE
-            lectureReviewDetailViewModel.getReviewList(lecture.id, lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
+            lectureReviewDetailViewModel.getReviewList(
+                lecture.id,
+                lectureReviewDetailViewModel.keyword,
+                lectureReviewDetailViewModel.sort
+            )
         }
         binding.lectureDetailSortType.setOnClickListener {
             binding.lectureDetailOrderPopup.visibility = View.VISIBLE
@@ -237,18 +302,17 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             binding.lectureDetailOrderPopup.visibility = View.VISIBLE
         }
         binding.lectureDetailBookmark.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked)
+            if (isChecked)
                 lectureReviewDetailViewModel.postScrap(lecture.id)
             else
                 lectureReviewDetailViewModel.deleteScrap(lecture.id)
         }
 
 
-
     }
 
 
-    fun init() {
+    private fun init() {
         lectureClassTimeAdapter = LectureClassTimeAdapter(requireContext())
         binding.lectureDetailClassTimeRecyclerview.adapter = lectureClassTimeAdapter
         binding.lectureDetailRecommendRecyclerview.adapter = recommendedDocsAdapter
@@ -262,8 +326,16 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             lectureReviewDetailViewModel.fetchClassLectureList(it, 5)
             lectureReviewDetailViewModel.getEvaluationRating(it)
             lectureReviewDetailViewModel.getEvaluationTotal(it)
-            lectureReviewDetailViewModel.getReviewList(it, lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
-            lectureReviewDetailViewModel.getPersonalReviewCount(it,lectureReviewDetailViewModel.keyword, lectureReviewDetailViewModel.sort)
+            lectureReviewDetailViewModel.getReviewList(
+                it,
+                lectureReviewDetailViewModel.keyword,
+                lectureReviewDetailViewModel.sort
+            )
+            lectureReviewDetailViewModel.getPersonalReviewCount(
+                it,
+                lectureReviewDetailViewModel.keyword,
+                lectureReviewDetailViewModel.sort
+            )
         }
         lecture.name.let {
             lectureReviewDetailViewModel.getRecommentedDocs(it)
@@ -277,10 +349,14 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         super.onAttach(context)
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                navController.navigate(R.id.action_lecture_review_detail_to_navigation_home)
+                navController.navigate(R.id.action_lecture_review_detail_to_navigation_evaluation)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback);
     }
+
+
+
+
 
 }

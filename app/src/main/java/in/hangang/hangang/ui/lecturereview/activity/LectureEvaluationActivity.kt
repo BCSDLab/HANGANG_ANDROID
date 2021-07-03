@@ -22,6 +22,9 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.RatingBar
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
@@ -69,6 +72,10 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
             })
             postCommonResponse.observe(this@LectureEvaluationActivity,{
                 shortToast { it.message.toString() }
+                lifecycleScope.launch {
+                    delay(2000)
+                    finish()
+                }
             })
         }
     }

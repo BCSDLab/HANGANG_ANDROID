@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
+import `in`.hangang.hangang.data.evaluation.LectureDoc
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.source.UserDataSource
@@ -69,6 +70,10 @@ class UserLocalDataSource : UserDataSource {
     }
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun getLectureBankHit(): Single<List<LectureDoc>> {
         return Single.never()
     }
 }

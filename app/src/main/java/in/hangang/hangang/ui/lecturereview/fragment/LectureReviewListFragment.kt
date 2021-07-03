@@ -9,6 +9,7 @@ import `in`.hangang.core.view.button.checkbox.FilledCheckBox
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.LOGIN
+import `in`.hangang.hangang.data.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.FragmentListReviewLectureBinding
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureReviewAdapter
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureSearchAdapter
@@ -61,7 +62,7 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
        }
     }
     private val navController: NavController by lazy {
-        Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
+        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
     private val checkboxButtonId = arrayOf(
         R.id.review_checkbox_button_major_0,
@@ -116,6 +117,14 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
             }
         }
     }
+    private fun goToRead(item: RankingLectureItem) {
+        val bundle = Bundle()
+        bundle.putParcelable("lecture", item)
+        navController.navigate(
+            R.id.action_navigation_evaluation_to_lecture_review_detail,
+            bundle
+        )
+    }
     private fun initSelecteMajor(){
         /* [바텀네비게이션-강의평]으로 들어온 경우 */
         if (arguments == null && lectureReviewListViewModel.selectedMajorList.size == 0) {
@@ -125,14 +134,20 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
         } else if (arguments == null && lectureReviewListViewModel.selectedMajorList.size >= 0){ // [필터 화면을 갔다가 돌아온 경우]
             setMajorButton()        //선택된 학부버튼 파란색으로 변경
             getLectureReviewList()
-        } else {                                                                                    //[메인-학부별탐]으로 들어온 경우
+        }
+        else {                                                                                    //[메인-학부별탐]으로 들어온 경우
+
+            val lecture = arguments?.getParcelable<RankingLectureItem>("lecture")
+            if(lecture != null) {
+                goToRead(lecture)
+            }
             majorIdx = arguments?.getInt("major")!!
             if(!reviewcheckboxButtons[majorIdx]?.isChecked!!) {
                 lectureReviewListViewModel.selectedMajorList.add(fullMajors[majorIdx])
             }
             setMajorButton()        //선택된 학부버튼 파란색으로 변경
             getLectureReviewList()
-            /*선택된 학부 버튼으로 스크*/
+            /*선택된 학부 버튼으로 스크롤*/
             reviewcheckboxButtons[majorIdx]?.let {
                 lifecycleScope.launch {
                     focusOnViewAsync(binding.lectureReviewHorizontalScrollview, it)
