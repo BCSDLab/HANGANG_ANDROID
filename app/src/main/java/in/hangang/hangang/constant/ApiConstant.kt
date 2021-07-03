@@ -33,6 +33,7 @@ const val TIMETABLE_LECTURE_LIST = "/timetable/lecture/list"
 const val TIMETABLE_MAIN = "/timetable/main/lecture"
 const val TIMETABLE_MEMO = "/memo"
 const val TIMETABLE_SCRAP = "/timetable/scrap"
+const val LECTURE_BANK_SCRAP = "/lecture-banks/scrap"
 
 const val USER_LECTURE = "/user/lecture"
 const val USER_ME = "/user/me"
@@ -44,3 +45,5 @@ const val API_ERROR_CODE_TIMETABLE_EXCEED = 24
 
 const val API_TIMETABLE_DEFAULT_LIMIT = 10
 const val API_TIMETABLE_DEFAULT_PAGE = 1
+
+const val LECTURE_BANKS_ORDER_BY_ID = "id"

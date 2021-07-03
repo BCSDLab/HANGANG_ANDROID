@@ -6,6 +6,7 @@ import `in`.hangang.hangang.databinding.FragmentMyPageBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.mypage.contract.MyPagePointRecordActivityContract
 import `in`.hangang.hangang.ui.mypage.contract.MyPagePurchasedBankActivityContract
+import `in`.hangang.hangang.ui.mypage.contract.MyScrapLectureBankActivityContract
 import `in`.hangang.hangang.ui.mypage.contract.MyScrapLectureReviewActivityContract
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import android.os.Bundle
@@ -24,7 +25,8 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
     private val myPagePointRecordActivityContract = registerForActivityResult(MyPagePointRecordActivityContract()) {}
     private val myPagePurchasedBankActivityContract =
         registerForActivityResult(MyPagePurchasedBankActivityContract()) {}
-    private val myScrapActivityContract = registerForActivityResult(MyScrapLectureReviewActivityContract()) {}
+    private val myScrapLectureReviewActivityContract = registerForActivityResult(MyScrapLectureReviewActivityContract()) {}
+    private val myScrapLectureBankActivityContract = registerForActivityResult(MyScrapLectureBankActivityContract()) {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,8 +68,11 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
             textViewPurchasedBank.setOnClickListener {
                 myPagePurchasedBankActivityContract.launch(null)
             }
+            textViewMyScrapLectureReview.setOnClickListener {
+                myScrapLectureReviewActivityContract.launch(null)
+            }
             textViewMyScrapLectureBank.setOnClickListener {
-                myScrapActivityContract.launch(null)
+                myScrapLectureBankActivityContract.launch(null)
             }
             viewMyPoint.setOnClickListener {
                 myPagePointRecordActivityContract.launch(myPageViewModel.user.value?.point ?: -1)

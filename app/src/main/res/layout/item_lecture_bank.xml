@@ -28,7 +28,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_scraped_lecture_bank">
 
                 <ImageView
                     android:id="@+id/image_view_lecture_bank_thumbnail"
@@ -182,12 +183,12 @@
         </androidx.cardview.widget.CardView>
 
         <ImageView
-            android:id="@+id/lecture_review_scrap"
+            android:id="@+id/lecture_bank_scrap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_bookmark"
             app:tint="?attr/colorSecondary"
-            android:visibility="@{bank.is ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="2dp"

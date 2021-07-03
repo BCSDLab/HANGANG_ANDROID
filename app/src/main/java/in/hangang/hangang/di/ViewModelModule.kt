@@ -14,7 +14,8 @@ import `in`.hangang.hangang.ui.home.recommendedlectures.viewmodel.RecommendedLec
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureEvaluationViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
-import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapViewModel
+import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapLectureBankViewModel
+import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapLectureReviewViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
@@ -57,5 +58,6 @@ val viewModelModule = module {
     viewModel { TimetableLectureDetailViewModel(get()) }
     //Mypage
     viewModel { MyPageViewModel(get()) }
-    viewModel { MyScrapViewModel(get()) }
+    viewModel { MyScrapLectureReviewViewModel(get()) }
+    viewModel { MyScrapLectureBankViewModel(get()) }
 }

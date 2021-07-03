@@ -3,12 +3,13 @@ package `in`.hangang.hangang.data.entity.lecturebank
 import `in`.hangang.hangang.data.entity.timetable.Lecture
 import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.data.entity.user.User
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class LectureBank(
+data class LectureBankScrap(
+    @SerializedName("scrap_id")
+    val scrapId: Int,
+    @SerializedName("scraped_at")
+    val scrapedAt: String,
     val id: Int,
     @SerializedName("user_id") val userId : Int,
     @SerializedName("lecture_id") val lectureId : Int,
@@ -27,5 +28,11 @@ data class LectureBank(
     val thumbnail: String,
     val user : User,
     val lecture: Lecture,
-    val uploadFiles : List<UploadFile>?
-) : Parcelable
+    val uploadFiles : List<UploadFile>
+)
+
+fun LectureBankScrap.toLectureBank(): LectureBank {
+    with(this) {
+        return LectureBank(id, userId, lectureId, category, title, content, pointPrice, semesterDate, hits, createdAt, updatedAt, isDeleted, isHit, userScrapId, isPurchased, thumbnail, user, lecture, uploadFiles)
+    }
+}

@@ -2,49 +2,49 @@ package `in`.hangang.hangang.ui.mypage.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.repository.LectureRepository
+import `in`.hangang.hangang.data.source.repository.LectureBankRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
 import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.rxjava3.core.Single
 
-class MyScrapViewModel(
-    private val lectureRepository: LectureRepository
+class MyScrapLectureBankViewModel(
+    private val lectureBankRepository: LectureBankRepository
 ) : ViewModelBase() {
 
-    private val _myScrapLecture = MutableLiveData<List<Lecture>>()
+    private val _scraps = MutableLiveData<List<LectureBankScrap>>()
     private val _isEditMode = MutableLiveData(false)
-    private val _canRemoveLecture = MutableLiveData(false)
+    private val _canRemoveLectureBank = MutableLiveData(false)
 
-    val myScrapLecture: LiveData<List<Lecture>> get() = _myScrapLecture
+    val scraps : LiveData<List<LectureBankScrap>> get() = _scraps
     val isEditMode: LiveData<Boolean> get() = _isEditMode
-    val canRemoveLecture: LiveData<Boolean> get() = _canRemoveLecture
+    val canRemoveLectureBank: LiveData<Boolean> get() = _canRemoveLectureBank
 
-    fun getMyScrapLecture() {
-        lectureRepository.getScrapedLecture()
+    fun getLectureBankScraps() {
+        lectureBankRepository.getScrapLectureBanks()
             .withThread()
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
-                _myScrapLecture.value = it
+                       _scraps.postValue(it)
             }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
+
             })
     }
 
-    fun unscrapLecture(vararg lectures: Lecture) {
-        lectureRepository.unscrapLecture(*lectures.map { it.id }.toIntArray())
-            .flatMap { lectureRepository.getScrapedLecture() }
+    fun unscrapLecture(vararg lectureBankScrap: LectureBankScrap) {
+        lectureBankRepository.unscrapLectureBanks(lectureBankScrap.map { it.scrapId }.toList())
+            .flatMap { lectureBankRepository.getScrapLectureBanks() }
             .withThread()
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
                 _isEditMode.value = false
-                _myScrapLecture.value = it
+                _scraps.value = it
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
             })
@@ -55,6 +55,6 @@ class MyScrapViewModel(
     }
 
     fun changeRemoveButtonState(isEnabled: Boolean) {
-        _canRemoveLecture.postValue(isEnabled)
+        _canRemoveLectureBank.postValue(isEnabled)
     }
 }

@@ -4,7 +4,7 @@ import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.databinding.ItemMyScrapLectureBinding
-import `in`.hangang.hangang.util.diffutil.MyScrapDiffCallback
+import `in`.hangang.hangang.util.diffutil.MyScrapLectureReviewDiffCallback
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -48,7 +48,7 @@ class MyScrapLectureReviewAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectur
     override fun getItemCount() = lectures.size
 
     fun setLectures(lectures: List<Lecture>) {
-        val diffCallback = MyScrapDiffCallback(this.lectures, lectures)
+        val diffCallback = MyScrapLectureReviewDiffCallback(this.lectures, lectures)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         this.lectures.clear()

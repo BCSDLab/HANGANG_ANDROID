@@ -3,7 +3,7 @@ package `in`.hangang.hangang.util.diffutil
 import `in`.hangang.hangang.data.entity.Lecture
 import androidx.recyclerview.widget.DiffUtil
 
-class MyScrapDiffCallback(
+class MyScrapLectureReviewDiffCallback(
     private val oldList: List<Lecture>,
     private val newList: List<Lecture>
 ) : DiffUtil.Callback() {

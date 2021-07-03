@@ -45,17 +45,30 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_my_scrap"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_select_all" />
+            app:layout_constraintTop_toBottomOf="@id/button_select_all" >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_my_scrap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_select_all" />
+
+            <include
+                android:id="@+id/layout_my_scrap_empty"
+                layout="@layout/layout_scrap_lecture_review_empty" />
+        </FrameLayout>
 
         <in.hangang.core.view.button.RoundedCornerButton
             android:id="@+id/button_remove_selected_lecture"

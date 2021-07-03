@@ -9,6 +9,7 @@ import `in`.hangang.hangang.data.entity.LectureTimeTable
 import `in`.hangang.hangang.data.entity.TimeTable
 import `in`.hangang.hangang.data.entity.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
@@ -168,5 +169,11 @@ interface AuthApi {
 
     @HTTP(method = "DELETE", path = LECTURE_SCRAPED, hasBody = true)
     fun removeScrapLecture(@Body lectureIds: List<Int>): Single<CommonResponse>
+
+    @GET(LECTURE_BANK_SCRAP)
+    fun getLectureBankScraps(): Single<List<LectureBankScrap>>
+
+    @HTTP(method = "DELETE", path = LECTURE_BANK_SCRAP, hasBody = true)
+    fun unscrapLectureBank(@Body scrapIds: List<Int>): Single<CommonResponse>
 }
 

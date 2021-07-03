@@ -270,4 +270,6 @@
     <string name="my_page_my_scrap_lecture_review">강의평 스크랩</string>
     <string name="my_page_my_scrap_lecture_bank">강의자료 스크랩</string>
     <string name="my_scrap_lecture_bank_app_bar_title">강의자료 스크랩</string>
+    <string name="my_scrap_no_lecture_review">스크랩한 강의평이 없습니다.</string>
+    <string name="my_scrap_no_lecture_bank">스크랩한 강의자료가 없습니다.</string>
 </resources>
