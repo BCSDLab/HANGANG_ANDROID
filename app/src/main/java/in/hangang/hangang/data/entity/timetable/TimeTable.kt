@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.entity
+package `in`.hangang.hangang.data.entity.timetable
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -11,13 +11,11 @@ data class TimeTable(
     val userId: Int = 0,
     @SerializedName("semester_date_id")
     val semesterDateId: Int,
-    @SerializedName("name")
     val name: String?,
     @SerializedName("is_deleted")
     val isDeleted: Boolean = false,
     @SerializedName("created_at")
     val createdAt: String? = null,
     @SerializedName("updated_at")
-    val updatedAt: String? = null,
-    var isChecked: Boolean = false
+    val updatedAt: String? = null
 ) : Parcelable

@@ -11,7 +11,7 @@
 
         <variable
             name="lectureDoc"
-            type="in.hangang.hangang.data.evaluation.LectureDoc" />
+            type="in.hangang.hangang.data.entity.evaluation.LectureDoc" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

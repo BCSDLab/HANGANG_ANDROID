@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.source.source
+package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse

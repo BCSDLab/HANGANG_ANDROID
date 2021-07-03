@@ -2,15 +2,13 @@ package `in`.hangang.hangang.ui.lecturereview.adapter
 
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.evaluation.ClassLecture
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
 import `in`.hangang.hangang.databinding.ItemLectureClassTimeBinding
 import `in`.hangang.hangang.util.ClassLectureTimeUtil
 import `in`.hangang.hangang.util.LogUtil
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ToggleButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView

@@ -1,13 +1,16 @@
 package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.evaluation.ClassLecture
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
-import `in`.hangang.hangang.data.source.LectureRepository
+import `in`.hangang.hangang.data.source.repository.LectureRepository
 import `in`.hangang.hangang.util.*
+import `in`.hangang.hangang.util.LogUtil
+import `in`.hangang.hangang.util.handleHttpException
+import `in`.hangang.hangang.util.handleProgress
+import `in`.hangang.hangang.util.withThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.addTo
