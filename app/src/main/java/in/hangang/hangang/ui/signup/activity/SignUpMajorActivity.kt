@@ -154,6 +154,34 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
+
+            mechanicalEngineeringTextView.setOnClickListener {
+                mechanicalEngineeringCheckbox.performClick()
+            }
+
+            designEngineeringTextView.setOnClickListener {
+                designEngineeringCheckbox.performClick()
+            }
+
+            mechatronicsEngineeringTextView.setOnClickListener {
+                mechatronicsEngineeringCheckbox.performClick()
+            }
+
+            industryManagementTextView.setOnClickListener {
+                industryManagementCheckbox.performClick()
+            }
+
+            energyEngineeringTextView.setOnClickListener {
+                energyEngineeringCheckbox.performClick()
+            }
+
+            electronicEngineeringTextView.setOnClickListener {
+                electronicEngineeringCheckbox.performClick()
+            }
+
+            computerEngineeringTextView.setOnClickListener {
+                computerEngineeringCheckbox.performClick()
+            }
         }
 
     }
