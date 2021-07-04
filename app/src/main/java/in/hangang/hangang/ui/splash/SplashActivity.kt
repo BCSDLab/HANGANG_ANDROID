@@ -32,6 +32,7 @@ class SplashActivity : ViewBindingActivity<ActivitySplashBinding>() {
                 } else {
                     startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                 }
+                finish()
             }
         }
     }

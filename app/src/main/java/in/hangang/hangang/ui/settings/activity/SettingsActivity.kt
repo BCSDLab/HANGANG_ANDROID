@@ -26,6 +26,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
     }
 
     private fun initView() {
+        settingsViewModel.getAutoLoginStatus()
     }
 
     private fun initEvent() {
@@ -55,7 +56,6 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
             autoLoginButtonResponse.observe(this@SettingsActivity){
                 binding.autoLoginToggleButton.isChecked = it
             }
-
         }
     }
 

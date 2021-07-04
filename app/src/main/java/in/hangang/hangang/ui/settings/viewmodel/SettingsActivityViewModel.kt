@@ -30,8 +30,7 @@ class SettingsActivityViewModel(private val userRepository: UserRepository) : Vi
 
     fun saveAutoLoginStatus(isAutoLoginActive : Boolean){
         userRepository.saveAutoLogin(isAutoLoginActive)
-            .subscribe {
-            }
+            .subscribe {}
     }
 
     fun deleteAccount(){
@@ -57,6 +56,14 @@ class SettingsActivityViewModel(private val userRepository: UserRepository) : Vi
             }, {
                 LogUtil.e("Error in logout : ${it.toCommonResponse().errorMessage}")
                 _throwable.value = it
+            })
+    }
+
+    fun getAutoLoginStatus(){
+        userRepository.getAutoLoginStatus()
+            .subscribe({
+                _autoLoginButtonResponse.value = it
+            },{
             })
     }
 

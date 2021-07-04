@@ -24,10 +24,11 @@ class SplashViewModel(private val userRepository: UserRepository):ViewModelBase(
                 when(isAutoLoginValid){
                     true -> userRepository.checkAccessTokenValid()
                     false -> Single.error(Throwable("Go to Login Page"))
-            } }.handleHttpException()
+            } }
+            .flatMap { userRepository.updateToken() }
+            .handleHttpException()
             .handleProgress(this)
             .withThread()
-            .flatMap { userRepository.updateToken() }
             .subscribe({
                 _isTokenValid.value = true
             },{
