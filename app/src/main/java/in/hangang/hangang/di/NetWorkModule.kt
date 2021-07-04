@@ -5,6 +5,7 @@ import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.util.LogUtil
+import `in`.hangang.hangang.util.TokenAuthenticator
 import com.orhanobut.hawk.Hawk
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -53,13 +54,13 @@ val netWorkModule = module {
             })
             addInterceptor { chain ->
                 val accessToken = Hawk.get(ACCESS_TOKEN, "")
-                val refreshToken = Hawk.get(REFRESH_TOKEN, "")
                 LogUtil.d("access token : $accessToken")
                 val newRequest: Request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer $accessToken")
                         .build()
                 chain.proceed(newRequest)
             }
+            authenticator(TokenAuthenticator(get()))
         }.build()
     }
 
