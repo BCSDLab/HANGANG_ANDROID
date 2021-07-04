@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.entity
+package `in`.hangang.hangang.data.entity.user
 
 data class UserCount(
     val getLectureBankCommentCount: Int,

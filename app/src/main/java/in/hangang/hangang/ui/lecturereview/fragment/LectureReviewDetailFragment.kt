@@ -3,9 +3,9 @@ package `in`.hangang.hangang.ui.lecturereview.fragment
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.evaluation.Chart
-import `in`.hangang.hangang.data.evaluation.LectureReview
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.evaluation.Chart
+import `in`.hangang.hangang.data.entity.evaluation.LectureReview
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.FragmentLectureReviewDetailBinding
 import `in`.hangang.hangang.ui.lecturereview.activity.LectureEvaluationActivity
 import `in`.hangang.hangang.ui.lecturereview.adapter.LectureClassTimeAdapter

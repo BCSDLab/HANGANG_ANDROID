@@ -1,10 +1,10 @@
 package `in`.hangang.hangang.ui.mypage.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.entity.LectureBank
-import `in`.hangang.hangang.data.entity.PointRecord
-import `in`.hangang.hangang.data.entity.UploadFile
-import `in`.hangang.hangang.data.entity.UserCount
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
+import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
+import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.UserRepository
@@ -79,7 +79,7 @@ class MyPageViewModel(private val userRepository: UserRepository) : ViewModelBas
     fun getUploadFiles() {
         userRepository.getPurchasedBanks()
             .map {
-                it.map { it.uploadFiles }.flatten()
+                it.map { it.uploadFiles ?: listOf() }.flatten()
             }
             .handleHttpException()
             .handleProgress(this)

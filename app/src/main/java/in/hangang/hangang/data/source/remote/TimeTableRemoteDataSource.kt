@@ -3,10 +3,10 @@ package `in`.hangang.hangang.data.source.remote
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_SEMESTER_ID
 import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_TIMETABLE_NAME
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
 import `in`.hangang.hangang.data.request.TimeTableRequest
 import `in`.hangang.hangang.data.request.TimetableMemoRequest
@@ -24,13 +24,13 @@ class TimeTableRemoteDataSource(
     }
 
     override fun getLectureTimetableList(
-            classification: List<String>?,
-            criteria: String?,
-            department: String?,
-            keyword: String?,
-            limit: Int,
-            page: Int,
-            semesterDateId: Int
+        classification: List<String>?,
+        criteria: String?,
+        department: String?,
+        keyword: String?,
+        limit: Int,
+        page: Int,
+        semesterDateId: Int
     ): Single<List<LectureTimeTable>> {
         return authApi.getTimetableLectureList(
                 classification, criteria, department, keyword, limit, page, semesterDateId
@@ -114,9 +114,9 @@ class TimeTableRemoteDataSource(
     }
 
     override fun getScrapLectures(
-            classification: List<String>?,
-            department: String?,
-            keyword: String?
+        classification: List<String>?,
+        department: String?,
+        keyword: String?
     ): Single<Collection<LectureTimeTable>> {
         return authApi.getScrapLectures()
                 .flatMap { list ->

@@ -1,7 +1,10 @@
 package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.evaluation.*
+import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
+import `in`.hangang.hangang.data.entity.evaluation.Evaluation
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
+import `in`.hangang.hangang.data.entity.evaluation.LectureReview
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse

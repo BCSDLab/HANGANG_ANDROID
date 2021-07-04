@@ -1,14 +1,17 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.evaluation.*
-import `in`.hangang.hangang.data.entity.*
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.entity.evaluation.*
+import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.entity.user.User
+import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse

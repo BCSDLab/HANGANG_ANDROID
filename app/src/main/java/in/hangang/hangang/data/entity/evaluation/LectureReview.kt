@@ -1,6 +1,6 @@
-package `in`.hangang.hangang.data.evaluation
+package `in`.hangang.hangang.data.entity.evaluation
 
-import `in`.hangang.hangang.data.ranking.RankingLectureHashTag
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureHashTag
 import com.google.gson.annotations.SerializedName
 import java.lang.StringBuilder
 

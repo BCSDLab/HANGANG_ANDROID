@@ -4,7 +4,7 @@ import `in`.hangang.core.view.dp2Px
 import `in`.hangang.core.view.setVisibility
 import `in`.hangang.core.view.sp2Px
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.util.toValuesList
 import android.content.Context
 import android.graphics.Canvas

@@ -6,8 +6,8 @@ import `in`.hangang.core.view.button.checkbox.FilledCheckBox
 import `in`.hangang.core.view.childViews
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.LectureFilter
-import `in`.hangang.hangang.data.entity.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.LectureFilter
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.databinding.FragmentTimetableLectureListBinding
 import `in`.hangang.hangang.ui.timetable.adapter.TimetableLectureAdapter
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableLectureFilterActivityContract

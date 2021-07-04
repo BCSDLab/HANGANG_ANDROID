@@ -2,7 +2,7 @@ package `in`.hangang.hangang.ui
 
 import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.UploadFile
+import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ItemLectureBankUploadFileBinding
 import `in`.hangang.hangang.util.LectureBankUtil
 import android.content.Context
@@ -49,7 +49,7 @@ class LectureBankFileAdapter : OnItemClickRecyclerViewAdapter<LectureBankFileAda
             binding.imageViewFileType.setImageDrawable(
                 LectureBankUtil.getLectureBankFileTypeImage(
                     context,
-                    uploadFile.fileExt ?: ""
+                    uploadFile.ext
                 )
             )
             binding.textViewFileName.text = uploadFile.fileName

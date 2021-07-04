@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.entity
+package `in`.hangang.hangang.data.entity.mypage
 
 import com.google.gson.annotations.SerializedName
 

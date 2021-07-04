@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.data.entity.lecturebank
 
-import `in`.hangang.hangang.data.entity.timetable.Lecture
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.data.entity.user.User
 import android.os.Parcelable

@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.data.source
 
-import `in`.hangang.hangang.data.evaluation.LectureReview
+import `in`.hangang.hangang.data.entity.evaluation.LectureReview
 import `in`.hangang.hangang.util.handleHttpException
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource

@@ -2,8 +2,8 @@ package `in`.hangang.hangang.ui.lecturereview.adapter
 
 import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.evaluation.LectureReview
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.evaluation.LectureReview
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.ItemLectureDetailReviewBinding
 import `in`.hangang.hangang.util.LogUtil
 import android.view.LayoutInflater

@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.mypage.adapter
 
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.PointRecord
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
 import `in`.hangang.hangang.databinding.ItemMyPagePointRecordBinding
 import `in`.hangang.hangang.util.DateUtil
 import android.view.LayoutInflater

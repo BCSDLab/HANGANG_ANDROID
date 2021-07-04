@@ -1,7 +1,6 @@
 package `in`.hangang.hangang.ui.mypage.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.entity.Lecture
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.LectureBankRepository

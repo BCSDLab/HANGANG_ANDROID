@@ -1,6 +1,6 @@
-package `in`.hangang.hangang.data.ranking
+package `in`.hangang.hangang.data.entity.ranking
 
-import `in`.hangang.hangang.data.ranking.RankingLectureHashTag
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureHashTag
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize

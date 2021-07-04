@@ -1,6 +1,9 @@
 package `in`.hangang.hangang.data.source
 
-import `in`.hangang.hangang.data.entity.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import io.reactivex.rxjava3.core.Single
@@ -15,23 +18,23 @@ interface TimeTableDataSource {
         limit: Int = 10,
         page: Int = 1,
         semesterDateId: Int
-    ): Single<List<`in`.hangang.hangang.data.entity.LectureTimeTable>>
+    ): Single<List<LectureTimeTable>>
 
     fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse>
     fun removeTimeTable(timetableId: Int): Single<CommonResponse>
     fun modifyTimeTableName(timetableId: Int, name: String): Single<CommonResponse>
     fun setMainTimeTable(timetableId: Int): Single<CommonResponse>
-    fun getMainTimeTable(): Single<`in`.hangang.hangang.data.entity.TimeTableWithLecture>
-    fun getTimetable(timetableId: Int): Single<`in`.hangang.hangang.data.entity.TimeTableWithLecture>
+    fun getMainTimeTable(): Single<TimeTableWithLecture>
+    fun getTimetable(timetableId: Int): Single<TimeTableWithLecture>
     fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
     fun removeLectureFromTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
-    fun scrapLecture(lectureTimeTable: `in`.hangang.hangang.data.entity.LectureTimeTable): Single<`in`.hangang.hangang.data.entity.LectureTimeTable>
-    fun unscrapLecture(lectureTimeTable: `in`.hangang.hangang.data.entity.LectureTimeTable): Single<`in`.hangang.hangang.data.entity.LectureTimeTable>
+    fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
+    fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun getScrapLectures(
         classification: List<String>? = null,
         department: String? = null,
         keyword: String? = null
-    ): Single<Collection<`in`.hangang.hangang.data.entity.LectureTimeTable>>
+    ): Single<Collection<LectureTimeTable>>
 
     fun addCustomLectureInTimetable(
         classTime: String?,
@@ -42,7 +45,7 @@ interface TimeTableDataSource {
 
     fun getMemo(
         timetableLectureId: Int
-    ): Single<`in`.hangang.hangang.data.entity.TimetableMemo>
+    ): Single<TimetableMemo>
 
     fun addMemo(
         timetableLectureId: Int,

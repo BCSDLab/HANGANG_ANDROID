@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.lecturereview.adapter
 
-import `in`.hangang.hangang.data.evaluation.ClassLecture
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.ItemLectureClassTimeBinding
 import `in`.hangang.hangang.util.ClassLectureTimeUtil
 import `in`.hangang.hangang.util.LogUtil

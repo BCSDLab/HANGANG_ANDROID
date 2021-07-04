@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.entity
+package `in`.hangang.hangang.data.entity.lecturebank
 
 data class SimpleLecture(
     val id: Int,

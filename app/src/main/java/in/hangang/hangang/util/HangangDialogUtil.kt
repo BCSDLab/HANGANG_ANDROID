@@ -3,7 +3,7 @@ package `in`.hangang.hangang.util
 import `in`.hangang.core.R
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
+import `in`.hangang.hangang.data.entity.timetable.CustomTimetableTimestamp
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater

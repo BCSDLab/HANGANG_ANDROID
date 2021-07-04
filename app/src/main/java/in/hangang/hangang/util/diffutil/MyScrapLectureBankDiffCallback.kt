@@ -1,7 +1,5 @@
 package `in`.hangang.hangang.util.diffutil
 
-import `in`.hangang.hangang.data.entity.Lecture
-import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
 import androidx.recyclerview.widget.DiffUtil
 

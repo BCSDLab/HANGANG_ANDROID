@@ -2,8 +2,8 @@ package `in`.hangang.hangang.ui.lecturereview.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
-import `in`.hangang.hangang.data.entity.Lecture
-import `in`.hangang.hangang.data.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.LectureRepository
 import `in`.hangang.hangang.util.LogUtil
@@ -17,7 +17,6 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.kotlin.addTo
-import java.util.*
 import kotlin.collections.ArrayList
 
 class LectureReviewListViewModel(private val lectureRepository: LectureRepository) :

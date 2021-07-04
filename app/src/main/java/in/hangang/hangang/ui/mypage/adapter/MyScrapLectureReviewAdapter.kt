@@ -2,7 +2,7 @@ package `in`.hangang.hangang.ui.mypage.adapter
 
 import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.Lecture
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.databinding.ItemMyScrapLectureBinding
 import `in`.hangang.hangang.util.diffutil.MyScrapLectureReviewDiffCallback
 import android.util.SparseBooleanArray

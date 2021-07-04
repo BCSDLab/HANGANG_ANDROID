@@ -2,9 +2,9 @@ package `in`.hangang.hangang.data.source.remote
 
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
-import `in`.hangang.hangang.data.entity.LectureBank
-import `in`.hangang.hangang.data.entity.PointRecord
-import `in`.hangang.hangang.data.entity.UserCount
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
+import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse

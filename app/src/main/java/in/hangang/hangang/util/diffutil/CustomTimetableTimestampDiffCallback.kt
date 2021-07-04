@@ -1,6 +1,6 @@
 package `in`.hangang.hangang.util.diffutil
 
-import `in`.hangang.hangang.data.entity.CustomTimetableTimestamp
+import `in`.hangang.hangang.data.entity.timetable.CustomTimetableTimestamp
 import androidx.recyclerview.widget.DiffUtil
 
 class CustomTimetableTimestampDiffCallback(

@@ -2,7 +2,7 @@ package `in`.hangang.hangang.ui.mypage.adapter
 
 import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
-import `in`.hangang.hangang.data.entity.LectureBank
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.databinding.ItemMyPagePurchasedBankBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import android.view.LayoutInflater
@@ -50,7 +50,7 @@ class MyPagePurchasedBankAdapter : OnItemClickRecyclerViewAdapter<MyPagePurchase
                 textViewLectureLectureName.text = lectureBank.lecture.name
                 textViewLectureLectureProfessor.text = lectureBank.lecture.professor
                 recyclerViewFile.adapter = LectureBankFileAdapter().apply {
-                    setFiles(lectureBank.uploadFiles)
+                    setFiles(lectureBank.uploadFiles ?: listOf())
                 }
             }
         }

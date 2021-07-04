@@ -1,9 +1,9 @@
 package `in`.hangang.hangang.data.source.repository
 
-import `in`.hangang.hangang.data.entity.LectureTimeTable
-import `in`.hangang.hangang.data.entity.TimeTable
-import `in`.hangang.hangang.data.entity.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.TimetableMemo
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
@@ -19,13 +19,13 @@ class TimeTableRepository(
     }
 
     override fun getLectureTimetableList(
-            classification: List<String>?,
-            criteria: String?,
-            department: String?,
-            keyword: String?,
-            limit: Int,
-            page: Int,
-            semesterDateId: Int
+        classification: List<String>?,
+        criteria: String?,
+        department: String?,
+        keyword: String?,
+        limit: Int,
+        page: Int,
+        semesterDateId: Int
     ): Single<List<LectureTimeTable>> {
         return timeTableRemoteDataSource.getLectureTimetableList(
                 classification,
@@ -85,9 +85,9 @@ class TimeTableRepository(
     }
 
     override fun getScrapLectures(
-            classifications: List<String>?,
-            department: String?,
-            keyword: String?
+        classifications: List<String>?,
+        department: String?,
+        keyword: String?
     ): Single<Collection<LectureTimeTable>> {
         return timeTableRemoteDataSource.getScrapLectures(classifications, department, keyword)
     }

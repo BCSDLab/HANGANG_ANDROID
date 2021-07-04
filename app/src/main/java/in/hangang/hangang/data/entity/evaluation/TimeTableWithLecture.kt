@@ -1,4 +1,4 @@
-package `in`.hangang.hangang.data.evaluation
+package `in`.hangang.hangang.data.entity.evaluation
 
 data class TimeTableWithLecture(
     val id: Int,
