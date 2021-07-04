@@ -45,6 +45,9 @@ android {
     dataBinding {
         enabled = true
     }
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type"]
+    }
 }
 repositories {
     maven { url 'https://jitpack.io' }
