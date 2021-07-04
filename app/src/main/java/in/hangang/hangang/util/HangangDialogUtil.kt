@@ -14,9 +14,9 @@ import androidx.core.view.children
 object HangangDialogUtil {
 
     fun makeTimetableCustomLectureTimePickerDialog(
-            context: Context,
-            customTimetableTimestamp: CustomTimetableTimestamp? = null,
-            listener: (week: Int, startTime: Pair<Int, Int>, endTime: Pair<Int, Int>) -> Unit
+        context: Context,
+        customTimetableTimestamp: CustomTimetableTimestamp? = null,
+        listener: (week: Int, startTime: Pair<Int, Int>, endTime: Pair<Int, Int>) -> Unit
     ): Dialog {
         val pickerView = LayoutInflater.from(context).inflate(R.layout.layout_time_picker, null)
 

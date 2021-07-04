@@ -2,6 +2,7 @@ package `in`.hangang.hangang.ui.mypage.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.LectureRepository
 import `in`.hangang.hangang.util.LogUtil
@@ -15,11 +16,11 @@ class MyScrapLectureReviewViewModel(
     private val lectureRepository: LectureRepository
 ) : ViewModelBase() {
 
-    private val _myScrapLecture = MutableLiveData<List<Lecture>>()
+    private val _myScrapLecture = MutableLiveData<List<RankingLectureItem>>()
     private val _isEditMode = MutableLiveData(false)
     private val _canRemoveLecture = MutableLiveData(false)
 
-    val myScrapLecture: LiveData<List<Lecture>> get() = _myScrapLecture
+    val myScrapLecture: LiveData<List<RankingLectureItem>> get() = _myScrapLecture
     val isEditMode: LiveData<Boolean> get() = _isEditMode
     val canRemoveLecture: LiveData<Boolean> get() = _canRemoveLecture
 
@@ -35,7 +36,7 @@ class MyScrapLectureReviewViewModel(
             })
     }
 
-    fun unscrapLecture(vararg lectures: Lecture) {
+    fun unscrapLecture(vararg lectures: RankingLectureItem) {
         lectureRepository.unscrapLecture(*lectures.map { it.id }.toIntArray())
             .flatMap { lectureRepository.getScrapedLecture() }
             .withThread()

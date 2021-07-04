@@ -1,11 +1,12 @@
 package `in`.hangang.hangang.util.diffutil
 
 import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import androidx.recyclerview.widget.DiffUtil
 
 class MyScrapLectureReviewDiffCallback(
-    private val oldList: List<Lecture>,
-    private val newList: List<Lecture>
+    private val oldList: List<RankingLectureItem>,
+    private val newList: List<RankingLectureItem>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 

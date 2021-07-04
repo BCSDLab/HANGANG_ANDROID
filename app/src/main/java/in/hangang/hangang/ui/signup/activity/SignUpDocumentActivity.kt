@@ -25,6 +25,9 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
 
     private fun initCheckBox() {
         with(binding) {
+            agreeAllTextView.setOnClickListener {
+                agreeAllCheckbox.performClick()
+            }
             agreeAllCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
                     binding.nextButton.isEnabled = isCheckBoxChecked()
@@ -32,6 +35,27 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
                     binding.nextButton.isEnabled = isCheckBoxChecked()
                 }
             }
+
+            agreePersonalInfoFirstTextView.setOnClickListener {
+                agreePersonalInfo.performClick()
+            }
+
+            agreePersonalInfoSecondTextView.setOnClickListener {
+                agreePersonalInfo.performClick()
+            }
+
+            agreePersonalInfoThirdTextView.setOnClickListener {
+                agreePersonalInfo.performClick()
+            }
+
+            agreePersonalInfoFourthTextView.setOnClickListener {
+                agreePersonalInfo.performClick()
+            }
+
+            binding.agreePersonalInfoFifthTextView.setOnClickListener {
+                agreePersonalInfo.performClick()
+            }
+
             agreeHangangService.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
                     binding.nextButton.isEnabled = isCheckBoxChecked()
@@ -39,12 +63,29 @@ class SignUpDocumentActivity : ViewBindingActivity<ActivitySignUpDocumentBinding
                     binding.nextButton.isEnabled = isCheckBoxChecked()
                 }
             }
+
             agreePersonalInfo.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
                     binding.nextButton.isEnabled = isCheckBoxChecked()
                 } else {
                     binding.nextButton.isEnabled = isCheckBoxChecked()
                 }
+            }
+
+            communityRuleFirstTextView.setOnClickListener {
+                agreeHangangService.performClick()
+            }
+            communityRuleSecondTextView.setOnClickListener {
+                agreeHangangService.performClick()
+            }
+            communityRuleThirdTextView.setOnClickListener {
+                agreeHangangService.performClick()
+            }
+            communityRuleFourthTextView.setOnClickListener {
+                agreeHangangService.performClick()
+            }
+            communityRuleFifthTextView.setOnClickListener {
+                agreeHangangService.performClick()
             }
         }
     }

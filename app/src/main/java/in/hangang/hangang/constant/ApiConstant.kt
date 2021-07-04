@@ -28,6 +28,8 @@ const val LECTURE_SEMESTER = "/semesterdates/lectures/{id}"
 const val TIMETABLE = "/timetable"
 const val TIMETABLE_LECTURE = "/timetable/lecture"
 const val REVIEW_RECOMMEND = "/review/recommend"
+const val REVIEW_REPORT = "/review/report"
+const val EVALUATIONS = "/reviews"
 const val TIMETABLE_CUSTOM_LECTURE = "/timetable/custom/lecture"
 const val TIMETABLE_LECTURE_LIST = "/timetable/lecture/list"
 const val TIMETABLE_MAIN = "/timetable/main/lecture"
@@ -40,7 +42,8 @@ const val USER_ME = "/user/me"
 const val USER_POINT_RECORD = "/user/point"
 const val USER_PURCHASED = "/user/purchase"
 const val LECTURES = "/lectures"
-
+const val LECTURES_ID = "/lectures/{id}"
+const val LECTURE_BANK_HIT = "/lecture-banks/hit"
 const val API_ERROR_CODE_TIMETABLE_EXCEED = 24
 
 const val API_TIMETABLE_DEFAULT_LIMIT = 10

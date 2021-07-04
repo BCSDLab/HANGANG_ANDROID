@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_evaluation"
             app:destination="@id/navigation_evaluation" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_timetable"
+            app:destination="@id/navigation_timetable" />
+        <action
+            android:id="@+id/action_navigation_home_to_lecture_review_detail"
+            app:destination="@id/lecture_review_detail" />
     </fragment>
 
     <fragment
@@ -51,6 +57,9 @@
         <action
             android:id="@+id/action_lecture_review_detail_to_navigation_evaluation"
             app:destination="@id/navigation_evaluation" />
+        <action
+            android:id="@+id/action_lecture_review_detail_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
     <fragment

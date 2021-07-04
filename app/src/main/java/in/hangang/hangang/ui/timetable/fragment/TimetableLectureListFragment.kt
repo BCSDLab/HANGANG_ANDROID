@@ -16,6 +16,7 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -159,7 +160,9 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                 binding.recyclerViewProgress.isRefreshing = it
             }
             lectures.observe(viewLifecycleOwner) {
-                timetableLectureAdapter.updateItem(it)
+                binding.recyclerViewTimetableLectures.isVisible = it.isNotEmpty()
+                binding.recyclerViewEmpty.isVisible = it.isEmpty()
+                if(it.isNotEmpty()) timetableLectureAdapter.updateItem(it)
             }
             timetableLectureChanged.observe(viewLifecycleOwner, EventObserver {
                 timetableViewModel.displayingTimeTable.value?.let { timeTable ->

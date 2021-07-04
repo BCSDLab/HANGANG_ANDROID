@@ -36,6 +36,7 @@ class TimetableLectureAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: TimetableLectureViewHolder, position: Int) {
+        val position = holder.absoluteAdapterPosition
         val item = lectures[position]
         holder.bind(item)
 

@@ -1,7 +1,6 @@
 package `in`.hangang.hangang.data.entity.evaluation
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 import kotlin.collections.ArrayList
 
 data class ClassLecture(
@@ -19,7 +18,7 @@ data class ClassLecture(
     val selectedTableId: ArrayList<String>,
     @SerializedName("target")
     val target: String,
-
+    var isChecked: Boolean = false
 
 
 ){

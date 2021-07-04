@@ -20,8 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.mypage.activity.MyScrapLectureBankActivity"></activity>
-        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity" />
+        <activity
+            android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan" />
+        <activity android:name=".ui.mypage.activity.MyScrapLectureBankActivity" />
         <activity android:name=".ui.timetable.activity.TimetableLectureFilterActivity" />
         <activity android:name=".ui.timetable.activity.TimetableAddActivity" />
         <activity android:name=".ui.timetable.activity.TimetableListActivity" />

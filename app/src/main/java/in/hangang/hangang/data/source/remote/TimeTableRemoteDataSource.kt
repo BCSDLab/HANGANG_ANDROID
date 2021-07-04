@@ -34,7 +34,11 @@ class TimeTableRemoteDataSource(
     ): Single<List<LectureTimeTable>> {
         return authApi.getTimetableLectureList(
                 classification, criteria, department, keyword, limit, page, semesterDateId
-        ).map { it.map { item -> item.copy(lectureId = item.id) }.toList() }
+        ).map { response ->
+            response.result.map {
+                it.copy(lectureTimetableId = it.id)
+            }
+        }
     }
 
     override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
@@ -80,7 +84,7 @@ class TimeTableRemoteDataSource(
         return authApi.getLectureListFromTimeTable(timetableId)
     }
 
-    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable> {
         return authApi.addLectureInTimeTable(
                 TimeTableRequest(lectureId, timetableId)
         )
@@ -139,11 +143,11 @@ class TimeTableRemoteDataSource(
     }
 
     override fun addCustomLectureInTimetable(
-            classTime: String?,
-            name: String?,
-            professor: String?,
-            userTimetableId: Int
-    ): Single<CommonResponse> {
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
+    ): Single<LectureTimeTable> {
         return authApi.addCustomLectureInTimetable(
                 TimeTableCustomLectureRequest(
                         classTime, name, professor, userTimetableId
@@ -195,5 +199,17 @@ class TimeTableRemoteDataSource(
                 } else
                     Single.just(list)
             }
+    }
+
+    override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return authApi.getTimeTables(semesterId)
+    }
+
+    override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {
+        return authApi.fetchLectureListFromTimeTable(timetableId)
+    }
+
+    override suspend fun fetchTimeTables(semesterDateId: Long?): List<TimeTable> {
+        return authApi.fetchTimeTables(semesterDateId)
     }
 }

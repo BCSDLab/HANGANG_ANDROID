@@ -7,7 +7,7 @@
 
         <variable
             name="lecture"
-            type="in.hangang.hangang.data.entity.lecture.Lecture" />
+            type="in.hangang.hangang.data.entity.ranking.RankingLectureItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="4dp"
-            android:text="@{String.format(`(%d)`, lecture.reviewCount)}"
+            android:text="@{lecture.reviewCount}"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="11sp"
             app:layout_constraintBaseline_toBaselineOf="@id/text_view_lecture_title"
@@ -85,7 +85,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:gravity="end"
-            android:text="@{String.format(`%1.01f`, lecture.totalRating)}"
+            android:text="@{lecture.totalRating}"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"

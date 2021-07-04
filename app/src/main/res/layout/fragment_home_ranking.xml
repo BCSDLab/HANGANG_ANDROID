@@ -35,6 +35,7 @@
                 android:layout_height="44dp"
                 android:background="@drawable/tab_layout_background"
                 app:tabIndicatorColor="?attr/colorSecondary"
+                app:tabRippleColor="@null"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="1dp"
                 app:tabMode="scrollable"

@@ -3,6 +3,7 @@ package `in`.hangang.hangang.ui.mypage.adapter
 import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.ItemMyScrapLectureBinding
 import `in`.hangang.hangang.util.diffutil.MyScrapLectureReviewDiffCallback
 import android.util.SparseBooleanArray
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 class MyScrapLectureReviewAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectureReviewAdapter.ViewHolder>() {
-    private val lectures = mutableListOf<Lecture>()
+    private val lectures = mutableListOf<RankingLectureItem>()
     private val selectedLectures = SparseBooleanArray()
     var isEditMode = false
         set(value) {
@@ -47,7 +48,7 @@ class MyScrapLectureReviewAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectur
 
     override fun getItemCount() = lectures.size
 
-    fun setLectures(lectures: List<Lecture>) {
+    fun setLectures(lectures: List<RankingLectureItem>) {
         val diffCallback = MyScrapLectureReviewDiffCallback(this.lectures, lectures)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
@@ -91,8 +92,8 @@ class MyScrapLectureReviewAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectur
         return false
     }
 
-    fun getSelectedLectures(): List<Lecture> {
-        val selectedLecture = mutableListOf<Lecture>()
+    fun getSelectedLectures(): List<RankingLectureItem> {
+        val selectedLecture = mutableListOf<RankingLectureItem>()
         lectures.forEachIndexed { i, lecture ->
             if (selectedLectures[i]) selectedLecture.add(lecture)
         }
@@ -100,7 +101,7 @@ class MyScrapLectureReviewAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectur
     }
 
     class ViewHolder(private val binding: ItemMyScrapLectureBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(lecture: Lecture) {
+        fun bind(lecture: RankingLectureItem) {
             with(binding) {
                 this.lecture = lecture
                 val top3HashTag = lecture.top3HashTag

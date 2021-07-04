@@ -42,6 +42,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/lecture_detail_class_add_button"
             android:layout_width="56dp"
             android:layout_height="28dp"
             android:background="@drawable/rectangle_rounded_corner_blue_200"

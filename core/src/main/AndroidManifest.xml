@@ -3,7 +3,8 @@
     package="in.hangang.core">
 
     <application>
-        <activity android:name=".base.activity.ActivityBase"></activity>
+        <activity android:name=".base.activity.WebViewActivity"></activity>
+        <activity android:name=".base.activity.ActivityBase" />
     </application>
 
 </manifest>

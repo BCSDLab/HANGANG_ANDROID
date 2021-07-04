@@ -79,7 +79,7 @@ class TimetableLayout @JvmOverloads constructor(
             field = value
         }
 
-    var rowCount = 9
+    var rowCount = 14
         set(value) {
             field = value
             postInvalidate()
@@ -142,7 +142,7 @@ class TimetableLayout @JvmOverloads constructor(
         ).apply {
             dividerColor =
                     getColor(R.styleable.TimetableLayout_dividerColor, Color.parseColor("#eeeeee"))
-            rowCount = getInteger(R.styleable.TimetableLayout_rowCount, 9)
+            rowCount = getInteger(R.styleable.TimetableLayout_rowCount, 14)
             columnCount = getInteger(R.styleable.TimetableLayout_columnCount, 5)
             rowHeight = getDimensionPixelSize(R.styleable.TimetableLayout_rowHeight, dp2Px(54f))
             columnWidth = getDimensionPixelSize(R.styleable.TimetableLayout_columnWidth, dp2Px(64f))

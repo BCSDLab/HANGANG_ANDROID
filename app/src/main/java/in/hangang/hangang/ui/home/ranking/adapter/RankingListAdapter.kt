@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.ui.home.ranking.adapter
 
+import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.databinding.ItemHomeRankingListBinding
 import `in`.hangang.hangang.util.LogUtil
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RankingListAdapter :
     ListAdapter<RankingLectureItem, RankingListAdapter.ViewHolder>(rankingLectureDiffUtil) {
-
+    lateinit var lectureClickListener: RecyclerViewClickListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemHomeRankingListBinding.inflate(
@@ -23,16 +24,21 @@ class RankingListAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val rankngLectureItem = getItem(position)
-        if (rankngLectureItem != null) {
-            holder.bind(rankngLectureItem, position)
+        val rankingLectureItem = getItem(position)
+        if (rankingLectureItem != null) {
+            holder.bind(rankingLectureItem, position)
+            holder.binding.rankingItemConstraintlayout.setOnClickListener {
+                lectureClickListener.onClick(it, position, rankingLectureItem)
+            }
         }else{
             LogUtil.e("onbindviewholder")
         }
     }
+    fun setClickListener(listener: RecyclerViewClickListener) {
+        lectureClickListener = listener
+    }
 
-
-    class ViewHolder(private val binding: ItemHomeRankingListBinding) :
+    class ViewHolder(val binding: ItemHomeRankingListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
 

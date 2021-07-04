@@ -6,6 +6,7 @@ import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.mypage.PointRecord
 import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.entity.user.User
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
@@ -89,6 +90,10 @@ class UserLocalDataSource : UserDataSource {
     }
 
     override fun getPurchasedBanks(): Single<List<LectureBank>> {
+        return Single.never()
+    }
+
+    override fun getLectureBankHit(): Single<List<LectureDoc>> {
         return Single.never()
     }
 }

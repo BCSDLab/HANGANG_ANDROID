@@ -11,21 +11,21 @@ import `in`.hangang.hangang.data.source.TimeTableDataSource
 import io.reactivex.rxjava3.core.Single
 
 class TimeTableRepository(
-        private val timeTableLocalDataSource: TimeTableDataSource,
-        private val timeTableRemoteDataSource: TimeTableDataSource
+    private val timeTableLocalDataSource: TimeTableDataSource,
+    private val timeTableRemoteDataSource: TimeTableDataSource
 ) : TimeTableDataSource {
     override fun getTimeTables(): Single<Map<Int, List<TimeTable>>> {
         return timeTableRemoteDataSource.getTimeTables()
     }
 
     override fun getLectureTimetableList(
-        classification: List<String>?,
-        criteria: String?,
-        department: String?,
-        keyword: String?,
-        limit: Int,
-        page: Int,
-        semesterDateId: Int
+            classification: List<String>?,
+            criteria: String?,
+            department: String?,
+            keyword: String?,
+            limit: Int,
+            page: Int,
+            semesterDateId: Int
     ): Single<List<LectureTimeTable>> {
         return timeTableRemoteDataSource.getLectureTimetableList(
                 classification,
@@ -65,7 +65,7 @@ class TimeTableRepository(
         return timeTableRemoteDataSource.getTimetable(timetableId)
     }
 
-    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable> {
         return timeTableRemoteDataSource.addLectureInTimeTable(lectureId, timetableId)
     }
 
@@ -85,19 +85,19 @@ class TimeTableRepository(
     }
 
     override fun getScrapLectures(
-        classifications: List<String>?,
-        department: String?,
-        keyword: String?
+            classifications: List<String>?,
+            department: String?,
+            keyword: String?
     ): Single<Collection<LectureTimeTable>> {
         return timeTableRemoteDataSource.getScrapLectures(classifications, department, keyword)
     }
 
     override fun addCustomLectureInTimetable(
-            classTime: String?,
-            name: String?,
-            professor: String?,
-            userTimetableId: Int
-    ): Single<CommonResponse> {
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
+    ): Single<LectureTimeTable> {
         return timeTableRemoteDataSource.addCustomLectureInTimetable(
                 classTime, name, professor, userTimetableId
         )
@@ -138,5 +138,17 @@ class TimeTableRepository(
 
     override fun removeMemo(timetableLectureId: Int): Single<CommonResponse> {
         return timeTableRemoteDataSource.removeMemo(timetableLectureId)
+    }
+
+    override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return timeTableRemoteDataSource.getUserTimeTables(semesterId)
+    }
+
+    override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {
+        return timeTableRemoteDataSource.fetchLectureListFromTimeTable(timetableId)
+    }
+
+    override suspend fun fetchTimeTables(semesterDateId: Long?): List<TimeTable> {
+        return timeTableRemoteDataSource.fetchTimeTables(semesterDateId)
     }
 }

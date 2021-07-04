@@ -1,10 +1,20 @@
 package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.data.entity.lecture.Lecture
-import `in`.hangang.hangang.data.entity.evaluation.*
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
+import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
+import `in`.hangang.hangang.data.request.LectureEvaluationRequest
+import `in`.hangang.hangang.data.request.LectureReviewReportRequest
+import com.orhanobut.hawk.Hawk
+import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
+import `in`.hangang.hangang.data.entity.evaluation.Evaluation
+import `in`.hangang.hangang.data.entity.evaluation.LectureDocResult
+import `in`.hangang.hangang.data.entity.evaluation.LectureReview
+import `in`.hangang.hangang.data.entity.evaluation.LectureReviewResult
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.source.LectureDataSource
 import io.reactivex.rxjava3.core.Single
 
@@ -21,7 +31,7 @@ class LectureLocalDataSource : LectureDataSource {
         return Single.never()
     }
 
-    override fun getScrapedLecture(): Single<List<Lecture>> {
+    override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
         return Single.never()
     }
 
@@ -69,15 +79,48 @@ class LectureLocalDataSource : LectureDataSource {
         return Single.never()
     }
 
-    override fun getLectureSemester(id: Int): Single<ArrayList<String>> {
+    override fun getLectureSemester(id: Int): Single<ArrayList<Int>> {
         return Single.never()
     }
 
-	override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
+    override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
         return Single.never()
     }
 
     override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
         return Single.never()
+    }
+
+    override fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun postEvaluation(lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override suspend fun getLectureClass(id: Int): ArrayList<ClassLecture> {
+        return arrayListOf()
+    }
+
+    override suspend fun fetchClassLectures(id: Int): List<ClassLecture> {
+        return emptyList()
+    }
+
+    override fun postScrapedLecture(scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun deleteScrapedLecture(scrapedLecture: ArrayList<Int>): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun getLecturesId(id: Int): Single<RankingLectureItem> {
+        return Single.never()
+    }
+
+    override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
+        return Hawk.get(RECENTLY_READ_LECTURE_REVIEW, ArrayList<RankingLectureItem>())
+
     }
 }

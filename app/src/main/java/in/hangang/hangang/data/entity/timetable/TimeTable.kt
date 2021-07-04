@@ -17,5 +17,7 @@ data class TimeTable(
     @SerializedName("created_at")
     val createdAt: String? = null,
     @SerializedName("updated_at")
-    val updatedAt: String? = null
+    val updatedAt: String? = null,
+    var isChecked: Boolean = false
+
 ) : Parcelable

@@ -61,8 +61,8 @@ class ChangePasswordFragment : ViewBindingFragment<FragmentNewPasswordBinding>()
             }
             buttonFinishChangePassword.setOnClickListener {
                 changePasswordFragmentViewModel.applyNewPassword(
-                    portalAccount = "${emailAuthenticationFragmentViewModel.portalAccount.value}@koreatech.ac.kr",
-                    password = editTextNewPassword.text.toString()
+                        portalAccount = emailAuthenticationFragmentViewModel.portalAccount,
+                        password = editTextNewPassword.text.toString()
                 )
             }
         }
