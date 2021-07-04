@@ -20,16 +20,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
-            android:windowSoftInputMode="adjustUnspecified|adjustPan"></activity>
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableLectureFilterActivity"></activity>
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableAddActivity" />
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableListActivity" />
+        <activity
+            android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan" />
+        <activity android:name=".ui.mypage.activity.MyScrapLectureBankActivity" />
+        <activity android:name=".ui.timetable.activity.TimetableLectureFilterActivity" />
+        <activity android:name=".ui.timetable.activity.TimetableAddActivity" />
+        <activity android:name=".ui.timetable.activity.TimetableListActivity" />
         <activity android:name=".ui.signup.activity.SignUpMajorActivity" />
         <activity android:name=".ui.signup.activity.SignUpActivity" />
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
         <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
         <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.mypage.activity.MyScrapLectureReviewActivity" />
+        <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity" />
+        <activity android:name=".ui.mypage.activity.MyPagePointRecordActivity" />
         <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

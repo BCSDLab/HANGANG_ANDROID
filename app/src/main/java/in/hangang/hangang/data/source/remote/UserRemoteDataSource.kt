@@ -2,6 +2,10 @@ package `in`.hangang.hangang.data.source.remote
 
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
+import `in`.hangang.hangang.data.entity.user.UserCount
+import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
@@ -13,8 +17,7 @@ class UserRemoteDataSource(
         private val noAuthApi: NoAuthApi,
         private val authApi: AuthApi,
         private val refreshApi: AuthApi
-) :
-        UserDataSource {
+) : UserDataSource {
     override fun signUp(
             major: Array<String>,
             nickName: String,
@@ -63,6 +66,22 @@ class UserRemoteDataSource(
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return noAuthApi.passwordFind(PasswordFindRequest(portalAccount, password))
+    }
+
+    override fun getUserInformation(): Single<User> {
+        return authApi.getUserInformation()
+    }
+
+    override fun getUserCounts(): Single<UserCount> {
+        return authApi.getUserCounts()
+    }
+
+    override fun getPointRecords(): Single<List<PointRecord>> {
+        return authApi.getUserPointRecord()
+    }
+
+    override fun getPurchasedBanks(): Single<List<LectureBank>> {
+        return authApi.getUserPurchasedBanks()
     }
 
     override fun getLectureBankHit(): Single<List<LectureDoc>> {

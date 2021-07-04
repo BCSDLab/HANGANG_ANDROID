@@ -65,13 +65,13 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
             }
             buttonSendAuthNumber.setOnClickListener {
                 emailAuthenticationFragmentViewModel.sendAuthNumber(
-                        portalAccount = "${editTextEmail.text}@koreatech.ac.kr"
+                    portalAccount = "${editTextEmail.text}@koreatech.ac.kr"
                 )
             }
             buttonFinishEmailAuth.setOnClickListener {
                 emailAuthenticationFragmentViewModel.finishEmailAuth(
-                        portalAccount = "${editTextEmail.text}@koreatech.ac.kr",
-                        secret = editTextEmailAuthNumber.text.toString()
+                    portalAccount = "${editTextEmail.text}@koreatech.ac.kr",
+                    secret = editTextEmailAuthNumber.text.toString()
                 )
             }
         }
@@ -79,24 +79,24 @@ class EmailAuthenticationFragment : ViewBindingFragment<FragmentEmailAuthenticat
 
     private fun showResentEmailAuthNumberDialog() {
         activity?.showSimpleDialog(
-                title = getString(R.string.reset_password_dialog_resent_title),
-                message = getString(R.string.reset_password_dialog_check_portal_message),
-                positiveButtonText = getString(R.string.ok),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
-                }
+            title = getString(R.string.reset_password_dialog_resent_title),
+            message = getString(R.string.reset_password_dialog_check_portal_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            }
         )
     }
 
     private fun showEmailAuthFailedDialog() {
         activity?.showSimpleDialog(
-                title = getString(R.string.reset_password_error_auth),
-                message = getString(R.string.reset_password_dialog_check_portal_message),
-                positiveButtonText = getString(R.string.reset_password_retry_auth),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    binding.editTextEmailAuthNumber.setText("")
-                    dialog.dismiss()
-                }
+            title = getString(R.string.reset_password_error_auth),
+            message = getString(R.string.reset_password_dialog_check_portal_message),
+            positiveButtonText = getString(R.string.reset_password_retry_auth),
+            positiveButtonOnClickListener = { dialog, _ ->
+                binding.editTextEmailAuthNumber.setText("")
+                dialog.dismiss()
+            }
         )
     }
 }

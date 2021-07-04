@@ -179,6 +179,28 @@
     <string name="timetable_lecture_detail_memo_hint">메모를 추가해주세요.</string>
     <string name="go_to_timetable_evaluation">평가하기</string>
     <string name="complete_timetable_evaluation">평가완료</string>
+    <string name="lecture_bank">강의자료</string>
+    <string name="comment">댓글</string>
+    <string name="lecture_review">강의평가</string>
+    <string name="my_page_my_scrap">내 스크랩</string>
+    <string name="my_page_bought_bank">구입한 자료</string>
+    <string name="my_point_app_bar_title">내 포인트</string>
+    <string name="my_point_summary_title">포인트 시스템 안내</string>
+    <string name="my_point_summary_description">포인트 시스템은 강의평가 서비스와 강의자료 서비스에서 사용하는 가상 포인트를 적립하고, 사용하는 시스템입니다. 포인트 획득을 위해 허위/중복/성의없는 정보를 작성할 경우, 허위 신고하는 경우, 그 외 부적절한 방법으로 포인트 시스템을 남용하는 경우에 서비스 이용이 영구 제한될 수 있습니다.</string>
+    <string name="my_point_usage_title"><![CDATA[포인트 적립 & 사용]]></string>
+    <string name="my_point_usage_point_kinds_1">- 가입시 기본 지급</string>
+    <string name="my_point_usage_point_kind_values_1">+ 20P</string>
+    <string name="my_point_usage_point_kinds_2">- 강의평가 작성</string>
+    <string name="my_point_usage_point_kind_values_2">+ 20P</string>
+    <string name="my_point_usage_point_kinds_3">- 강의자료 업로드</string>
+    <string name="my_point_usage_point_kind_values_3">+ 50P</string>
+    <string name="my_point_usage_point_kinds_4">- 강의자료 구입</string>
+    <string name="my_point_usage_point_kind_values_4">- 100P</string>
+    <string name="my_page_purchased_bank_app_bar_title">구입한 자료</string>
+    <string name="my_scrap_lecture_review_app_bar_title">강의평 스크랩</string>
+    <string name="edit">편집</string>
+    <string name="my_scrap_edit_finish">완료</string>
+    <string name="my_scrap_select_all">전체선택</string>
 
     <string name="apologize">죄송합니다.</string>
     <string name="ranking_fail_message_1">강의랭킹을</string>
@@ -259,4 +281,9 @@
     <string name="recently_query">최근 검색어</string>
     <string name="complete_write_review_message">리뷰가 정상적으로 작성되었습니다.</string>
     <string name="token_expired">세션이 만료되었습니다. 재로그인 해주시기 바랍니다.</string>
+    <string name="my_page_my_scrap_lecture_review">강의평 스크랩</string>
+    <string name="my_page_my_scrap_lecture_bank">강의자료 스크랩</string>
+    <string name="my_scrap_lecture_bank_app_bar_title">강의자료 스크랩</string>
+    <string name="my_scrap_no_lecture_review">스크랩한 강의평이 없습니다.</string>
+    <string name="my_scrap_no_lecture_bank">스크랩한 강의자료가 없습니다.</string>
 </resources>

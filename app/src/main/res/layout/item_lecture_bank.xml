@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bank"
+            type="in.hangang.hangang.data.entity.lecturebank.LectureBank"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lecture_review_constraintlayout"
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_scraped_lecture_bank">
+
+                <ImageView
+                    android:id="@+id/image_view_lecture_bank_thumbnail"
+                    android:layout_width="102dp"
+                    android:layout_height="102dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:srcCompat="@tools:sample/avatars"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    tools:text="필기"
+                    android:text="@{bank.category.get(0)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="12sp"
+                    android:textColor="?attr/colorPrimary"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_thumbs_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/image_view_thumbs_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_thumbs_up"
+                        app:tint="@color/color_state_lecture_bank_thumbs_up"/>
+
+                    <TextView
+                        android:id="@+id/text_view_hits_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_state_lecture_bank_thumbs_up"
+                        tools:text="42"
+                        android:text="@{String.valueOf(bank.hits)}"
+                        android:paddingStart="4dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/image_view_lecture_bank_thumbnail"
+                    app:layout_constraintEnd_toStartOf="@id/text_view_lecture_bank_type"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingTop="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="4dp"
+                    android:text="@{bank.title}"
+                    tools:text="디자인논리논술 필기본인디자인논리논술 필기본인디자인논리논술 필기본인디자인논리논술 필기본인"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="14sp"
+                    android:textColor="?android:attr/textColorPrimary"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_author"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/image_view_lecture_bank_thumbnail"
+                    app:layout_constraintEnd_toStartOf="@id/text_view_lecture_bank_type"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_lecture_bank_title"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="@{bank.content}"
+                    tools:text="디자인논리논술 필기본인디자인논리논술 필기본인디자인논리논술 필기본인디자인논리논술 필기본인"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorPrimary"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_lecture_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="12sp"
+                    android:text="@{bank.lecture.name}"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/image_view_lecture_bank_thumbnail"
+                    app:layout_constraintEnd_toStartOf="@id/text_view_lecture_bank_lecture_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_weight="6"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constrainedWidth="true"
+                    android:textColor="?android:attr/textColorSecondary"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_lecture_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="|"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="12sp"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/text_view_lecture_bank_lecture_name"
+                    app:layout_constraintEnd_toStartOf="@id/text_view_lecture_bank_lecture_professor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textColor="?android:attr/textColorSecondary"/>
+
+                <TextView
+                    android:id="@+id/text_view_lecture_bank_lecture_professor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    android:ellipsize="end"
+                    android:textSize="12sp"
+                    android:text="@{bank.lecture.professor}"
+                    android:layout_weight="4"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintStart_toEndOf="@id/text_view_lecture_bank_lecture_bar"
+                    app:layout_constraintEnd_toStartOf="@id/layout_thumbs_count"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textColor="?android:attr/textColorSecondary"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/background_item_lecture_bank" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/lecture_bank_scrap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bookmark"
+            app:tint="?attr/colorSecondary"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="2dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>
