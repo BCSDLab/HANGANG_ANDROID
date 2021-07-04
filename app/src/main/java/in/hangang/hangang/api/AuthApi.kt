@@ -5,7 +5,7 @@ import `in`.hangang.hangang.data.entity.evaluation.*
 import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
-import `in`.hangang.hangang.data.entity.mypage.PointRecorㅇ
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
