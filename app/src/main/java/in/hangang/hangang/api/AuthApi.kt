@@ -33,7 +33,6 @@ interface AuthApi {
         @Query("semesterDateId") semesterDateId: Long? = null
     ): List<TimeTable>
 
-
     @POST(TIMETABLE)
     fun makeTimeTable(
             @Body userTimeTableRequest: UserTimeTableRequest
