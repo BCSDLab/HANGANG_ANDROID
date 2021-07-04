@@ -24,17 +24,21 @@ class TimeTableRemoteDataSource(
     }
 
     override fun getLectureTimetableList(
-            classification: List<String>?,
-            criteria: String?,
-            department: String?,
-            keyword: String?,
-            limit: Int,
-            page: Int,
-            semesterDateId: Int
+        classification: List<String>?,
+        criteria: String?,
+        department: String?,
+        keyword: String?,
+        limit: Int,
+        page: Int,
+        semesterDateId: Int
     ): Single<List<LectureTimeTable>> {
         return authApi.getTimetableLectureList(
                 classification, criteria, department, keyword, limit, page, semesterDateId
-        ).map { it.result }
+        ).map { response ->
+            response.result.map {
+                it.copy(lectureTimetableId = it.id)
+            }
+        }
     }
 
     override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
@@ -114,9 +118,9 @@ class TimeTableRemoteDataSource(
     }
 
     override fun getScrapLectures(
-            classification: List<String>?,
-            department: String?,
-            keyword: String?
+        classification: List<String>?,
+        department: String?,
+        keyword: String?
     ): Single<Collection<LectureTimeTable>> {
         return authApi.getScrapLectures()
                 .flatMap { list ->

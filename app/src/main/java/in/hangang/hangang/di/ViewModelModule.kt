@@ -13,6 +13,9 @@ import `in`.hangang.hangang.ui.home.recentlectures.viewmodel.RecentLecturesFragm
 import `in`.hangang.hangang.ui.home.recommendedlectures.viewmodel.RecommendedLecturesFragmentViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureEvaluationViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewModel
+import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
+import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapLectureBankViewModel
+import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapLectureReviewViewModel
 import `in`.hangang.hangang.ui.settings.viewmodel.MyProfileActivityViewModel
 import `in`.hangang.hangang.ui.settings.viewmodel.SettingsActivityViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
@@ -32,10 +35,10 @@ val viewModelModule = module {
     viewModel { (handle: String) -> SignUpViewModel(get(), handle) }
     viewModel { (portalAccount: String, nickName: String, password: String) ->
         SignUpMajorViewModel(
-                get(),
-                portalAccount,
-                nickName,
-                password
+            get(),
+            portalAccount,
+            nickName,
+            password
         )
     }
     //Change password activity, fragments
@@ -56,6 +59,10 @@ val viewModelModule = module {
     viewModel { TimetableLectureListViewModel(get()) }
     viewModel { TimetableAddActivityViewModel(get()) }
     viewModel { TimetableLectureDetailViewModel(get()) }
+    //Mypage
+    viewModel { MyPageViewModel(get()) }
+    viewModel { MyScrapLectureReviewViewModel(get()) }
+    viewModel { MyScrapLectureBankViewModel(get()) }
 
     viewModel { SplashViewModel(get()) }
     viewModel { SettingsActivityViewModel(get()) }

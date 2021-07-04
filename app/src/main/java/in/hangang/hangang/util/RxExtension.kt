@@ -28,8 +28,7 @@ fun <T> Single<T>.handleUpdateAccessToken(): Single<T> {
 
 // TODO : 공통 HttpException 처리
 fun <T> Single<T>.handleHttpException(): Single<T> {
-    return this.handleUpdateAccessToken()
-            .doOnError {
+    return this.doOnError {
                 if (it !is HttpException) return@doOnError
                 LogUtil.e("handle http exception : ${it.code()}")
                 when (it.code()) {

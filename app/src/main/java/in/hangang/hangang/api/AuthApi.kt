@@ -1,15 +1,20 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.*
 import `in`.hangang.hangang.data.entity.evaluation.*
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
+import `in`.hangang.hangang.data.entity.user.User
+import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.request.*
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TimetableListResponse
@@ -33,7 +38,6 @@ interface AuthApi {
     suspend fun fetchTimeTables(
         @Query("semesterDateId") semesterDateId: Long? = null
     ): List<TimeTable>
-
 
     @POST(TIMETABLE)
     fun makeTimeTable(
@@ -215,6 +219,28 @@ interface AuthApi {
     @GET(LECTURE_BANK_HIT)
     fun getLectureBankHit(): Single<List<LectureDoc>>
 
-}
+    @GET(USER_ME)
+    fun getUserInformation(): Single<User>
 
+    @GET(USER_LECTURE)
+    fun getUserCounts(): Single<UserCount>
+
+    @GET(USER_POINT_RECORD)
+    fun getUserPointRecord(): Single<List<PointRecord>>
+
+    @GET(USER_PURCHASED)
+    fun getUserPurchasedBanks(): Single<List<LectureBank>>
+
+    @POST(LECTURE_SCRAPED)
+    fun addScrapLecture(@Body scrapLectureRequest: ScrapLectureRequest): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = LECTURE_SCRAPED, hasBody = true)
+    fun removeScrapLecture(@Body lectureIds: List<Int>): Single<CommonResponse>
+
+    @GET(LECTURE_BANK_SCRAP)
+    fun getLectureBankScraps(): Single<List<LectureBankScrap>>
+
+    @HTTP(method = "DELETE", path = LECTURE_BANK_SCRAP, hasBody = true)
+    fun unscrapLectureBank(@Body scrapIds: List<Int>): Single<CommonResponse>
+}
 

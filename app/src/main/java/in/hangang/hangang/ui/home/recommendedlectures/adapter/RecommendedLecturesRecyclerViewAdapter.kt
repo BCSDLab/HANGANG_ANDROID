@@ -10,19 +10,19 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
 class RecommendedLecturesRecyclerViewAdapter :
-        OnItemClickRecyclerViewAdapter<RecommendedLecturesRecyclerViewAdapter.ViewHolder>() {
+    OnItemClickRecyclerViewAdapter<RecommendedLecturesRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(binding: ItemHomeRecommendedLecturesBinding) :
-            ViewBindingRecyclerViewHolder<ItemHomeRecommendedLecturesBinding>(binding)
+        ViewBindingRecyclerViewHolder<ItemHomeRecommendedLecturesBinding>(binding)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_home_recommended_lectures,
-                        parent,
-                        false
-                )
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_home_recommended_lectures,
+                parent,
+                false
+            )
         )
     }
 
@@ -32,7 +32,7 @@ class RecommendedLecturesRecyclerViewAdapter :
             textViewRecommendedLectures.text = "문명과 멸망"
             extraLeftPadding.visibility = if (position == 0) View.VISIBLE else View.GONE
             extraRightPadding.visibility =
-                    if (position == itemCount - 1) View.VISIBLE else View.GONE
+                if (position == itemCount - 1) View.VISIBLE else View.GONE
         }
     }
 

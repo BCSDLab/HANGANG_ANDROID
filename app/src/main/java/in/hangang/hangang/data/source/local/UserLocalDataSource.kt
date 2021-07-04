@@ -3,6 +3,10 @@ package `in`.hangang.hangang.data.source.local
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.IS_AUTO_LOGIN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
+import `in`.hangang.hangang.data.entity.user.UserCount
+import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.MyProfileResponse
@@ -76,6 +80,10 @@ class UserLocalDataSource : UserDataSource {
         return Single.never()
     }
 
+    override fun getUserInformation(): Single<User> {
+        return Single.never()
+    }
+
     override fun deleteAccount(): Single<CommonResponse> {
         return Single.never()
     }
@@ -100,6 +108,18 @@ class UserLocalDataSource : UserDataSource {
 
     override fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse> {
         return  Single.never()
+    }
+
+    override fun getUserCounts(): Single<UserCount> {
+        return Single.never()
+    }
+
+    override fun getPointRecords(): Single<List<PointRecord>> {
+        return Single.never()
+    }
+
+    override fun getPurchasedBanks(): Single<List<LectureBank>> {
+        return Single.never()
     }
 
     override fun getLectureBankHit(): Single<List<LectureDoc>> {
