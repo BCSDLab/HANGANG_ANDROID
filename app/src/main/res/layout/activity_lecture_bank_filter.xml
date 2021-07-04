@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/button_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="16dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/lecture_bank_filter_message"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/button_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_close"/>
+
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/lecture_bank_filter_message"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/button_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_close"/>
+
+        <TextView
+            android:id="@+id/text_view_title_sorting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lecture_bank_filter_sorting"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title"/>
+
+        <RadioGroup
+            android:id="@+id/radio_group_sorting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title_sorting"
+            android:orientation="horizontal" >
+
+            <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                android:id="@+id/radio_button_sort_by_recent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:checked="true"
+                android:text="@string/lecture_bank_sort_by_recent"
+                android:textColor="@color/color_state_button_text"/>
+
+            <in.hangang.core.view.button.radiobutton.FilledRadioButton
+                android:id="@+id/radio_button_sort_by_thumbs_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/lecture_bank_sort_by_thumbs_count"
+                android:textColor="@color/color_state_button_text"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/text_view_title_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lecture_bank_filter_category"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group_sorting"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title_category">
+
+            <in.hangang.core.view.button.checkbox.FilledCheckBox
+                android:id="@+id/check_box_lecture_bank_category_previous_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/lecture_bank_category_previous_bank"
+                android:textColor="@color/color_state_button_text"/>
+
+            <in.hangang.core.view.button.checkbox.FilledCheckBox
+                android:id="@+id/check_box_lecture_bank_category_writing_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/lecture_bank_category_writing_bank"
+                android:textColor="@color/color_state_button_text"/>
+
+            <in.hangang.core.view.button.checkbox.FilledCheckBox
+                android:id="@+id/check_box_lecture_bank_category_assignment_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/lecture_bank_category_assignment_bank"
+                android:textColor="@color/color_state_button_text"/>
+
+            <in.hangang.core.view.button.checkbox.FilledCheckBox
+                android:id="@+id/check_box_lecture_bank_category_lecture_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/lecture_bank_category_lecture_bank"
+                android:textColor="@color/color_state_button_text"/>
+
+            <in.hangang.core.view.button.checkbox.FilledCheckBox
+                android:id="@+id/check_box_lecture_bank_category_etc_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/lecture_bank_category_etc_bank"
+                android:textColor="@color/color_state_button_text"/>
+
+        </GridLayout>
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_apply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/color_state_button_blue"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/lecture_bank_filter_apply"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/button_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/button_apply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_refresh"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:text="@string/lecture_bank_filter_reset"
+                android:textColor="?android:attr/textColorSecondary"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

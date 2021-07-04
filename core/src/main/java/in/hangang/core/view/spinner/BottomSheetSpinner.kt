@@ -11,12 +11,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 class BottomSheetSpinner @JvmOverloads constructor(
-        context: Context,
-        attributeSet: AttributeSet? = null,
-        defStyleAttr: Int = 0,
-        defStyleRes: Int = 0
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
 ) : LinearLayout(context, attributeSet, defStyleAttr, defStyleRes) {
-    val view: View = LayoutInflater.from(context).inflate(R.layout.layout_spinner, this, true)
+    private val view: View = LayoutInflater.from(context).inflate(R.layout.layout_spinner, this, true)
+
+    val spinnerLayout get() = view.findViewById<LinearLayout>(R.id.container)
 
     var onItemClickListener: AdapterView.OnItemClickListener? = null
 
@@ -33,22 +35,21 @@ class BottomSheetSpinner @JvmOverloads constructor(
 
             field = value
         }
-    private var _textViewSelectedItem: TextView
+    private var _textViewSelectedItem: TextView = view.findViewById(R.id.text_view_spinner_selected_item)
+    val selectedItem : CharSequence? get() = items.getOrNull(position)
 
     val textViewSelectedItem: TextView get() = _textViewSelectedItem
 
     init {
-        _textViewSelectedItem = view.findViewById(R.id.text_view_spinner_selected_item)
 
-        this.setOnClickListener {
-            showBottomSheet()
-        }
+        this.setOnClickListener { showBottomSheet() }
+        view.setOnClickListener { showBottomSheet() }
 
         context.theme.obtainStyledAttributes(
-                attributeSet,
-                R.styleable.BottomSheetSpinner,
-                defStyleAttr,
-                defStyleRes
+            attributeSet,
+            R.styleable.BottomSheetSpinner,
+            defStyleAttr,
+            defStyleRes
         ).apply {
             val entries = getTextArray(R.styleable.BottomSheetSpinner_android_entries)
             if (entries != null) {
@@ -60,8 +61,10 @@ class BottomSheetSpinner @JvmOverloads constructor(
     }
 
     private fun showBottomSheet() {
-        DialogUtil.makeListBottomSheet(context, items, null) { _, _, position, _ ->
-            this.position = position
-        }.show()
+        if (items.isNotEmpty()) {
+            DialogUtil.makeListBottomSheet(context, items, null) { _, _, position, _ ->
+                this.position = position
+            }.show()
+        }
     }
 }

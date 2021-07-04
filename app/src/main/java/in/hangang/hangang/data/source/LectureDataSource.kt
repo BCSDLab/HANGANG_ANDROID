@@ -2,8 +2,11 @@ package `in`.hangang.hangang.data.source
 
 import `in`.hangang.hangang.data.entity.evaluation.*
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.response.CommonResponse
+import androidx.paging.PagingData
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
@@ -34,4 +37,11 @@ interface LectureDataSource {
     fun postReviewRecommend(reviewRecommendRequest: ReviewRecommendRequest): Single<CommonResponse>
     fun getLectureReviewItem(id: Int): Single<LectureReview>
     fun getLectureSemester(id: Int): Single<ArrayList<Int>>
+    fun getLectureList(
+        classification: String? = null,
+        hashTag: Int? = null,
+        department: String? = null,
+        keyword: String? = null,
+        sort: String? = null
+    ): Flowable<PagingData<Lecture>>
 }

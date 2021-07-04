@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source.repository
 import `in`.hangang.hangang.data.entity.evaluation.*
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
@@ -146,5 +147,14 @@ class LectureRepository(
 
     fun getLectureReviewPersonalCount(id: Int, keyword: String?, sort: String): Single<LectureReviewResult> {
         return lectureRemoteDataSource.getLectureReview(id, 1, keyword, sort)
+    }
+    override fun getLectureList(
+        classification: String?,
+        hashTag: Int?,
+        department: String?,
+        keyword: String?,
+        sort: String?
+    ): Flowable<PagingData<Lecture>> {
+        return lectureRemoteDataSource.getLectureList(classification, hashTag, department, keyword, sort)
     }
 }

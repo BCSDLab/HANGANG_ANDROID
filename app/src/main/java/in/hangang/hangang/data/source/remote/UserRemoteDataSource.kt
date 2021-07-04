@@ -43,7 +43,6 @@ class UserRemoteDataSource(
         return Single.never()
     }
 
-
     override fun emailCheck(portalAccount: String): Single<CommonResponse> {
         return noAuthApi.checkEmail(EmailRequest(0, portalAccount))
     }
@@ -87,4 +86,10 @@ class UserRemoteDataSource(
     override fun getLectureBankHit(): Single<List<LectureDoc>> {
         return noAuthApi.getLectureBankHit()
     }
+
+    override fun getUserInfo(): Single<User> {
+        return authApi.getUserInfo()
+    }
+
+    override fun saveUserInfo(user: User) {}
 }

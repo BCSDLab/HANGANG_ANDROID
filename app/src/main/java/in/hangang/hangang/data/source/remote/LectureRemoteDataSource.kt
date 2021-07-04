@@ -19,7 +19,14 @@ import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
 import `in`.hangang.hangang.data.request.ScrapLectureRequest
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.source.paging.BaseRxPagingSource
+import `in`.hangang.hangang.data.source.paging.LectureListPagingSource
 import `in`.hangang.hangang.data.source.LectureDataSource
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.rxjava3.flowable
+import io.reactivex.rxjava3.core.Flowable
 
 import io.reactivex.rxjava3.core.Single
 
@@ -156,5 +163,17 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
 
     override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
         return ArrayList()
+    }
+
+    override fun getLectureList(
+        classification: String?,
+        hashTag: Int?,
+        department: String?,
+        keyword: String?,
+        sort: String?
+    ): Flowable<PagingData<Lecture>> {
+        return Pager(PagingConfig(pageSize = BaseRxPagingSource.DEFAULT_LIMIT)) {
+            LectureListPagingSource(noAuthApi, classification, department, hashTag, keyword, sort)
+        }.flowable
     }
 }

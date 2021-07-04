@@ -46,4 +46,6 @@ interface UserDataSource {
     fun getPointRecords(): Single<List<PointRecord>>
 
     fun getPurchasedBanks(): Single<List<LectureBank>>
+    fun getUserInfo(): Single<User>
+    fun saveUserInfo(user: User)
 }

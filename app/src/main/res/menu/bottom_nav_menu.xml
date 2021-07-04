@@ -12,9 +12,9 @@
         android:title="@string/title_evaluation" />
 
     <item
-        android:id="@+id/navigation_document"
+        android:id="@+id/navigation_lecture_bank"
         android:icon="@drawable/ic_nav_document"
-        android:title="@string/title_document" />
+        android:title="@string/title_lecture_bank" />
 
     <item
         android:id="@+id/navigation_timetable"
