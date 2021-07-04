@@ -26,7 +26,7 @@ interface TimeTableDataSource {
     fun setMainTimeTable(timetableId: Int): Single<CommonResponse>
     fun getMainTimeTable(): Single<TimeTableWithLecture>
     fun getTimetable(timetableId: Int): Single<TimeTableWithLecture>
-    fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
+    fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable>
     fun removeLectureFromTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse>
     fun scrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
     fun unscrapLecture(lectureTimeTable: LectureTimeTable): Single<LectureTimeTable>
@@ -41,7 +41,7 @@ interface TimeTableDataSource {
             name: String?,
             professor: String?,
             userTimetableId: Int
-    ): Single<CommonResponse>
+    ): Single<LectureTimeTable>
 
     fun getMemo(
             timetableLectureId: Int
@@ -60,4 +60,8 @@ interface TimeTableDataSource {
     fun removeMemo(
             timetableLectureId: Int
     ): Single<CommonResponse>
+    fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>>
+
+    suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture
+    suspend fun fetchTimeTables(semesterDateId: Long? = null): List<TimeTable>
 }

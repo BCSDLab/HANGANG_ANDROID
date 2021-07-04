@@ -1,5 +1,6 @@
 package `in`.hangang.hangang
 
+import `in`.hangang.core.sharedpreference.LectureSearchSharedPreference
 import `in`.hangang.hangang.di.*
 import `in`.hangang.hangang.util.LogUtil
 import android.app.Application
@@ -36,6 +37,7 @@ class HangangApplication : Application() {
             modules(viewModelModule)
             modules(fileModule)
         }
+        LectureSearchSharedPreference.init(this)
     }
 
     /**

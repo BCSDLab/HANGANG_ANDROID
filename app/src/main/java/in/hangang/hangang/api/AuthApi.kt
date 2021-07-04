@@ -1,26 +1,20 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.entity.*
 import `in`.hangang.hangang.data.entity.evaluation.*
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.request.ReviewRecommendRequest
-import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
-import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
-import `in`.hangang.hangang.data.entity.timetable.TimeTable
-import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
-import `in`.hangang.hangang.data.request.TimeTableCustomLectureRequest
-import `in`.hangang.hangang.data.request.TimeTableRequest
-import `in`.hangang.hangang.data.request.TimetableMemoRequest
-import `in`.hangang.hangang.data.request.UserTimeTableRequest
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankPostRequest
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTable
+import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
+import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.entity.user.User
-import `in`.hangang.hangang.data.request.LectureBankReportRequest
-import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.response.LectureBankCommentResponse
-import `in`.hangang.hangang.data.response.LectureBankResponse
-import `in`.hangang.hangang.data.response.TokenResponse
+import `in`.hangang.hangang.data.request.*
+import `in`.hangang.hangang.data.response.*
 import io.reactivex.rxjava3.core.Single
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -37,6 +31,11 @@ interface AuthApi {
     fun getTimeTables(
             @Query("semesterDateId") semesterDateId: Long? = null
     ): Single<List<TimeTable>>
+
+    @GET(TIMETABLE)
+    suspend fun fetchTimeTables(
+        @Query("semesterDateId") semesterDateId: Long? = null
+    ): List<TimeTable>
 
     @POST(TIMETABLE)
     fun makeTimeTable(
@@ -56,7 +55,7 @@ interface AuthApi {
     @POST(TIMETABLE_LECTURE)
     fun addLectureInTimeTable(
             @Body timeTableRequest: TimeTableRequest
-    ): Single<CommonResponse>
+    ): Single<LectureTimeTable>
 
     @HTTP(method = "DELETE", path = TIMETABLE_LECTURE, hasBody = true)
     fun removeLectureInTimeTable(
@@ -68,10 +67,16 @@ interface AuthApi {
         @Query("timeTableId") timetableId: Int
     ): Single<TimeTableWithLecture>
 
+    @GET(TIMETABLE_LECTURE)
+    suspend fun fetchLectureListFromTimeTable(
+        @Query("timeTableId") timetableId: Int
+    ): TimeTableWithLecture
+
+
     @POST(TIMETABLE_CUSTOM_LECTURE)
     fun addCustomLectureInTimetable(
             @Body timeTableCustomLectureRequest: TimeTableCustomLectureRequest
-    ): Single<CommonResponse>
+    ): Single<LectureTimeTable>
 
     @GET(TIMETABLE_LECTURE_LIST)
     fun getTimetableLectureList(
@@ -82,7 +87,7 @@ interface AuthApi {
             @Query("limit") limit: Int = API_TIMETABLE_DEFAULT_LIMIT,
             @Query("page") page: Int = API_TIMETABLE_DEFAULT_PAGE,
             @Query("semesterDateId") semesterDateId: Int
-    ): Single<List<LectureTimeTable>>
+    ): Single<TimetableListResponse>
 
     @GET(TIMETABLE_MAIN)
     fun getMainTimeTable(): Single<TimeTableWithLecture>
@@ -94,7 +99,7 @@ interface AuthApi {
 
     @GET(TIMETABLE_MEMO)
     fun getTimetableMemo(
-            @Query("timeTableId") timetableId: Int
+            @Query("timetableComponentId") timetableId: Int
     ): Single<TimetableMemo>
 
     @POST(TIMETABLE_MEMO)
@@ -128,6 +133,12 @@ interface AuthApi {
     @GET(LECTURE_SCRAPED)
     fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>>
 
+    @POST(LECTURE_SCRAPED)
+    fun postScrapedLecture(@Body scrapedLecture: LectureEvaluationIdRequest): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = LECTURE_SCRAPED, hasBody = true)
+    fun deleteScrapedLecture(@Body scrapedLecture: ArrayList<Int>): Single<CommonResponse>
+
     @GET(EVALUATION_RATING)
     fun getEvaluationRating(@Path("id")id: Int): Single<ArrayList<Int>>
 
@@ -136,6 +147,16 @@ interface AuthApi {
 
     @GET(CLASS_LECTURES)
     fun getClassLectures(@Path("id") id: Int): Single<ArrayList<ClassLecture>>
+
+    @GET(CLASS_LECTURES)
+    suspend fun fetchClassLectures(@Path("id") id: Int): List<ClassLecture>
+
+    @GET(CLASS_LECTURES)
+    suspend fun getLectureClass(@Path("id") id: Int): ArrayList<ClassLecture>
+
+    @GET(LECTURES_ID)
+    fun getLecturesId(@Path("id") id: Int): Single<RankingLectureItem>
+
 
     @GET(LECTURE_REVIEWS)
     fun getLectureReview(@Path("id") id: Int,
@@ -160,7 +181,27 @@ interface AuthApi {
     fun getLectureReviewItem(@Path("id") id: Int): Single<LectureReview>
 
     @GET(LECTURE_SEMESTER)
-    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<String>>
+    fun getLectureSemester(@Path("id") id: Int): Single<ArrayList<Int>>
+
+    @POST(REVIEW_REPORT)
+    fun reportLectureReview(@Body lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse>
+
+    @POST(EVALUATIONS)
+    fun postEvaluation(@Body lectureEvaluationRequest: LectureEvaluationRequest): Single<CommonResponse>
+
+    @GET(LECTURES_RANKING)
+    fun getLectureRanking(
+        @Query("classification") classification: ArrayList<String>? = null,
+        @Query("department") department: ArrayList<String>? = null,
+        @Query("hash_tag") hashTag: ArrayList<Int>? = null,
+        @Query("keyword") keyword: String? = null,
+        @Query("limit") limit: Int = 20,
+        @Query("page") page: Int? = null,
+        @Query("sort") sort: String? = null
+    ): Single<RankingLectureResult>
+
+    @GET(LECTURE_BANK_HIT)
+    fun getLectureBankHit(): Single<List<LectureDoc>>
 
     @GET(LECTURE_BANKS)
     fun getLectureBanks(

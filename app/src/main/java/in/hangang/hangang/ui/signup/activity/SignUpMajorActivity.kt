@@ -51,9 +51,6 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
         portalAccount = signUpMajorViewModel.portalAccount.plus(getString(R.string.email_koreatech))
         nickName = signUpMajorViewModel.nickName
         password = signUpMajorViewModel.password
-        LogUtil.e(portalAccount)
-        LogUtil.e(password)
-        LogUtil.e(nickName)
         initAppBar()
         initCheckBox()
         initEditText()
@@ -156,6 +153,34 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
                     signUpMajorViewModel.majorHashMap.remove(7)
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
+            }
+
+            mechanicalEngineeringTextView.setOnClickListener {
+                mechanicalEngineeringCheckbox.performClick()
+            }
+
+            designEngineeringTextView.setOnClickListener {
+                designEngineeringCheckbox.performClick()
+            }
+
+            mechatronicsEngineeringTextView.setOnClickListener {
+                mechatronicsEngineeringCheckbox.performClick()
+            }
+
+            industryManagementTextView.setOnClickListener {
+                industryManagementCheckbox.performClick()
+            }
+
+            energyEngineeringTextView.setOnClickListener {
+                energyEngineeringCheckbox.performClick()
+            }
+
+            electronicEngineeringTextView.setOnClickListener {
+                electronicEngineeringCheckbox.performClick()
+            }
+
+            computerEngineeringTextView.setOnClickListener {
+                computerEngineeringCheckbox.performClick()
             }
         }
 

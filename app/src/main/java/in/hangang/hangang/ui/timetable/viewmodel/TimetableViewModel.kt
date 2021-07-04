@@ -211,7 +211,7 @@ class TimetableViewModel(
 
     fun addTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
             timeTableRepository.addLectureInTimeTable(
-                    lectureId = lectureTimeTable.id,
+                    lectureId = lectureTimeTable.lectureTimetableId ?: 0,
                     timetableId = timetable.id
             ).flatMap {
                 timeTableRepository.getTimetable(timetable.id)
@@ -229,7 +229,7 @@ class TimetableViewModel(
 
     fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
         timeTableRepository.removeLectureFromTimeTable(
-            lectureId = lectureTimeTable.id,
+            lectureId = lectureTimeTable.lectureTimetableId ?: 0,
             timetableId = timetable.id
         ).flatMap {
             timeTableRepository.getTimetable(timetable.id)

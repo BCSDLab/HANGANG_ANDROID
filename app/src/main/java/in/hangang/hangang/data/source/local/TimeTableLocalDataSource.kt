@@ -52,7 +52,7 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         return Single.never()
     }
 
-    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<CommonResponse> {
+    override fun addLectureInTimeTable(lectureId: Int, timetableId: Int): Single<LectureTimeTable> {
         return Single.never()
     }
 
@@ -98,11 +98,11 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun addCustomLectureInTimetable(
-            classTime: String?,
-            name: String?,
-            professor: String?,
-            userTimetableId: Int
-    ): Single<CommonResponse> {
+        classTime: String?,
+        name: String?,
+        professor: String?,
+        userTimetableId: Int
+    ): Single<LectureTimeTable> {
         return Single.never()
     }
 
@@ -127,5 +127,17 @@ class TimeTableLocalDataSource : TimeTableDataSource {
             Hawk.get(TIMETABLE_LECTURE_DIPS)
         else
             mutableSetOf()
+    }
+
+    override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return Single.never()
+    }
+
+    override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {
+        return TimeTableWithLecture.EMPTY
+    }
+
+    override suspend fun fetchTimeTables(semesterDateId: Long?): List<TimeTable> {
+        return emptyList()
     }
 }

@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.signup.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.util.toEditable
 import `in`.hangang.core.view.edittext.EditTextWithError.Companion.CHECK
 import `in`.hangang.core.view.edittext.EditTextWithError.Companion.ERROR
 import `in`.hangang.core.view.edittext.EditTextWithError.Companion.UNDEFINED
@@ -129,7 +130,6 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
         binding.appBar.title = getString(R.string.join_in)
     }
 
-    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
     private fun isConditionComplete(): Boolean {
         with(binding) {
             return passwordEditText.status == CHECK && passwordCheckEditText.status == CHECK && nicknameEditText.status == CHECK

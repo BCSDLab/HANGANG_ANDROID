@@ -61,7 +61,13 @@
         <item>전기\u00AD전자\u00AD통신\u00AD공학부</item>
         <item>컴퓨터\u00AD공학부</item>
     </string-array>
-
+    <string-array name="report_item">
+        <item>욕설/비하</item>
+        <item>유출/사칭/저작권 위배</item>
+        <item>허위/부적절한 정보</item>
+        <item>광고/도배</item>
+        <item>음란물</item>
+    </string-array>
     <integer-array name="find_by_major_cover_drawables">
         <item>@drawable/cover_image_1</item>
         <item>@drawable/cover_image_2</item>

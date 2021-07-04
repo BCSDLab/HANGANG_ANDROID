@@ -179,7 +179,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 binding.appBar.title = it
             })
             lectureTimetableRemovedEvent.observe(viewLifecycleOwner, EventObserver {
-                setMode(TimetableViewModel.Mode.MODE_NORMAL)
+                //setMode(TimetableViewModel.Mode.MODE_NORMAL)
             })
         }
 

@@ -62,6 +62,7 @@
     <string name="reset_password_resend_auth_number">재전송</string>
     <string name="reset_password_finish_email_auth">인증 완료</string>
     <string name="reset_password_new_password">새 비밀번호</string>
+    <string name="goto_aunuri">아우누리 바로가기</string>
     <string name="reset_password_confirm_new_password">새 비밀번호 확인</string>
     <string name="reset_password_new_password_hint">영문, 숫자, 특수기호 반드시 포함 8자~15자</string>
     <string name="reset_password_confirm_new_password_hint">비밀번호를 한번 더 입력해주세요</string>
@@ -83,7 +84,7 @@
     <string name="reset_password_regex_error_too_long">비밀번호는 15자 이하여야 합니다.</string>
 
     <string name="reset_password_finished_title">비밀번호가 변경되었습니다</string>
-    <string name="reset_password_finished_message">%1$s님!\n한기대의 강의평가를 보러 가볼까요?</string>
+    <string name="reset_password_finished_message">한기대의 강의평가를 보러 가볼까요?</string>
     <string name="reset_password_finished_positive_button">로그인하러 가기</string>
 
     <string name="mechanical_engineering">기계공학부</string>
@@ -187,6 +188,8 @@
     <string name="remove">삭제</string>
     <string name="save">저장</string>
     <string name="timetable_lecture_detail_memo_hint">메모를 추가해주세요.</string>
+    <string name="go_to_timetable_evaluation">평가하기</string>
+    <string name="complete_timetable_evaluation">평가완료</string>
 
     <string name="apologize">죄송합니다.</string>
     <string name="ranking_fail_message_1">강의랭킹을</string>
@@ -256,6 +259,16 @@
     <string name="grade_portion_low">아쉽게주심</string>
     <string name="total_evaluation">총평</string>
     <string name="lecture_evaluation_write_complete">작성완료 (+30P)</string>
+    <string name="like_order">좋아요 순</string>
+    <string name="latest_order">최신 순</string>인
+    <string name="report_dialog_title">신고해주셔서 감사합니다.</string>
+    <string name="report_dialog_messge">회원님의 의견은 한강 서비스를\n안전하게 유지하기 위해 사용하겠습니다.</string>
+    <string name="noti_uncompleted_review">아직 작성이 완료되지 않았습니다.</string>
+    <string name="lecture_evaluation_write_guide_message">이 강의에 대한 총평을 자유롭게 적어주세요!\n(시험정보, 과제정보, 팁 등)\n\n허위사실이나 지나친 비방 내용을 작성할 시,\n승인이 불가할 수 있습니다.\n\n강의평 작성이 완료될 시, 수정이나 삭제가 불가합니다. </string>
+    <string name="lecture_search_no_result_text">검색결과가 없습니다.</string>
+    <string name="recently_query">최근 검색어</string>
+    <string name="complete_write_review_message">리뷰가 정상적으로 작성되었습니다.</string>
+    <string name="token_expired">세션이 만료되었습니다. 재로그인 해주시기 바랍니다.</string>
     <string name="lecture_bank_detail_title">강의자료 상세</string>
     <string name="lecture_bank_detail_comment_hint">댓글을 작성해주세요.</string>
     <string name="lecture_bank_filter_reset">초기화</string>

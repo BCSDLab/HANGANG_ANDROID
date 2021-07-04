@@ -13,10 +13,10 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.addTo
 
 class SignUpMajorViewModel(
-        private val userRepository: UserRepository,
-        private val _portalAccount: String,
-        private val _nickName: String,
-        private val _password: String
+    private val userRepository: UserRepository,
+    private val _portalAccount: String,
+    private val _nickName: String,
+    private val _password: String
 ) : ViewModelBase() {
     private val _signUpMessage = MutableLiveData<String>()
     val signUpMessage: LiveData<String>

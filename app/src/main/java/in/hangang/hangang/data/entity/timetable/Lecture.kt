@@ -4,6 +4,11 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+data class LectureResult(
+    val result: List<Lecture>,
+    val count: Int
+)
+
 @Parcelize
 data class Lecture(
     val id: Int,

@@ -32,30 +32,35 @@ data class LectureTimeTable(
         val createdAt: String? = null,
         @SerializedName("updated_at")
         val updatedAt: String? = null,
-        val rating: Double = 0.0
+        val rating: Double = 0.0,
+        @SerializedName("lecture_timetable_id")
+        val lectureTimetableId: Int? = null,
+        @SerializedName("is_reviewed")
+        val isReviewed: Boolean = false
+
 ) {
-    override fun equals(other: Any?): Boolean {
-        return this.lectureId == ((other as? LectureTimeTable)?.lectureId ?: -1)
-    }
+        override fun equals(other: Any?): Boolean {
+                return this.lectureId == ((other as? LectureTimeTable)?.lectureId ?: -1)
+        }
 
-    override fun hashCode(): Int {
-        return lectureId.hashCode()
-    }
+        override fun hashCode(): Int {
+                return lectureId.hashCode()
+        }
 
-    fun contains(keyword: CharSequence): Boolean =
-            (semesterDate?.contains(keyword, true) ?: false) ||
-                    (code?.contains(keyword, true) ?: false) ||
-                    (name?.contains(keyword, true) ?: false) ||
-                    (classification?.contains(keyword, true) ?: false) ||
-                    (grades?.contains(keyword, true) ?: false) ||
-                    (classNumber?.contains(keyword, true) ?: false) ||
-                    (regularNumber?.contains(keyword, true) ?: false) ||
-                    (department?.contains(keyword, true) ?: false) ||
-                    (target?.contains(keyword, true) ?: false) ||
-                    (designScore?.contains(keyword, true) ?: false) ||
-                    (isElearning?.contains(keyword, true) ?: false) ||
-                    (classTime?.contains(keyword, true) ?: false) ||
-                    (createdAt?.contains(keyword, true) ?: false) ||
-                    (updatedAt?.contains(keyword, true) ?: false)
+        fun contains(keyword: CharSequence): Boolean =
+                (semesterDate?.contains(keyword, true) ?: false) ||
+                        (code?.contains(keyword, true) ?: false) ||
+                        (name?.contains(keyword, true) ?: false) ||
+                        (classification?.contains(keyword, true) ?: false) ||
+                        (grades?.contains(keyword, true) ?: false) ||
+                        (classNumber?.contains(keyword, true) ?: false) ||
+                        (regularNumber?.contains(keyword, true) ?: false) ||
+                        (department?.contains(keyword, true) ?: false) ||
+                        (target?.contains(keyword, true) ?: false) ||
+                        (designScore?.contains(keyword, true) ?: false) ||
+                        (isElearning?.contains(keyword, true) ?: false) ||
+                        (classTime?.contains(keyword, true) ?: false) ||
+                        (createdAt?.contains(keyword, true) ?: false) ||
+                        (updatedAt?.contains(keyword, true) ?: false)
 
 }

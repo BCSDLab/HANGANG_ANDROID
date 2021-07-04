@@ -1,8 +1,9 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
+import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
-import `in`.hangang.hangang.data.entity.user.User
 import io.reactivex.rxjava3.core.Single
 
 interface UserDataSource {
@@ -33,7 +34,7 @@ interface UserDataSource {
 
     fun changePassword(portalAccount: String, password: String): Single<CommonResponse>
 
+    fun getLectureBankHit(): Single<List<LectureDoc>>
     fun getUserInfo(): Single<User>
-
     fun saveUserInfo(user: User)
 }

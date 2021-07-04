@@ -43,12 +43,13 @@
 
         <EditText
             android:id="@+id/portal_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="@string/koreatech_email"
             android:singleLine="true"
             android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/koreatech_email_text_view"
             app:layout_constraintBottom_toTopOf="@id/underbar_first"
             app:layout_constraintStart_toStartOf="@id/guideline_left" />
 
@@ -65,8 +66,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/koreatech_email_text_view"
             android:layout_width="wrap_content"
             android:layout_height="21dp"
+            android:textSize="14sp"
             android:text="\u0040koretech.ac.kr"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/underbar_first"
@@ -74,12 +77,13 @@
 
         <EditText
             android:id="@+id/portal_password"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             app:layout_constraintBottom_toTopOf="@id/underbar_second"
             app:layout_constraintStart_toStartOf="@id/guideline_left" />
 

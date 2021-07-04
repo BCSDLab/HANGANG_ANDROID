@@ -131,6 +131,7 @@ class LectureReviewFilterFragment : ViewBindingFragment<FragmentLectureReviewFil
 
 
     }
+    /* 필터 초기화 */
     private fun setFiltersClear(){
         filterSort = SORT_BY_TOTAL_RATING
         filterType.clear()
@@ -144,6 +145,7 @@ class LectureReviewFilterFragment : ViewBindingFragment<FragmentLectureReviewFil
         Arrays.fill(filterTypeIsChecked, false)
         Arrays.fill(filterHashTagIsChecked, false)
     }
+    /* 필터 적용 */
     private fun setFilters(){
         lectureReviewListViewModel.filterSort = filterSort
         lectureReviewListViewModel.filterType = filterType

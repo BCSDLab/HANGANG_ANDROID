@@ -20,6 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan"></activity>
         <activity android:name=".ui.lecturebank.activity.LectureBankSelectLectureActivity">
         </activity>
         <activity android:name=".ui.lecturebank.activity.LectureBankEditorActivity">
@@ -27,7 +29,6 @@
         <activity android:name=".ui.lecturebank.activity.LectureBankFilterActivity">
         </activity>
         <activity android:name=".ui.lecturebank.activity.LectureBankDetailActivity"/>
-        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity"/>
         <activity android:name=".ui.timetable.activity.TimetableLectureFilterActivity"/>
         <activity android:name=".ui.timetable.activity.TimetableAddActivity"/>
         <activity android:name=".ui.timetable.activity.TimetableListActivity"/>

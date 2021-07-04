@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
@@ -84,5 +85,9 @@ class UserLocalDataSource : UserDataSource {
 
     override fun saveUserInfo(user: User) {
         this.user = user
+    }
+
+    override fun getLectureBankHit(): Single<List<LectureDoc>> {
+        return Single.never()
     }
 }

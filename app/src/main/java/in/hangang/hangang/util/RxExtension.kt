@@ -9,6 +9,7 @@ import `in`.hangang.hangang.constant.REFRESH_TOKEN
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.kotlin.Flowables
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.core.qualifier.named
 import org.koin.java.KoinJavaComponent.get
@@ -37,8 +38,7 @@ fun <T> Single<T>.handleUpdateAccessToken(): Single<T> {
 
 // TODO : 공통 HttpException 처리
 fun <T> Single<T>.handleHttpException(): Single<T> {
-    return this.handleUpdateAccessToken()
-            .doOnError {
+    return this.doOnError {
                 if (it !is HttpException) return@doOnError
                 LogUtil.e("handle http exception : ${it.code()}")
                 when (it.code()) {
