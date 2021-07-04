@@ -34,7 +34,11 @@ class TimeTableRemoteDataSource(
     ): Single<List<LectureTimeTable>> {
         return authApi.getTimetableLectureList(
                 classification, criteria, department, keyword, limit, page, semesterDateId
-        ).map { it.result }
+        ).map { response ->
+            response.result.map {
+                it.copy(lectureTimetableId = it.id)
+            }
+        }
     }
 
     override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
