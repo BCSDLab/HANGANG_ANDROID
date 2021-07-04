@@ -9,6 +9,7 @@ import `in`.hangang.hangang.ui.settings.viewmodel.SettingsActivityViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.util.EventLog
+import com.orhanobut.hawk.Hawk
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
@@ -38,6 +39,11 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
             deleteAccountButton.setOnClickListener {
                 showDeleteAccountDialog()
             }
+            autoLoginToggleButton.setOnClickListener {
+                settingsViewModel.saveAutoLoginStatus(autoLoginToggleButton.isChecked)
+            }
+
+
         }
 
 
@@ -47,12 +53,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
     private fun initViewModel() {
         with(settingsViewModel) {
             autoLoginButtonResponse.observe(this@SettingsActivity){
-                if(it){
-                    saveAutoLoginStatus(true)
-                }
-                else{
-                    saveAutoLoginStatus(false)
-                }
+                binding.autoLoginToggleButton.isChecked = it
             }
 
         }

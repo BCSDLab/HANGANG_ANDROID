@@ -98,7 +98,7 @@ class UserRepository(
     }
 
     override fun getAutoLoginStatus(): Single<Boolean> {
-        TODO("Not yet implemented")
+        return userLocalDataSource.getAutoLoginStatus()
     }
 
     override fun getMyProfile(): Single<MyProfileResponse> {

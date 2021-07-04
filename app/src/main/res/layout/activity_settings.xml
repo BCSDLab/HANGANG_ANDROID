@@ -104,12 +104,12 @@
             app:layout_constraintTop_toBottomOf="@id/app_settings" />
 
         <ToggleButton
-            android:id="@+id/toggle_button"
+            android:id="@+id/auto_login_toggle_button"
             android:layout_width="48dp"
             android:layout_height="24dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/toggle_selector"
-            android:checked="true"
+            android:checked="false"
             android:textOff=""
             android:textOn=""
             app:layout_constraintEnd_toStartOf="@id/guideline_right"

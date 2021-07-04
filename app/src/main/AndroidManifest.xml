@@ -29,17 +29,17 @@
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
         <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
         <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.splash.SplashActivity"/>
-        <activity android:name=".ui.mypage.activity.MyScrapActivity" />
-        <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity" />
-        <activity android:name=".ui.mypage.activity.MyPagePointRecordActivity" />
-        <activity android:name=".ui.login.LoginActivity">
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.mypage.activity.MyScrapActivity" />
+        <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity" />
+        <activity android:name=".ui.mypage.activity.MyPagePointRecordActivity" />
+        <activity android:name=".ui.login.LoginActivity"/>
         <activity android:name=".ui.changepassword.activity.ChangePasswordActivity" />
         <activity android:name=".ui.settings.activity.SettingsActivity"/>
         <activity android:name=".ui.settings.activity.MyProfileActivity"/>

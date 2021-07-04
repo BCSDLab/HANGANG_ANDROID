@@ -31,8 +31,6 @@ class SettingsActivityViewModel(private val userRepository: UserRepository) : Vi
     fun saveAutoLoginStatus(isAutoLoginActive : Boolean){
         userRepository.saveAutoLogin(isAutoLoginActive)
             .subscribe {
-                _autoLoginButtonResponse.value = isAutoLoginActive
-                _autoLoginButtonResponse.postValue(isAutoLoginActive)
             }
     }
 

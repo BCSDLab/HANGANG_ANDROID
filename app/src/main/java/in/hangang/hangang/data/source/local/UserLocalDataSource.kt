@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
+import `in`.hangang.hangang.constant.IS_AUTO_LOGIN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
 import `in`.hangang.hangang.data.entity.LectureBank
 import `in`.hangang.hangang.data.entity.PointRecord
@@ -87,11 +88,13 @@ class UserLocalDataSource : UserDataSource {
     }
 
     override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
-        TODO("Not yet implemented")
+        return Completable.create{Hawk.put(IS_AUTO_LOGIN, isAutoLogin)
+        it.onComplete()
+        }
     }
 
     override fun getAutoLoginStatus(): Single<Boolean> {
-        TODO("Not yet implemented")
+        return Single.just(Hawk.get(IS_AUTO_LOGIN, false))
     }
 
     override fun getMyProfile(): Single<MyProfileResponse> {
