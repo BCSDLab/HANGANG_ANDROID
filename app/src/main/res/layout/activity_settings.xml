@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="in.hangang.hangang.ui.settings.viewmodel.SettingsActivityViewModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.settings.activity.SettingsActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <in.hangang.core.view.appbar.BaseAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleText="환경설정" />
+
+        <TextView
+            android:id="@+id/profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/profile"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/app_bar" />
+
+        <TextView
+            android:id="@+id/change_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/change_profile"
+            android:textColor="@color/black2"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/profile" />
+
+        <ImageButton
+            android:id="@+id/change_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/profile" />
+
+        <View
+            android:id="@+id/underbar_name"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/gray_100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/change_profile" />
+
+        <TextView
+            android:id="@+id/app_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/app_settings"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/underbar_name" />
+
+        <TextView
+            android:id="@+id/auto_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/auto_login"
+            android:textColor="@color/black2"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/app_settings" />
+
+        <ToggleButton
+            android:id="@+id/auto_login_toggle_button"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/toggle_selector"
+            android:checked="false"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/app_settings" />
+
+        <TextView
+            android:id="@+id/app_inform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/app_inform"
+            android:textColor="@color/black2"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/auto_login" />
+
+        <TextView
+            android:id="@+id/app_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/app_version"
+            android:textColor="@color/gray_500"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/auto_login" />
+
+        <View
+            android:id="@+id/underbar_second"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/gray_100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_inform" />
+
+        <TextView
+            android:id="@+id/others"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/profile"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/underbar_second" />
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/questions"
+            android:textColor="@color/black2"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/others" />
+
+        <ImageButton
+            android:id="@+id/question_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/others" />
+
+        <TextView
+            android:id="@+id/log_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/log_out"
+            android:textColor="@color/black2"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/question" />
+
+        <ImageButton
+            android:id="@+id/log_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/question" />
+
+        <TextView
+            android:id="@+id/delete_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/delete_account"
+            android:textColor="@color/black2"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/log_out" />
+
+        <ImageButton
+            android:id="@+id/delete_account_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/log_out" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

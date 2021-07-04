@@ -11,6 +11,7 @@ import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TimetableListResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import io.reactivex.rxjava3.core.Single
@@ -63,6 +64,20 @@ interface AuthApi {
     fun getLectureListFromTimeTable(
         @Query("timeTableId") timetableId: Int
     ): Single<TimeTableWithLecture>
+
+    @GET(MyProfile)
+    fun setMyProfile(): Single<MyProfileResponse>
+
+    @PUT(SaveMyProfile)
+    fun saveMyProfile(
+        @Body saveMyProfileRequest: SaveMyProfileRequest
+    ): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = Delete_Account, hasBody = true)
+    fun deleteAccount(): Single<CommonResponse>
+
+    @PUT(Logout_All)
+    fun logoutAll() : Single<CommonResponse>
 
     @GET(TIMETABLE_LECTURE)
     suspend fun fetchLectureListFromTimeTable(

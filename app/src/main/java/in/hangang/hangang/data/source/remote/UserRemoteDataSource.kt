@@ -5,8 +5,10 @@ import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.request.*
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserRemoteDataSource(
@@ -63,6 +65,30 @@ class UserRemoteDataSource(
 
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return noAuthApi.passwordFind(PasswordFindRequest(portalAccount, password))
+    }
+
+    override fun deleteAccount(): Single<CommonResponse> {
+        return authApi.deleteAccount()
+    }
+
+    override fun logoutAll(): Single<CommonResponse> {
+        return authApi.logoutAll()
+    }
+
+    override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
+        return Completable.never()
+    }
+
+    override fun getAutoLoginStatus(): Single<Boolean> {
+        return Single.never()
+    }
+
+    override fun getMyProfile(): Single<MyProfileResponse> {
+        return authApi.setMyProfile()
+    }
+
+    override fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse> {
+        return authApi.saveMyProfile(SaveMyProfileRequest(name, nickName, major))
     }
 
     override fun getLectureBankHit(): Single<List<LectureDoc>> {

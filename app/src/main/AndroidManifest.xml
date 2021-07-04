@@ -20,11 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
-            android:windowSoftInputMode="adjustUnspecified|adjustPan"></activity>
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableLectureFilterActivity"></activity>
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableAddActivity" />
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableListActivity" />
+        <activity android:name=".ui.splash.SplashActivity"></activity>
+        <activity android:name=".ui.settings.SettingsActivity" />
+        <activity android:name=".ui.settings.MyProfileActivity" />
+        <activity
+            android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan" />
+        <activity android:name=".ui.timetable.activity.TimetableLectureFilterActivity" />
+        <activity android:name=".ui.timetable.activity.TimetableAddActivity" />
+        <activity android:name=".ui.timetable.activity.TimetableListActivity" />
         <activity android:name=".ui.signup.activity.SignUpMajorActivity" />
         <activity android:name=".ui.signup.activity.SignUpActivity" />
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
