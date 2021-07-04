@@ -117,7 +117,6 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun getLectureSemester(id: Int): Single<ArrayList<Int>> {
         return authApi.getLectureSemester(id)
     }
-
     override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
         return authApi.addScrapLecture(
             ScrapLectureRequest(id = lectureId)
@@ -127,7 +126,6 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
         return authApi.removeScrapLecture(lectureId.toList())
     }
-
     override fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse> {
         return authApi.reportLectureReview(lectureReviewReportRequest)
     }

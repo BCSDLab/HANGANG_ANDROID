@@ -76,7 +76,7 @@ class UserLocalDataSource : UserDataSource {
     override fun changePassword(portalAccount: String, password: String): Single<CommonResponse> {
         return Single.never()
     }
-
+    
     override fun getUserInformation(): Single<User> {
         return Single.never()
     }
@@ -92,7 +92,7 @@ class UserLocalDataSource : UserDataSource {
     override fun getPurchasedBanks(): Single<List<LectureBank>> {
         return Single.never()
     }
-
+    
     override fun getLectureBankHit(): Single<List<LectureDoc>> {
         return Single.never()
     }

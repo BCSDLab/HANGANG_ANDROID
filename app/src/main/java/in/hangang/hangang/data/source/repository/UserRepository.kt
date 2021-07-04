@@ -71,7 +71,7 @@ class UserRepository(
     override fun getLectureBankHit(): Single<List<LectureDoc>> {
         return userRemoteDataSource.getLectureBankHit()
     }
-
+    
     override fun getUserInformation(): Single<User> {
         return userRemoteDataSource.getUserInformation()
     }

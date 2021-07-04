@@ -67,7 +67,6 @@ class LectureRepository(
     override fun getScrapedLecture(): Single<ArrayList<RankingLectureItem>> {
         return lectureRemoteDataSource.getScrapedLecture()
     }
-
     override fun getLectureRankingByTotalRating(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return lectureRemoteDataSource.getLectureRankingByTotalRating(majors, page)
     }
@@ -79,7 +78,6 @@ class LectureRepository(
     override fun getLectureRankingByLatestReview(majors: ArrayList<String>, page: Int): Single<RankingLectureResult> {
         return lectureRemoteDataSource.getLectureRankingByLatestReview(majors, page)
     }
-
     override fun getFilteredLectureList(
         majors: ArrayList<String>,
         page: Int,

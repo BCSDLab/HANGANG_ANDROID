@@ -38,7 +38,7 @@ interface UserDataSource {
     fun changePassword(portalAccount: String, password: String): Single<CommonResponse>
 
     fun getLectureBankHit(): Single<List<LectureDoc>>
-
+  
     fun getUserInformation(): Single<User>
 
     fun getUserCounts(): Single<UserCount>

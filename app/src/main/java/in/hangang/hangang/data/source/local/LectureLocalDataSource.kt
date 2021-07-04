@@ -90,7 +90,6 @@ class LectureLocalDataSource : LectureDataSource {
     override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
         return Single.never()
     }
-
     override fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse> {
         return Single.never()
     }
