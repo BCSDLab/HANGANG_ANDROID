@@ -5,10 +5,7 @@ import `in`.hangang.core.http.request.ProgressRequestBodyCallback
 import `in`.hangang.core.http.response.ResponseWithProgress
 import `in`.hangang.core.util.getDisplayName
 import `in`.hangang.hangang.api.AuthApi
-import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
-import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
-import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
-import `in`.hangang.hangang.data.entity.lecturebank.LectureBankPostRequest
+import `in`.hangang.hangang.data.entity.lecturebank.*
 import `in`.hangang.hangang.data.request.LectureBankReportRequest
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureBankDataSource
@@ -183,5 +180,8 @@ class LectureBankRemoteDataSource(
 
     companion object {
         const val FILE_MULTIPART_NAME = "file"
+    }
+    override fun getScrapLectureBanks(): Single<List<LectureBankScrap>> {
+        return authApi.getLectureBankScraps()
     }
 }

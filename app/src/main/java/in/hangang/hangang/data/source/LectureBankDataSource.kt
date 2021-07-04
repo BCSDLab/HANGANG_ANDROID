@@ -4,6 +4,7 @@ import `in`.hangang.core.http.response.ResponseWithProgress
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
 import `in`.hangang.hangang.data.response.CommonResponse
 import android.net.Uri
 import androidx.paging.PagingData
@@ -62,4 +63,5 @@ interface LectureBankDataSource {
 
     fun downloadSingleFile(uploadFileId: Int) : Single<String>
     fun uploadSingleFile(uri: Uri) : Observable<ResponseWithProgress<String>>
+    fun getScrapLectureBanks() : Single<List<LectureBankScrap>>
 }

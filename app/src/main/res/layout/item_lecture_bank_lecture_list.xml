@@ -6,7 +6,7 @@
     <data>
         <variable
             name="lecture"
-            type="in.hangang.hangang.data.entity.timetable.Lecture"/>
+            type="in.hangang.hangang.data.entity.lecture.Lecture"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

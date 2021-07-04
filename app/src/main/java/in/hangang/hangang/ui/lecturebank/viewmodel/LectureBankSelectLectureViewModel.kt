@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.hangang.data.entity.timetable.Lecture
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.source.repository.LectureRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

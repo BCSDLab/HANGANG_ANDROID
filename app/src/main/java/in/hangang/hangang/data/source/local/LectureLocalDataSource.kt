@@ -1,14 +1,14 @@
 package `in`.hangang.hangang.data.source.local
 
+import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
-import `in`.hangang.hangang.data.entity.timetable.Lecture
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
-import `in`.hangang.hangang.data.request.ReviewRecommendRequest
-import `in`.hangang.hangang.data.response.CommonResponse
 import com.orhanobut.hawk.Hawk
 import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
 import `in`.hangang.hangang.data.entity.evaluation.Evaluation
@@ -85,6 +85,23 @@ class LectureLocalDataSource : LectureDataSource {
         return Single.never()
     }
 
+    override fun getLectureList(
+        classification: String?,
+        hashTag: Int?,
+        department: String?,
+        keyword: String?,
+        sort: String?
+    ): Flowable<PagingData<Lecture>> {
+        return Flowable.never()
+    }
+
+    override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
+        return Single.never()
+    }
+
+    override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
+        return Single.never()
+    }
     override fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse> {
         return Single.never()
     }
@@ -116,15 +133,5 @@ class LectureLocalDataSource : LectureDataSource {
     override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
         return Hawk.get(RECENTLY_READ_LECTURE_REVIEW, ArrayList<RankingLectureItem>())
 
-    }
-
-    override fun getLectureList(
-        classification: String?,
-        department: String?,
-        hashTag: Int?,
-        keyword: String?,
-        sort: String?
-    ): Flowable<PagingData<Lecture>> {
-        return Flowable.never()
     }
 }

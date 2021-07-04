@@ -1,7 +1,10 @@
 package `in`.hangang.hangang.data.source.repository
 
 import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
 import `in`.hangang.hangang.data.entity.user.User
+import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
@@ -67,6 +70,22 @@ class UserRepository(
 
     override fun getLectureBankHit(): Single<List<LectureDoc>> {
         return userRemoteDataSource.getLectureBankHit()
+    }
+    
+    override fun getUserInformation(): Single<User> {
+        return userRemoteDataSource.getUserInformation()
+    }
+
+    override fun getUserCounts(): Single<UserCount> {
+        return userRemoteDataSource.getUserCounts()
+    }
+
+    override fun getPointRecords(): Single<List<PointRecord>> {
+        return userRemoteDataSource.getPointRecords()
+    }
+
+    override fun getPurchasedBanks(): Single<List<LectureBank>> {
+        return userRemoteDataSource.getPurchasedBanks()
     }
 
     override fun getUserInfo(): Single<User> {

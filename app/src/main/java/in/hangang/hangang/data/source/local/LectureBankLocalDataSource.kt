@@ -4,6 +4,7 @@ import `in`.hangang.core.http.response.ResponseWithProgress
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureBankDataSource
 import android.net.Uri
@@ -92,5 +93,8 @@ class LectureBankLocalDataSource : LectureBankDataSource {
 
     override fun uploadSingleFile(uri: Uri): Observable<ResponseWithProgress<String>> {
         return Observable.never()
+    }
+    override fun getScrapLectureBanks(): Single<List<LectureBankScrap>> {
+        return Single.never()
     }
 }

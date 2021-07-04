@@ -8,7 +8,7 @@ import `in`.hangang.core.util.getSize
 import `in`.hangang.core.util.toProperCapacityUnit
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.timetable.Lecture
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ActivityLectureBankEditorBinding

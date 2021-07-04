@@ -4,6 +4,7 @@ import `in`.hangang.core.http.response.ResponseWithProgress
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.source.LectureBankDataSource
 import android.net.Uri
@@ -98,4 +99,7 @@ class LectureBankRepository(
         return lectureBankRemoteDataSource.uploadSingleFile(uri)
     }
 
+    override fun getScrapLectureBanks(): Single<List<LectureBankScrap>> {
+        return lectureBankRemoteDataSource.getScrapLectureBanks()
+    }
 }

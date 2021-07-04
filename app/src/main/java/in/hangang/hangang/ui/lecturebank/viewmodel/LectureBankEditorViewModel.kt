@@ -3,7 +3,7 @@ package `in`.hangang.hangang.ui.lecturebank.viewmodel
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.timetable.Lecture
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.source.repository.LectureBankRepository
 import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.data.response.CommonResponse

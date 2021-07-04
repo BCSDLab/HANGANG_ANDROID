@@ -1,5 +1,7 @@
-package `in`.hangang.hangang.data.entity.timetable
+package `in`.hangang.hangang.data.entity.lecture
 
+import `in`.hangang.hangang.data.entity.timetable.HashTag
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize

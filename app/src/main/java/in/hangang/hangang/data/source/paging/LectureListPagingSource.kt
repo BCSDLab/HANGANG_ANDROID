@@ -1,7 +1,7 @@
 package `in`.hangang.hangang.data.source.paging
 
 import `in`.hangang.hangang.api.NoAuthApi
-import `in`.hangang.hangang.data.entity.timetable.Lecture
+import `in`.hangang.hangang.data.entity.lecture.Lecture
 
 class LectureListPagingSource(
     private val noAuthApi: NoAuthApi,
