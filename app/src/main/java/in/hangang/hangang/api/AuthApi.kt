@@ -1,19 +1,27 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
-import `in`.hangang.hangang.data.entity.*
 import `in`.hangang.hangang.data.entity.evaluation.*
+import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankScrap
+import `in`.hangang.hangang.data.entity.mypage.PointRecord
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankComment
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
+import `in`.hangang.hangang.data.entity.lecturebank.LectureBankPostRequest
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
 import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
+import `in`.hangang.hangang.data.entity.user.User
+import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.request.*
-import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.data.response.TimetableListResponse
-import `in`.hangang.hangang.data.response.TokenResponse
+import `in`.hangang.hangang.data.response.*
 import io.reactivex.rxjava3.core.Single
+import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface AuthApi {
@@ -199,6 +207,92 @@ interface AuthApi {
     @GET(LECTURE_BANK_HIT)
     fun getLectureBankHit(): Single<List<LectureDoc>>
 
+    @GET(USER_ME)
+    fun getUserInformation(): Single<User>
+
+    @GET(USER_LECTURE)
+    fun getUserCounts(): Single<UserCount>
+
+    @GET(USER_POINT_RECORD)
+    fun getUserPointRecord(): Single<List<PointRecord>>
+
+    @GET(USER_PURCHASED)
+    fun getUserPurchasedBanks(): Single<List<LectureBank>>
+
+    @POST(LECTURE_SCRAPED)
+    fun addScrapLecture(@Body scrapLectureRequest: ScrapLectureRequest): Single<CommonResponse>
+
+    @HTTP(method = "DELETE", path = LECTURE_SCRAPED, hasBody = true)
+    fun removeScrapLecture(@Body lectureIds: List<Int>): Single<CommonResponse>
+
+    @GET(LECTURE_BANK_SCRAP)
+    fun getLectureBankScraps(): Single<List<LectureBankScrap>>
+
+    @HTTP(method = "DELETE", path = LECTURE_BANK_SCRAP, hasBody = true)
+    fun unscrapLectureBank(@Body scrapIds: List<Int>): Single<CommonResponse>
+
+    @GET(LECTURE_BANKS)
+    fun getLectureBanks(
+        @Query("category") categories: List<String>?,
+    @Query("department") department: String?,
+    @Query("keyword") keyword: String?,
+    @Query("limit") limit: Int,
+    @Query("order") order: String,
+    @Query("page") page : Int) : Single<LectureBankResponse>
+
+    @POST(LECTURE_BANKS)
+    fun createLectureBank(@Body lectureBankPostRequest: LectureBankPostRequest) : Single<CommonResponse>
+
+    @GET("$LECTURE_BANKS/{id}")
+    fun getLectureBankDetail(@Path("id") id: Int) : Single<LectureBankDetail>
+
+    @POST("$LECTURE_BANKS_HIT/{id}")
+    fun toggleHitLectureBank(@Path("id") id: Int) : Single<CommonResponse>
+
+    @POST(LECTURE_BANKS_PURCHASE)
+    fun purchaseLectureBank(@Path("id") id: Int) : Single<CommonResponse>
+
+    @GET(LECTURE_BANKS_PURCHASE_CHECK)
+    fun checkLectureBankPurchased(@Path("id") id: Int) : Single<Boolean>
+
+    @POST("$LECTURE_BANKS_SCRAP/{id}")
+    fun scrapLectureBank(@Path("id") id: Int) : Single<Int>
+
+    @HTTP(method = "DELETE", path = LECTURE_BANKS_SCRAP, hasBody = true)
+    fun unscrapLectureBanks(@Body ids: List<Int>) : Single<CommonResponse>
+
+    @POST(LECTURE_BANKS_REPORT)
+    fun reportLectureBank(@Body lectureBankReportRequest: LectureBankReportRequest) : Single<CommonResponse>
+
+    @GET(LECTURE_BANKS_COMMENTS)
+    fun getLectureBankComments(
+        @Path("id") id: Int,
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ) : Single<LectureBankCommentResponse>
+
+    @POST(LECTURE_BANKS_COMMENT)
+    fun commentLectureBank(
+        @Path("id") id: Int,
+        @Body lectureBankComment: LectureBankComment
+    ) : Single<Int>
+
+    @POST(LECTURE_BANKS_REPORT_COMMENT)
+    fun reportLectureBankComment(@Body lectureBankReportRequest: LectureBankReportRequest) : Single<CommonResponse>
+
+    @GET(LECTURE_BANKS_FILE)
+    fun downloadSingleFile(@Path("id") id: Int) : Single<String>
+
+    @PUT(LECTURE_BANKS_COMMENT_WITH_ID)
+    fun modifyLectureBankComment(@Path("id") lectureBankId: Int, @Path("commentId") commentId: Int, @Body lectureBankComment: LectureBankComment) : Single<CommonResponse>
+
+    @DELETE(LECTURE_BANKS_COMMENT_WITH_ID)
+    fun deleteLectureBankComment(@Path("id") lectureBankId: Int, @Path("commentId") commentId: Int) : Single<CommonResponse>
+
+    @POST(LECTURE_BANKS_FILES)
+    fun uploadFile(@Body file : RequestBody) : Call<List<String>>
+
+    @GET(USER_ME)
+    fun getUserInfo() : Single<User>
+
 }
-
-

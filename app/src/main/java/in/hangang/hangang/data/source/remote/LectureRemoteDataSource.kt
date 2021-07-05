@@ -5,6 +5,8 @@ import `in`.hangang.hangang.api.NoAuthApi
 import `in`.hangang.hangang.constant.SORT_BY_LATEST_REVIEW
 import `in`.hangang.hangang.constant.SORT_BY_REVIEW_COUNT
 import `in`.hangang.hangang.constant.SORT_BY_TOTAL_RATING
+import `in`.hangang.hangang.data.entity.lecture.Lecture
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
@@ -14,13 +16,19 @@ import `in`.hangang.hangang.data.entity.evaluation.LectureDocResult
 import `in`.hangang.hangang.data.entity.evaluation.LectureReview
 import `in`.hangang.hangang.data.entity.evaluation.LectureReviewResult
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.request.ReviewRecommendRequest
+import `in`.hangang.hangang.data.request.ScrapLectureRequest
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.source.paging.BaseRxPagingSource
+import `in`.hangang.hangang.data.source.paging.LectureListPagingSource
 import `in`.hangang.hangang.data.source.LectureDataSource
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.rxjava3.flowable
+import io.reactivex.rxjava3.core.Flowable
 
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.Body
 
 class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val authApi: AuthApi) :
     LectureDataSource {
@@ -116,7 +124,15 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
     override fun getLectureSemester(id: Int): Single<ArrayList<Int>> {
         return authApi.getLectureSemester(id)
     }
+    override fun scrapLecture(lectureId: Int): Single<CommonResponse> {
+        return authApi.addScrapLecture(
+            ScrapLectureRequest(id = lectureId)
+        )
+    }
 
+    override fun unscrapLecture(vararg lectureId: Int): Single<CommonResponse> {
+        return authApi.removeScrapLecture(lectureId.toList())
+    }
     override fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest): Single<CommonResponse> {
         return authApi.reportLectureReview(lectureReviewReportRequest)
     }
@@ -147,5 +163,17 @@ class LectureRemoteDataSource(private val noAuthApi: NoAuthApi, private val auth
 
     override fun getRecentlyLectureList(): ArrayList<RankingLectureItem> {
         return ArrayList()
+    }
+
+    override fun getLectureList(
+        classification: String?,
+        hashTag: Int?,
+        department: String?,
+        keyword: String?,
+        sort: String?
+    ): Flowable<PagingData<Lecture>> {
+        return Pager(PagingConfig(pageSize = BaseRxPagingSource.DEFAULT_LIMIT)) {
+            LectureListPagingSource(noAuthApi, classification, department, hashTag, keyword, sort)
+        }.flowable
     }
 }

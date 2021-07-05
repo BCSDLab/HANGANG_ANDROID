@@ -22,14 +22,23 @@ fun <T> Single<T>.withThread(): Single<T> {
             .observeOn(AndroidSchedulers.mainThread())
 }
 
+fun <T> Observable<T>.withThread(): Observable<T> {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+
+fun <T> Flowable<T>.withThread(): Flowable<T> {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+
 fun <T> Single<T>.handleUpdateAccessToken(): Single<T> {
     return this.compose(retryOnNotAuthorized<T>())
 }
 
 // TODO : 공통 HttpException 처리
 fun <T> Single<T>.handleHttpException(): Single<T> {
-    return this.handleUpdateAccessToken()
-            .doOnError {
+    return this.doOnError {
                 if (it !is HttpException) return@doOnError
                 LogUtil.e("handle http exception : ${it.code()}")
                 when (it.code()) {

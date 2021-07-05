@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_lecture_bank_scrap"
+        android:title="@string/lecture_bank_scrap"/>
+    <item
+        android:id="@+id/menu_lecture_bank_unscrap"
+        android:title="@string/lecture_bank_unscrap"
+        android:visible="false"/>
+    <item
+        android:id="@+id/menu_lecture_bank_report"
+        android:title="@string/lecture_bank_report"/>
+
+</menu>

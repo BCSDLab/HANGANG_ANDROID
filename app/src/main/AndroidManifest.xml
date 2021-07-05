@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="in.hangang.hangang">
+          package="in.hangang.hangang">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <meta-data
         android:name="firebase_performance_logcat_enabled"
-        android:value="true" />
+        android:value="true"/>
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".HangangApplication"
@@ -20,24 +20,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
-            android:windowSoftInputMode="adjustUnspecified|adjustPan"></activity>
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableLectureFilterActivity"></activity>
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableAddActivity" />
-        <activity android:name="in.hangang.hangang.ui.timetable.activity.TimetableListActivity" />
+        <activity
+            android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan" />
+        <activity android:name=".ui.mypage.activity.MyScrapLectureBankActivity" />
+        <activity android:name=".ui.timetable.activity.TimetableLectureFilterActivity" />
+        <activity android:name=".ui.timetable.activity.TimetableAddActivity" />
+        <activity android:name=".ui.timetable.activity.TimetableListActivity" />
         <activity android:name=".ui.signup.activity.SignUpMajorActivity" />
         <activity android:name=".ui.signup.activity.SignUpActivity" />
         <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
         <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
         <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.mypage.activity.MyScrapLectureReviewActivity" />
+        <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity" />
+        <activity android:name=".ui.mypage.activity.MyPagePointRecordActivity" />
+        <activity android:name=".ui.lecturebank.activity.LectureBankSelectLectureActivity">
+        </activity>
+        <activity android:name=".ui.lecturebank.activity.LectureBankEditorActivity">
+        </activity>
+        <activity android:name=".ui.lecturebank.activity.LectureBankFilterActivity">
+        </activity>
+        <activity android:name=".ui.lecturebank.activity.LectureBankDetailActivity"/>
         <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity" />
+        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity"/>
     </application>
 
 </manifest>

@@ -1,7 +1,17 @@
-package `in`.hangang.hangang.data.entity.timetable
+package `in`.hangang.hangang.data.entity.lecture
 
+import `in`.hangang.hangang.data.entity.timetable.HashTag
+import `in`.hangang.hangang.data.entity.lecture.Lecture
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+data class LectureResult(
+    val result: List<Lecture>,
+    val count: Int
+)
+
+@Parcelize
 data class Lecture(
     val id: Int,
     @SerializedName("semester_data")
@@ -16,13 +26,13 @@ data class Lecture(
     @SerializedName("total_rating")
         val totalRating: Double,
     @SerializedName("last_reviewed_at")
-        val lastReviewedAt: String,
+        val lastReviewedAt: String?,
     @SerializedName("review_count")
-        val reviewCount: Int,
+        val reviewCount: Int?,
     @SerializedName("is_deleted")
         val isDeleted: Boolean,
     @SerializedName("created_at")
         val createdAt: String,
     @SerializedName("updated_at")
         val updatedAt: String
-)
+): Parcelable

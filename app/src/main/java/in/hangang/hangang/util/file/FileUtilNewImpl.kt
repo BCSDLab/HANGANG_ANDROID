@@ -1,20 +1,19 @@
 package `in`.hangang.hangang.util.file
 
-import android.content.ContentValues
-import android.content.Context
+import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import io.reactivex.rxjava3.core.Single
 import java.io.OutputStream
 
-class FileUtilNewImpl(private val context: Context) : FileUtil {
+class FileUtilNewImpl(private val context: Context) : FileUtil(context) {
     override fun saveImageToPictures(
-            bitmap: Bitmap,
-            fileName: String,
-            mineType: String,
-            directory: String,
-            mediaContentUri: Uri
+        bitmap: Bitmap,
+        fileName: String,
+        mineType: String,
+        directory: String,
+        mediaContentUri: Uri
     ): Single<Uri> {
         return Single.create { subscriber ->
             var outputStream: OutputStream? = null
