@@ -18,8 +18,6 @@ import `in`.hangang.hangang.data.entity.timetable.TimetableMemo
 import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.request.*
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TimetableListResponse

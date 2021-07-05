@@ -141,7 +141,7 @@ class LectureBankDetailActivity : ViewBindingActivity<ActivityLectureBankDetailB
             }
             lectureBankFileAdapter.setOnItemClickListener { i, uploadFile, b ->
                 if (!b) {
-                    lectureBankUploadFileViewModel.downloadOrOpenFile(this@LectureBankDetailActivity, uploadFile)
+                    lectureBankUploadFileViewModel.downloadOrOpenFile(applicationContext, uploadFile)
                 }
             }
             textViewComment.setOnClickListener {

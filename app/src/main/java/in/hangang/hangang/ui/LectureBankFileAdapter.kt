@@ -55,6 +55,7 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val position = holder.absoluteAdapterPosition
         holder.bind(files[position])
         downloadStatusMap[files[position]]?.let {
             holder.setProgressBar(it.first, it.second)

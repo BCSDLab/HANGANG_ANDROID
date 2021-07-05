@@ -111,7 +111,8 @@ class UserLocalDataSource : UserDataSource {
     }
 
     override fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse> {
-        return  Single.never()
+        return Single.never()
+    }
 
     override fun getUserInfo(): Single<User> {
         return if(user == null) Single.error(NullPointerException("User is null"))

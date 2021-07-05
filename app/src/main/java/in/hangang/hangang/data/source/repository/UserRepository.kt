@@ -113,7 +113,7 @@ class UserRepository(
     override fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse> {
         return userRemoteDataSource.saveProfile(name, nickName, major)
     }
-}
+
     override fun getUserInfo(): Single<User> {
         return userLocalDataSource.getUserInfo()
             .onErrorResumeNext {
