@@ -15,11 +15,14 @@ import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewDetailViewMo
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyPageViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapLectureBankViewModel
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapLectureReviewViewModel
+import `in`.hangang.hangang.ui.settings.viewmodel.MyProfileActivityViewModel
+import `in`.hangang.hangang.ui.settings.viewmodel.SettingsActivityViewModel
 import `in`.hangang.hangang.ui.lecturereview.viewmodel.LectureReviewListViewModel
 import `in`.hangang.hangang.ui.login.LoginViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpMajorViewModel
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpViewModel
+import `in`.hangang.hangang.ui.splash.SplashViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableAddActivityViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
@@ -61,6 +64,11 @@ val viewModelModule = module {
     viewModel { MyPageViewModel(get()) }
     viewModel { MyScrapLectureReviewViewModel(get()) }
     viewModel { MyScrapLectureBankViewModel(get()) }
+
+    viewModel { SplashViewModel(get()) }
+    viewModel { SettingsActivityViewModel(get()) }
+    viewModel { MyProfileActivityViewModel(get()) }
+
     //LectureBank
     viewModel { LectureBankViewModel(get()) }
     viewModel { LectureBankDetailViewModel(get(), get()) }

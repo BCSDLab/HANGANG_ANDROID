@@ -20,6 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.settings.activity.SettingsActivity" />
+        <activity android:name=".ui.settings.activity.MyProfileActivity" />
         <activity
             android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
             android:windowSoftInputMode="adjustUnspecified|adjustPan" />
@@ -35,6 +37,8 @@
         <activity android:name=".ui.mypage.activity.MyScrapLectureReviewActivity" />
         <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity" />
         <activity android:name=".ui.mypage.activity.MyPagePointRecordActivity" />
+        <activity android:name=".ui.settings.activity.SettingsActivity" />
+        <activity android:name=".ui.settings.activity.MyProfileActivity" />
         <activity android:name=".ui.lecturebank.activity.LectureBankSelectLectureActivity">
         </activity>
         <activity android:name=".ui.lecturebank.activity.LectureBankEditorActivity">

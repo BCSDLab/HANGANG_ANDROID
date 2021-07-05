@@ -67,6 +67,13 @@ const val LECTURE_BANKS_CATEGORY_ASSIGNMENT = "과제자료"
 const val LECTURE_BANKS_CATEGORY_LECTURE = "강의자료"
 const val LECTURE_BANKS_CATEGORY_ETC = "기타자료"
 const val LECTURE_BANKS_ORDER_BY_ID = "id"
+
+const val MyProfile = "/user/me"
+const val SaveMyProfile = "/user/me"
+const val Delete_Account = "/user/me"
+const val Logout_All = "/user/me"
+const val IS_AUTO_LOGIN = "IS_AUTO_LOGIN"
+
 const val LECTURE_BANKS_ORDER_BY_HITS = "hits"
 const val LECTURE_BANKS_REPORT_ABUSEMENT = 1
 const val LECTURE_BANKS_REPORT_COPYRIGHT = 2
