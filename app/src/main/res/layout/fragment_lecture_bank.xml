@@ -14,6 +14,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/lecture_bank_search_bar_hint"
+            android:paddingStart="16dp"
+            app:showBackButton="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
