@@ -6,6 +6,8 @@ import `in`.hangang.core.view.dp2Px
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.lecturebank.toLectureBank
 import `in`.hangang.hangang.databinding.ActivityMyScrapLectureBankBinding
+import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankDetailActivityContract
+import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorActivityContract
 import `in`.hangang.hangang.ui.mypage.adapter.MyScrapLectureBankAdapter
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapLectureBankViewModel
 import android.os.Bundle
@@ -19,14 +21,16 @@ class MyScrapLectureBankActivity : ViewBindingActivity<ActivityMyScrapLectureBan
 
     private val myScrapLectureBankViewModel: MyScrapLectureBankViewModel by viewModel()
 
+    private val lectureBankDetailActivityContract = registerForActivityResult(LectureBankDetailActivityContract()) {}
+
     private val myScrapLectureBankAdapter: MyScrapLectureBankAdapter by lazy {
         MyScrapLectureBankAdapter().apply {
-            setOnItemClickListener { parent, view, position ->
+            setOnItemClickListener { position, lectureBankScrap ->
                 if (myScrapLectureBankViewModel.isEditMode.value == true) {
                     toggleLectureSelection(position)
                     myScrapLectureBankViewModel.changeRemoveButtonState(isLeastOneSelected())
                 } else {
-                    //TODO 강의자료 상세페이지 이동
+                    lectureBankDetailActivityContract.launch(lectureBankScrap.id)
                 }
             }
         }

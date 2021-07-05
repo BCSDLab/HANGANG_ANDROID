@@ -4,6 +4,7 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.FragmentMyPageBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
+import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankUploadFileViewModel
 import `in`.hangang.hangang.ui.mypage.contract.MyPagePointRecordActivityContract
 import `in`.hangang.hangang.ui.mypage.contract.MyPagePurchasedBankActivityContract
 import `in`.hangang.hangang.ui.mypage.contract.MyScrapLectureBankActivityContract
@@ -18,8 +19,15 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
     override val layoutId = R.layout.fragment_my_page
 
     private val myPageViewModel: MyPageViewModel by sharedViewModel()
+    private val lectureBankUploadFileViewModel : LectureBankUploadFileViewModel by sharedViewModel()
+
     private val lectureBankFileAdapter: LectureBankFileAdapter by lazy {
-        LectureBankFileAdapter()
+        LectureBankFileAdapter().apply {
+            isEnabled = true
+            setOnItemClickListener { position, uploadFile ->
+                lectureBankUploadFileViewModel.downloadOrOpenFile(requireContext(), uploadFile)
+            }
+        }
     }
 
     private val myPagePointRecordActivityContract = registerForActivityResult(MyPagePointRecordActivityContract()) {}

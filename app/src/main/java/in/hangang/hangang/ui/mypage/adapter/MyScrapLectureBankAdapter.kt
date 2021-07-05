@@ -16,9 +16,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class MyScrapLectureBankAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectureBankAdapter.ViewHolder>() {
+class MyScrapLectureBankAdapter : RecyclerView.Adapter<MyScrapLectureBankAdapter.ViewHolder>() {
     private val scraps = mutableListOf<LectureBankScrap>()
     private val selectedLectureBanks = SparseBooleanArray()
+
+    var onItemClickListener : OnItemClickListener? = null
+
     var isEditMode = false
         set(value) {
             field = value
@@ -36,9 +39,12 @@ class MyScrapLectureBankAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectureB
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        super.onBindViewHolder(holder, position)
+        val position = holder.absoluteAdapterPosition
         holder.bind(scraps[position].toLectureBank())
         holder.setSelection(selectedLectureBanks[position] && isEditMode)
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.onItemClick(position, scraps[position])
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -103,6 +109,14 @@ class MyScrapLectureBankAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectureB
         return selectedLectureBank
     }
 
+    inline fun setOnItemClickListener(crossinline onItemClick : (Int, LectureBankScrap) -> Unit) {
+        onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(position: Int, lectureBankScrap: LectureBankScrap) {
+                onItemClick(position, lectureBankScrap)
+            }
+        }
+    }
+
     class ViewHolder(private val binding: ItemLectureBankBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(lectureBank: LectureBank) {
             with(binding) {
@@ -116,5 +130,9 @@ class MyScrapLectureBankAdapter : OnItemClickRecyclerViewAdapter<MyScrapLectureB
         fun setSelection(isSelected: Boolean) {
             binding.root.isSelected = isSelected
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int, lectureBankScrap: LectureBankScrap)
     }
 }
