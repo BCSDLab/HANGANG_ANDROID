@@ -137,7 +137,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                         appBarMoreMenuButton.visibility = View.VISIBLE
                         appBarAddManuallyButton.visibility = View.GONE
                         appBarCloseButton.visibility = View.GONE
-                        binding.timetableLayout.isShowingDummyView = true
+                        binding.timetableLayout.isShowingDummyView = false
                     }
                 }
             }
