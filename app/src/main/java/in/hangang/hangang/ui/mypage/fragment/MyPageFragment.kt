@@ -39,7 +39,7 @@ class MyPageFragment : ViewBindingFragment<FragmentMyPageBinding>() {
             isEnabled = true
             setOnItemClickListener { _, uploadFile, b ->
                 if(!b) {
-                    lectureBankUploadFileViewModel.downloadOrOpenFile(requireContext(), uploadFile)
+                    lectureBankUploadFileViewModel.downloadOrOpenFile(requireContext().applicationContext, uploadFile)
                 }
             }
         }
