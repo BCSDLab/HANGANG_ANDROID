@@ -8,8 +8,6 @@ import `in`.hangang.hangang.ui.login.LoginActivity
 import `in`.hangang.hangang.ui.settings.viewmodel.SettingsActivityViewModel
 import android.content.Intent
 import android.os.Bundle
-import android.util.EventLog
-import com.orhanobut.hawk.Hawk
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
@@ -37,6 +35,9 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
             changeProfileButton.setOnClickListener {
                 myProfileActivityStart()
             }
+            questionButton.setOnClickListener {
+                showQuestionDialog()
+            }
             deleteAccountButton.setOnClickListener {
                 showDeleteAccountDialog()
             }
@@ -53,7 +54,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
     private fun initViewModel() {
         with(settingsViewModel) {
-            autoLoginButtonResponse.observe(this@SettingsActivity){
+            autoLoginButtonResponse.observe(this@SettingsActivity) {
                 binding.autoLoginToggleButton.isChecked = it
             }
         }
@@ -78,7 +79,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
                     startActivity(this)
                 }
             },
-            negativeButtonOnClickListener = {dialog, _ ->
+            negativeButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
             }
 
@@ -98,7 +99,17 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
                     startActivity(this)
                 }
             },
-            negativeButtonOnClickListener = {dialog, _ ->
+            negativeButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            }
+        )
+    }
+
+    private fun showQuestionDialog() {
+        showSimpleDialog(
+            message = "개발중인 페이지 입니다.",
+            positiveButtonText = "확인",
+            positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
             }
         )
