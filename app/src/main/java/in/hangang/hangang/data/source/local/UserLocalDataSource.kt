@@ -15,8 +15,12 @@ import `in`.hangang.hangang.data.source.UserDataSource
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import java.lang.NullPointerException
 
 class UserLocalDataSource : UserDataSource {
+
+    private var user: User? = null
+
     override fun signUp(
             major: Array<String>,
             nickName: String,
@@ -108,6 +112,14 @@ class UserLocalDataSource : UserDataSource {
 
     override fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse> {
         return  Single.never()
+
+    override fun getUserInfo(): Single<User> {
+        return if(user == null) Single.error(NullPointerException("User is null"))
+        else Single.just(user)
+    }
+
+    override fun saveUserInfo(user: User) {
+        this.user = user
     }
 
     override fun getUserCounts(): Single<UserCount> {

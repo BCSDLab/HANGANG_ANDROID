@@ -1,11 +1,18 @@
 package `in`.hangang.core.view
-
+import android.app.ProgressDialog.show
 import android.graphics.Rect
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import androidx.annotation.MenuRes
 import kotlin.math.roundToInt
 
+fun View.showPopupMenu(@MenuRes menuId: Int) : PopupMenu {
+    return PopupMenu(context, this).apply {
+        inflate(menuId)
+    }.also { it.show() }
+}
 
 fun View.dp2Px(dp: Float) = (dp * resources.displayMetrics.density).roundToInt()
 

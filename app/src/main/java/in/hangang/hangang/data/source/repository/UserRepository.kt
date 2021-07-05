@@ -114,3 +114,16 @@ class UserRepository(
         return userRemoteDataSource.saveProfile(name, nickName, major)
     }
 }
+    override fun getUserInfo(): Single<User> {
+        return userLocalDataSource.getUserInfo()
+            .onErrorResumeNext {
+                userRemoteDataSource.getUserInfo().doOnSuccess {
+                    userLocalDataSource.saveUserInfo(it)
+                }
+            }
+    }
+
+    override fun saveUserInfo(user: User) {
+        throw IllegalAccessException("Cannot access saveUserInfo via repository.")
+    }
+}

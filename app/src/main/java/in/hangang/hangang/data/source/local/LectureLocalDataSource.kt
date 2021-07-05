@@ -8,14 +8,16 @@ import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureEvaluationRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import com.orhanobut.hawk.Hawk
 import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
 import `in`.hangang.hangang.data.entity.evaluation.Evaluation
 import `in`.hangang.hangang.data.entity.evaluation.LectureDocResult
 import `in`.hangang.hangang.data.entity.evaluation.LectureReview
 import `in`.hangang.hangang.data.entity.evaluation.LectureReviewResult
-import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.source.LectureDataSource
+import androidx.paging.PagingData
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 
 class LectureLocalDataSource : LectureDataSource {
@@ -81,6 +83,16 @@ class LectureLocalDataSource : LectureDataSource {
 
     override fun getLectureSemester(id: Int): Single<ArrayList<Int>> {
         return Single.never()
+    }
+
+    override fun getLectureList(
+        classification: String?,
+        hashTag: Int?,
+        department: String?,
+        keyword: String?,
+        sort: String?
+    ): Flowable<PagingData<Lecture>> {
+        return Flowable.never()
     }
 
     override fun scrapLecture(lectureId: Int): Single<CommonResponse> {

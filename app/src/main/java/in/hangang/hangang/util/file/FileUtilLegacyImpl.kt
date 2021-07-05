@@ -10,7 +10,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 
-class FileUtilLegacyImpl(private val context: Context) : FileUtil {
+class FileUtilLegacyImpl(private val context: Context) : FileUtil(context) {
     override fun saveImageToPictures(
             bitmap: Bitmap,
             fileName: String,

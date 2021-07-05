@@ -23,7 +23,7 @@ ext {
     androidxMaterial = "com.google.android.material:material:$androidx_material_version"
 
     /* Dependency - AndroidX Paging3 */
-    def paging_version = "3.0.0-beta02"
+    def paging_version = "3.0.0"
     androidxPagingRuntime = "androidx.paging:paging-runtime:$paging_version"
     androidxPagingCommon = "androidx.paging:paging-common:$paging_version"
     androidxPagingRxjava3 = "androidx.paging:paging-rxjava3:$paging_version"

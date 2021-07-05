@@ -25,17 +25,28 @@
         <item>@string/major_simple_9</item>
     </string-array>
 
+    <string name="major_full_0">교양학부</string>
+    <string name="major_full_1">HRD학과</string>
+    <string name="major_full_2">기계공학부</string>
+    <string name="major_full_3">디자인·건축공학부</string>
+    <string name="major_full_4">메카트로닉스공학부</string>
+    <string name="major_full_5">산업경영학부</string>
+    <string name="major_full_6">에너지신소재화학공학부</string>
+    <string name="major_full_7">융합학과</string>
+    <string name="major_full_8">전기전자통신공학부</string>
+    <string name="major_full_9">컴퓨터공학부</string>
+
     <string-array name="major_full">
-        <item>교양학부</item>
-        <item>HRD학과</item>
-        <item>기계공학부</item>
-        <item>디자인ㆍ건축공학부</item>
-        <item>메카트로닉스공학부</item>
-        <item>산업경영학부</item>
-        <item>에너지신소재화학공학부</item>
-        <item>융합학과</item>
-        <item>전기ㆍ전자ㆍ통신공학부</item>
-        <item>컴퓨터공학부</item>
+        <item>@string/major_full_0</item>
+        <item>@string/major_full_1</item>
+        <item>@string/major_full_2</item>
+        <item>@string/major_full_3</item>
+        <item>@string/major_full_4</item>
+        <item>@string/major_full_5</item>
+        <item>@string/major_full_6</item>
+        <item>@string/major_full_7</item>
+        <item>@string/major_full_8</item>
+        <item>@string/major_full_9</item>
     </string-array>
 
     <string-array name="major_list">
@@ -79,4 +90,12 @@
         <item>@drawable/cover_image_9</item>
         <item>@drawable/cover_image_10</item>
     </integer-array>
+
+    <string-array name="lecture_bank_report_types">
+        <item>욕설/비하</item>
+        <item>유출/사칭/저작권 위배</item>
+        <item>허위/부적절한 정보</item>
+        <item>광고/도배</item>
+        <item>음란물</item>
+    </string-array>
 </resources>
