@@ -50,7 +50,7 @@ interface AuthApi {
     @POST(TIMETABLE)
     fun makeTimeTable(
             @Body userTimeTableRequest: UserTimeTableRequest
-    ): Single<CommonResponse>
+    ): Single<String>
 
     @HTTP(method = "DELETE", path = TIMETABLE, hasBody = true)
     fun deleteTimeTable(

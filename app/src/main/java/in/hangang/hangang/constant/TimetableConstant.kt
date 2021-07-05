@@ -3,9 +3,9 @@ package `in`.hangang.hangang.constant
 const val TIMETABLE_CRITERIA_PROFESSOR = "교수명"
 const val TIMETABLE_CRITERIA_LECTURE_NAME = "교과명"
 
-const val TIMETABLE_DEFAULT_SEMESTER_ID = 5
+const val TIMETABLE_DEFAULT_SEMESTER_ID = 6
 const val TIMETABLE_DEFAULT_SEMESTER_YEAR = 2021
-const val TIMETABLE_DEFAULT_TIMETABLE_NAME = "2021년 1학기 (1)"
+const val TIMETABLE_DEFAULT_TIMETABLE_NAME = "2021년 2학기 (1)"
 const val TIMETABLE_MAX_TIMETABLES = 50
 
 const val TIMETABLE_INVALID_TIMETABLE_ID = -1
@@ -24,7 +24,7 @@ const val TIMETABLE_MINUTE_30 = 1
 
 const val TIMETABLE_SEMESTER_1 = 5          //1학기 semester id
 const val TIMETABLE_SEMESTER_SUMMER = 5     //여름학기 semester id
-const val TIMETABLE_SEMESTER_2 = 5          //2학기 semester id
+const val TIMETABLE_SEMESTER_2 = 6          //2학기 semester id
 const val TIMETABLE_SEMESTER_WINTER = 5     //겨울학기 semester id
 
 const val TIMETABLE_EMPTY_POSITION = -1

@@ -28,7 +28,7 @@ class TimeTableLocalDataSource : TimeTableDataSource {
         return Single.never()
     }
 
-    override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
+    override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<String> {
         return Single.never()
     }
 

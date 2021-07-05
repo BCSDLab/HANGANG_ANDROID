@@ -38,7 +38,7 @@ class TimeTableRepository(
         )
     }
 
-    override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
+    override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<String> {
         return timeTableRemoteDataSource.makeTimeTable(userTimeTableRequest)
     }
 
