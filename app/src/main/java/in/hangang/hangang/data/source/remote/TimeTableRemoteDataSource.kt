@@ -41,7 +41,7 @@ class TimeTableRemoteDataSource(
         }
     }
 
-    override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse> {
+    override fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<String> {
         return authApi.makeTimeTable(userTimeTableRequest)
     }
 

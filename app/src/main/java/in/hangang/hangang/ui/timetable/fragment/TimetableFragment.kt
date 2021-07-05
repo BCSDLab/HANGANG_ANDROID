@@ -179,7 +179,10 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 binding.appBar.title = it
             })
             lectureTimetableRemovedEvent.observe(viewLifecycleOwner, EventObserver {
-                //setMode(TimetableViewModel.Mode.MODE_NORMAL)
+                setMode(TimetableViewModel.Mode.MODE_NORMAL)
+            })
+            error.observe(viewLifecycleOwner, EventObserver {
+                showCommonErrorDialog(it.message ?: "")
             })
         }
 
@@ -390,14 +393,26 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private fun showTimetableAddErrorDialog(message: String) {
         DialogUtil.makeSimpleDialog(
-                requireContext(),
-                title = getString(R.string.timetable_duplicated_title),
-                message = message,
-                positiveButtonText = getString(R.string.ok),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
-                },
-                cancelable = true
+            requireContext(),
+            title = getString(R.string.timetable_duplicated_title),
+            message = message,
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            },
+            cancelable = true
+        ).show()
+    }
+
+    private fun showCommonErrorDialog(message: String) {
+        DialogUtil.makeSimpleDialog(
+            requireContext(),
+            message = message,
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            },
+            cancelable = true
         ).show()
     }
 

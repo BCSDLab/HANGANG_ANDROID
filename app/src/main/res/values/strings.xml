@@ -258,4 +258,5 @@
     <string name="lecture_search_no_result_text">검색결과가 없습니다.</string>
     <string name="recently_query">최근 검색어</string>
     <string name="complete_write_review_message">리뷰가 정상적으로 작성되었습니다.</string>
+    <string name="semester_20212">2021년 2학기</string>
 </resources>

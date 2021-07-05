@@ -20,7 +20,7 @@ interface TimeTableDataSource {
             semesterDateId: Int
     ): Single<List<LectureTimeTable>>
 
-    fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<CommonResponse>
+    fun makeTimeTable(userTimeTableRequest: UserTimeTableRequest): Single<String>
     fun removeTimeTable(timetableId: Int): Single<CommonResponse>
     fun modifyTimeTableName(timetableId: Int, name: String): Single<CommonResponse>
     fun setMainTimeTable(timetableId: Int): Single<CommonResponse>
