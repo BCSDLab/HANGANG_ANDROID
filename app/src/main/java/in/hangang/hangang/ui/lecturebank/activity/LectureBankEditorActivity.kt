@@ -242,18 +242,7 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
         if (uploadedFileSize + urisSize > FILE_50MB)
             showFileSizeExceedDialog()
         else {
-            uris.forEach { uri ->
-                lectureBankEditorViewModel.uploadSingleFile(
-                    uploadFile = UploadFile(
-                        0, 0,
-                        fileName = uri.getDisplayName(applicationContext) ?: "",
-                        ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri)) ?: "*",
-                        size = uri.getSize(applicationContext) ?: 0L,
-                        url = ""
-                    ),
-                    uri = uri
-                )
-            }
+            lectureBankEditorViewModel.uploadSingleFile(applicationContext, uris)
         }
     }
 
