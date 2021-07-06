@@ -7,12 +7,9 @@ import `in`.hangang.core.util.getDisplayName
 import `in`.hangang.core.util.getSize
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.lecture.Lecture
-import `in`.hangang.hangang.data.source.repository.LectureBankRepository
 import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
-import `in`.hangang.hangang.data.response.CommonResponse
-import `in`.hangang.hangang.ui.LectureBankFileAdapter
+import `in`.hangang.hangang.data.source.repository.LectureBankRepository
 import `in`.hangang.hangang.util.handleHttpException
-import `in`.hangang.hangang.util.handleProgress
 import `in`.hangang.hangang.util.withThread
 import android.content.Context
 import android.net.Uri
@@ -22,19 +19,12 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
-import java.util.*
 
 class LectureBankEditorViewModel(
     private val lectureBankRepository: LectureBankRepository
 ) : ViewModelBase() {
 
-    private lateinit var title: String
-    private lateinit var content: String
-    private lateinit var category: String
-    private lateinit var semesterDate: String
-
-    private var isFileUploading = false
-    private var uploadQueue = LinkedList<Pair<UploadFile, Observable<ResponseWithProgress<String>>>>()
+    private var uploadDisposable : Disposable? = null
 
     private val semesterDateList = listOf(
         LECTURE_BANK_SEMESTER_DATE_ID_1,
@@ -44,89 +34,36 @@ class LectureBankEditorViewModel(
         LECTURE_BANK_SEMESTER_DATE_ID_5
     )
 
-    private val fileIsUploading = mutableMapOf<UploadFile, Disposable>()
-    private val uploadedFile = mutableMapOf<UploadFile, String>()
-    private val fileUploadStatusMap = mutableMapOf<UploadFile, Int>()
-    private val uploadFileList = mutableListOf<UploadFile>()
+    private val uploadFileMap = mutableMapOf<UploadFile, Uri>()
 
     private val _lecture = MutableLiveData<Lecture?>()
 
-    private val _uploadFiles = MutableLiveData<List<UploadFile>>()
-    private val _fileUploadStatus = MutableLiveData<Pair<UploadFile, Int>>()
-    private val _fileUploadError = MutableLiveData<Event<Pair<UploadFile, Throwable>>>()
-    private val _lectureBankUploadRequested = MutableLiveData<Boolean>()
-    private val _lectureBankUploaded = MutableLiveData<Event<CommonResponse>>()
+    private val _uploadFiles = MutableLiveData<Map<UploadFile, Uri>>()
+    private val _lectureBankUploadProgress =
+        MutableLiveData(LectureBankUploadStatus.LECTURE_BANK_NOT_UPLOADING to 0) //status, progress pair
     private val _lectureBankUploadError = MutableLiveData<Event<Throwable>>()
 
     val lecture: LiveData<Lecture?> get() = _lecture
-    val uploadFiles: LiveData<List<UploadFile>> get() = _uploadFiles
-    val fileUploadStatus: LiveData<Pair<UploadFile, Int>> get() = _fileUploadStatus
-    val fileUploadError: LiveData<Event<Pair<UploadFile, Throwable>>> get() = _fileUploadError
-    val lectureBankUploaded: LiveData<Event<CommonResponse>> get() = _lectureBankUploaded
+    val uploadFiles: LiveData<Map<UploadFile, Uri>> get() = _uploadFiles
+    val lectureBankUploadProgress: LiveData<Pair<LectureBankUploadStatus, Int>> get() = _lectureBankUploadProgress //status, progress pair
     val lectureBankUploadError: LiveData<Event<Throwable>> get() = _lectureBankUploadError
-    val lectureBankUploadRequested: LiveData<Boolean> get() = _lectureBankUploadRequested
 
-    fun uploadSingleFile(applicationContext: Context, uris: List<Uri>) {
+    fun uploadFiles(applicationContext: Context, uris: List<Uri>) {
         uris.forEach { uri ->
             val uploadFile = UploadFile(
                 0, 0,
                 fileName = uri.getDisplayName(applicationContext) ?: "",
                 ext = MimeTypeMap.getSingleton()
-                    .getExtensionFromMimeType(applicationContext.contentResolver.getType(uri)) ?: "*",
+                    .getExtensionFromMimeType(applicationContext.contentResolver.getType(uri))
+                    ?: "*",
                 size = uri.getSize(applicationContext) ?: 0L,
                 url = ""
             )
 
-            fileUploadStatusMap[uploadFile] = LectureBankFileAdapter.PROGRESS_INDETERMINATE
-            uploadFileList.add(uploadFile)
-            uploadQueue.push(uploadFile to lectureBankRepository.uploadSingleFile(uri))
+            uploadFileMap[uploadFile] = uri
         }
 
-        _uploadFiles.postValue(uploadFileList)
-
-        if (isFileUploading == false) {
-            val item = uploadQueue.pollFirst()
-            if (item != null) {
-                subscribeFileUpload(item.first, item.second)
-                isFileUploading = true
-            }
-        }
-    }
-
-    private fun subscribeFileUpload(uploadFile: UploadFile, observable: Observable<ResponseWithProgress<String>>) {
-        fileIsUploading[uploadFile] = observable.subscribe({
-            fileUploadStatusMap[uploadFile] = it.percentage
-            _fileUploadStatus.postValue(uploadFile to it.percentage)
-            if (it.response != null)
-                uploadedFile[uploadFile] = it.response!!
-        }, {
-            _fileUploadError.postValue(Event(uploadFile to it))
-            fileIsUploading.remove(uploadFile)
-            uploadFileList.remove(uploadFile)
-            _uploadFiles.value = uploadFileList
-            _lectureBankUploadRequested.postValue(false)
-        }, {
-            fileUploadStatusMap[uploadFile] = LectureBankFileAdapter.PROGRESS_NONE
-            _fileUploadStatus.postValue(uploadFile to LectureBankFileAdapter.PROGRESS_NONE)
-            fileIsUploading.remove(uploadFile)
-
-            val item = uploadQueue.pollFirst()
-            if (item != null) {
-                subscribeFileUpload(item.first, item.second)
-                isFileUploading = true
-            } else {
-                isFileUploading = false
-                if (_lectureBankUploadRequested.value == true) {
-                    uploadLectureBank(title, content, category, semesterDate)
-                }
-
-            }
-        })
-            .addTo(compositeDisposable)
-    }
-
-    fun setUploadFiles(uploadFiles: List<UploadFile>) {
-        _uploadFiles.postValue(uploadFiles)
+        _uploadFiles.postValue(uploadFileMap)
     }
 
     fun setLecture(lecture: Lecture?) {
@@ -134,46 +71,72 @@ class LectureBankEditorViewModel(
     }
 
     fun removeUploadFile(uploadFile: UploadFile) {
-        fileIsUploading[uploadFile]?.dispose()
-        fileIsUploading.remove(uploadFile)
-        uploadedFile.remove(uploadFile)
-        uploadFileList.remove(uploadFile)
-        fileUploadStatusMap.remove(uploadFile)
+        uploadFileMap.remove(uploadFile)
 
-        _uploadFiles.postValue(uploadFileList)
+        _uploadFiles.postValue(uploadFileMap)
     }
 
     fun uploadLectureBank(title: String, content: String, category: String, semesterDate: String) {
-        this.title = title
-        this.content = content
-        this.category = category
-        this.semesterDate = semesterDate
-        if (fileIsUploading.isEmpty()) {
-            uploadLectureBankRx(title, content, category, semesterDate)
-        } else {
-            _lectureBankUploadRequested.postValue(true)
+        val uploadedFile = mutableListOf<String>()
+        val uploadFileCount = uploadFileMap.size
+        var totalProgress = 0
+
+        if (uploadFileCount > 0) {
+            _lectureBankUploadProgress.postValue(
+                LectureBankUploadStatus.LECTURE_BANK_UPLOADING_FILES to totalProgress / uploadFileCount
+            )
+
+            uploadDisposable = Observable.concat(uploadFileMap.values.map { lectureBankRepository.uploadSingleFile(it) })
+                .withThread()
+                .handleHttpException()
+                .subscribe({
+                    totalProgress += it.percentage
+                    it.response?.let { tempUrl ->
+                        uploadedFile.add(tempUrl)
+                    }
+
+                    _lectureBankUploadProgress.postValue(
+                        LectureBankUploadStatus.LECTURE_BANK_UPLOADING_FILES to totalProgress / uploadFileCount
+                    )
+                }, {
+                    _lectureBankUploadError.postValue(Event(it))
+                }, {
+                    _lectureBankUploadProgress.value =
+                        LectureBankUploadStatus.LECTURE_BANK_UPLOADING_LECTURE_BANK to 100
+
+                    lectureBankRepository.uploadLectureBank(
+                        title,
+                        content,
+                        category,
+                        uploadedFile,
+                        _lecture.value?.id ?: -1,
+                        getLectureBankId(semesterDate)
+                    )
+                        .withThread()
+                        .handleHttpException()
+                        .subscribe({
+                            _lectureBankUploadProgress.value =
+                                LectureBankUploadStatus.LECTURE_BANK_UPLOADED to 100
+                        }, {
+                            _lectureBankUploadError.postValue(Event(it))
+                        })
+                })
+                .addTo(compositeDisposable)
         }
     }
 
-    private fun uploadLectureBankRx(title: String, content: String, category: String, semesterDate: String) {
-        _lectureBankUploadRequested.postValue(false)
-        lectureBankRepository.uploadLectureBank(
-            title,
-            content,
-            category,
-            uploadedFile.values.toList(),
-            _lecture.value?.id ?: -1,
-            getLectureBankId(semesterDate)
-        )
-            .withThread()
-            .handleHttpException()
-            .handleProgress(this)
-            .subscribe({
-                _lectureBankUploaded.postValue(Event(it))
-            }, {
-                _lectureBankUploadError.postValue(Event(it))
-            })
+    fun cancelUploadLectureBank() {
+        uploadDisposable?.dispose()
+        _lectureBankUploadProgress.postValue(LectureBankUploadStatus.LECTURE_BANK_NOT_UPLOADING to 0)
     }
 
-    private fun getLectureBankId(semesterDate: String): Int = semesterDateList.indexOf(semesterDate) + 1
+    private fun getLectureBankId(semesterDate: String): Int =
+        semesterDateList.indexOf(semesterDate) + 1
+
+    enum class LectureBankUploadStatus {
+        LECTURE_BANK_NOT_UPLOADING,
+        LECTURE_BANK_UPLOADING_FILES,
+        LECTURE_BANK_UPLOADING_LECTURE_BANK,
+        LECTURE_BANK_UPLOADED
+    }
 }
