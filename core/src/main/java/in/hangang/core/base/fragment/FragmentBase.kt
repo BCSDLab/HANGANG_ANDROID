@@ -30,12 +30,6 @@ open class FragmentBase : Fragment(), IProgressDialog {
         super.onDestroy()
     }
 
-    inline fun requireWriteStorage(crossinline result: () -> Unit) = try {
-        (requireActivity() as ActivityBase).requireWriteStorage { result() }
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-
     override fun showProgressDialog() {
         progressDialog.show()
     }
