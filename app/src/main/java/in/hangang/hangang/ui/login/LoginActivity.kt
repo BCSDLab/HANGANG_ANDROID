@@ -53,6 +53,7 @@ class LoginActivity : ViewBindingActivity<ActivityLoginBinding>() {
             isLoginSuccess.observe(this@LoginActivity) {
                 if (it) {
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    finish()
                 }
             }
             errorConfig.observe(this@LoginActivity, { status ->

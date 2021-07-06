@@ -8,6 +8,7 @@ import `in`.hangang.hangang.ui.login.LoginActivity
 import `in`.hangang.hangang.ui.settings.viewmodel.SettingsActivityViewModel
 import android.content.Intent
 import android.os.Bundle
+import com.orhanobut.hawk.Hawk
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
@@ -74,6 +75,7 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
             positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
                 settingsViewModel.logoutAll()
+                Hawk.destroy()
                 Intent(this, LoginActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(this)
