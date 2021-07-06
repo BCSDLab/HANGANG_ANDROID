@@ -12,6 +12,7 @@ class SemesterUtil {
                 3 -> context.getString(R.string.semester_20201)
                 4 -> context.getString(R.string.semester_20202)
                 5 -> context.getString(R.string.semester_20211)
+                6 -> context.getString(R.string.semester_20212)
                 else -> "Unknown"
             }
         }

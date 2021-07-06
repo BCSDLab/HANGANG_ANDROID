@@ -20,36 +20,79 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hangang"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.settings.activity.SettingsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.settings.activity.MyProfileActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".ui.lecturereview.activity.LectureEvaluationActivity"
-            android:windowSoftInputMode="adjustUnspecified|adjustPan" />
-        <activity android:name=".ui.mypage.activity.MyScrapLectureBankActivity" />
-        <activity android:name=".ui.timetable.activity.TimetableLectureFilterActivity" />
-        <activity android:name=".ui.timetable.activity.TimetableAddActivity" />
-        <activity android:name=".ui.timetable.activity.TimetableListActivity" />
-        <activity android:name=".ui.signup.activity.SignUpMajorActivity" />
-        <activity android:name=".ui.signup.activity.SignUpActivity" />
-        <activity android:name=".ui.signup.activity.SignUpEmailActivity" />
-        <activity android:name=".ui.signup.activity.SignUpDocumentActivity" />
-        <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.mypage.activity.MyScrapLectureReviewActivity" />
-        <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity" />
-        <activity android:name=".ui.mypage.activity.MyPagePointRecordActivity" />
-        <activity android:name=".ui.lecturebank.activity.LectureBankSelectLectureActivity">
+            android:windowSoftInputMode="adjustUnspecified|adjustPan"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.lecturebank.activity.LectureBankEditorActivity">
+        <activity android:name=".ui.mypage.activity.MyScrapLectureBankActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.lecturebank.activity.LectureBankFilterActivity">
+        <activity android:name=".ui.timetable.activity.TimetableLectureFilterActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.lecturebank.activity.LectureBankDetailActivity"/>
-        <activity android:name=".ui.login.LoginActivity">
+        <activity android:name=".ui.timetable.activity.TimetableAddActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.timetable.activity.TimetableListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.signup.activity.SignUpMajorActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.signup.activity.SignUpActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.signup.activity.SignUpEmailActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.signup.activity.SignUpDocumentActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.main.MainActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.mypage.activity.MyScrapLectureReviewActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.mypage.activity.MyPagePurchasedBankActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.mypage.activity.MyPagePointRecordActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.lecturebank.activity.LectureBankSelectLectureActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.lecturebank.activity.LectureBankEditorActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.lecturebank.activity.LectureBankFilterActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.lecturebank.activity.LectureBankDetailActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity"/>
+        <activity android:name=".ui.changepassword.activity.ChangePasswordActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

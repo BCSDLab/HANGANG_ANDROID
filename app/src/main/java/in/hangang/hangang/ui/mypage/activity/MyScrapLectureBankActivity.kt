@@ -35,11 +35,13 @@ class MyScrapLectureBankActivity : ViewBindingActivity<ActivityMyScrapLectureBan
             }
         }
     }
+
     private val editButton: View by lazy {
         appBarTextButton(
             getString(R.string.edit)
         )
     }
+
     private val finishButton: View by lazy {
         appBarTextButton(
             getString(R.string.my_scrap_edit_finish)

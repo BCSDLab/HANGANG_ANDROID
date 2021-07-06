@@ -213,6 +213,25 @@
     <string name="my_scrap_edit_finish">완료</string>
     <string name="my_scrap_select_all">전체선택</string>
 
+    <string name="profile">프로필</string>
+    <string name="change_profile">내 정보 변경</string>
+    <string name="app_settings">앱 설정</string>
+    <string name="auto_login">자동로그인</string>
+    <string name="app_inform">앱 정보</string>
+    <string name="app_version">v 1.0 최신 버전입니다.</string>
+    <string name="questions">문의하기</string>
+    <string name="log_out">로그아웃</string>
+    <string name="delete_account">회원탈퇴</string>
+    <string name="profile_name">이름 (학번)</string>
+    <string name="profile_id">아이디</string>
+    <string name="profile_nickname">닉네임</string>
+    <string name="profile_edit_button">수정</string>
+    <string name="profile_done_button">완료</string>
+    <string name="profile_logout_dialog_message">로그아웃 하시겠습니까?</string>
+    <string name="profile_delete_account_dialog_message">회원 탈퇴를 하시겠습니까?</string>
+    <string name="profile_major">전공</string>
+    <string name="profile_nickname_error">사용중인 닉네임입니다!</string>
+
     <string name="apologize">죄송합니다.</string>
     <string name="ranking_fail_message_1">강의랭킹을</string>
     <string name="ranking_fail_message_2">불러오지 못하였습니다.</string>
@@ -350,5 +369,5 @@
     <string name="lecture_bank_uploading_lecture_bank">강의자료 업로드 중...</string>
     <string name="lecture_bank_upload_error_message">강의자료 업로드 중 오류가 발생했습니다.</string>
     <string name="lecture_bank_upload_retry">다시 시도</string>
-
+    <string name="semester_20212">2021년 2학기</string>
 </resources>

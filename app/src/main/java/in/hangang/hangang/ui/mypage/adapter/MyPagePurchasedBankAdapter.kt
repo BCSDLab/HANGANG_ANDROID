@@ -1,8 +1,8 @@
 package `in`.hangang.hangang.ui.mypage.adapter
 
-import `in`.hangang.core.view.recyclerview.OnItemClickRecyclerViewAdapter
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
+import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ItemMyPagePurchasedBankBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import android.view.LayoutInflater
@@ -11,9 +11,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MyPagePurchasedBankAdapter : OnItemClickRecyclerViewAdapter<MyPagePurchasedBankAdapter.ViewHolder>() {
+class MyPagePurchasedBankAdapter : RecyclerView.Adapter<MyPagePurchasedBankAdapter.ViewHolder>() {
 
     private val lectureBanks = mutableListOf<LectureBank>()
+
+    var onItemClickListener : OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -25,7 +27,10 @@ class MyPagePurchasedBankAdapter : OnItemClickRecyclerViewAdapter<MyPagePurchase
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(lectureBanks[holder.adapterPosition])
+        holder.bind(lectureBanks[holder.absoluteAdapterPosition])
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.onItemClick(holder.absoluteAdapterPosition, lectureBanks[holder.absoluteAdapterPosition])
+        }
     }
 
     override fun getItemCount() = lectureBanks.size
@@ -36,7 +41,21 @@ class MyPagePurchasedBankAdapter : OnItemClickRecyclerViewAdapter<MyPagePurchase
         notifyDataSetChanged()
     }
 
-    class ViewHolder(
+    inline fun setOnItemClickListener(
+        crossinline onItemClick : (Int, LectureBank) -> Unit,
+        crossinline onFileItemClick: (Int, LectureBank, UploadFile, Boolean) -> Unit) {
+        onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(position: Int, lectureBank: LectureBank) {
+                onItemClick(position, lectureBank)
+            }
+
+            override fun onFileItemClick(position: Int, lectureBank: LectureBank, uploadFile: UploadFile, isDownloading: Boolean) {
+                onFileItemClick(position, lectureBank, uploadFile, isDownloading)
+            }
+        }
+    }
+
+    inner class ViewHolder(
         private val binding: ItemMyPagePurchasedBankBinding,
         private val layoutManager: RecyclerView.LayoutManager
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -51,8 +70,17 @@ class MyPagePurchasedBankAdapter : OnItemClickRecyclerViewAdapter<MyPagePurchase
                 textViewLectureLectureProfessor.text = lectureBank.lecture.professor
                 recyclerViewFile.adapter = LectureBankFileAdapter().apply {
                     setFiles(lectureBank.uploadFiles ?: listOf())
+                    isEnabled = true
+                    setOnItemClickListener { i, uploadFile, b ->
+                        this@MyPagePurchasedBankAdapter.onItemClickListener?.onFileItemClick(i, lectureBank, uploadFile, b)
+                    }
                 }
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int, lectureBank: LectureBank)
+        fun onFileItemClick(position: Int, lectureBank: LectureBank, uploadFile: UploadFile, isDownloading: Boolean)
     }
 }

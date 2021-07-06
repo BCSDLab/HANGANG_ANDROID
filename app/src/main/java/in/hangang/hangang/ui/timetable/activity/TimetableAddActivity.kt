@@ -30,12 +30,10 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
                 binding.buttonAddTimetable.isEnabled = it
             }
             isAdded.observe(this@TimetableAddActivity, EventObserver {
-                if (it) {
                     setResult(TimeTableAddActivityContract.TIMETABLE_RESULT_IS_ADDED, Intent().apply {
                         putExtra(TimeTableAddActivityContract.TIMETABLE_IS_ADDED, true)
                     })
                     finish()
-                }
             })
             error.observe(this@TimetableAddActivity, EventObserver {
                 when (it.code) {

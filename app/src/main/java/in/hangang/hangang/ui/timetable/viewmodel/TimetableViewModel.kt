@@ -52,6 +52,8 @@ class TimetableViewModel(
 
     private val _timestamp = MutableLiveData<List<CustomTimetableTimestamp>>()
 
+    private val _error = MutableLiveData<Event<CommonResponse>>()
+
     val timetables: LiveData<Map<Int, List<TimeTable>>> get() = _timetables
     val mainTimetableEvent: LiveData<Event<TimeTable>> get() = _mainTimetableEvent
     val setMainTimetableEvent: LiveData<Event<CommonResponse>> get() = _setMainTimetableEvent
@@ -67,6 +69,8 @@ class TimetableViewModel(
     val customLectureAdded: LiveData<Event<Boolean>> get() = _customLectureAdded
     val availableAddingCustomTimetable: LiveData<Boolean> get() = _availableAddingCustomTimetable
     val lectureTimetableRemovedEvent : LiveData<Event<Int>> get() = _lectureTimetableRemovedEvent
+
+    val error : LiveData<Event<CommonResponse>> get() = _error
 
     fun setMode(mode: Mode) {
         if (_mode.value != mode)
@@ -101,6 +105,7 @@ class TimetableViewModel(
             }, {
                 //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
                 LogUtil.e(it.toCommonResponse().errorMessage)
+                _error.value = Event(it.toCommonResponse())
             })
             .addTo(compositeDisposable)
     }
@@ -115,6 +120,7 @@ class TimetableViewModel(
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
+                _error.value = Event(it.toCommonResponse())
                 //TODO 메인 시간표 가져오는 중 오류
             })
     }
@@ -128,6 +134,7 @@ class TimetableViewModel(
                     _setMainTimetableEvent.value = Event(it)
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
+                    _error.value = Event(it.toCommonResponse())
                     //TODO 메인 시간표 설정 중 오류
                 })
     }
@@ -147,6 +154,7 @@ class TimetableViewModel(
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
+                _error.value = Event(it.toCommonResponse())
                 //TODO 시간표 삭제 중 오류
             })
     }
@@ -160,6 +168,7 @@ class TimetableViewModel(
                     _timetableNameModifiedEvent.postValue(Event(name))
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
+                    _error.value = Event(it.toCommonResponse())
                     //TODO 시간표 이름 수정 중 오류
                 })
                 .addTo(compositeDisposable)
@@ -186,6 +195,7 @@ class TimetableViewModel(
                     _timetableBitmapImage.postValue(it)
                 }, {
                     LogUtil.e(it.toCommonResponse().errorMessage)
+                    _error.value = Event(it.toCommonResponse())
                     //TODO 시간표 이미지 만드는 중 오류
                 })
                 .addTo(compositeDisposable)
@@ -205,6 +215,7 @@ class TimetableViewModel(
             }, {
                 //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
                 LogUtil.e(it.toCommonResponse().errorMessage)
+                _error.value = Event(it.toCommonResponse())
             })
             .addTo(compositeDisposable)
     }
@@ -223,6 +234,7 @@ class TimetableViewModel(
                         _lectureTimetablesInTimetable.postValue(it.lectureList)
                     }, {
                         _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
+                        _error.value = Event(it.toCommonResponse())
                     })
                     .addTo(compositeDisposable)
     }
@@ -242,6 +254,7 @@ class TimetableViewModel(
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
+                _error.value = Event(it.toCommonResponse())
                 //TODO 시간표에 강의 삭제 중 에러 발생시
             })
             .addTo(compositeDisposable)
@@ -294,6 +307,7 @@ class TimetableViewModel(
                     _lectureTimetablesInTimetable.postValue(it.lectureList)
                 }, {
                     _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
+                    _error.value = Event(it.toCommonResponse())
                 })
     }
 

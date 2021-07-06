@@ -6,8 +6,10 @@ import `in`.hangang.hangang.data.entity.mypage.PointRecord
 import `in`.hangang.hangang.data.entity.user.User
 import `in`.hangang.hangang.data.entity.user.UserCount
 import `in`.hangang.hangang.data.response.CommonResponse
+import `in`.hangang.hangang.data.response.MyProfileResponse
 import `in`.hangang.hangang.data.response.TokenResponse
 import `in`.hangang.hangang.data.source.UserDataSource
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class UserRepository(
@@ -71,7 +73,7 @@ class UserRepository(
     override fun getLectureBankHit(): Single<List<LectureDoc>> {
         return userRemoteDataSource.getLectureBankHit()
     }
-    
+
     override fun getUserInformation(): Single<User> {
         return userRemoteDataSource.getUserInformation()
     }
@@ -86,6 +88,30 @@ class UserRepository(
 
     override fun getPurchasedBanks(): Single<List<LectureBank>> {
         return userRemoteDataSource.getPurchasedBanks()
+    }
+
+    override fun deleteAccount(): Single<CommonResponse> {
+        return userRemoteDataSource.deleteAccount()
+    }
+
+    override fun logoutAll(): Single<CommonResponse> {
+        return userRemoteDataSource.logoutAll()
+    }
+
+    override fun saveAutoLogin(isAutoLogin: Boolean): Completable {
+        return userLocalDataSource.saveAutoLogin(isAutoLogin)
+    }
+
+    override fun getAutoLoginStatus(): Single<Boolean> {
+        return userLocalDataSource.getAutoLoginStatus()
+    }
+
+    override fun getMyProfile(): Single<MyProfileResponse> {
+        return userRemoteDataSource.getMyProfile()
+    }
+
+    override fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse> {
+        return userRemoteDataSource.saveProfile(name, nickName, major)
     }
 
     override fun getUserInfo(): Single<User> {
