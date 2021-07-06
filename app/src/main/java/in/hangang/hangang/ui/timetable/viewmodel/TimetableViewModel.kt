@@ -9,18 +9,22 @@ import `in`.hangang.hangang.data.entity.timetable.toTimeTable
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.TimeTableRepository
+import `in`.hangang.hangang.ui.customview.timetable.TimetableColumnHeader
+import `in`.hangang.hangang.ui.customview.timetable.TimetableLayout
 import `in`.hangang.hangang.ui.customview.timetable.TimetableUtil
 import `in`.hangang.hangang.util.*
+import `in`.hangang.hangang.util.file.FileUtil
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.view.ViewGroup
+import android.graphics.Paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableViewModel(
-        private val timeTableRepository: TimeTableRepository
+    private val timeTableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
     enum class Mode {
@@ -38,7 +42,8 @@ class TimetableViewModel(
     private val _mainTimetableEvent = MutableLiveData<Event<TimeTable>>()
     private val _setMainTimetableEvent = MutableLiveData<Event<CommonResponse>>()
     private val _timetableNameModifiedEvent = MutableLiveData<Event<String>>()
-    private val _timetableBitmapImage = MutableLiveData<Bitmap>()
+    private val _timetableBitmapSaved = MutableLiveData<Event<Boolean>>()
+    private val _timetableBitmapError = MutableLiveData<Event<String>>()
 
     private val _mode = MutableLiveData(Mode.MODE_NORMAL)
     private val _displayingTimeTable = MutableLiveData<TimeTable>()
@@ -58,7 +63,7 @@ class TimetableViewModel(
     val mainTimetableEvent: LiveData<Event<TimeTable>> get() = _mainTimetableEvent
     val setMainTimetableEvent: LiveData<Event<CommonResponse>> get() = _setMainTimetableEvent
     val timetableNameModifiedEvent: LiveData<Event<String>> get() = _timetableNameModifiedEvent
-    val timetableBitmapImage: LiveData<Bitmap> get() = _timetableBitmapImage
+    val timetableBitmapSaved: LiveData<Event<Boolean>> get() = _timetableBitmapSaved
     val mode: LiveData<Mode> get() = _mode
     val displayingTimeTable: LiveData<TimeTable> get() = _displayingTimeTable
     val lectureTimetablesInTimetable: LiveData<List<LectureTimeTable>> get() = _lectureTimetablesInTimetable
@@ -68,9 +73,10 @@ class TimetableViewModel(
     val timestamp: LiveData<List<CustomTimetableTimestamp>> get() = _timestamp
     val customLectureAdded: LiveData<Event<Boolean>> get() = _customLectureAdded
     val availableAddingCustomTimetable: LiveData<Boolean> get() = _availableAddingCustomTimetable
-    val lectureTimetableRemovedEvent : LiveData<Event<Int>> get() = _lectureTimetableRemovedEvent
+    val lectureTimetableRemovedEvent: LiveData<Event<Int>> get() = _lectureTimetableRemovedEvent
+    val timetableBitmapError : LiveData<Event<String>> get() = _timetableBitmapError
 
-    val error : LiveData<Event<CommonResponse>> get() = _error
+    val error: LiveData<Event<CommonResponse>> get() = _error
 
     fun setMode(mode: Mode) {
         if (_mode.value != mode)
@@ -79,19 +85,19 @@ class TimetableViewModel(
 
     fun getTimetables() {
         timeTableRepository.getTimeTables()
-                .withThread()
-                .handleProgress(this)
-                .handleHttpException()
-                .doOnSuccess {
-                    listTimetables.clear()
-                    listTimetables.addAll(it.toValuesList())
-                }
-                .subscribe({
-                    _timetables.postValue(it)
-                }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                    // TODO 시간표 목록 가져오기 중 오류
-                })
+            .withThread()
+            .handleProgress(this)
+            .handleHttpException()
+            .doOnSuccess {
+                listTimetables.clear()
+                listTimetables.addAll(it.toValuesList())
+            }
+            .subscribe({
+                _timetables.postValue(it)
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+                // TODO 시간표 목록 가져오기 중 오류
+            })
     }
 
     fun getTimeTable(timetable: TimeTable) {
@@ -127,16 +133,16 @@ class TimetableViewModel(
 
     fun setMainTimetable(timetableId: Int) {
         timeTableRepository.setMainTimeTable(timetableId)
-                .withThread()
-                .handleProgress(this)
-                .handleHttpException()
-                .subscribe({
-                    _setMainTimetableEvent.value = Event(it)
-                }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                    _error.value = Event(it.toCommonResponse())
-                    //TODO 메인 시간표 설정 중 오류
-                })
+            .withThread()
+            .handleProgress(this)
+            .handleHttpException()
+            .subscribe({
+                _setMainTimetableEvent.value = Event(it)
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+                _error.value = Event(it.toCommonResponse())
+                //TODO 메인 시간표 설정 중 오류
+            })
     }
 
     fun removeTimetable(timetable: TimeTable) {
@@ -161,44 +167,82 @@ class TimetableViewModel(
 
     fun modifyTimeTableName(timetable: TimeTable, name: String) {
         timeTableRepository.modifyTimeTableName(timetable.id, name)
-                .withThread()
-                .handleHttpException()
-                .handleProgress(this)
-                .subscribe({
-                    _timetableNameModifiedEvent.postValue(Event(name))
-                }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                    _error.value = Event(it.toCommonResponse())
-                    //TODO 시간표 이름 수정 중 오류
-                })
-                .addTo(compositeDisposable)
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _timetableNameModifiedEvent.postValue(Event(name))
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+                _error.value = Event(it.toCommonResponse())
+                //TODO 시간표 이름 수정 중 오류
+            })
+            .addTo(compositeDisposable)
     }
 
-    fun getTimetableBitmapImage(viewGroup: ViewGroup) {
-        Single.create<Bitmap> { subscriber ->
+    fun getTimetableBitmapImage(
+        fileUtil: FileUtil,
+        timetableColumnHeader: TimetableColumnHeader,
+        timetableLayout: TimetableLayout
+    ) {
+        Completable.create { subscriber ->
             try {
-                val bitmap = Bitmap.createBitmap(
-                        viewGroup.measuredWidth,
-                        viewGroup.measuredHeight,
+                try {
+                    val timetableLayoutBitmap = Bitmap.createBitmap(
+                        timetableLayout.width,
+                        timetableLayout.height,
                         Bitmap.Config.ARGB_8888
-                )
-                val canvas = Canvas(bitmap)
-                viewGroup.draw(canvas)
-                subscriber.onSuccess(bitmap)
+                    )
+                    val timetableHeaderBitmap = Bitmap.createBitmap(
+                        timetableColumnHeader.width,
+                        timetableColumnHeader.height,
+                        Bitmap.Config.ARGB_8888
+                    )
+                    val timetableLayoutCanvas = Canvas(timetableLayoutBitmap)
+                    val timetableHeaderCanvas = Canvas(timetableHeaderBitmap)
+                    timetableLayout.draw(timetableLayoutCanvas)
+                    timetableColumnHeader.draw(timetableHeaderCanvas)
+
+                    val bitmap = Bitmap.createScaledBitmap(
+                        timetableHeaderBitmap,
+                        timetableHeaderBitmap.width,
+                        timetableHeaderBitmap.height + timetableLayoutBitmap.height,
+                        true)
+                    val canvas = Canvas(bitmap)
+                    val paint = Paint().apply {
+                        isDither = true
+                        flags = Paint.ANTI_ALIAS_FLAG
+                    }
+                    canvas.drawBitmap(timetableHeaderBitmap, 0f, 0f, paint)
+                    canvas.drawBitmap(
+                        timetableLayoutBitmap,
+                        0f,
+                        timetableHeaderBitmap.height.toFloat(),
+                        paint
+                    )
+
+                    timetableHeaderBitmap.recycle()
+                    timetableLayoutBitmap.recycle()
+
+                    fileUtil.saveImageToPictures(bitmap, "${displayingTimeTable.value?.name ?: "Unknown"}.jpg")
+
+                    subscriber.onComplete()
+                } catch (e: Exception) {
+                    subscriber.onError(e)
+                }
             } catch (e: Exception) {
                 subscriber.onError(e)
             }
         }
-                .withThread()
-                .handleProgress(this)
-                .subscribe({
-                    _timetableBitmapImage.postValue(it)
-                }, {
-                    LogUtil.e(it.toCommonResponse().errorMessage)
-                    _error.value = Event(it.toCommonResponse())
-                    //TODO 시간표 이미지 만드는 중 오류
-                })
-                .addTo(compositeDisposable)
+            .withThread()
+            .handleProgress(this)
+            .subscribe({
+                _timetableBitmapSaved.value = Event(true)
+            }, {
+                LogUtil.e(it.localizedMessage)
+                _timetableBitmapError.value = Event(it.localizedMessage ?: "")
+            })
+            .addTo(compositeDisposable)
     }
 
     fun setDisplayingTimeTable(timetable: TimeTable) {
@@ -221,22 +265,22 @@ class TimetableViewModel(
     }
 
     fun addTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
-            timeTableRepository.addLectureInTimeTable(
-                    lectureId = lectureTimeTable.lectureTimetableId ?: 0,
-                    timetableId = timetable.id
-            ).flatMap {
-                timeTableRepository.getTimetable(timetable.id)
-            }
-                    .withThread()
-                    .handleHttpException()
-                    .handleProgress(this)
-                    .subscribe({
-                        _lectureTimetablesInTimetable.postValue(it.lectureList)
-                    }, {
-                        _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
-                        _error.value = Event(it.toCommonResponse())
-                    })
-                    .addTo(compositeDisposable)
+        timeTableRepository.addLectureInTimeTable(
+            lectureId = lectureTimeTable.lectureTimetableId ?: 0,
+            timetableId = timetable.id
+        ).flatMap {
+            timeTableRepository.getTimetable(timetable.id)
+        }
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lectureTimetablesInTimetable.postValue(it.lectureList)
+            }, {
+                _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
+                _error.value = Event(it.toCommonResponse())
+            })
+            .addTo(compositeDisposable)
     }
 
     fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
@@ -281,44 +325,44 @@ class TimetableViewModel(
 
     fun checkValidation(name: String, professor: String) {
         _availableAddingCustomTimetable.postValue(
-                name.isNotEmpty() &&
-                        professor.isNotEmpty() &&
-                        TimetableUtil.convertCustomTimetableTimestampToApiExpression(times) != "[]"
+            name.isNotEmpty() &&
+                    professor.isNotEmpty() &&
+                    TimetableUtil.convertCustomTimetableTimestampToApiExpression(times) != "[]"
         )
     }
 
     fun addCustomLecture(
-            name: String,
-            professor: String,
-            classTime: String,
-            timetableId: Int
+        name: String,
+        professor: String,
+        classTime: String,
+        timetableId: Int
     ) {
-            timeTableRepository.addCustomLectureInTimetable(
-                    classTime, name, professor, timetableId
-            )
-                .flatMap {
-                    timeTableRepository.getTimetable(timetableId)
-                }
-                .withThread()
-                .handleProgress(this)
-                .handleHttpException()
-                .subscribe({
-                    _customLectureAdded.postValue(Event(true))
-                    _lectureTimetablesInTimetable.postValue(it.lectureList)
-                }, {
-                    _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
-                    _error.value = Event(it.toCommonResponse())
-                })
+        timeTableRepository.addCustomLectureInTimetable(
+            classTime, name, professor, timetableId
+        )
+            .flatMap {
+                timeTableRepository.getTimetable(timetableId)
+            }
+            .withThread()
+            .handleProgress(this)
+            .handleHttpException()
+            .subscribe({
+                _customLectureAdded.postValue(Event(true))
+                _lectureTimetablesInTimetable.postValue(it.lectureList)
+            }, {
+                _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
+                _error.value = Event(it.toCommonResponse())
+            })
     }
 
     fun initCustomLectureValue() {
         times.clear()
         times.add(
-                CustomTimetableTimestamp(
-                        week = 0,
-                        startTime = Pair(9, 0),
-                        endTime = Pair(10, 0)
-                )
+            CustomTimetableTimestamp(
+                week = 0,
+                startTime = Pair(9, 0),
+                endTime = Pair(10, 0)
+            )
         )
         _timestamp.postValue(times)
     }

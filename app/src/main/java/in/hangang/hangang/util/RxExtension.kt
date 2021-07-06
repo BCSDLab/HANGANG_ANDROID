@@ -19,7 +19,12 @@ import java.util.concurrent.TimeUnit
 
 fun <T> Single<T>.withThread(): Single<T> {
     return this.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+
+fun Completable.withThread(): Completable {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 }
 
 fun <T> Observable<T>.withThread(): Observable<T> {
@@ -65,8 +70,14 @@ fun Completable.toSingleConvert(): Single<Boolean> {
 
 fun <T> Single<T>.handleProgress(viewModel: ViewModelBase): Single<T> {
     return this.doOnSubscribe { viewModel.isLoading.postValue(true) }
-            .doOnError { viewModel.isLoading.postValue(false) }
-            .doOnSuccess { viewModel.isLoading.postValue(false) }
+        .doOnError { viewModel.isLoading.postValue(false) }
+        .doOnSuccess { viewModel.isLoading.postValue(false) }
+}
+
+fun Completable.handleProgress(viewModel: ViewModelBase): Completable {
+    return this.doOnSubscribe { viewModel.isLoading.postValue(true) }
+        .doOnError { viewModel.isLoading.postValue(false) }
+        .doOnComplete { viewModel.isLoading.postValue(false) }
 }
 
 fun EditTextWithError.debounce(time: Long = 500L, timeUnit: TimeUnit = TimeUnit.MILLISECONDS): Observable<String> {
