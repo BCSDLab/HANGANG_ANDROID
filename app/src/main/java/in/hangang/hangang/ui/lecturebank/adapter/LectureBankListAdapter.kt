@@ -5,6 +5,7 @@ import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.databinding.ItemLectureBankBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -54,7 +55,6 @@ class LectureBankListAdapter : PagingDataAdapter<LectureBank, LectureBankListAda
             binding.imageViewThumbsUp.isSelected = lectureBank.isHit
             binding.textViewHitsCount.isSelected = lectureBank.isHit
             Glide.with(binding.root.context).load(lectureBank.thumbnail).into(binding.imageViewLectureBankThumbnail)
-
             binding.executePendingBindings()
         }
     }

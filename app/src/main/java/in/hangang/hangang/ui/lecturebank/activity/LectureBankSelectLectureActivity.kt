@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.ui.lecturebank.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
+import `in`.hangang.core.view.appbar.SearchAppBar
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivityLectureBankSelectLectureBinding
 import `in`.hangang.hangang.ui.lecturebank.adapter.LectureBankLectureListAdapter
@@ -8,6 +9,7 @@ import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorSelectLectu
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankSelectLectureViewModel
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -52,6 +54,11 @@ class LectureBankSelectLectureActivity : ViewBindingActivity<ActivityLectureBank
 
             appBar.setSearchListener {
                 lectureBankSelectLectureViewModel.setKeyword(it.ifBlank { null })
+            }
+
+            appBar.onBackButtonClickListener = View.OnClickListener {
+                setResult(RESULT_CANCELED)
+                finish()
             }
 
             majorsView.setOnSelectionChangedListener { _, simpleMajorString ->

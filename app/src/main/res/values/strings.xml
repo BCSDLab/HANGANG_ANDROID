@@ -361,10 +361,13 @@
     <string name="lecture_bank_lecture_list_select">선택</string>
     <string name="lecture_bank_editor_file_info">총 %1$d개 ( %2$s / %3$s )</string>
     <string name="description_image_chooser">Choose image</string>
-    <string name="lecture_bank_pending_upload">첨부파일 업로드 중...</string>
+    <string name="lecture_bank_uploading_files">첨부파일 업로드 중...</string>
     <string name="description_file_chooser">Choose files</string>
     <string name="lecture_bank_title_file_size_exceed">파일 크기가 초과되었습니다!</string>
     <string name="lecture_bank_message_file_size_exceed">파일첨부는 최대 50MB까지 가능합니다.</string>
     <string name="lecture_bank_purchased_my_lecture_bank">구입불가</string>
+    <string name="lecture_bank_uploading_lecture_bank">강의자료 업로드 중...</string>
+    <string name="lecture_bank_upload_error_message">강의자료 업로드 중 오류가 발생했습니다.</string>
+    <string name="lecture_bank_upload_retry">다시 시도</string>
     <string name="semester_20212">2021년 2학기</string>
 </resources>

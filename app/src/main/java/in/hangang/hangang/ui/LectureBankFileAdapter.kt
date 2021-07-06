@@ -72,7 +72,7 @@ class LectureBankFileAdapter : RecyclerView.Adapter<LectureBankFileAdapter.ViewH
 
     override fun getItemCount() = files.size
 
-    fun setFiles(files: List<UploadFile>) {
+    fun setFiles(files: Collection<UploadFile>) {
         this.files.clear()
         this.files.addAll(files)
         notifyDataSetChanged()

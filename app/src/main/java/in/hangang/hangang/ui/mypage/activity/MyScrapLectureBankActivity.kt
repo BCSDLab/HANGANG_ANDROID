@@ -7,6 +7,7 @@ import `in`.hangang.hangang.R
 import `in`.hangang.hangang.data.entity.lecturebank.toLectureBank
 import `in`.hangang.hangang.databinding.ActivityMyScrapLectureBankBinding
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankDetailActivityContract
+import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorActivityContract
 import `in`.hangang.hangang.ui.mypage.adapter.MyScrapLectureBankAdapter
 import `in`.hangang.hangang.ui.mypage.viewmodel.MyScrapLectureBankViewModel
 import android.os.Bundle

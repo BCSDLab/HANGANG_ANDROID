@@ -94,6 +94,7 @@ class LectureBankLocalDataSource : LectureBankDataSource {
     override fun uploadSingleFile(uri: Uri): Observable<ResponseWithProgress<String>> {
         return Observable.never()
     }
+
     override fun getScrapLectureBanks(): Single<List<LectureBankScrap>> {
         return Single.never()
     }

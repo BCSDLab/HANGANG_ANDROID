@@ -15,6 +15,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:paddingStart="16dp"
             android:hint="@string/lecture_bank_search_bar_hint" />
 
         <in.hangang.hangang.ui.view.HorizontalMajorsView

@@ -2,15 +2,13 @@ package `in`.hangang.hangang.ui.lecturebank.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.base.activity.showSimpleDialog
-import `in`.hangang.core.progressdialog.ProgressDialog
-import `in`.hangang.core.util.getDisplayName
+import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.core.util.getSize
 import `in`.hangang.core.util.toProperCapacityUnit
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
 import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
-import `in`.hangang.hangang.data.entity.uploadfile.UploadFile
 import `in`.hangang.hangang.databinding.ActivityLectureBankEditorBinding
 import `in`.hangang.hangang.ui.LectureBankFileAdapter
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorActivityContract
@@ -18,18 +16,22 @@ import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankEditorSelectLectu
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankFilePickerContract
 import `in`.hangang.hangang.ui.lecturebank.contract.LectureBankImagePickerContract
 import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankEditorViewModel
-import android.content.DialogInterface
+import `in`.hangang.hangang.ui.lecturebank.viewmodel.LectureBankEditorViewModel.LectureBankUploadStatus.*
+import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
-import android.util.Log
 import android.util.TypedValue
-import android.webkit.MimeTypeMap
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.CheckBox
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.text.inSpans
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,6 +40,8 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
     override val layoutId = R.layout.activity_lecture_bank_editor
 
     private val lectureBankEditorViewModel: LectureBankEditorViewModel by viewModel()
+    private var lectureBankUploadProgressDialog: Dialog? = null
+    private var lectureBankUploadProgressView: View? = null
 
     private val selectedCategory: CheckBox
         get() {
@@ -56,18 +60,12 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
         )
     }
 
-    private val uploadRequestProgressDialog: ProgressDialog by lazy {
-        ProgressDialog(
-            this,
-            getString(R.string.lecture_bank_pending_upload)
-        )
-    }
-
-    private val lectureBankEditorSelectActivityContract = registerForActivityResult(
+    private val lectureBankEditorSelectLectureActivityContract = registerForActivityResult(
         LectureBankEditorSelectLectureActivityContract()
     ) {
-        if (it.resultCode == RESULT_OK)
+        if (it.resultCode == RESULT_OK) {
             lectureBankEditorViewModel.setLecture(it.lecture)
+        }
     }
 
     private val lectureBankEditorImagePickerContract = registerForActivityResult(
@@ -104,8 +102,7 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
                 editTextLectureBankTitle.setText(lectureBank.title)
                 setLectureTextView(lectureBank.lecture)
             }
-
-            lectureBankEditorViewModel.setUploadFiles(lectureBank?.uploadFiles ?: emptyList())
+            checkUploadAvailability()
         }
     }
 
@@ -114,11 +111,12 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
             lecture.observe(this@LectureBankEditorActivity) {
                 setLectureTextView(it)
                 binding.spinnerLectureBankSemester.items = it?.semesters ?: emptyList()
+                checkUploadAvailability()
             }
             uploadFiles.observe(this@LectureBankEditorActivity) {
                 binding.recyclerViewListFiles.apply {
                     isVisible = !it.isNullOrEmpty()
-                    lectureBankEditorUploadFileAdapter.setFiles(it)
+                    lectureBankEditorUploadFileAdapter.setFiles(it.keys)
                 }
                 binding.textViewPlzUploadFile.isVisible = it.isNullOrEmpty()
                 binding.textViewFileCountCapacity.apply {
@@ -126,26 +124,40 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
                     text = this@LectureBankEditorActivity.getString(
                         R.string.lecture_bank_editor_file_info,
                         it.size,
-                        it.sumOf { it.size }.toProperCapacityUnit(),
+                        it.keys.sumOf { it.size }.toProperCapacityUnit(),
                         "50MB"
                     )
                 }
                 checkUploadAvailability()
             }
-            fileUploadStatus.observe(this@LectureBankEditorActivity) {
-                lectureBankEditorUploadFileAdapter.setDownloadStatus(
-                    it.first,
-                    it.second,
-                    if (it.second >= 0) 100 else it.second
-                )
+            lectureBankUploadProgress.observe(this@LectureBankEditorActivity) {
+                when (it.first) {
+                    LECTURE_BANK_NOT_UPLOADING -> {
+                        lectureBankUploadProgressDialog?.dismiss()
+                        lectureBankUploadProgressDialog = null
+                    }
+                    LECTURE_BANK_UPLOADING_FILES -> {
+                        setLectureBankProgressDialog(
+                            getString(R.string.lecture_bank_uploading_files),
+                            it.second,
+                            false
+                        )
+                    }
+                    LECTURE_BANK_UPLOADING_LECTURE_BANK -> {
+                        setLectureBankProgressDialog(
+                            getString(R.string.lecture_bank_uploading_lecture_bank),
+                            100,
+                            true
+                        )
+                    }
+                    LECTURE_BANK_UPLOADED -> {
+                        setResult(LectureBankEditorActivityContract.RESULT_UPLOADED)
+                        finish()
+                    }
+                }
             }
-            lectureBankUploadRequested.observe(this@LectureBankEditorActivity) {
-                if (it) uploadRequestProgressDialog.show()
-                else uploadRequestProgressDialog.hide()
-            }
-            lectureBankUploaded.observe(this@LectureBankEditorActivity) {
-                setResult(LectureBankEditorActivityContract.RESULT_UPLOADED)
-                finish()
+            lectureBankUploadError.observe(this@LectureBankEditorActivity) {
+                showLectureBankUploadErrorDialog()
             }
             isLoading.observe(this@LectureBankEditorActivity) {
                 if (it) showProgressDialog()
@@ -154,9 +166,65 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
         }
     }
 
+    private fun showLectureBankUploadErrorDialog() {
+        DialogUtil.makeSimpleDialog(
+            this,
+            message = getString(R.string.lecture_bank_upload_error_message),
+            positiveButtonText = getString(R.string.lecture_bank_upload_retry),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+                lectureBankEditorViewModel.uploadLectureBank(
+                    title = binding.editTextLectureBankTitle.text.toString(),
+                    content = binding.editTextLectureBankContent.text.toString(),
+                    semesterDate = binding.spinnerLectureBankSemester.selectedItem.toString(),
+                    category = selectedCategory.text.toString()
+                )
+            },
+            negativeButtonText = getString(R.string.cancel),
+            negativeButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            }
+        ).show()
+    }
+
+    private fun setLectureBankProgressDialog(
+        message: String,
+        progress: Int,
+        indeterminate: Boolean
+    ) {
+        if (lectureBankUploadProgressDialog == null) {
+            lectureBankUploadProgressView =
+                LayoutInflater.from(this).inflate(R.layout.lecture_bank_progress_dialog, null)
+            lectureBankUploadProgressDialog = DialogUtil.makeViewDialog(
+                context = this,
+                view = lectureBankUploadProgressView!!,
+                positiveButtonText = getString(R.string.cancel),
+                positiveButtonOnClickListener = { dialog, _ ->
+                    lectureBankEditorViewModel.cancelUploadLectureBank()
+                },
+                cancelable = false
+            )
+        }
+
+        lectureBankUploadProgressView?.findViewById<TextView>(R.id.text_view_message)?.text =
+            message
+        lectureBankUploadProgressView?.findViewById<ProgressBar>(R.id.progress_bar_upload)?.apply {
+            this.progress = progress
+            this.isIndeterminate = indeterminate
+        }
+
+        lectureBankUploadProgressDialog?.show()
+    }
+
     private fun initView() {
+        binding.editTextLectureBankTitle.addTextChangedListener {
+            checkUploadAvailability()
+        }
+        binding.editTextLectureBankContent.addTextChangedListener {
+            checkUploadAvailability()
+        }
         binding.buttonLectureBankSearchLecture.setOnClickListener {
-            lectureBankEditorSelectActivityContract.launch(lectureBankEditorViewModel.lecture.value)
+            lectureBankEditorSelectLectureActivityContract.launch(lectureBankEditorViewModel.lecture.value)
         }
 
         binding.spinnerLectureBankSemester.spinnerLayout.background = null
@@ -174,7 +242,8 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
         }
 
         binding.recyclerViewListFiles.apply {
-            layoutManager = LinearLayoutManager(this@LectureBankEditorActivity, RecyclerView.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@LectureBankEditorActivity, RecyclerView.HORIZONTAL, false)
             adapter = lectureBankEditorUploadFileAdapter
         }
 
@@ -194,6 +263,10 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
                 category = selectedCategory.text.toString()
             )
         }
+
+        binding.recyclerViewListFiles.isVisible = false
+        binding.textViewPlzUploadFile.isVisible = true
+        binding.textViewFileCountCapacity.isVisible = false
     }
 
     private fun setLectureTextView(lecture: Lecture?) {
@@ -233,27 +306,18 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
         binding.buttonLectureBankNewFinish.isEnabled =
             binding.editTextLectureBankTitle.text.isNotBlank() &&
                     binding.editTextLectureBankContent.text.isNotBlank() &&
-                    binding.spinnerLectureBankSemester.items.isNotEmpty()
+                    binding.spinnerLectureBankSemester.items.isNotEmpty() &&
+                    !lectureBankEditorViewModel.uploadFiles.value.isNullOrEmpty()
     }
 
     private fun uploadSelectedUris(uris: List<Uri>) {
-        val uploadedFileSize = lectureBankEditorViewModel.uploadFiles.value?.sumOf { it.size } ?: 0L
+        val uploadedFileSize =
+            lectureBankEditorViewModel.uploadFiles.value?.keys?.sumOf { it.size } ?: 0L
         val urisSize = uris.sumOf { it.getSize(applicationContext) ?: 0L }
         if (uploadedFileSize + urisSize > FILE_50MB)
             showFileSizeExceedDialog()
         else {
-            uris.forEach { uri ->
-                lectureBankEditorViewModel.uploadSingleFile(
-                    uploadFile = UploadFile(
-                        0, 0,
-                        fileName = uri.getDisplayName(applicationContext) ?: "",
-                        ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri)) ?: "*",
-                        size = uri.getSize(applicationContext) ?: 0L,
-                        url = ""
-                    ),
-                    uri = uri
-                )
-            }
+            lectureBankEditorViewModel.uploadFiles(applicationContext, uris)
         }
     }
 
