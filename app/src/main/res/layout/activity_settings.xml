@@ -109,7 +109,7 @@
             android:layout_height="24dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/toggle_selector"
-            android:checked="false"
+            android:checked="true"
             android:textOff=""
             android:textOn=""
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
