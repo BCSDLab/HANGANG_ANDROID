@@ -231,6 +231,8 @@
     <string name="profile_delete_account_dialog_message">회원 탈퇴를 하시겠습니까?</string>
     <string name="profile_major">전공</string>
     <string name="profile_nickname_error">사용중인 닉네임입니다!</string>
+    <string name="profile_others">기타</string>
+
 
     <string name="apologize">죄송합니다.</string>
     <string name="ranking_fail_message_1">강의랭킹을</string>

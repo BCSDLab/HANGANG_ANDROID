@@ -30,16 +30,16 @@ class SettingsActivity : ViewBindingActivity<ActivitySettingsBinding>() {
 
     private fun initEvent() {
         with(binding) {
-            logOutButton.setOnClickListener {
+            logoutLayout.setOnClickListener {
                 showLogoutDialog()
             }
-            changeProfileButton.setOnClickListener {
+            changeProfileLayout.setOnClickListener {
                 myProfileActivityStart()
             }
-            questionButton.setOnClickListener {
+            questionLayout.setOnClickListener {
                 showQuestionDialog()
             }
-            deleteAccountButton.setOnClickListener {
+            deleteAccountLayout.setOnClickListener {
                 showDeleteAccountDialog()
             }
             autoLoginToggleButton.setOnClickListener {
