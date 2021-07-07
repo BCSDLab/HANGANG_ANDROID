@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.api
 
 import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.entity.email.Email
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
 import `in`.hangang.hangang.data.entity.lecture.Lecture
 import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
@@ -23,7 +24,7 @@ interface NoAuthApi {
     @POST(SEND_EMAIL)
     fun checkEmail(
             @Body emailRequest: EmailRequest
-    ): Single<CommonResponse>
+    ): Single<Email>
 
     @POST(CONFIG_EMAIL)
     fun configEmail(

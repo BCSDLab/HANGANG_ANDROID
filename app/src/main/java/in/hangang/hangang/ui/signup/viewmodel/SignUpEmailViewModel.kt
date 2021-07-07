@@ -14,25 +14,27 @@ import io.reactivex.rxjava3.kotlin.addTo
 import retrofit2.HttpException
 
 class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewModelBase() {
-    private val _emailSendText = MutableLiveData<String>()
-    val emailSendText: LiveData<String>
+    private val _emailSendText = MutableLiveData<Int>()
+    val emailSendText: LiveData<Int>
         get() = _emailSendText
-    private val _emainConfigSendText = MutableLiveData<String>()
-    val emailConfigSendText: LiveData<String>
+
+    val showAlert = MutableLiveData<Boolean>()
+
+    private val _emainConfigSendText = MutableLiveData<CommonResponse>()
+    val emailConfigSendText: LiveData<CommonResponse>
         get() = _emainConfigSendText
     val sentEmailAuth = MutableLiveData<AuthEmailState>(AuthEmailState.UNACTIVE)
     fun sendEmail(portalID: String) {
         userRepository.emailCheck(portalID)
             .handleProgress(this)
             .withThread()
-            .onErrorReturn {
-                return@onErrorReturn it.toCommonResponse()
-            }
             .subscribe({ data ->
-                if (data.code != 200) _emailSendText.value = data.errorMessage
-
+                if (data.flag == 0) showAlert.value = true
             },
-                { error -> LogUtil.e("error") })
+                {
+                    val code = it.toCommonResponse().code
+                    _emailSendText.value = code
+                })
             .addTo(compositeDisposable)
     }
 
@@ -40,18 +42,12 @@ class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewMod
         userRepository.emailConfig(portalID, secret)
             .handleProgress(this)
             .withThread()
-            .onErrorReturn {
-                return@onErrorReturn it.toCommonResponse()
-            }
             .subscribe({ data ->
-                if (data.code == 200) {
-                    _emainConfigSendText.value = "OK"
-                } else {
-                    _emainConfigSendText.value = data.errorMessage
-                }
+                if(data.httpStatus == "OK")
+                    _emainConfigSendText.value = data
             },
                 { error ->
-                    LogUtil.e(error.toCommonResponse().errorMessage)
+                    _emainConfigSendText.value = error.toCommonResponse()
                 })
             .addTo(compositeDisposable)
     }

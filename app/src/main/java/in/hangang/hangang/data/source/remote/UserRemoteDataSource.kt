@@ -2,6 +2,7 @@ package `in`.hangang.hangang.data.source.remote
 
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.api.NoAuthApi
+import `in`.hangang.hangang.data.entity.email.Email
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.mypage.PointRecord
 import `in`.hangang.hangang.data.entity.user.UserCount
@@ -46,7 +47,7 @@ class UserRemoteDataSource(
         return Single.never()
     }
 
-    override fun emailCheck(portalAccount: String): Single<CommonResponse> {
+    override fun emailCheck(portalAccount: String): Single<Email> {
         return noAuthApi.checkEmail(EmailRequest(0, portalAccount))
     }
 
