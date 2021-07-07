@@ -52,6 +52,10 @@
     <string name="sign_up_complete_dialog_title">회원가입이 되었습니다.</string>
     <string name="email_koreatech">"\@koreatech.ac.kr"</string>
     <string name="sign_up_complete_dialog_message">%s님!\n한기대의 강의평가를 보러 가볼까요?</string>
+    <string name="sign_up_email_config_error_message">인증번호가 일치하지 않습니다!</string>
+    <string name="sign_up_email_duplicated_error_message">이미 가입된 이메일입니다!</string>
+    <string name="sign_up_email_five_limit_title">인증 횟수가 초과되었습니다.</string>
+    <string name="sign_up_email_five_limit_message">하루 최대 5번의 인증 횟수가\n만료되어 24시간 이후에 이용하실 수 있습니다.</string>
 
     <string name="reset_password_app_bar_title">비밀번호 찾기</string>
     <string name="reset_password_auth_koreatech_email_title">학교 이메일 인증</string>

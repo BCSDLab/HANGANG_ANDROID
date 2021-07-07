@@ -6,6 +6,8 @@ import `in`.hangang.core.base.activity.getColorFromAttr
 import `in`.hangang.core.base.activity.showSimpleDialog
 import `in`.hangang.core.view.button.RoundedCornerButton.Companion.FILLED
 import `in`.hangang.core.view.button.RoundedCornerButton.Companion.OUTLINED
+import `in`.hangang.core.view.edittext.EditTextWithError.Companion.ERROR
+import `in`.hangang.core.view.edittext.EditTextWithError.Companion.UNDEFINED
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpEmailBinding
 import `in`.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel
@@ -37,13 +39,17 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
 
     private fun handleObserver() {
         signUpEmailViewModel.emailConfigSendText.observe(this, {
-            if (it.equals("OK")) {
+            if (it.httpStatus == "OK") {
+                binding.authnumEditText.status = UNDEFINED
                 var intent = Intent(this, SignUpActivity::class.java).run {
                     putExtra("id", binding.emailEditText.text.toString())
                     startActivity(this)
+                    finish()
                 }
             } else {
-                initCommonErrorDialog(it)
+                binding.signupEmailConfigErrorTextview.text = getString(R.string.sign_up_email_config_error_message)
+                binding.authnumEditText.status = ERROR
+                //initCommonErrorDialog(it)
             }
         })
 
@@ -73,7 +79,12 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             }
         })
         signUpEmailViewModel.emailSendText.observe(this, {
-            binding.signupEmailErrorTextview.text = it
+            if(it == 14){
+                binding.signupEmailErrorTextview.text = getString(R.string.sign_up_email_duplicated_error_message)
+            } else {
+                initCommonErrorDialog(getString(R.string.sign_up_email_five_limit_title), getString(R.string.sign_up_email_five_limit_message))
+            }
+
         })
         signUpEmailViewModel.showAlert.observe(this, {
             if(it){
@@ -140,9 +151,9 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
             }
         }
     }
-    private fun initCommonErrorDialog(errorMessage: String) {
+    private fun initCommonErrorDialog(title: String,errorMessage: String) {
         showSimpleDialog(
-            title = "",
+            title = title,
             message = errorMessage,
             positiveButtonText = getString(R.string.ok),
             positiveButtonOnClickListener = { dialog, _ ->

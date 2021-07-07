@@ -60,24 +60,43 @@
             android:layout_marginEnd="16dp"
             android:hint="@string/write_school_email"
             android:inputType="textEmailAddress" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="16dp">
+
 
         <TextView
+            android:id="@+id/signup_email_config_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="32dp"
             android:text="@string/reset_password_auth_number_title"
             android:textColor="@color/black2"
             android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/signup_email_config_error_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="11sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/signup_email_config_title_textview"
+                app:layout_constraintBottom_toBottomOf="@+id/signup_email_config_title_textview"
+                android:textColor="@color/mango"
+                tools:text="이미 가입된 이메일입니다!"/>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:orientation="horizontal">
 
-            <in.hangang.core.view.edittext.SingleLineEditText
+            <in.hangang.core.view.edittext.EditTextWithError
                 android:id="@+id/authnum_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
