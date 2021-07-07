@@ -42,6 +42,9 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
         binding.imageButtonGotoReview.setOnClickListener {
             //TODO 강의평 이동
         }
+        binding.container.setOnClickListener {
+            //Blocking being closed this fragment
+        }
     }
 
     private fun initViewModel() {
