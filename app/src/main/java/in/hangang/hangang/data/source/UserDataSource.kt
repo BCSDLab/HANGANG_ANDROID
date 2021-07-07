@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.entity.email.Email
 import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.mypage.PointRecord
@@ -27,7 +28,7 @@ interface UserDataSource {
 
     fun saveToken(accessToken: String, refreshToken: String): Single<TokenResponse>
 
-    fun emailCheck(portalAccount: String): Single<CommonResponse>
+    fun emailCheck(portalAccount: String): Single<Email>
 
     fun emailConfig(portalAccount: String, secret: String): Single<CommonResponse>
 

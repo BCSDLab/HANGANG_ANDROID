@@ -17,6 +17,9 @@ class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewMod
     private val _emailSendText = MutableLiveData<String>()
     val emailSendText: LiveData<String>
         get() = _emailSendText
+
+    val showAlert = MutableLiveData<Boolean>()
+
     private val _emainConfigSendText = MutableLiveData<String>()
     val emailConfigSendText: LiveData<String>
         get() = _emainConfigSendText
@@ -25,14 +28,13 @@ class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewMod
         userRepository.emailCheck(portalID)
             .handleProgress(this)
             .withThread()
-            .onErrorReturn {
-                return@onErrorReturn it.toCommonResponse()
-            }
             .subscribe({ data ->
-                if (data.code != 200) _emailSendText.value = data.errorMessage
-
+                if (data.flag == 0) showAlert.value = true
             },
-                { error -> LogUtil.e("error") })
+                {
+                    val data = it.toCommonResponse()
+                    _emailSendText.value = data.errorMessage
+                })
             .addTo(compositeDisposable)
     }
 

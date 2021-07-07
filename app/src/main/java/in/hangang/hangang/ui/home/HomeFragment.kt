@@ -22,7 +22,6 @@ class HomeFragment : ViewBindingFragment<FragmentHomeBinding>() {
     private fun initAppBar() {
         with(binding.appBar) {
             addViewInLeft(LayoutInflater.from(activity).inflate(R.layout.hangang_full_logo_small, null))
-            addViewInRight(appBarImageButton(R.drawable.ic_search))
             setOnAppBarButtonClickListener(
                 onClickViewInRightContainer = { view, index ->
                     if (index == 0) {

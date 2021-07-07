@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source.repository
 
+import `in`.hangang.hangang.data.entity.email.Email
 import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.mypage.PointRecord
@@ -43,7 +44,7 @@ class UserRepository(
         return userLocalDataSource.saveToken(accessToken, refreshToken)
     }
 
-    override fun emailCheck(portalAccount: String): Single<CommonResponse> {
+    override fun emailCheck(portalAccount: String): Single<Email> {
         return userRemoteDataSource.emailCheck(portalAccount)
     }
 

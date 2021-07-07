@@ -59,8 +59,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/write_school_email"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="16dp" />
+            android:inputType="textEmailAddress" />
 
         <TextView
             android:layout_width="wrap_content"

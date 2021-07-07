@@ -75,6 +75,11 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
         signUpEmailViewModel.emailSendText.observe(this, {
             binding.signupEmailErrorTextview.text = it
         })
+        signUpEmailViewModel.showAlert.observe(this, {
+            if(it){
+                initResendDialog()
+            }
+        })
     }
 
     private fun initAppBar() {
@@ -84,6 +89,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
     private fun initEvent() {
         with(binding) {
             authnumSendButton.setOnClickListener {
+                binding.signupEmailErrorTextview.text = ""
                 if(signUpEmailViewModel.sentEmailAuth.value == SignUpEmailViewModel.AuthEmailState.ACTIVE ) {
                     signUpEmailViewModel.sentEmailAuth.value = SignUpEmailViewModel.AuthEmailState.RETRY
                     signUpEmailViewModel.sendEmail(
@@ -93,7 +99,6 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
                     signUpEmailViewModel.sendEmail(
                         binding.emailEditText.text.toString().plus(getString(R.string.email_koreatech))
                     )
-                    initResendDialog()
                 }
 
             }
@@ -169,6 +174,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
                 positiveButtonText = getString(R.string.ok),
                 positiveButtonOnClickListener = { dialog, _ ->
                     dialog.dismiss()
+                    signUpEmailViewModel.showAlert.value = false
                 },
                 cancelable = false
         )
