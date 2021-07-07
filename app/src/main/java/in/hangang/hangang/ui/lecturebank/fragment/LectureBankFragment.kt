@@ -90,6 +90,10 @@ class LectureBankFragment : ViewBindingFragment<FragmentLectureBankBinding>() {
     }
 
     private fun initView() {
+        val lectureDocId = arguments?.getInt("LECTURE_DOC_ID")?:null
+        if(lectureDocId != null){
+            lectureBankDetailActivityContract.launch(lectureDocId)
+        }
         with(binding.recyclerViewLectureBank) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = lectureBankListAdapter
