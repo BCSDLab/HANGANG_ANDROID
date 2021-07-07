@@ -35,7 +35,7 @@ abstract class FileUtil(
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(Uri.parse(url))
             .setTitle(uploadFile.fileName)
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, uploadFile.fileName)
             .setAllowedOverMetered(true)
             .setAllowedOverRoaming(true)
