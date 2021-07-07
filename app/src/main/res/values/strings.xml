@@ -376,5 +376,6 @@
     <string name="lecture_bank_upload_error_message">강의자료 업로드 중 오류가 발생했습니다.</string>
     <string name="lecture_bank_upload_retry">다시 시도</string>
     <string name="semester_20212">2021년 2학기</string>
+    <string name="common_error_message">오류가 발생했습니다.</string>
     <string name="dialog_error_timestamp_start_more_future">시작 시간을 끝 시간보다 과거로 설정해주세요.</string>
 </resources>

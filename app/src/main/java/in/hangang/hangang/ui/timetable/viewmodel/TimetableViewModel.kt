@@ -234,7 +234,6 @@ class TimetableViewModel(
                         _lectureTimetablesInTimetable.postValue(it.lectureList)
                     }, {
                         _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
-                        _error.value = Event(it.toCommonResponse())
                     })
                     .addTo(compositeDisposable)
     }

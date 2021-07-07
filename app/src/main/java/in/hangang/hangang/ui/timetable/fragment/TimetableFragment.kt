@@ -407,7 +407,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun showCommonErrorDialog(message: String) {
         DialogUtil.makeSimpleDialog(
             requireContext(),
-            message = message,
+            message = if(message.isNullOrBlank())
+                getString(R.string.common_error_message) else message,
             positiveButtonText = getString(R.string.ok),
             positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
