@@ -6,6 +6,7 @@ import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
 import `in`.hangang.hangang.data.entity.evaluation.ClassLecture
+import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.data.entity.evaluation.LectureReview
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
@@ -50,6 +51,13 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     private val reportList: Array<String> by lazy { resources.getStringArray(R.array.report_item) }
     private val navController: NavController by lazy {
         Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
+    }
+    private val lectureDocsItemClickListener = object : RecyclerViewClickListener{
+        override fun onClick(view: View, position: Int, item: Any) {
+            val bundle = Bundle()
+            bundle.putInt("LECTURE_DOC_ID", (item as LectureDoc).id)
+            navController.navigate(R.id.navigation_lecture_bank, bundle)
+        }
     }
 
     private val timeTableListDialogClickListener =
@@ -300,6 +308,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         lectureDetailReviewAdapter.setReportClickListener(reportClickListener)
         lectureClassTimeAdapter.setClassClickListener(classClickListener)
         listDialogRecyclerViewAdapter.setCheckClickListener(checkClickListener)
+        recommendedDocsAdapter.setLectureDocClickListener(lectureDocsItemClickListener)
         binding.lectureDetailSortType.text = lectureReviewDetailViewModel.sort
         lecture.id.let {
             lectureReviewDetailViewModel.fetchClassLectureList(it, 5)

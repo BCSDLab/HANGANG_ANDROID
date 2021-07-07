@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source.local
 import `in`.hangang.hangang.constant.ACCESS_TOKEN
 import `in`.hangang.hangang.constant.IS_AUTO_LOGIN
 import `in`.hangang.hangang.constant.REFRESH_TOKEN
+import `in`.hangang.hangang.data.entity.email.Email
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBank
 import `in`.hangang.hangang.data.entity.mypage.PointRecord
 import `in`.hangang.hangang.data.entity.user.UserCount
@@ -57,7 +58,7 @@ class UserLocalDataSource : UserDataSource {
         }
     }
 
-    override fun emailCheck(portalAccount: String): Single<CommonResponse> {
+    override fun emailCheck(portalAccount: String): Single<Email> {
         return Single.never()
     }
 

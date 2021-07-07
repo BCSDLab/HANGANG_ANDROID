@@ -42,6 +42,7 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
+                    finish()
                 },
                 cancelable = false
         )

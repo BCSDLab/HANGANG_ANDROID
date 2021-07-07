@@ -59,6 +59,7 @@ class SignUpActivity : ViewBindingActivity<ActivitySignUpBinding>() {
                 intent.putExtra("password", binding.passwordEditText.text.toString())
                 intent.putExtra("nickName", binding.nicknameEditText.text.toString())
                 startActivity(intent)
+                finish()
             }
         }
     }

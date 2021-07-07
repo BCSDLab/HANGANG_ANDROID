@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.ui.lecturereview.adapter
 
+import `in`.hangang.core.view.recyclerview.RecyclerViewClickListener
 import `in`.hangang.hangang.data.entity.evaluation.LectureDoc
 import `in`.hangang.hangang.databinding.ItemRecommendedLectureDocsBinding
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RecommendedDocsAdapter :
     ListAdapter<LectureDoc, RecommendedDocsAdapter.ViewHolder>(lectureDocDiffUtil){
+    lateinit var itemClickListener: RecyclerViewClickListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemRecommendedLectureDocsBinding.inflate(
@@ -24,10 +26,16 @@ class RecommendedDocsAdapter :
         val lectureDoc = getItem(position)
         if(lectureDoc != null){
             holder.bind(lectureDoc)
+            holder.binding.lectureReviewConstraintlayout.setOnClickListener {
+                itemClickListener.onClick(it,position, lectureDoc)
+            }
         }
     }
+    fun setLectureDocClickListener(listener: RecyclerViewClickListener) {
+        itemClickListener = listener
+    }
 
-    class ViewHolder(private val binding: ItemRecommendedLectureDocsBinding):
+    class ViewHolder(val binding: ItemRecommendedLectureDocsBinding):
             RecyclerView.ViewHolder(binding.root){
                 fun bind(item: LectureDoc){
                     binding.apply {
