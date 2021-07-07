@@ -132,14 +132,15 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                 timetableViewModel.displayingTimeTable.value?.let {
                     timetableViewModel.removeTimeTableLecture(
                             timetable = it,
-                            lectureTimeTable = lectureTimeTable
+                            lectureTimeTable = lectureTimeTable,
+                        closeBottomSheet = false
                     )
                 }
                 return false
             }
 
             override fun onReviewButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
-                //TODO goto review activity
+                //TODO 강의평 이동
             }
 
             override fun onScrapButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {

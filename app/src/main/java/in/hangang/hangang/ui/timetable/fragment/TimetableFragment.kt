@@ -178,7 +178,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             timetableNameModifiedEvent.observe(viewLifecycleOwner, EventObserver {
                 binding.appBar.title = it
             })
-            lectureTimetableRemovedEvent.observe(viewLifecycleOwner, EventObserver {
+            bottomSheetCloseEvent.observe(viewLifecycleOwner, EventObserver {
                 setMode(TimetableViewModel.Mode.MODE_NORMAL)
             })
             error.observe(viewLifecycleOwner, EventObserver {

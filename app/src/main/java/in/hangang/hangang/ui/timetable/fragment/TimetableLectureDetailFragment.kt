@@ -31,7 +31,8 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
                 timetableLectureDetailViewModel.lectureTimetable.value?.let { lectureTimeTable ->
                     timetableViewModel.removeTimeTableLecture(
                             timetable = timetable,
-                            lectureTimeTable = lectureTimeTable
+                            lectureTimeTable = lectureTimeTable,
+                        closeBottomSheet = true
                     )
                 }
             }
