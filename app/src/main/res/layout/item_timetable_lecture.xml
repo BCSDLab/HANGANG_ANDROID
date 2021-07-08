@@ -7,7 +7,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_state_timetable_list_item_background">
+        android:background="#000"
+        android:backgroundTint="@color/color_state_timetable_list_item_background">
 
         <TextView
             android:id="@+id/text_view_lecture_title"
