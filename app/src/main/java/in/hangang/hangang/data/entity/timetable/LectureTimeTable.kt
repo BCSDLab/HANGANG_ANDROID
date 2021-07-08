@@ -10,6 +10,8 @@ data class LectureTimeTable(
         val isCustom: Boolean = false,
         @SerializedName("semester_date")
         val semesterDate: String? = null,
+        @SerializedName("semester_date_id")
+        val semesterDateId: Int? = null,
         val code: String? = null,
         val name: String? = null,
         val classification: String? = null,

@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source
 
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
@@ -61,6 +62,8 @@ interface TimeTableDataSource {
             timetableLectureId: Int
     ): Single<CommonResponse>
     fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>>
+
+    fun getSemesterNow(): Single<Semester>
 
     suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture
     suspend fun fetchTimeTables(semesterDateId: Long? = null): List<TimeTable>

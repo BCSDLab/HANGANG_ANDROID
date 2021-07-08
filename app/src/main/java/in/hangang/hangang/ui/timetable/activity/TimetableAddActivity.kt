@@ -5,9 +5,11 @@ import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.core.util.DialogUtil
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.constant.*
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.databinding.ActivityTimetableAddBinding
 import `in`.hangang.hangang.ui.timetable.contract.TimeTableAddActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableAddActivityViewModel
+import `in`.hangang.hangang.util.DateUtil
 import android.content.Intent
 import android.os.Bundle
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,6 +24,8 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
 
         initView()
         initViewModel()
+
+        timetableAddActivityViewModel.getSemesterNow()
     }
 
     private fun initViewModel() {
@@ -35,9 +39,16 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
                     })
                     finish()
             })
+            semesterNow.observe(this@TimetableAddActivity) {
+                if(!it.hasBeenHandled)
+                    initSemesterDateId(it.peekContent())
+
+                binding.textViewTimetableSemester.text = getString(R.string.timetable_add_timetable_semester, DateUtil.getYear(it.peekContent().startTime).toString())
+            }
             error.observe(this@TimetableAddActivity, EventObserver {
                 when (it.code) {
                     API_ERROR_CODE_TIMETABLE_EXCEED -> showTimetableSemesterLimitErrorDialog()
+                    else -> showCommonErrorDialog(it.message ?: "")
                 }
             })
         }
@@ -54,7 +65,6 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
     }
 
     private fun initView() {
-        initSemesterDateId()
         binding.buttonAddTimetable.setOnClickListener {
             timetableAddActivityViewModel.addTimeTable(
                     semesterDateId = getSemesterDateId(),
@@ -64,14 +74,15 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
         binding.editTextTimetableName.addTextChangedListener {
             timetableAddActivityViewModel.checkAddingAvailability(it.toString())
         }
+
     }
 
-    private fun initSemesterDateId() {
+    private fun initSemesterDateId(semester: Semester) {
         binding.radioButtonTimetableSemester1.isChecked = false
         binding.radioButtonTimetableSemester2.isChecked = false
         binding.radioButtonTimetableSemester3.isChecked = false
         binding.radioButtonTimetableSemester4.isChecked = false
-        when (TIMETABLE_DEFAULT_SEMESTER_ID) {
+        when (semester.id) {
             TIMETABLE_SEMESTER_1 -> binding.radioButtonTimetableSemester1.isChecked = true
             TIMETABLE_SEMESTER_SUMMER -> binding.radioButtonTimetableSemester2.isChecked = true
             TIMETABLE_SEMESTER_2 -> binding.radioButtonTimetableSemester3.isChecked = true
@@ -85,5 +96,17 @@ class TimetableAddActivity : ViewBindingActivity<ActivityTimetableAddBinding>() 
         R.id.radio_button_timetable_semester_3 -> TIMETABLE_SEMESTER_2
         R.id.radio_button_timetable_semester_4 -> TIMETABLE_SEMESTER_WINTER
         else -> 0
+    }
+
+    private fun showCommonErrorDialog(message: String) {
+        DialogUtil.makeSimpleDialog(
+            this,
+            message = message,
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            },
+            cancelable = true
+        ).show()
     }
 }

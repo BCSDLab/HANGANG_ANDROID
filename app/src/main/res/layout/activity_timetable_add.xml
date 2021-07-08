@@ -56,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_text_timetable_name"
-            tools:text="학기 설정(2020년)" />
+            tools:text="학기 설정(2021년)" />
 
         <TextView
             android:id="@+id/text_view_timetable_semester_message"
@@ -100,8 +100,7 @@
                 android:layout_weight="1"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
-                android:text="@string/timetable_add_semester_2"
-                android:visibility="gone" />
+                android:text="@string/timetable_add_semester_2" />
 
             <in.hangang.core.view.button.radiobutton.FilledRadioButton
                 android:id="@+id/radio_button_timetable_semester_3"
@@ -121,8 +120,7 @@
                 android:layout_weight="1"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
-                android:text="@string/timetable_add_semester_4"
-                android:visibility="gone" />
+                android:text="@string/timetable_add_semester_4" />
         </RadioGroup>
 
         <in.hangang.core.view.button.RoundedCornerButton

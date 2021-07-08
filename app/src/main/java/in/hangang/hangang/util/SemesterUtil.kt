@@ -21,3 +21,9 @@ class SemesterUtil {
         }
     }
 }
+
+fun Int.isRegularSemester(): Boolean {
+    return this !in setOf(6, 8)
+}
+
+fun Int.isNotRegularSemester() = !this.isRegularSemester()

@@ -76,4 +76,14 @@ object DateUtil {
 
         return apiDateTime.format(DateTimeFormatter.ofPattern(format))
     }
+
+    fun getYear(apiDate: String? = null) : Int {
+        val dateTime = apiDate?.let {
+            LocalDateTime.ofInstant(
+                SimpleDateFormat(API_DATE_FORMAT).parse(it).toInstant(),
+                ZoneId.of("Asia/Seoul")
+            )
+        }  ?: LocalDateTime.now()
+        return dateTime.year
+    }
 }

@@ -1,5 +1,6 @@
 package `in`.hangang.hangang.data.source.repository
 
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
@@ -142,6 +143,10 @@ class TimeTableRepository(
 
     override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
         return timeTableRemoteDataSource.getUserTimeTables(semesterId)
+    }
+
+    override fun getSemesterNow(): Single<Semester> {
+        return timeTableRemoteDataSource.getSemesterNow()
     }
 
     override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {

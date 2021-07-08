@@ -1,6 +1,7 @@
 package `in`.hangang.hangang.data.source.local
 
 import `in`.hangang.hangang.constant.TIMETABLE_LECTURE_DIPS
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
@@ -130,6 +131,10 @@ class TimeTableLocalDataSource : TimeTableDataSource {
     }
 
     override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
+        return Single.never()
+    }
+
+    override fun getSemesterNow(): Single<Semester> {
         return Single.never()
     }
 
