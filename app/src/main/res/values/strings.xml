@@ -377,4 +377,7 @@
     <string name="lecture_bank_upload_retry">다시 시도</string>
     <string name="semester_20212">2021년 2학기</string>
     <string name="timetable_saved_to_file">시간표를 저장했습니다.</string>
+    <string name="semester_2021s">2021년 여름학기</string>
+    <string name="semester_2021w">2021년 겨울학기</string>
+    <string name="semester_20221">2022년 1학기</string>
 </resources>
