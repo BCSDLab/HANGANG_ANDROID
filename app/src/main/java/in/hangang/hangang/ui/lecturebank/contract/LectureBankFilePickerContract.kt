@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContract
 open class LectureBankFilePickerContract : ActivityResultContract<Void?, List<Uri>>() {
     override fun createIntent(context: Context, input: Void?): Intent {
             return Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "*/*"
             }
