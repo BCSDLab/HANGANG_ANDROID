@@ -24,7 +24,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableViewModel(
-    private val timeTableRepository: TimeTableRepository
+    private val timeTableRepository: TimeTableRepository,
 ) : ViewModelBase() {
 
     enum class Mode {

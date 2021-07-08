@@ -74,4 +74,10 @@
         android:name="in.hangang.hangang.ui.lecturebank.fragment.LectureBankFragment"
         android:label="@string/title_lecture_bank"
         tools:layout="@layout/fragment_lecture_bank" />
+    <fragment
+        android:id="@+id/navigation_timetable_lecturelist"
+        android:name="in.hangang.hangang.ui.timetable.fragment.TimetableLectureListFragment"
+        android:label="@string/title_evaluation"
+        tools:layout="@layout/fragment_timetable_lecture_list"
+        />
 </navigation>
