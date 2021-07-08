@@ -61,6 +61,7 @@ const val LECTURE_BANKS_COMMENT_WITH_ID = "/lecture-banks/{id}/comment/{commentI
 const val LECTURE_BANKS_REPORT_COMMENT = "/lecture-banks/report/comment"
 const val LECTURE_BANKS_FILE = "/lecture-banks/file/download/{id}"
 const val LECTURE_BANKS_FILES = "/lecture-banks/files"
+const val SEMESTER = "/semester"
 const val LECTURE_BANKS_CATEGORY_PREVIOUS = "기출자료"
 const val LECTURE_BANKS_CATEGORY_WRITING = "필기자료"
 const val LECTURE_BANKS_CATEGORY_ASSIGNMENT = "과제자료"

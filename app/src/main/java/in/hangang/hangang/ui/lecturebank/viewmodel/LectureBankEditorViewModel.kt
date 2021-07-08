@@ -1,7 +1,6 @@
 package `in`.hangang.hangang.ui.lecturebank.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
-import `in`.hangang.core.http.response.ResponseWithProgress
 import `in`.hangang.core.livedata.Event
 import `in`.hangang.core.util.getDisplayName
 import `in`.hangang.core.util.getSize
@@ -27,11 +26,15 @@ class LectureBankEditorViewModel(
     private var uploadDisposable : Disposable? = null
 
     private val semesterDateList = listOf(
-        LECTURE_BANK_SEMESTER_DATE_ID_1,
-        LECTURE_BANK_SEMESTER_DATE_ID_2,
-        LECTURE_BANK_SEMESTER_DATE_ID_3,
-        LECTURE_BANK_SEMESTER_DATE_ID_4,
-        LECTURE_BANK_SEMESTER_DATE_ID_5
+        SEMESTER_DATE_ID_1,
+        SEMESTER_DATE_ID_2,
+        SEMESTER_DATE_ID_3,
+        SEMESTER_DATE_ID_4,
+        SEMESTER_DATE_ID_5,
+        SEMESTER_DATE_ID_6,
+        SEMESTER_DATE_ID_7,
+        SEMESTER_DATE_ID_8,
+        SEMESTER_DATE_ID_9,
     )
 
     private val uploadFileMap = mutableMapOf<UploadFile, Uri>()
