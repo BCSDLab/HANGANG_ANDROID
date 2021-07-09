@@ -7,6 +7,7 @@ import `in`.hangang.hangang.ui.login.LoginActivity
 import `in`.hangang.hangang.ui.main.MainActivity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : ViewBindingActivity<ActivitySplashBinding>() {
@@ -16,8 +17,8 @@ class SplashActivity : ViewBindingActivity<ActivitySplashBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.vm = splashViewModel
+        delay()
         initObserver()
-        init()
     }
 
     private fun init() {
@@ -35,5 +36,11 @@ class SplashActivity : ViewBindingActivity<ActivitySplashBinding>() {
                 finish()
             }
         }
+    }
+    private fun delay(){
+        val mHandler = Handler()
+        mHandler.postDelayed({
+            init()
+        }, 1000)
     }
 }

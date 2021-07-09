@@ -50,7 +50,6 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
         with(binding) {
             myProfileViewModel.myProfile.observe(this@MyProfileActivity) {
                 it.let {
-                    nameText.text = it.name?.toEditable()
                     profileIdText.text = it.portalAccount
                     profileNicknameEditText.text = it.nickname.toEditable()
                     myProfileViewModel.nickName = it.nickname
@@ -109,12 +108,10 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
                     finishButton -> if (myProfileViewModel.isProfileEdited.value == true) {
                         if (myProfileViewModel.nickName != binding.profileNicknameEditText.toString()){
                             myProfileViewModel.applyMyProfile(
-                                binding.nameText.text.toString(),
                                 binding.profileNicknameEditText.text.toString(),
                                 myProfileViewModel.bottomSheetSelectedMajorList
                             )}else{
                             myProfileViewModel.applyMyProfileWithNickname(
-                                binding.nameText.text.toString(),
                                 binding.profileNicknameEditText.text.toString(),
                                 myProfileViewModel.bottomSheetSelectedMajorList
                             )
@@ -146,7 +143,6 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     private fun underBarColorEdit(id: Int) {
-        binding.underbarName.setBackgroundColor(ContextCompat.getColor(applicationContext, id))
         binding.underbarNickname.setBackgroundColor(ContextCompat.getColor(applicationContext, id))
         binding.underbarMajorFirst.setBackgroundColor(ContextCompat.getColor(applicationContext, id))
         binding.underbarMajorSecond.setBackgroundColor(ContextCompat.getColor(applicationContext, id))
@@ -164,7 +160,6 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
     }
 
     private fun editButtonView(state: Boolean) {
-        binding.nameText.isEnabled = state
         binding.profileNicknameEditText.isEnabled = state
     }
 
