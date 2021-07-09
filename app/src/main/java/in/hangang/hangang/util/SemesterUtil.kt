@@ -12,9 +12,18 @@ class SemesterUtil {
                 3 -> context.getString(R.string.semester_20201)
                 4 -> context.getString(R.string.semester_20202)
                 5 -> context.getString(R.string.semester_20211)
-                6 -> context.getString(R.string.semester_20212)
+                6 -> context.getString(R.string.semester_2021s)
+                7 -> context.getString(R.string.semester_20212)
+                8 -> context.getString(R.string.semester_2021w)
+                9 -> context.getString(R.string.semester_20221)
                 else -> "Unknown"
             }
         }
     }
 }
+
+fun Int.isRegularSemester(): Boolean {
+    return this !in setOf(6, 8)
+}
+
+fun Int.isNotRegularSemester() = !this.isRegularSemester()

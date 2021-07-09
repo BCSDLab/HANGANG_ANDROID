@@ -150,7 +150,7 @@
     <string name="timetable_add_semester_1">1학기</string>
     <string name="timetable_add_semester_2">여름학기</string>
     <string name="timetable_add_semester_3">2학기</string>
-    <string name="timetable_add_semester_4">가을학기</string>
+    <string name="timetable_add_semester_4">겨울학기</string>
     <string name="timetable_add_finish">완료</string>
     <string name="major_simple_dip">찜</string>
     <string name="semester_20191">2019년 1학기</string>
@@ -176,7 +176,7 @@
     <string name="timetable_dialog_edit_timetable_name_title">시간표 이름 수정</string>
     <string name="timetable_dialog_remove_timetable_title">해당 시간표를 삭제하시겠습니까?</string>
     <string name="close">닫기</string>
-    <string name="timetable_add_timetable_semester">학기 설정(2020년)</string>
+    <string name="timetable_add_timetable_semester">학기 설정(%1$s년)</string>
     <string name="timetable_exceed_title">시간표가 초과되었습니다.</string>
     <string name="timetable_exceed_message_semester">한 학기 당 최대 5개까지 시간표를 추가할 수 있습니다.</string>
     <string name="timetable_exceed_message">총 50개까지 시간표를 추가할 수 있습니다.</string>
@@ -378,4 +378,10 @@
     <string name="semester_20212">2021년 2학기</string>
     <string name="common_error_message">오류가 발생했습니다.</string>
     <string name="dialog_error_timestamp_start_more_future">시작 시간을 끝 시간보다 과거로 설정해주세요.</string>
+    <string name="timetable_saved_to_file">시간표를 저장했습니다.</string>
+    <string name="semester_2021s">2021년 여름학기</string>
+    <string name="semester_2021w">2021년 겨울학기</string>
+    <string name="semester_20221">2022년 1학기</string>
+    <string name="timetable_can_only_add_lecture_timetable_at_custom_message">데이터가 없어 직접 추가만 가능합니다.</string>
+    <string name="timetable_can_only_add_lecture_timetable_at_custom_title">계절학기 과목 데이터가 없습니다.</string>
 </resources>

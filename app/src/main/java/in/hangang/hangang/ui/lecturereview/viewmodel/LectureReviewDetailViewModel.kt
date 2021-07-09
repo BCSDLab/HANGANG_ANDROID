@@ -4,6 +4,7 @@ import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.hangang.constant.RECENTLY_READ_LECTURE_REVIEW
 import `in`.hangang.hangang.data.entity.evaluation.*
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.request.LectureEvaluationIdRequest
 import `in`.hangang.hangang.data.request.LectureReviewReportRequest
@@ -62,6 +63,8 @@ class LectureReviewDetailViewModel(
     private val _scrapResult = MutableLiveData<CommonResponse>()
     val scrapResult: LiveData<CommonResponse> get() = _scrapResult
 
+    private val _semester = MutableLiveData<Semester>()
+    val semester: LiveData<Semester> get() = _semester
 
 
 
@@ -206,6 +209,7 @@ class LectureReviewDetailViewModel(
     }
 
     fun fetchClassLectureList(id: Int, semesterId: Long) {
+
         var lectureList = emptyList<ClassLecture>()
         viewModelScope.launch {
             lectureList = lectureRepository.fetchClassLectures(id)
@@ -298,5 +302,17 @@ class LectureReviewDetailViewModel(
             }
             Hawk.put(RECENTLY_READ_LECTURE_REVIEW, list)
         }
+    }
+    fun getSemesterId(){
+        timeTableRepository.getSemesterNow()
+            .handleHttpException()
+            .handleProgress(this)
+            .withThread()
+            .subscribe({
+                _semester.value = it
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage.toString())
+            })
+            .addTo(compositeDisposable)
     }
 }

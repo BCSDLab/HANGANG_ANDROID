@@ -23,8 +23,8 @@ const val TIMETABLE_MINUTE_0 = 0
 const val TIMETABLE_MINUTE_30 = 1
 
 const val TIMETABLE_SEMESTER_1 = 5          //1학기 semester id
-const val TIMETABLE_SEMESTER_SUMMER = 5     //여름학기 semester id
-const val TIMETABLE_SEMESTER_2 = 6          //2학기 semester id
-const val TIMETABLE_SEMESTER_WINTER = 5     //겨울학기 semester id
+const val TIMETABLE_SEMESTER_SUMMER = 6     //여름학기 semester id
+const val TIMETABLE_SEMESTER_2 = 7          //2학기 semester id
+const val TIMETABLE_SEMESTER_WINTER = 8     //겨울학기 semester id
 
 const val TIMETABLE_EMPTY_POSITION = -1

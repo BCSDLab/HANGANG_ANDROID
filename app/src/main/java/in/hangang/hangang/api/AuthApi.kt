@@ -11,6 +11,7 @@ import `in`.hangang.hangang.data.entity.lecturebank.LectureBankDetail
 import `in`.hangang.hangang.data.entity.lecturebank.LectureBankPostRequest
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureResult
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
@@ -313,4 +314,6 @@ interface AuthApi {
     @GET(USER_ME)
     fun getUserInfo() : Single<User>
 
+    @GET(SEMESTER)
+    fun getSemester(@Query("isRegular") isRegular: Int?): Single<Semester>
 }

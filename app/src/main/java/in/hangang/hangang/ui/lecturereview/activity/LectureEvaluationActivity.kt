@@ -81,7 +81,9 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
                                     lifecycleScope.launch {
                                         delay(1000)
                                         finish()
+                                        dialog?.dismiss()
                                     }
+
                                 }
                             },
                             cancelable = false

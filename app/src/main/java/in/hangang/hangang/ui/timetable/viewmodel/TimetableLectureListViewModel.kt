@@ -2,10 +2,13 @@ package `in`.hangang.hangang.ui.timetable.viewmodel
 
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
+import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.data.entity.timetable.LectureFilter
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
+import `in`.hangang.hangang.data.source.repository.LectureRepository
 import `in`.hangang.hangang.data.source.repository.TimeTableRepository
 import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.handleHttpException
@@ -17,7 +20,8 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableLectureListViewModel(
-        private val timetableRepository: TimeTableRepository
+        private val timetableRepository: TimeTableRepository,
+        private val lectureRepository: LectureRepository
 ) : ViewModelBase() {
     private val lectureList = mutableListOf<LectureTimeTable>()
     private val scrapLectures = mutableListOf<LectureTimeTable>()
@@ -32,12 +36,15 @@ class TimetableLectureListViewModel(
     private val _lectureFilter = MutableLiveData<LectureFilter>()
     private val _resetLectureFilter = MutableLiveData<Event<Boolean>>()
 
+    private val _lecture = MutableLiveData<RankingLectureItem>()
+
     val lectures: LiveData<Collection<LectureTimeTable>> get() = _lectures
     val timetableLectureChanged: MutableLiveData<Event<CommonResponse>> get() = _timetableLectureChanged
     val scraps: LiveData<Collection<LectureTimeTable>> get() = _scraps
     val isShowingScraps: LiveData<Boolean> get() = _isShowingScraps
     val lectureFilter: LiveData<LectureFilter> get() = _lectureFilter
     val resetLectureFilter: LiveData<Event<Boolean>> get() = _resetLectureFilter
+    val lecture: LiveData<RankingLectureItem> get() = _lecture
 
     var page = 0
     var semesterDateId: Int = 5
@@ -149,5 +156,17 @@ class TimetableLectureListViewModel(
         _lectureFilter.postValue(
                 LectureFilter()
         )
+    }
+    fun getLectureId(lectureId: Int){
+        lectureRepository.getLecturesId(lectureId)
+            .withThread()
+            .handleHttpException()
+            .handleProgress(this)
+            .subscribe({
+                _lecture.value = it
+            }, {
+                LogUtil.e(it.toCommonResponse().errorMessage)
+            })
+
     }
 }

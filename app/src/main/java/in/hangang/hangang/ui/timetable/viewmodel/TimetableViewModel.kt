@@ -9,13 +9,17 @@ import `in`.hangang.hangang.data.entity.timetable.toTimeTable
 import `in`.hangang.hangang.data.response.CommonResponse
 import `in`.hangang.hangang.data.response.toCommonResponse
 import `in`.hangang.hangang.data.source.repository.TimeTableRepository
+import `in`.hangang.hangang.ui.customview.timetable.TimetableColumnHeader
+import `in`.hangang.hangang.ui.customview.timetable.TimetableLayout
 import `in`.hangang.hangang.ui.customview.timetable.TimetableUtil
 import `in`.hangang.hangang.util.*
+import `in`.hangang.hangang.util.file.FileUtil
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.view.ViewGroup
+import android.graphics.Paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
@@ -30,6 +34,8 @@ class TimetableViewModel(
         MODE_LECTURE_DETAIL
     }
 
+    private var showOnlyCustomLectureEventDialog = true
+
     private val listTimetables = mutableListOf<TimeTable>()
 
     private val times = mutableListOf<CustomTimetableTimestamp>()
@@ -38,18 +44,19 @@ class TimetableViewModel(
     private val _mainTimetableEvent = MutableLiveData<Event<TimeTable>>()
     private val _setMainTimetableEvent = MutableLiveData<Event<CommonResponse>>()
     private val _timetableNameModifiedEvent = MutableLiveData<Event<String>>()
-    private val _timetableBitmapImage = MutableLiveData<Bitmap>()
+    private val _timetableBitmapSaved = MutableLiveData<Event<Boolean>>()
+    private val _timetableBitmapError = MutableLiveData<Event<String>>()
 
     private val _mode = MutableLiveData(Mode.MODE_NORMAL)
     private val _displayingTimeTable = MutableLiveData<TimeTable>()
     private val _lectureTimetablesInTimetable = MutableLiveData<List<LectureTimeTable>>()
-    private val _selectedTimetable = MutableLiveData<LectureTimeTable?>()
     private val _dummyTimeTable = MutableLiveData<LectureTimeTable?>()
     private val _onErrorAddLectureTimetable = MutableLiveData<Event<CommonResponse>>()
     private val _customLectureAdded = MutableLiveData<Event<Boolean>>()
     private val _availableAddingCustomTimetable = MutableLiveData<Boolean>()
     private val _lectureTimetableRemovedEvent = MutableLiveData<Event<Int>>()
     private val _bottomSheetCloseEvent = MutableLiveData<Event<Boolean>>()
+    private val _onlyCustomLectureEvent = MutableLiveData<Event<Boolean>>()
 
     private val _timestamp = MutableLiveData<List<CustomTimetableTimestamp>>()
 
@@ -59,11 +66,10 @@ class TimetableViewModel(
     val mainTimetableEvent: LiveData<Event<TimeTable>> get() = _mainTimetableEvent
     val setMainTimetableEvent: LiveData<Event<CommonResponse>> get() = _setMainTimetableEvent
     val timetableNameModifiedEvent: LiveData<Event<String>> get() = _timetableNameModifiedEvent
-    val timetableBitmapImage: LiveData<Bitmap> get() = _timetableBitmapImage
+    val timetableBitmapSaved: LiveData<Event<Boolean>> get() = _timetableBitmapSaved
     val mode: LiveData<Mode> get() = _mode
     val displayingTimeTable: LiveData<TimeTable> get() = _displayingTimeTable
     val lectureTimetablesInTimetable: LiveData<List<LectureTimeTable>> get() = _lectureTimetablesInTimetable
-    val selectedTimetable: LiveData<LectureTimeTable?> get() = _selectedTimetable
     val dummyTimeTable: LiveData<LectureTimeTable?> get() = _dummyTimeTable
     val onErrorAddLectureTimetable: LiveData<Event<CommonResponse>> get() = _onErrorAddLectureTimetable
     val timestamp: LiveData<List<CustomTimetableTimestamp>> get() = _timestamp
@@ -71,12 +77,21 @@ class TimetableViewModel(
     val availableAddingCustomTimetable: LiveData<Boolean> get() = _availableAddingCustomTimetable
     val lectureTimetableRemovedEvent: LiveData<Event<Int>> get() = _lectureTimetableRemovedEvent
     val bottomSheetCloseEvent: LiveData<Event<Boolean>> get() = _bottomSheetCloseEvent
+    val timetableBitmapError : LiveData<Event<String>> get() = _timetableBitmapError
+    val onlyCustomLectureEvent : LiveData<Event<Boolean>> get() = _onlyCustomLectureEvent
 
     val error: LiveData<Event<CommonResponse>> get() = _error
 
     fun setMode(mode: Mode) {
-        if (_mode.value != mode)
-            _mode.postValue(mode)
+        if (_mode.value != mode) {
+            if(mode == Mode.MODE_LECTURE_LIST && _displayingTimeTable.value?.semesterDateId?.isRegularSemester() == false) {
+                _onlyCustomLectureEvent.postValue(Event(showOnlyCustomLectureEventDialog))
+                _mode.postValue(Mode.MODE_CUSTOM_LECTURE)
+                showOnlyCustomLectureEventDialog = false
+            } else {
+                _mode.postValue(mode)
+            }
+        }
     }
 
     fun getTimetables() {
@@ -102,7 +117,7 @@ class TimetableViewModel(
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
-                _displayingTimeTable.postValue(it.toTimeTable())
+                setDisplayingTimeTable(it.toTimeTable())
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
@@ -118,6 +133,7 @@ class TimetableViewModel(
             .handleProgress(this)
             .handleHttpException()
             .subscribe({
+                showOnlyCustomLectureEventDialog = true
                 _mainTimetableEvent.postValue(Event(it.toTimeTable()))
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
@@ -152,7 +168,7 @@ class TimetableViewModel(
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
-                _displayingTimeTable.postValue(it.toTimeTable())
+                setDisplayingTimeTable(it.toTimeTable())
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
@@ -176,34 +192,69 @@ class TimetableViewModel(
             .addTo(compositeDisposable)
     }
 
-    fun getTimetableBitmapImage(viewGroup: ViewGroup) {
-        Single.create<Bitmap> { subscriber ->
-            try {
-                val bitmap = Bitmap.createBitmap(
-                    viewGroup.measuredWidth,
-                    viewGroup.measuredHeight,
-                    Bitmap.Config.ARGB_8888
-                )
-                val canvas = Canvas(bitmap)
-                viewGroup.draw(canvas)
-                subscriber.onSuccess(bitmap)
-            } catch (e: Exception) {
-                subscriber.onError(e)
-            }
+    fun getTimetableBitmapImage(
+        fileUtil: FileUtil,
+        timetableColumnHeader: TimetableColumnHeader,
+        timetableLayout: TimetableLayout
+    ) {
+        Completable.create { subscriber ->
+                try {
+                    val timetableLayoutBitmap = Bitmap.createBitmap(
+                        timetableLayout.width,
+                        timetableLayout.height,
+                        Bitmap.Config.ARGB_8888
+                    )
+                    val timetableHeaderBitmap = Bitmap.createBitmap(
+                        timetableColumnHeader.width,
+                        timetableColumnHeader.height,
+                        Bitmap.Config.ARGB_8888
+                    )
+                    val timetableLayoutCanvas = Canvas(timetableLayoutBitmap)
+                    val timetableHeaderCanvas = Canvas(timetableHeaderBitmap)
+                    timetableLayout.draw(timetableLayoutCanvas)
+                    timetableColumnHeader.draw(timetableHeaderCanvas)
+
+                    val bitmap = Bitmap.createScaledBitmap(
+                        timetableHeaderBitmap,
+                        timetableHeaderBitmap.width,
+                        timetableHeaderBitmap.height + timetableLayoutBitmap.height,
+                        true)
+                    val canvas = Canvas(bitmap)
+                    val paint = Paint().apply {
+                        isDither = true
+                        flags = Paint.ANTI_ALIAS_FLAG
+                    }
+                    canvas.drawBitmap(timetableHeaderBitmap, 0f, 0f, paint)
+                    canvas.drawBitmap(
+                        timetableLayoutBitmap,
+                        0f,
+                        timetableHeaderBitmap.height.toFloat(),
+                        paint
+                    )
+
+                    timetableHeaderBitmap.recycle()
+                    timetableLayoutBitmap.recycle()
+
+                    fileUtil.saveImageToPictures(bitmap, "${displayingTimeTable.value?.name ?: "Unknown"}.jpg")
+
+                    subscriber.onComplete()
+                } catch (e: Exception) {
+                    subscriber.onError(e)
+                }
         }
             .withThread()
             .handleProgress(this)
             .subscribe({
-                _timetableBitmapImage.postValue(it)
+                _timetableBitmapSaved.value = Event(true)
             }, {
-                LogUtil.e(it.toCommonResponse().errorMessage)
-                _error.value = Event(it.toCommonResponse())
-                //TODO 시간표 이미지 만드는 중 오류
+                LogUtil.e(it.localizedMessage)
+                _timetableBitmapError.value = Event(it.localizedMessage ?: "")
             })
             .addTo(compositeDisposable)
     }
 
     fun setDisplayingTimeTable(timetable: TimeTable) {
+        showOnlyCustomLectureEventDialog = true
         _displayingTimeTable.value = timetable
     }
 

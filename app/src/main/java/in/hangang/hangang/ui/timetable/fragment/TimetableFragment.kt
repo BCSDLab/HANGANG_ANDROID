@@ -16,18 +16,15 @@ import `in`.hangang.hangang.ui.timetable.contract.TimetableListActivityContract
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
-import `in`.hangang.hangang.util.LogUtil
 import `in`.hangang.hangang.util.file.FileUtil
-import `in`.hangang.hangang.util.handleProgress
-import `in`.hangang.hangang.util.withThread
 import android.app.Activity.RESULT_OK
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -44,23 +41,27 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private val timetableLectureListViewModel: TimetableLectureListViewModel by sharedViewModel()
     private val timetableLectureDetailViewModel: TimetableLectureDetailViewModel by sharedViewModel()
 
-    private val timetableLectureListFragment: TimetableLectureListFragment = TimetableLectureListFragment()
-    private val timetableCustomLectureFragment: TimetableCustomLectureFragment = TimetableCustomLectureFragment()
-    private val timetableLectureDetailFragment: TimetableLectureDetailFragment = TimetableLectureDetailFragment()
+    private val timetableLectureListFragment: TimetableLectureListFragment =
+        TimetableLectureListFragment()
+    private val timetableCustomLectureFragment: TimetableCustomLectureFragment =
+        TimetableCustomLectureFragment()
+    private val timetableLectureDetailFragment: TimetableLectureDetailFragment =
+        TimetableLectureDetailFragment()
 
     private val fileUtil: FileUtil by inject()
 
     private val behavior by lazy { BottomSheetBehavior.from(binding.timetableBottomSheetContainer) }
 
-    private val timetableListActivityResult = registerForActivityResult(TimetableListActivityContract()) {
-        if (it.resultCode == RESULT_OK) {
-            it.selectedTimetable?.let { timetable ->
-                timetableViewModel.getTimeTable(timetable)
+    private val timetableListActivityResult =
+        registerForActivityResult(TimetableListActivityContract()) {
+            if (it.resultCode == RESULT_OK) {
+                it.selectedTimetable?.let { timetable ->
+                    timetableViewModel.getTimeTable(timetable)
+                }
+                if (it.timetableListChanged) timetableViewModel.getTimetables()
+                timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
             }
-            if (it.timetableListChanged) timetableViewModel.getTimetables()
-            timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
         }
-    }
 
     private val appBarOpenTimetableListButton by lazy {
         appBarImageButton(R.drawable.ic_list)
@@ -76,12 +77,16 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
     private val appBarAddManuallyButton by lazy {
         appBarTextButton(
-                getString(R.string.timetable_add_manually),
-                width = ViewGroup.LayoutParams.WRAP_CONTENT
+            getString(R.string.timetable_add_manually),
+            width = ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -144,18 +149,21 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
             displayingTimeTable.observe(viewLifecycleOwner, this@TimetableFragment::updateTimeTable)
 
-            timetableBitmapImage.observe(viewLifecycleOwner, this@TimetableFragment::saveImageToFile)
+            timetableBitmapSaved.observe(viewLifecycleOwner, EventObserver {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.timetable_saved_to_file),
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
+
+            timetableBitmapError.observe(viewLifecycleOwner, EventObserver {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            })
 
             lectureTimetablesInTimetable.observe(viewLifecycleOwner) {
                 binding.timetableLayout.removeAllTimetableItems()
                 binding.timetableLayout.addTimetableItem(*it.toTypedArray())
-            }
-
-            selectedTimetable.observe(viewLifecycleOwner) { lectureTimeTable ->
-                if (lectureTimeTable != null) {
-                    timetableLectureDetailViewModel.initWithLectureTimetable(lectureTimeTable)
-                }
-                timetableViewModel.setMode(TimetableViewModel.Mode.MODE_LECTURE_DETAIL)
             }
 
             dummyTimeTable.observe(viewLifecycleOwner) {
@@ -184,6 +192,9 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             error.observe(viewLifecycleOwner, EventObserver {
                 showCommonErrorDialog(it.message ?: "")
             })
+            onlyCustomLectureEvent.observe(viewLifecycleOwner, EventObserver {
+                if(it) showCanOnlyAddCustomLectureTimetableDialog()
+            })
         }
 
     }
@@ -204,7 +215,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             }
             setScrollViewCallback({
             }, {
-                it[0].viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                it[0].viewTreeObserver.addOnGlobalLayoutListener(object :
+                    ViewTreeObserver.OnGlobalLayoutListener {
                     override fun onGlobalLayout() {
                         binding.timetableScrollView.smoothScrollTo(0, it[0].top)
                         it[0].viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -228,7 +240,10 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                     }
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         if (timetableViewModel.mode.value == TimetableViewModel.Mode.MODE_LECTURE_DETAIL) {
-                            binding.timetableScrollView.smoothScrollTo(0, selectedLecturePositionTop)
+                            binding.timetableScrollView.smoothScrollTo(
+                                0,
+                                selectedLecturePositionTop
+                            )
                             selectedLecturePositionTop = 0
                         }
                     }
@@ -237,8 +252,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 binding.timetableScrollView.setPadding(
-                        0, 0, 0,
-                        (bottomSheet.height * (slideOffset + 1)).toInt()
+                    0, 0, 0,
+                    (bottomSheet.height * (slideOffset + 1)).toInt()
                 )
             }
         })
@@ -286,10 +301,18 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_item_set_main_timetable -> {
-                    timetableViewModel.displayingTimeTable.value?.let { it1 -> timetableViewModel.setMainTimetable(it1.id) }
+                    timetableViewModel.displayingTimeTable.value?.let { it1 ->
+                        timetableViewModel.setMainTimetable(
+                            it1.id
+                        )
+                    }
                 }
                 R.id.menu_item_save_image -> {
-                    timetableViewModel.getTimetableBitmapImage(binding.timetableContainer)
+                    timetableViewModel.getTimetableBitmapImage(
+                        fileUtil,
+                        binding.timetableHeader,
+                        binding.timetableLayout
+                    )
                 }
                 R.id.menu_item_edit_timetable_name -> {
                     showEditTimeTableNameDialog()
@@ -306,7 +329,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     //리스트 형태의 시간표 관리 화면 표시
     private fun openTimetableList() {
         timetableListActivityResult.launch(
-                timetableViewModel.displayingTimeTable.value
+            timetableViewModel.displayingTimeTable.value
         )
     }
 
@@ -317,32 +340,16 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         timetableLectureListViewModel.resetLectureFilter()
     }
 
-    private fun saveImageToFile(bitmap: Bitmap) {
-        requireWriteStorage {
-            fileUtil.saveImageToPictures(
-                    bitmap = bitmap,
-                    fileName = "${timetableViewModel.displayingTimeTable.value?.name ?: "Unknown"}.jpg"
-            )
-                    .withThread()
-                    .handleProgress(timetableViewModel)
-                    .subscribe({
-                        LogUtil.d(it.path)
-                    }, {
-                        it.printStackTrace()
-                    })
-        }
-    }
-
     private fun showMainTimetableSetDialog() {
         DialogUtil.makeSimpleDialog(
-                requireContext(),
-                title = getString(R.string.timetable_dialog_finish_main_timetable_title),
-                message = getString(R.string.timetable_dialog_finish_main_timetable_message),
-                positiveButtonText = getString(R.string.ok),
-                positiveButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
-                },
-                cancelable = true
+            requireContext(),
+            title = getString(R.string.timetable_dialog_finish_main_timetable_title),
+            message = getString(R.string.timetable_dialog_finish_main_timetable_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            },
+            cancelable = true
         ).show()
     }
 
@@ -353,40 +360,40 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             }
 
             DialogUtil.makeViewDialog(requireContext(),
-                    title = getString(R.string.timetable_dialog_edit_timetable_name_title),
-                    view = editText,
-                    cancelable = true,
-                    positiveButtonText = getString(R.string.ok),
-                    negativeButtonText = getString(R.string.cancel),
-                    positiveButtonOnClickListener = { dialog, _ ->
-                        timetableViewModel.modifyTimeTableName(
-                                timetableViewModel.displayingTimeTable.value!!,
-                                editText.text.toString()
-                        )
-                        dialog.dismiss()
-                    },
-                    negativeButtonOnClickListener = { dialog, _ ->
-                        dialog.dismiss()
-                    }).show()
+                title = getString(R.string.timetable_dialog_edit_timetable_name_title),
+                view = editText,
+                cancelable = true,
+                positiveButtonText = getString(R.string.ok),
+                negativeButtonText = getString(R.string.cancel),
+                positiveButtonOnClickListener = { dialog, _ ->
+                    timetableViewModel.modifyTimeTableName(
+                        timetableViewModel.displayingTimeTable.value!!,
+                        editText.text.toString()
+                    )
+                    dialog.dismiss()
+                },
+                negativeButtonOnClickListener = { dialog, _ ->
+                    dialog.dismiss()
+                }).show()
         }
     }
 
     private fun showRemoveTimeTableDialog() {
         if (timetableViewModel.displayingTimeTable.value != null) {
             DialogUtil.makeSimpleDialog(
-                    requireContext(),
-                    title = getString(R.string.timetable_dialog_remove_timetable_title),
-                    message = "",
-                    positiveButtonText = getString(R.string.ok),
-                    negativeButtonText = getString(R.string.close),
-                    negativeButtonOnClickListener = { dialog, _ ->
-                        dialog.dismiss()
-                    },
-                    positiveButtonOnClickListener = { dialog, _ ->
-                        timetableViewModel.removeTimetable(timetableViewModel.displayingTimeTable.value!!)
-                        dialog.dismiss()
-                    },
-                    cancelable = true
+                requireContext(),
+                title = getString(R.string.timetable_dialog_remove_timetable_title),
+                message = "",
+                positiveButtonText = getString(R.string.ok),
+                negativeButtonText = getString(R.string.close),
+                negativeButtonOnClickListener = { dialog, _ ->
+                    dialog.dismiss()
+                },
+                positiveButtonOnClickListener = { dialog, _ ->
+                    timetableViewModel.removeTimetable(timetableViewModel.displayingTimeTable.value!!)
+                    dialog.dismiss()
+                },
+                cancelable = true
             ).show()
         }
     }
@@ -417,27 +424,23 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         ).show()
     }
 
+    private fun showCanOnlyAddCustomLectureTimetableDialog() {
+        DialogUtil.makeSimpleDialog(
+            requireContext(),
+            title = getString(R.string.timetable_can_only_add_lecture_timetable_at_custom_title),
+            message = getString(R.string.timetable_can_only_add_lecture_timetable_at_custom_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            },
+            cancelable = true
+        ).show()
+    }
+
     private fun changeBottomSheetFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction().apply {
             replace(R.id.timetable_bottom_sheet_container, fragment)
             commit()
         }
-    }
-
-    override fun onDestroyView() {
-        with(timetableViewModel) {
-            isLoading.removeObservers(viewLifecycleOwner)
-            mode.removeObservers(viewLifecycleOwner)
-            displayingTimeTable.removeObservers(viewLifecycleOwner)
-            timetableBitmapImage.removeObservers(viewLifecycleOwner)
-            lectureTimetablesInTimetable.removeObservers(viewLifecycleOwner)
-            selectedTimetable.removeObservers(viewLifecycleOwner)
-            dummyTimeTable.removeObservers(viewLifecycleOwner)
-            onErrorAddLectureTimetable.removeObservers(viewLifecycleOwner)
-            mainTimetableEvent.removeObservers(viewLifecycleOwner)
-            setMainTimetableEvent.removeObservers(viewLifecycleOwner)
-            timetableNameModifiedEvent.removeObservers(viewLifecycleOwner)
-        }
-        super.onDestroyView()
     }
 }

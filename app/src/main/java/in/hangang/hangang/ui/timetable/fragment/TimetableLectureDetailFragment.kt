@@ -10,6 +10,8 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewMod
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLectureDetailBinding>() {
@@ -17,6 +19,9 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
 
     private val timetableViewModel: TimetableViewModel by sharedViewModel()
     private val timetableLectureDetailViewModel: TimetableLectureDetailViewModel by sharedViewModel()
+    private val navController: NavController by lazy {
+        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,7 +46,9 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
             timetableLectureDetailViewModel.updateMemo(binding.editTextMemo.text.toString())
         }
         binding.imageButtonGotoReview.setOnClickListener {
-            //TODO 강의평 이동
+            var lectureId = timetableLectureDetailViewModel.lectureTimetable.value?.lectureId
+            timetableLectureDetailViewModel.getLectureId(lectureId!!)
+
         }
         binding.container.setOnClickListener {
             //Blocking being closed this fragment
@@ -66,6 +73,11 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
             memo.observe(viewLifecycleOwner, EventObserver {
                 binding.editTextMemo.setText(it)
             })
+            lecture.observe(viewLifecycleOwner){
+                val bundle = Bundle()
+                bundle.putParcelable("lecture", it)
+                navController.navigate(R.id.navigation_evaluation, bundle)
+            }
         }
     }
 

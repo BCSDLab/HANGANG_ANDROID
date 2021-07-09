@@ -24,8 +24,10 @@
             tools:context=".ui.timetable.fragment.TimetableFragment">
 
             <in.hangang.hangang.ui.customview.timetable.TimetableColumnHeader
+                android:id="@+id/timetable_header"
                 android:layout_width="match_parent"
                 android:layout_height="26dp"
+                android:background="?attr/colorSurface"
                 android:paddingLeft="36dp" />
 
             <androidx.core.widget.NestedScrollView
@@ -39,6 +41,7 @@
                     android:id="@+id/timetable_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/colorSurface"
                     android:textColor="?android:attr/textColorPrimary"
                     app:dividerColor="?android:attr/textColorTertiary" />
 
