@@ -17,6 +17,8 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -39,6 +41,9 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                     timetableLectureListViewModel.setLectureFilter(it.lectureFilter)
                 }
             }
+    private val navController: NavController by lazy {
+        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -132,14 +137,15 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                 timetableViewModel.displayingTimeTable.value?.let {
                     timetableViewModel.removeTimeTableLecture(
                             timetable = it,
-                            lectureTimeTable = lectureTimeTable
+                            lectureTimeTable = lectureTimeTable,
+                        closeBottomSheet = false
                     )
                 }
                 return false
             }
 
             override fun onReviewButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
-                //TODO goto review activity
+                timetableLectureListViewModel.getLectureId(lectureTimeTable.lectureId)
             }
 
             override fun onScrapButtonClicked(position: Int, lectureTimeTable: LectureTimeTable) {
@@ -180,6 +186,11 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                 binding.radioGroupDepartment.childViews().forEach {
                     (it as FilledCheckBox).isChecked = false
                 }
+            }
+            lecture.observe(viewLifecycleOwner){
+                val bundle = Bundle()
+                bundle.putParcelable("lecture", it)
+                navController.navigate(R.id.navigation_evaluation, bundle)
             }
         }
     }

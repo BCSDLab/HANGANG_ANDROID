@@ -34,6 +34,8 @@ class TimetableViewModel(
         MODE_LECTURE_DETAIL
     }
 
+    private var showOnlyCustomLectureEventDialog = true
+
     private val listTimetables = mutableListOf<TimeTable>()
 
     private val times = mutableListOf<CustomTimetableTimestamp>()
@@ -48,12 +50,13 @@ class TimetableViewModel(
     private val _mode = MutableLiveData(Mode.MODE_NORMAL)
     private val _displayingTimeTable = MutableLiveData<TimeTable>()
     private val _lectureTimetablesInTimetable = MutableLiveData<List<LectureTimeTable>>()
-    private val _selectedTimetable = MutableLiveData<LectureTimeTable?>()
     private val _dummyTimeTable = MutableLiveData<LectureTimeTable?>()
     private val _onErrorAddLectureTimetable = MutableLiveData<Event<CommonResponse>>()
     private val _customLectureAdded = MutableLiveData<Event<Boolean>>()
     private val _availableAddingCustomTimetable = MutableLiveData<Boolean>()
     private val _lectureTimetableRemovedEvent = MutableLiveData<Event<Int>>()
+    private val _bottomSheetCloseEvent = MutableLiveData<Event<Boolean>>()
+    private val _onlyCustomLectureEvent = MutableLiveData<Event<Boolean>>()
 
     private val _timestamp = MutableLiveData<List<CustomTimetableTimestamp>>()
 
@@ -67,20 +70,28 @@ class TimetableViewModel(
     val mode: LiveData<Mode> get() = _mode
     val displayingTimeTable: LiveData<TimeTable> get() = _displayingTimeTable
     val lectureTimetablesInTimetable: LiveData<List<LectureTimeTable>> get() = _lectureTimetablesInTimetable
-    val selectedTimetable: LiveData<LectureTimeTable?> get() = _selectedTimetable
     val dummyTimeTable: LiveData<LectureTimeTable?> get() = _dummyTimeTable
     val onErrorAddLectureTimetable: LiveData<Event<CommonResponse>> get() = _onErrorAddLectureTimetable
     val timestamp: LiveData<List<CustomTimetableTimestamp>> get() = _timestamp
     val customLectureAdded: LiveData<Event<Boolean>> get() = _customLectureAdded
     val availableAddingCustomTimetable: LiveData<Boolean> get() = _availableAddingCustomTimetable
     val lectureTimetableRemovedEvent: LiveData<Event<Int>> get() = _lectureTimetableRemovedEvent
+    val bottomSheetCloseEvent: LiveData<Event<Boolean>> get() = _bottomSheetCloseEvent
     val timetableBitmapError : LiveData<Event<String>> get() = _timetableBitmapError
+    val onlyCustomLectureEvent : LiveData<Event<Boolean>> get() = _onlyCustomLectureEvent
 
     val error: LiveData<Event<CommonResponse>> get() = _error
 
     fun setMode(mode: Mode) {
-        if (_mode.value != mode)
-            _mode.postValue(mode)
+        if (_mode.value != mode) {
+            if(mode == Mode.MODE_LECTURE_LIST && _displayingTimeTable.value?.semesterDateId?.isRegularSemester() == false) {
+                _onlyCustomLectureEvent.postValue(Event(showOnlyCustomLectureEventDialog))
+                _mode.postValue(Mode.MODE_CUSTOM_LECTURE)
+                showOnlyCustomLectureEventDialog = false
+            } else {
+                _mode.postValue(mode)
+            }
+        }
     }
 
     fun getTimetables() {
@@ -106,7 +117,7 @@ class TimetableViewModel(
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
-                _displayingTimeTable.postValue(it.toTimeTable())
+                setDisplayingTimeTable(it.toTimeTable())
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 //TODO 시간표에 추가된 강의 아이템을 가져오지 못했을 때 에러메시지
@@ -122,6 +133,7 @@ class TimetableViewModel(
             .handleProgress(this)
             .handleHttpException()
             .subscribe({
+                showOnlyCustomLectureEventDialog = true
                 _mainTimetableEvent.postValue(Event(it.toTimeTable()))
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
@@ -156,7 +168,7 @@ class TimetableViewModel(
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
-                _displayingTimeTable.postValue(it.toTimeTable())
+                setDisplayingTimeTable(it.toTimeTable())
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
@@ -186,7 +198,6 @@ class TimetableViewModel(
         timetableLayout: TimetableLayout
     ) {
         Completable.create { subscriber ->
-            try {
                 try {
                     val timetableLayoutBitmap = Bitmap.createBitmap(
                         timetableLayout.width,
@@ -230,9 +241,6 @@ class TimetableViewModel(
                 } catch (e: Exception) {
                     subscriber.onError(e)
                 }
-            } catch (e: Exception) {
-                subscriber.onError(e)
-            }
         }
             .withThread()
             .handleProgress(this)
@@ -246,6 +254,7 @@ class TimetableViewModel(
     }
 
     fun setDisplayingTimeTable(timetable: TimeTable) {
+        showOnlyCustomLectureEventDialog = true
         _displayingTimeTable.value = timetable
     }
 
@@ -264,7 +273,10 @@ class TimetableViewModel(
             .addTo(compositeDisposable)
     }
 
-    fun addTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
+    fun addTimeTableLecture(
+        timetable: TimeTable,
+        lectureTimeTable: LectureTimeTable
+    ) {
         timeTableRepository.addLectureInTimeTable(
             lectureId = lectureTimeTable.lectureTimetableId ?: 0,
             timetableId = timetable.id
@@ -278,12 +290,14 @@ class TimetableViewModel(
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
-                _error.value = Event(it.toCommonResponse())
             })
             .addTo(compositeDisposable)
     }
 
-    fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
+    fun removeTimeTableLecture(
+        timetable: TimeTable, lectureTimeTable: LectureTimeTable,
+        closeBottomSheet: Boolean
+    ) {
         timeTableRepository.removeLectureFromTimeTable(
             lectureId = lectureTimeTable.lectureTimetableId ?: 0,
             timetableId = timetable.id
@@ -296,6 +310,8 @@ class TimetableViewModel(
             .subscribe({
                 _lectureTimetableRemovedEvent.postValue(Event(lectureTimeTable.id))
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
+                if (closeBottomSheet)
+                    _bottomSheetCloseEvent.value = Event(true)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
                 _error.value = Event(it.toCommonResponse())

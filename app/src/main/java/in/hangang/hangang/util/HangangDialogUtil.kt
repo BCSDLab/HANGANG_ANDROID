@@ -9,6 +9,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.core.view.children
 
 object HangangDialogUtil {
@@ -23,7 +24,7 @@ object HangangDialogUtil {
         val weekPicker = pickerView.findViewById<NumberPicker>(R.id.number_picker_week)
         val startHourPicker = pickerView.findViewById<NumberPicker>(R.id.number_picker_start_hour)
         val startMinutePicker =
-                pickerView.findViewById<NumberPicker>(R.id.number_picker_start_minute)
+            pickerView.findViewById<NumberPicker>(R.id.number_picker_start_minute)
         val endHourPicker = pickerView.findViewById<NumberPicker>(R.id.number_picker_end_hour)
         val endMinutePicker = pickerView.findViewById<NumberPicker>(R.id.number_picker_end_minute)
 
@@ -76,21 +77,35 @@ object HangangDialogUtil {
         }
 
         return DialogUtil.makeViewDialog(
-                context,
-                view = pickerView,
-                positiveButtonText = context.getString(R.string.ok),
-                negativeButtonText = context.getString(R.string.close),
-                positiveButtonOnClickListener = { dialog, _ ->
+            context,
+            view = pickerView,
+            positiveButtonText = context.getString(R.string.ok),
+            negativeButtonText = context.getString(R.string.close),
+            positiveButtonOnClickListener = { dialog, _ ->
+
+                if (
+                    startHourPicker.value * 1000 + startMinutePicker.value * 30 >=
+                    endHourPicker.value * 1000 + endMinutePicker.value * 30
+                ) {
+                    Toast.makeText(
+                        context,
+                        context.getString(`in`.hangang.hangang.R.string.dialog_error_timestamp_start_more_future),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
                     listener(
-                            weekPicker.value,
-                            Pair(startHourPicker.value, startMinutePicker.value * 30),
-                            Pair(endHourPicker.value, endMinutePicker.value * 30)
+                        weekPicker.value,
+                        Pair(startHourPicker.value, startMinutePicker.value * 30),
+                        Pair(endHourPicker.value, endMinutePicker.value * 30)
                     )
                     dialog.dismiss()
-                },
-                negativeButtonOnClickListener = { dialog, _ ->
-                    dialog.dismiss()
                 }
+
+
+            },
+            negativeButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            }
         )
     }
 }

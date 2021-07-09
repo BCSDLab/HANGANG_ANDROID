@@ -11,7 +11,7 @@ class RankingPagerAdapter(fragmentActivity: FragmentActivity) :
 
     private val fullMajors = fragmentActivity.resources.getStringArray(R.array.major_full)
 
-    override fun getItemCount() = 9
+    override fun getItemCount() = 10
 
     override fun createFragment(position: Int): Fragment {
         return RankingListFragment.newInstance(fullMajors[position])

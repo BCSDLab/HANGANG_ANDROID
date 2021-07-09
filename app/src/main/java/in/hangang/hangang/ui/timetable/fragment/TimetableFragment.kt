@@ -166,13 +166,6 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 binding.timetableLayout.addTimetableItem(*it.toTypedArray())
             }
 
-            selectedTimetable.observe(viewLifecycleOwner) { lectureTimeTable ->
-                if (lectureTimeTable != null) {
-                    timetableLectureDetailViewModel.initWithLectureTimetable(lectureTimeTable)
-                }
-                timetableViewModel.setMode(TimetableViewModel.Mode.MODE_LECTURE_DETAIL)
-            }
-
             dummyTimeTable.observe(viewLifecycleOwner) {
                 if (it != null) {
                     binding.timetableLayout.removeAllTimetableDummyItems()
@@ -193,11 +186,14 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             timetableNameModifiedEvent.observe(viewLifecycleOwner, EventObserver {
                 binding.appBar.title = it
             })
-            lectureTimetableRemovedEvent.observe(viewLifecycleOwner, EventObserver {
+            bottomSheetCloseEvent.observe(viewLifecycleOwner, EventObserver {
                 setMode(TimetableViewModel.Mode.MODE_NORMAL)
             })
             error.observe(viewLifecycleOwner, EventObserver {
                 showCommonErrorDialog(it.message ?: "")
+            })
+            onlyCustomLectureEvent.observe(viewLifecycleOwner, EventObserver {
+                if(it) showCanOnlyAddCustomLectureTimetableDialog()
             })
         }
 
@@ -418,7 +414,21 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun showCommonErrorDialog(message: String) {
         DialogUtil.makeSimpleDialog(
             requireContext(),
-            message = message,
+            message = if(message.isNullOrBlank())
+                getString(R.string.common_error_message) else message,
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { dialog, _ ->
+                dialog.dismiss()
+            },
+            cancelable = true
+        ).show()
+    }
+
+    private fun showCanOnlyAddCustomLectureTimetableDialog() {
+        DialogUtil.makeSimpleDialog(
+            requireContext(),
+            title = getString(R.string.timetable_can_only_add_lecture_timetable_at_custom_title),
+            message = getString(R.string.timetable_can_only_add_lecture_timetable_at_custom_message),
             positiveButtonText = getString(R.string.ok),
             positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()
