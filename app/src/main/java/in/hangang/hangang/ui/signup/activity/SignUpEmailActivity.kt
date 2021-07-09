@@ -81,8 +81,10 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
         signUpEmailViewModel.emailSendText.observe(this, {
             if(it == 14){
                 binding.signupEmailErrorTextview.text = getString(R.string.sign_up_email_duplicated_error_message)
-            } else {
+            } else if(it == 22){
                 initCommonErrorDialog(getString(R.string.sign_up_email_five_limit_title), getString(R.string.sign_up_email_five_limit_message))
+            } else {
+                initErrorDialog()
             }
 
         })
