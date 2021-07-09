@@ -32,7 +32,7 @@ class SignUpEmailViewModel(private val userRepository: UserRepository) : ViewMod
                 if (data.flag == 0) showAlert.value = true
             },
                 {
-                    val code = it.toCommonResponse().code
+                    val code = it.toCommonResponse().code ?: -1
                     _emailSendText.value = code
                 })
             .addTo(compositeDisposable)
