@@ -44,7 +44,9 @@ class LectureBankRepository(
     }
 
     override fun commentLectureBank(lectureBankId: Int, comment: String): Single<Int> {
-        return lectureBankRemoteDataSource.commentLectureBank(lectureBankId, comment)
+        val regex = """\n+""".toRegex()
+        val commentTrimmed = regex.replace(comment, "\n")
+        return lectureBankRemoteDataSource.commentLectureBank(lectureBankId, commentTrimmed)
     }
 
     override fun modifyLectureBankComment(lectureBankId: Int, commentId: Int, comment: String): Single<CommonResponse> {

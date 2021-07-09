@@ -22,6 +22,7 @@
         tools:text="Item 1"/>
 
     <ImageButton
+        android:id="@+id/image_button_more"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@null"

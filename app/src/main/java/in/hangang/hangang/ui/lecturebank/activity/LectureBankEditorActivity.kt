@@ -96,6 +96,22 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
         initWithLectureBank(intent.extras?.getParcelable(LectureBankEditorActivityContract.LECTURE_BANK))
     }
 
+    override fun onBackPressed() {
+        showConfirmExitDialog()
+    }
+
+    private fun showConfirmExitDialog() {
+        DialogUtil.makeSimpleDialog(
+            this,
+            message = getString(R.string.lecture_bank_editor_exit_message),
+            positiveButtonText = getString(R.string.ok),
+            positiveButtonOnClickListener = { _, _ -> super.onBackPressed() },
+            negativeButtonText = getString(R.string.close),
+            negativeButtonOnClickListener = { dialog, _ -> dialog.dismiss() },
+            cancelable = true
+        ).show()
+    }
+
     private fun initWithLectureBank(lectureBank: LectureBank?) {
         with(binding) {
             if (lectureBank != null) {
@@ -335,4 +351,6 @@ class LectureBankEditorActivity : ViewBindingActivity<ActivityLectureBankEditorB
     companion object {
         private const val FILE_50MB = 50 * 1024 * 1024
     }
+
+
 }

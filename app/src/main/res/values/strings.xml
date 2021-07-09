@@ -379,6 +379,7 @@
     <string name="common_error_message">오류가 발생했습니다.</string>
     <string name="dialog_error_timestamp_start_more_future">시작 시간을 끝 시간보다 과거로 설정해주세요.</string>
     <string name="timetable_saved_to_file">시간표를 저장했습니다.</string>
+    <string name="lecture_bank_editor_exit_message">작성을 취소하시겠습니까?</string>
     <string name="semester_2021s">2021년 여름학기</string>
     <string name="semester_2021w">2021년 겨울학기</string>
     <string name="semester_20221">2022년 1학기</string>

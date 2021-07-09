@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -44,6 +45,8 @@ class BottomSheetSpinner @JvmOverloads constructor(
 
         this.setOnClickListener { showBottomSheet() }
         view.setOnClickListener { showBottomSheet() }
+        view.findViewById<TextView>(R.id.text_view_spinner_selected_item).setOnClickListener { showBottomSheet() }
+        view.findViewById<ImageButton>(R.id.image_button_more).setOnClickListener { showBottomSheet() }
 
         context.theme.obtainStyledAttributes(
             attributeSet,
