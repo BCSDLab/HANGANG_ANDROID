@@ -63,8 +63,9 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
     private val timeTableListDialogClickListener =
         object : TimeTableListDialog.TimeTableListDialogClickListener {
             override fun onConfirmClick(view: DialogFragment) {
+                showProgressDialog()
                 view.dismiss()
-                lectureReviewDetailViewModel.fetchClassLectureList(lecture.id, 5)
+                lectureReviewDetailViewModel.fetchClassLectureList(lecture.id, lectureReviewDetailViewModel.semester.value?.id?.toLong()!!)
             }
 
             override fun onCancelClick(view: DialogFragment) {
@@ -77,7 +78,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         override fun onClick(view: View, position: Int, item: Any) {
             val classLecture = (item as ClassLecture)
             classLectureId = classLecture.id
-            lectureReviewDetailViewModel.fetchDialogData(5, classLecture.id)
+            lectureReviewDetailViewModel.fetchDialogData(lectureReviewDetailViewModel.semester.value?.id?.toLong()!!, classLecture.id)
             //lectureReviewDetailViewModel.setDialogCheckButton(classLecture.id)
 
 
@@ -162,6 +163,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
             classLectureList.observe(viewLifecycleOwner, {
                 it?.let {
                     lectureClassTimeAdapter.submitList(it)
+                    hideProgressDialog()
                 }
             })
             chartList.observe(viewLifecycleOwner, {
@@ -213,7 +215,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                         listDialogRecyclerViewAdapter,
                         timeTableListDialogClickListener
                     )
-                    timeTableListDialog.show(parentFragmentManager, "asdf")
+                    timeTableListDialog.show(parentFragmentManager, "TimetTableListDialog")
                 }
             })
             reviewCount.observe(viewLifecycleOwner, {
@@ -224,6 +226,11 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                     showProgressDialog()
                 } else {
                     hideProgressDialog()
+                }
+            })
+            semester.observe(viewLifecycleOwner, { semester ->
+                lecture.id.let { lectureId ->
+                    lectureReviewDetailViewModel.fetchClassLectureList(lectureId, semester.id.toLong())
                 }
             })
 
@@ -310,8 +317,8 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
         listDialogRecyclerViewAdapter.setCheckClickListener(checkClickListener)
         recommendedDocsAdapter.setLectureDocClickListener(lectureDocsItemClickListener)
         binding.lectureDetailSortType.text = lectureReviewDetailViewModel.sort
+        lectureReviewDetailViewModel.getSemesterId()
         lecture.id.let {
-            lectureReviewDetailViewModel.fetchClassLectureList(it, 5)
             lectureReviewDetailViewModel.getEvaluationRating(it)
             lectureReviewDetailViewModel.getEvaluationTotal(it)
             lectureReviewDetailViewModel.getReviewList(

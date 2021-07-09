@@ -30,7 +30,7 @@ class LectureEvaluationViewModel(private val lectureRepository: LectureRepositor
     var hashTag = ArrayList<Int>()
     var lectureId = 0
     var rating = 0.5f
-    var semesterId = 5
+    var semesterId = 0
 
     private val _postCommonResponse = MutableLiveData<String>()
     val postCommonResponse: LiveData<String> get() = _postCommonResponse

@@ -42,10 +42,7 @@ class TimeTableListDialog(val recyclerviewAdapter: ListDialogRecyclerViewAdapter
         binding.listDialogRecyclerview.adapter = recyclerviewAdapter
     }
     private fun initEvent() {
-        binding.listDialogButtonNegative.setOnClickListener {
-            dialogClickListener.onCancelClick(this)
-            //dismiss()
-        }
+
         binding.listDialogButtonPositive.setOnClickListener {
             dialogClickListener.onConfirmClick(this)
             //dismiss()
