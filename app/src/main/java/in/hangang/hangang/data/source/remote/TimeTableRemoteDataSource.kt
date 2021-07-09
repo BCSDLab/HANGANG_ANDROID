@@ -3,6 +3,7 @@ package `in`.hangang.hangang.data.source.remote
 import `in`.hangang.hangang.api.AuthApi
 import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_SEMESTER_ID
 import `in`.hangang.hangang.constant.TIMETABLE_DEFAULT_TIMETABLE_NAME
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTable
 import `in`.hangang.hangang.data.entity.timetable.TimeTableWithLecture
@@ -203,6 +204,10 @@ class TimeTableRemoteDataSource(
 
     override fun getUserTimeTables(semesterId: Long?): Single<List<TimeTable>> {
         return authApi.getTimeTables(semesterId)
+    }
+
+    override fun getSemesterNow(): Single<Semester> {
+        return authApi.getSemester(null)
     }
 
     override suspend fun fetchLectureListFromTimeTable(timetableId: Int): TimeTableWithLecture {

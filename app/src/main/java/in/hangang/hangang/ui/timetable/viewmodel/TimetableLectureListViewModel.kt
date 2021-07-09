@@ -3,6 +3,7 @@ package `in`.hangang.hangang.ui.timetable.viewmodel
 import `in`.hangang.core.base.viewmodel.ViewModelBase
 import `in`.hangang.core.livedata.Event
 import `in`.hangang.hangang.data.entity.ranking.RankingLectureItem
+import `in`.hangang.hangang.data.entity.semester.Semester
 import `in`.hangang.hangang.data.entity.timetable.LectureFilter
 import `in`.hangang.hangang.data.entity.timetable.LectureTimeTable
 import `in`.hangang.hangang.data.response.CommonResponse

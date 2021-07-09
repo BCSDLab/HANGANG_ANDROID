@@ -12,5 +12,5 @@ data class Semester(
     @SerializedName("start_time")
     val startTime: String,
     @SerializedName("is_regular")
-    val isRegular: Boolean
+    val isRegular: Int
 ): Parcelable
