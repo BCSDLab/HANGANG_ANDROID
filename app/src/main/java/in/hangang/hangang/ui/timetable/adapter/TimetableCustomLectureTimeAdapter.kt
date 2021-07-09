@@ -10,6 +10,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,7 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
 
     var onItemClickListener: OnItemClickListener? = null
 
-    class ViewHolder(
+    inner class ViewHolder(
             val binding: ItemTimetableCustomLectureTimestampBinding,
             private val weekdaysText: Array<CharSequence>
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -35,6 +36,7 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
                         } ~ ${endTime.first.format(TIME_FORMAT)}:${
                             endTime.second.format(TIME_FORMAT)
                         }"
+                binding.textViewRemove.isVisible = list.size > 1
             }
         }
     }
@@ -50,6 +52,7 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val position = holder.absoluteAdapterPosition
         holder.bind(list[position])
         holder.itemView.setOnClickListener {
             onItemClickListener?.onItemClick(holder.itemView, position)
@@ -64,13 +67,10 @@ class TimetableCustomLectureTimeAdapter(private val context: Context) :
     }
 
     fun updateList(newList: List<CustomTimetableTimestamp>) {
-        val diffCallback = CustomTimetableTimestampDiffCallback(this.list, newList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
         this.list.clear()
         this.list.addAll(newList)
 
-        diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
     inline fun setOnItemClickListener(

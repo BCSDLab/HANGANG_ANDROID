@@ -186,7 +186,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
             timetableNameModifiedEvent.observe(viewLifecycleOwner, EventObserver {
                 binding.appBar.title = it
             })
-            lectureTimetableRemovedEvent.observe(viewLifecycleOwner, EventObserver {
+            bottomSheetCloseEvent.observe(viewLifecycleOwner, EventObserver {
                 setMode(TimetableViewModel.Mode.MODE_NORMAL)
             })
             error.observe(viewLifecycleOwner, EventObserver {
@@ -414,7 +414,8 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun showCommonErrorDialog(message: String) {
         DialogUtil.makeSimpleDialog(
             requireContext(),
-            message = message,
+            message = if(message.isNullOrBlank())
+                getString(R.string.common_error_message) else message,
             positiveButtonText = getString(R.string.ok),
             positiveButtonOnClickListener = { dialog, _ ->
                 dialog.dismiss()

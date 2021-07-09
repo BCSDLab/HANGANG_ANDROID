@@ -24,7 +24,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 
 class TimetableViewModel(
-    private val timeTableRepository: TimeTableRepository,
+    private val timeTableRepository: TimeTableRepository
 ) : ViewModelBase() {
 
     enum class Mode {
@@ -55,6 +55,7 @@ class TimetableViewModel(
     private val _customLectureAdded = MutableLiveData<Event<Boolean>>()
     private val _availableAddingCustomTimetable = MutableLiveData<Boolean>()
     private val _lectureTimetableRemovedEvent = MutableLiveData<Event<Int>>()
+    private val _bottomSheetCloseEvent = MutableLiveData<Event<Boolean>>()
     private val _onlyCustomLectureEvent = MutableLiveData<Event<Boolean>>()
 
     private val _timestamp = MutableLiveData<List<CustomTimetableTimestamp>>()
@@ -75,6 +76,7 @@ class TimetableViewModel(
     val customLectureAdded: LiveData<Event<Boolean>> get() = _customLectureAdded
     val availableAddingCustomTimetable: LiveData<Boolean> get() = _availableAddingCustomTimetable
     val lectureTimetableRemovedEvent: LiveData<Event<Int>> get() = _lectureTimetableRemovedEvent
+    val bottomSheetCloseEvent: LiveData<Event<Boolean>> get() = _bottomSheetCloseEvent
     val timetableBitmapError : LiveData<Event<String>> get() = _timetableBitmapError
     val onlyCustomLectureEvent : LiveData<Event<Boolean>> get() = _onlyCustomLectureEvent
 
@@ -196,7 +198,6 @@ class TimetableViewModel(
         timetableLayout: TimetableLayout
     ) {
         Completable.create { subscriber ->
-            try {
                 try {
                     val timetableLayoutBitmap = Bitmap.createBitmap(
                         timetableLayout.width,
@@ -240,9 +241,6 @@ class TimetableViewModel(
                 } catch (e: Exception) {
                     subscriber.onError(e)
                 }
-            } catch (e: Exception) {
-                subscriber.onError(e)
-            }
         }
             .withThread()
             .handleProgress(this)
@@ -275,7 +273,10 @@ class TimetableViewModel(
             .addTo(compositeDisposable)
     }
 
-    fun addTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
+    fun addTimeTableLecture(
+        timetable: TimeTable,
+        lectureTimeTable: LectureTimeTable
+    ) {
         timeTableRepository.addLectureInTimeTable(
             lectureId = lectureTimeTable.lectureTimetableId ?: 0,
             timetableId = timetable.id
@@ -289,12 +290,14 @@ class TimetableViewModel(
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
             }, {
                 _onErrorAddLectureTimetable.postValue(Event(it.toCommonResponse()))
-                _error.value = Event(it.toCommonResponse())
             })
             .addTo(compositeDisposable)
     }
 
-    fun removeTimeTableLecture(timetable: TimeTable, lectureTimeTable: LectureTimeTable) {
+    fun removeTimeTableLecture(
+        timetable: TimeTable, lectureTimeTable: LectureTimeTable,
+        closeBottomSheet: Boolean
+    ) {
         timeTableRepository.removeLectureFromTimeTable(
             lectureId = lectureTimeTable.lectureTimetableId ?: 0,
             timetableId = timetable.id
@@ -307,6 +310,8 @@ class TimetableViewModel(
             .subscribe({
                 _lectureTimetableRemovedEvent.postValue(Event(lectureTimeTable.id))
                 _lectureTimetablesInTimetable.postValue(it.lectureList)
+                if (closeBottomSheet)
+                    _bottomSheetCloseEvent.value = Event(true)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
                 _error.value = Event(it.toCommonResponse())

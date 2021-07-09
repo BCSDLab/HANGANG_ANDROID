@@ -36,7 +36,8 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
                 timetableLectureDetailViewModel.lectureTimetable.value?.let { lectureTimeTable ->
                     timetableViewModel.removeTimeTableLecture(
                             timetable = timetable,
-                            lectureTimeTable = lectureTimeTable
+                            lectureTimeTable = lectureTimeTable,
+                        closeBottomSheet = true
                     )
                 }
             }
@@ -48,6 +49,9 @@ class TimetableLectureDetailFragment : ViewBindingFragment<FragmentTimetableLect
             var lectureId = timetableLectureDetailViewModel.lectureTimetable.value?.lectureId
             timetableLectureDetailViewModel.getLectureId(lectureId!!)
 
+        }
+        binding.container.setOnClickListener {
+            //Blocking being closed this fragment
         }
     }
 

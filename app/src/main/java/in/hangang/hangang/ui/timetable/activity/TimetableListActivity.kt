@@ -66,7 +66,8 @@ class TimetableListActivity : ViewBindingActivity<ActivityTimetableListBinding>(
             }
             timetables.observe(this@TimetableListActivity) {
                 timetableAdapter.updateItem(it)
-                binding.textViewTimetableListLimit.text = "${it.size}/${TIMETABLE_MAX_TIMETABLES}"
+                val timetableCount = it.values.flatten().size
+                binding.textViewTimetableListLimit.text = "${timetableCount}/${TIMETABLE_MAX_TIMETABLES}"
             }
             mainTimetableEvent.observe(this@TimetableListActivity, EventObserver {
                 timetableAdapter.mainTimeTableId = it.id
