@@ -20,7 +20,7 @@ class FindByMajorRecyclerViewAdapter(val context: Context) :
     private val navController: NavController by lazy {
         Navigation.findNavController(context as Activity, R.id.nav_host_fragment)
     }
-    private val fullMajors: Array<String> by lazy { context.resources.getStringArray(R.array.major_full_word_wrap) }
+    private val fullMajors: Array<String> by lazy { context.resources.getStringArray(R.array.major_full) }
     private val coverDrawables: TypedArray by lazy {
         context.resources.obtainTypedArray(R.array.find_by_major_cover_drawables)
     }
