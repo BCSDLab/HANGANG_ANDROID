@@ -53,9 +53,9 @@ class MyProfileActivityViewModel(private val userRepository: UserRepository) : V
     }
 
 
-    fun applyMyProfileWithNickname(name: String, nickName: String, major: ArrayList<String>) {
+    fun applyMyProfileWithNickname(nickName: String, major: ArrayList<String>) {
         userRepository.checkNickname(nickName)
-            .flatMap { userRepository.saveProfile(name, nickName, major) }
+            .flatMap { userRepository.saveProfile(nickName, major) }
             .handleHttpException()
             .handleProgress(this)
             .withThread()
@@ -73,8 +73,8 @@ class MyProfileActivityViewModel(private val userRepository: UserRepository) : V
 
     }
 
-    fun applyMyProfile(name: String, nickName: String, major: ArrayList<String>){
-        userRepository.saveProfile(name, nickName, major)
+    fun applyMyProfile(nickName: String, major: ArrayList<String>){
+        userRepository.saveProfile(nickName, major)
             .handleHttpException()
             .handleProgress(this)
             .withThread()

@@ -107,8 +107,8 @@ class UserRemoteDataSource(
         return authApi.setMyProfile()
     }
 
-    override fun saveProfile(name: String, nickName: String, major: ArrayList<String>): Single<CommonResponse> {
-        return authApi.saveMyProfile(SaveMyProfileRequest(name, nickName, major))
+    override fun saveProfile(nickName: String, major: ArrayList<String>): Single<CommonResponse> {
+        return authApi.saveMyProfile(SaveMyProfileRequest(nickName, major))
     }
 
     override fun getLectureBankHit(): Single<List<LectureDoc>> {
