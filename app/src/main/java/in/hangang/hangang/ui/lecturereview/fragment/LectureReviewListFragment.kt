@@ -275,7 +275,7 @@ class LectureReviewListFragment : ViewBindingFragment<FragmentListReviewLectureB
     override fun onStop() {
         super.onStop()
         if(!isComplete)
-            lectureReviewListViewModel.clear()
+            lectureReviewListViewModel.filterClear()
         LogUtil.e("onstop")
     }
 

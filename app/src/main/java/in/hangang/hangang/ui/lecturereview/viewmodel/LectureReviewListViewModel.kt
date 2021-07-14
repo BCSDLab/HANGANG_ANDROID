@@ -50,7 +50,7 @@ class LectureReviewListViewModel(private val lectureRepository: LectureRepositor
         return selectedMajorList.size < 2
     }
     /* 검색필터 지우는 함수 */
-    fun clear(){
+    fun filterClear(){
         selectedMajorList.clear()
         filterSort = SORT_BY_TOTAL_RATING
         filterType.clear()
