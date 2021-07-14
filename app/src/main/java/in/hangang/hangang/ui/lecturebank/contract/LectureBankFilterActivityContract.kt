@@ -15,7 +15,7 @@ class LectureBankFilterActivityContract : ActivityResultContract<LectureBankFilt
     }
 
     override fun parseResult(resultCode: Int, intent: Intent?): LectureBankFilter? {
-        if(resultCode == RESULT_OK) return intent?.getParcelableExtra(INTENT_EXTRA_FILTER) as LectureBankFilter
+        if(resultCode == RESULT_OK) return intent?.getParcelableExtra(INTENT_EXTRA_FILTER) as? LectureBankFilter
         return null
     }
 
