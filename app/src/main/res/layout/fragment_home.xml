@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <in.hangang.core.view.appbar.BaseAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:showBackButton="false"
+            app:showDivider="false" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="32dp"
+                tools:context=".ui.home.HomeFragment">
+
+                <fragment
+                    android:id="@+id/fragment_container_lecture_ranking"
+                    android:name="in.hangang.hangang.ui.home.ranking.fragment.RankingFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <fragment
+                    android:id="@+id/fragment_container_find_by_major"
+                    android:name="in.hangang.hangang.ui.home.findbymajor.fragment.FindByMajorFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+                <fragment
+                    android:id="@+id/fragment_container_my_timetable"
+                    android:name="in.hangang.hangang.ui.home.mytimetable.fragment.MyTimetableFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+                <fragment
+                    android:id="@+id/fragment_container_recommended_lectures"
+                    android:name="in.hangang.hangang.ui.home.recommendedlectures.fragment.RecommendedLecturesFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+                <fragment
+                    android:id="@+id/fragment_container_recent_lectures"
+                    android:name="in.hangang.hangang.ui.home.recentlectures.fragment.RecentLecturesFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

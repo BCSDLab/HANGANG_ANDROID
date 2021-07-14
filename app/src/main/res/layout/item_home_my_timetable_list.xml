@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="timetable"
+            type="in.hangang.hangang.data.entity.timetable.LectureTimeTable" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_my_timetable_constraintlayout"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        tools:context=".ui.home.ranking.fragment.RankingListFragment">
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/item_my_timetable_button_evaluate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="22dp"
+            android:backgroundTint="@color/color_state_button_blue_gray"
+            android:paddingStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="5dp"
+            android:text="@{timetable.reviewed? @string/complete_timetable_evaluation : @string/go_to_timetable_evaluation}"
+            android:enabled="@{!timetable.reviewed}"
+            android:textColor="@color/color_state_button_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:enabled="false" />
+
+        <TextView
+            android:id="@+id/item_my_timetable_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/item_my_timetable_professor"
+            app:layout_constraintEnd_toStartOf="@+id/item_my_timetable_button_evaluate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:text="@{timetable.name}"
+            tools:text="사랑의 역사" />
+
+        <TextView
+            android:id="@+id/item_my_timetable_professor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/item_my_timetable_button_evaluate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_my_timetable_title"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:text="@{timetable.professor}"
+            tools:text="김사랑" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="divider_height">1dp</dimen>
+
+    <!-- Dimension for simple text and 2 buttons dialog -->
+    <dimen name="dialog_text_margin">24dp</dimen>
+    <dimen name="dialog_button_margin">8dp</dimen>
+    <dimen name="dialog_button_height">36dp</dimen>
+    <dimen name="dialog_background_corner_radius">4dp</dimen>
+    <dimen name="dialog_margin">40dp</dimen>
+
+    <!-- Dimension for small checkbox -->
+    <dimen name="checkbox_button_size">12dp</dimen>
+    <dimen name="checkbox_button_padding">16dp</dimen>
+
+    <!-- Dimension for hangang radio button -->
+    <dimen name="radio_min_width">64dp</dimen>
+
+    <!-- Dimension for hangang spinner -->
+    <dimen name="spinner_background_radius">4dp</dimen>
+    <dimen name="spinner_bottom_sheet_handle_width">32dp</dimen>
+    <dimen name="spinner_bottom_sheet_background_radius">16dp</dimen>
+
+    <!-- Dimension for search layout -->
+    <dimen name="search_layout_corner_radius">8dp</dimen>
+    <dimen name="search_layout_height">48dp</dimen>
+
+    <!-- Dimension for custom edittext -->
+    <dimen name="edit_text_right_icon_size">24dp</dimen>
+    <dimen name="dialog_text_margin_small">12dp</dimen>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_nav_home"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_evaluation"
+        android:icon="@drawable/ic_nav_evaluation"
+        android:title="@string/title_evaluation" />
+
+    <item
+        android:id="@+id/navigation_lecture_bank"
+        android:icon="@drawable/ic_nav_document"
+        android:title="@string/title_lecture_bank" />
+
+    <item
+        android:id="@+id/navigation_timetable"
+        android:icon="@drawable/ic_nav_timetable"
+        android:title="@string/title_timetable" />
+
+    <item
+        android:id="@+id/navigation_mypage"
+        android:icon="@drawable/ic_nav_mypage"
+        android:title="@string/title_mypage" />
+
+</menu>

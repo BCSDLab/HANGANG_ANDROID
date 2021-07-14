@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.lecturereview.fragment.LectureReviewDetailFragment">
+
+    <data>
+
+        <variable
+            name="lecture"
+            type="in.hangang.hangang.data.entity.ranking.RankingLectureItem" />
+        <variable
+            name="evaluation"
+            type="in.hangang.hangang.data.entity.evaluation.Evaluation"/>
+    </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/lecture_detail_motionlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            app:layoutDescription="@xml/fragment_lecture_review_detail_scene">
+
+            <in.hangang.core.view.appbar.BaseAppBar
+                android:id="@+id/lecture_detail_appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:rightText="@string/lecture_review_write"
+                app:titleText="@string/title_evaluation" />
+
+            <TextView
+                android:id="@+id/lecture_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{lecture.name}"
+                android:textColor="@color/black2"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_appbar"
+                tools:text="사랑의 역사" />
+
+            <TextView
+                android:id="@+id/lecture_detail_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@{lecture.code}"
+                android:textColor="@color/gray_500"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lecture_detail_name"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_name"
+                tools:text="MAC1012" />
+
+            <TextView
+                android:id="@+id/lecture_detail_classfication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@{lecture.classification}"
+                android:textColor="@color/blue_200"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lecture_detail_code"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="교양필수" />
+
+            <TextView
+                android:id="@+id/lecture_detail_professor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@{lecture.professor}"
+                android:textColor="@color/black2"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_name"
+                tools:text="문일영" />
+
+            <TextView
+                android:id="@+id/lecture_detail_semester_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/lecture_semester"
+                android:textColor="@color/gray_500"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_professor" />
+
+            <TextView
+                android:id="@+id/lecture_detail_semester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="@{lecture.totalSemester}"
+                android:textColor="@color/black2"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_semester_title"
+                tools:text="2020-1, 2019-2, 2019-1" />
+
+            <View
+                android:id="@+id/divide_line_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/gray_100"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_semester" />
+
+            <ToggleButton
+                android:id="@+id/lecture_detail_bookmark"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/selector_bookmark"
+                app:layout_constraintBottom_toBottomOf="@+id/lecture_detail_semester"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/lecture_detail_timetable_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/lecture_time"
+                android:textColor="@color/black2"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divide_line_1"
+                tools:text="시간표 정보" />
+
+            <TextView
+                android:id="@+id/lecture_detail_grade_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/lecture_grade"
+                android:textColor="@color/gray_500"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_timetable_title" />
+
+            <TextView
+                android:id="@+id/lecture_detail_grade_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:digits="lectue_detail_grade"
+                android:text="@{lecture.stringGrade}"
+                android:textColor="@color/black2"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_grade_title"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_grade_title" />
+
+            <TextView
+                android:id="@+id/lecture_detail_time_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/lecture_time"
+                android:textColor="@color/gray_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_grade_title" />
+
+            <TextView
+                android:id="@+id/elcture_detail_titmetable_chek_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/lecture_check_time"
+                android:textColor="@color/black2"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_time_title"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_time_title" />
+
+            <ImageView
+                android:id="@+id/lecture_detail_timetable_toggle_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_time_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lecture_detail_class_time_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_time_title" />
+
+            <View
+                android:id="@+id/divide_line_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/gray_100"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_class_time_recyclerview" />
+            <TextView
+                android:id="@+id/lecture_detail_total_rating_text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divide_line_2"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black2"
+                android:text="@string/lecture_detail_total_evaluation"
+                />
+            <View
+                android:id="@+id/lecture_detail_graph_background"
+                android:layout_width="0dp"
+                android:layout_height="146dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/gray_400"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_total_rating_text_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/lecture_detail_barchart"
+                android:layout_width="209dp"
+                android:layout_height="146dp"
+                android:layout_marginTop="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_graph_background"/>
+            <TextView
+                android:id="@+id/lecture_detail_rating_text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/gray_500"
+                android:text="@string/rating"
+                app:layout_constraintStart_toStartOf="@+id/lecture_detail_graph_background"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_graph_background"
+                android:layout_marginTop="16dp"/>
+            <TextView
+                android:id="@+id/lecture_detail_total_rating_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{lecture.totalRating}"
+                android:textSize="20sp"
+                android:textColor="@color/black2"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_rating_text_title"
+                app:layout_constraintBottom_toBottomOf="@+id/lecture_detail_rating_text_title"
+                tools:text="3.2"
+                android:layout_marginStart="8dp" />
+            <TextView
+                android:id="@+id/lecture_detail_addendance_frequency_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/gray_500"
+                android:text="@string/attendance_frequency"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_graph_background"
+                android:layout_marginTop="32dp" />
+            <TextView
+                android:id="@+id/lecture_detail_attendance_frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/black2"
+                android:text="@{evaluation.attendanceToString()}"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_addendance_frequency_title"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_addendance_frequency_title"
+                android:layout_marginStart="16dp"
+                tools:text="상"
+                />
+            <TextView
+                android:id="@+id/lecture_detail_exam_difficulty_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/gray_500"
+                tools:text="시험 난이도"
+                android:text="@string/exam_difficulty"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_attendance_frequency"
+                android:layout_marginStart="87dp"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_graph_background"
+                android:layout_marginTop="32dp"
+                />
+            <TextView
+                android:id="@+id/lecture_detail_exam_difficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/black2"
+                tools:text="상"
+                android:text="@{evaluation.difficultyToString()}"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_exam_difficulty_title"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_exam_difficulty_title" />
+            <TextView
+                android:id="@+id/lecture_detail_homework_size_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/gray_500"
+                android:text="@string/homework_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_addendance_frequency_title"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                />
+            <TextView
+                android:id="@+id/lecture_detail_homework_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="@{evaluation.assignmentAmountToString()}"
+                android:textColor="@color/black2"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_homework_size_title"
+                app:layout_constraintStart_toStartOf="@+id/lecture_detail_attendance_frequency"
+                tools:text="상"/>
+            <TextView
+                android:id="@+id/lecture_detail_grade_ratio_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_500"
+                android:textSize="14sp"
+                android:text="@string/grade_ratio"
+                app:layout_constraintStart_toStartOf="@+id/lecture_detail_exam_difficulty_title"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_exam_difficulty_title"
+                android:layout_marginTop="16dp"/>
+            <TextView
+                android:id="@+id/lecture_detail_grade_ratio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black2"
+                android:textSize="14sp"
+                android:text="@{evaluation.gradePortionToString()}"
+                app:layout_constraintStart_toStartOf="@+id/lecture_detail_exam_difficulty"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_exam_difficulty"
+                android:layout_marginTop="16dp"
+                tools:text="상"/>
+            <TextView
+                android:id="@+id/lecture_detail_hashtag_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/gray_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_homework_size_title"
+                android:layout_marginTop="24dp"
+                android:text="@{lecture.top3HashTag[0].tagToString}"
+                android:layout_marginStart="16dp"
+                tools:text="# 그저그러함"
+                />
+            <TextView
+                android:id="@+id/lecture_detail_hashtag_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/gray_500"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_hashtag_1"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_homework_size_title"
+                android:layout_marginTop="24dp"
+                android:text="@{lecture.top3HashTag[1].tagToString}"
+                android:layout_marginStart="8dp"
+                tools:text="# 리얼수면제"
+                />
+
+            <TextView
+                android:id="@+id/lecture_detail_hashtag_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/gray_500"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_hashtag_2"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_homework_size_title"
+                android:layout_marginTop="24dp"
+                android:text="@{lecture.top3HashTag[2].tagToString}"
+                android:layout_marginStart="8dp"
+                tools:text="# 리얼수면제"
+                />
+            <View
+                android:id="@+id/divide_line_3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/gray_100"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_hashtag_3" />
+            <TextView
+                android:id="@+id/lecture_detail_recommend_document_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:textColor="@color/black2"
+                android:text="@string/lecture_bank_recommend"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divide_line_3"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lecture_detail_recommend_recyclerview"
+                android:layout_width="0dp"
+                android:layout_height="112dp"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_recommend_document_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/divide_line_4"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"/>
+            <TextView
+                android:id="@+id/lecture_detail_no_recommend_docs_guide"
+                android:layout_width="0dp"
+                android:layout_height="112dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="invisible"
+                android:gravity="center"
+                android:text="@string/no_lecture_docs"
+                android:textColor="@color/gray_500"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_recommend_document_title"
+                app:layout_constraintBottom_toTopOf="@+id/divide_line_4"
+                android:layout_marginTop="16dp"/>
+            <View
+                android:id="@+id/divide_line_4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/gray_100"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_no_recommend_docs_guide" />
+            <TextView
+                android:id="@+id/lecture_detail_personal_evaluation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black2"
+                android:text="@string/personal_evaluation"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/divide_line_4"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+            <TextView
+                android:id="@+id/lecture_detail_personal_evaluation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black2"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="4dp"
+                tools:text="(16)"
+                app:layout_constraintTop_toBottomOf="@+id/divide_line_4"
+                app:layout_constraintStart_toEndOf="@+id/lecture_detail_personal_evaluation_title"
+
+                />
+            <TextView
+                android:id="@+id/lecture_detail_sort_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/lecture_detail_personal_evaluation_title"
+                app:layout_constraintEnd_toStartOf="@+id/lecture_detail_sort_type_icon"
+                android:textColor="@color/black2"
+                android:textSize="12sp"
+                tools:text="좋아요 순"/>
+            <ImageView
+                android:id="@+id/lecture_detail_sort_type_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_down"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lecture_detail_sort_type"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/lecture_detail_order_popup"
+                android:layout_width="112dp"
+                android:layout_height="112dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="8dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_sort_type"
+                app:layout_constraintEnd_toEndOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lecture_detail_cardview_constraintlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/lecture_detail_order_by_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black2"
+                        android:textSize="14sp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="22dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/like_order"/>
+                    <TextView
+                        android:id="@+id/lecture_detail_order_by_latest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black2"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@+id/lecture_detail_order_by_like"
+                        android:layout_marginTop="27dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/latest_order"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lecture_detail_review_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="16dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_detail_personal_evaluation_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

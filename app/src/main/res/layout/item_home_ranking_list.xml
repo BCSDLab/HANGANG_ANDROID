@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="rankingLectureItem"
+            type="in.hangang.hangang.data.entity.ranking.RankingLectureItem" />
+        <variable
+            name="ranking"
+            type="int" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ranking_item_constraintlayout"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        tools:context=".ui.home.ranking.fragment.RankingListFragment">
+
+        <TextView
+            android:id="@+id/ranking_item_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{Integer.toString(ranking)}"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/ranking_item_star_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{rankingLectureItem.totalRating}"
+            tools:text="4.2" />
+
+        <TextView
+            android:id="@+id/ranking_item_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/ranking_item_professor"
+            app:layout_constraintEnd_toStartOf="@id/ranking_item_star_number"
+            app:layout_constraintStart_toEndOf="@id/ranking_item_number"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:text="@{rankingLectureItem.name}"
+            tools:text="사랑의 역사" />
+
+        <TextView
+            android:id="@+id/ranking_item_professor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ranking_item_star_number"
+            app:layout_constraintStart_toEndOf="@id/ranking_item_number"
+            app:layout_constraintTop_toBottomOf="@id/ranking_item_title"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:text="@{rankingLectureItem.professor}"
+            tools:text="김사랑" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            android:visibility="@{ranking == 5 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

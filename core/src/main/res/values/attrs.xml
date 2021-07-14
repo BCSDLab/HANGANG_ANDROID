@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundedCornerButton">
+        <attr name="buttonAppearence" format="enum">
+            <enum name="filled" value="0" />
+            <enum name="outlined" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="BaseAppBar">
+        <attr name="showBackButton" format="boolean" />
+        <attr name="titleText" format="string|reference" />
+        <attr name="rightText" format="string|reference" />
+        <attr name="centerTitle" format="boolean" />
+        <attr name="showDivider" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="StarView">
+        <attr name="rating" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="SearchAppBar">
+        <attr name="showBackButton"/>
+        <attr name="android:hint" />
+        <attr name="android:text" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressAppBar">
+        <attr name="android:max" format="integer|reference" />
+        <attr name="android:progress" format="integer|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="BottomSheetSpinner">
+        <attr name="android:entries" />
+    </declare-styleable>
+
+    <declare-styleable name="SingleLineEditText">
+        <attr name="android:inputType" />
+        <attr name="android:hint" />
+        <attr name="android:text" />
+        <attr name="android:enabled" />
+    </declare-styleable>
+
+    <declare-styleable name="EditTextWithError">
+        <attr name="status" format="enum">
+            <enum name="undefined" value="0" />
+            <enum name="check" value="1" />
+            <enum name="error" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="MaxLengthEditText">
+        <attr name="android:maxLength" />
+    </declare-styleable>
+
+    <declare-styleable name="PasswordEditText">
+        <attr name="mask" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ViewPager">
+        <attr name="pagingEnabled" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="PickerView">
+        <attr name="android:entries" />
+    </declare-styleable>
+
+    <attr name="textArray" format="reference" />
+</resources>

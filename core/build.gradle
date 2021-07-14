@@ -1,0 +1,117 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 10000
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "IS_DEBUG", "true"
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "IS_DEBUG", "false"
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    /* Dependency - AndroidX Jetpack */
+    api project.androidxAppCompat
+    api project.androidxRecyclerView
+    api project.androidxCardView
+    api project.androidxNavigation
+    api project.androidxNavgationFragment
+    api project.androidxNavgationKtx
+    api project.androidxNavigationUi
+    api project.androidxMaterial
+    api project.androidxFragment
+    api project.androidxPagingRuntime
+    api project.androidxPagingCommon
+    api project.androidxPagingRxjava3
+    /* Dependency - AndroidX lifecycle */
+    api project.androidxLifecycleLivedata
+    api project.androidLifecycleViewmodel
+
+    /* Dependency - Retrofit2 */
+    api project.retrofit
+    api project.retrofitGsonConvert
+    api project.retrofitRxJava
+    api project.retrofitMoshiConvert
+    api project.retrofitScalarsConverter
+
+    /* Dependency - leakcanary */
+    debugImplementation project.leakcanaryDebug
+    releaseImplementation project.leakcanaryRelease
+    debugImplementation project.leakcanrySupportFragment
+
+    /* Dependency - glide */
+    api project.glide
+    annotationProcessor project.glideAnnotation
+
+    /* Dependency - okhttp */
+    api project.okhttp
+    api project.okhttpLogging
+
+    /* Dependency - rxkotlin */
+    api(project.rxkotlin)
+    api project.rxandroid
+
+    /* Dependency - lottie */
+    api project.lottie
+
+    /* Dependency - Koin */
+    api project.koinCore
+    api project.koinCoreExtension
+    api project.koinTest
+    api project.koinAndroidXScope
+    api project.koinAndroidXViewModel
+    api project.koinAndoridXFragment
+    api project.koinAndoridXWorkerManager
+    api project.koinAndoridXCompose
+    api project.koinAndoridXExtension
+
+    /* Dependency - Hawk */
+    api project.hawk
+
+    api project.prettyLogger
+}

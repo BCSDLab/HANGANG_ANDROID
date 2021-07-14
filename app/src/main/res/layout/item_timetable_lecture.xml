@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000"
+        android:backgroundTint="@color/color_state_timetable_list_item_background">
+
+        <TextView
+            android:id="@+id/text_view_lecture_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="사랑의 역사" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="11sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_lecture_title"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_title"
+            tools:text="ABC1234" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="4.1" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_professor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_lecture_title"
+            tools:text="김사랑 (01)" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_credit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_lecture_professor"
+            tools:text="3학점" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="11sp"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_credit"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_lecture_professor"
+            tools:text="1학년" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_classification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="11sp"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_grade"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_lecture_professor"
+            tools:text="교양선택" />
+
+        <TextView
+            android:id="@+id/text_view_lecture_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="11sp"
+            app:layout_constraintStart_toEndOf="@id/text_view_lecture_classification"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_lecture_professor"
+            tools:text="월 1A~3B" />
+
+        <ImageButton
+            android:id="@+id/check_box_scrap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="16dp"
+            android:src="@drawable/ic_check_v_unselected"
+            app:layout_constraintBottom_toBottomOf="@id/button_lecture_review"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_lecture_review" />
+
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_lecture_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="?android:attr/textColorSecondary"
+            android:paddingStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="5dp"
+            android:text="@string/lecture_list_button_review"
+            android:textColor="?android:attr/textColorSecondary"
+            app:buttonAppearence="outlined"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/check_box_scrap"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_classification" />
+
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_add_lecture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:paddingStart="16dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="5dp"
+            android:text="@string/lecture_list_add_lecture"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintEnd_toStartOf="@id/button_lecture_review"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_classification" />
+
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_remove_lecture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:paddingStart="16dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="5dp"
+            android:text="@string/lecture_list_remove_lecture"
+            android:textColor="?attr/colorOnSecondary"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@id/button_lecture_review"
+            app:layout_constraintTop_toBottomOf="@id/text_view_lecture_classification" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000"
+            android:backgroundTint="?android:attr/textColorTertiary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

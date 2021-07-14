@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="in.hangang.hangang.ui.signup.viewmodel.SignUpEmailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.signup.activity.SignUpEmailActivity">
+
+        <in.hangang.core.view.appbar.ProgressAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="25" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp">
+            <TextView
+                android:id="@+id/signup_email_title_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/reset_password_auth_koreatech_email_title"
+                android:textColor="@color/black2"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="normal" />
+            <TextView
+                android:id="@+id/signup_email_error_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="11sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/signup_email_title_textview"
+                app:layout_constraintBottom_toBottomOf="@+id/signup_email_title_textview"
+                android:textColor="@color/mango"
+                tools:text="이미 가입된 이메일입니다!"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <in.hangang.core.view.edittext.KoreatechEmailEditText
+            android:id="@+id/email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/write_school_email"
+            android:inputType="textEmailAddress" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="16dp">
+
+
+        <TextView
+            android:id="@+id/signup_email_config_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset_password_auth_number_title"
+            android:textColor="@color/black2"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/signup_email_config_error_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="11sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/signup_email_config_title_textview"
+                app:layout_constraintBottom_toBottomOf="@+id/signup_email_config_title_textview"
+                android:textColor="@color/mango"
+                tools:text="이미 가입된 이메일입니다!"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="horizontal">
+
+            <in.hangang.core.view.edittext.EditTextWithError
+                android:id="@+id/authnum_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/send_authnum_school_email"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/authnum_send_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <in.hangang.core.view.button.RoundedCornerButton
+                android:id="@+id/authnum_send_button"
+                android:layout_width="97dp"
+                android:layout_height="28dp"
+                android:backgroundTint="@color/color_state_button_blue"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="@string/reset_password_send_auth_number"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+            <in.hangang.core.view.button.RoundedCornerButton
+                android:id="@+id/go_to_aunuri_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/mango"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="@string/goto_aunuri"
+                android:textColor="@color/white"
+                android:visibility="invisible"
+                android:textSize="14sp" />
+
+            <in.hangang.core.view.button.RoundedCornerButton
+                android:id="@+id/auth_complete_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="@color/color_state_button_blue"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="@string/reset_password_finish_email_auth"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

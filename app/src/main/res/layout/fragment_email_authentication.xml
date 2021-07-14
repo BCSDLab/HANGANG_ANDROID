@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="in.hangang.hangang.ui.changepassword.viewmodel.EmailAuthenticationFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.changepassword.fragment.EmailAuthenticationFragment">
+
+        <TextView
+            android:id="@+id/text_view_email_auth_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/reset_password_auth_koreatech_email_title"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_confirm_email_auth_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/reset_password_auth_number_title"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_email" />
+
+        <in.hangang.core.view.edittext.KoreatechEmailEditText
+            android:id="@+id/edit_text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:enabled="true"
+            android:hint="@string/reset_password_auth_koreatech_email_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_email_auth_title" />
+
+        <in.hangang.core.view.edittext.SingleLineEditText
+            android:id="@+id/edit_text_email_auth_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:enabled="@{vm.sentEmailAuth}"
+            android:hint="@string/reset_password_auth_number_hint"
+            app:layout_constraintBottom_toBottomOf="@+id/button_send_auth_number"
+            app:layout_constraintEnd_toStartOf="@+id/button_send_auth_number"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_send_auth_number"
+            android:layout_width="96dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/color_state_button_blue"
+            android:gravity="center"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_confirm_email_auth_title"
+            tools:enabled="false" />
+
+        <in.hangang.core.view.button.RoundedCornerButton
+            android:id="@+id/button_finish_email_auth"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/color_state_button_blue"
+            android:gravity="center"
+            android:text="@string/reset_password_finish_email_auth"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:enabled="false" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

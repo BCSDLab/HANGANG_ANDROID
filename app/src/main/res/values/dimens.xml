@@ -1,0 +1,17 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="bottom_navigation_view_height">72dp</dimen>
+
+    <!-- Override bottom navigation bar dimens -->
+    <dimen name="design_bottom_navigation_height">64dp</dimen>
+    <dimen name="design_bottom_navigation_margin">16dp</dimen>
+    <dimen name="design_bottom_navigation_label_padding">0dp</dimen>
+    <dimen name="design_bottom_navigation_text_size">11sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size">11sp</dimen>
+    <dimen name="dimen_home_find_by_major_cover_length">87dp</dimen>
+    <dimen name="dimen_home_recommended_lectures_cover_length">90dp</dimen>
+
+    <dimen name="thumnail_recomended_docs_radious_size">8dp</dimen>
+</resources>

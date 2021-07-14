@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:paddingStart="@dimen/dialog_margin"
+    android:paddingEnd="@dimen/dialog_margin">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/background_dialog"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dialog_text_margin"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="주의!" />
+
+        <TextView
+            android:id="@+id/text_view_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dialog_text_margin"
+            android:layout_marginTop="@dimen/dialog_text_margin_small"
+            app:layout_goneMarginTop="24dp"
+            android:layout_marginEnd="@dimen/dialog_text_margin"
+            android:layout_marginBottom="@dimen/dialog_text_margin_small"
+            android:gravity="top|start"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/button_positive"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title"
+            tools:text="구매 시 사용한 포인트는 환불이 불가능하니 미리보기와 내용, 댓글을 확인한 후 구매해 주세요.\n\n자료를 무단으로 가공 및 유통, 재판매하는 경우 이용에 제한이 생길 수 있습니다." />
+
+        <Button
+            android:id="@+id/button_positive"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dialog_button_margin"
+            android:padding="@dimen/dialog_text_margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/blue_500"
+            android:textSize="14sp"
+            tools:text="확인" />
+
+        <Button
+            android:id="@+id/button_negative"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dialog_button_margin"
+            android:padding="@dimen/dialog_text_margin_small"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_positive"
+            tools:text="닫기" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
