@@ -61,7 +61,7 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lectureId = intent.getIntExtra(INTENT_KEY, 0)
-        lectureName = intent.getStringExtra(INTENT_NAME_KEY)
+        lectureName = intent.getStringExtra(INTENT_NAME_KEY) ?: ""
         initViewModel()
         init()
         initEvent()

@@ -27,23 +27,23 @@ object LogUtil {
     }
 
     fun e(message: String?) {
-        if (isLoggable) Log.e(TAG, buildLogMsg(message))
+        if (isLoggable) Log.e(TAG, buildLogMsg(message) ?: "")
     }
 
     fun w(message: String?) {
-        if (isLoggable) Log.w(TAG, buildLogMsg(message))
+        if (isLoggable) Log.w(TAG, buildLogMsg(message) ?: "")
     }
 
     fun i(message: String?) {
-        if (isLoggable) Log.i(TAG, buildLogMsg(message))
+        if (isLoggable) Log.i(TAG, buildLogMsg(message) ?: "")
     }
 
     fun d(message: String?) {
-        if (isLoggable) Log.d(TAG, buildLogMsg(message))
+        if (isLoggable) Log.d(TAG, buildLogMsg(message) ?: "")
     }
 
     fun v(message: String?) {
-        if (isLoggable) Log.v(TAG, buildLogMsg(message))
+        if (isLoggable) Log.v(TAG, buildLogMsg(message) ?: "")
     }
 
 

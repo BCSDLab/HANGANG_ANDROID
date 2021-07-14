@@ -14,7 +14,7 @@ class WebViewActivity : ViewBindingActivity<ActivityWebViewBinding>() {
     lateinit var URL: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        URL = intent.getStringExtra("url")
+        URL = intent.getStringExtra("url") ?: ""
         initWebview()
     }
     private fun initWebview() {
