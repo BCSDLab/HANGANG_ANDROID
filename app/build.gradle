@@ -21,7 +21,14 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    signingConfigs{
+        releaseWithSignedKey {
+            storeFile file(SIGNED_STORE_FILE)
+            storePassword SIGNED_STORE_PASSWORD
+            keyAlias SIGNED_KEY_ALIAS
+            keyPassword SIGNED_KEY_PASSWORD
+        }
+    }
     buildTypes {
 
         debug {
@@ -33,10 +40,12 @@ android {
         }
 
         release {
+            debuggable true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "IS_DEBUG", "false"
             manifestPlaceholders = [crashlyticsCollectionEnabled:"true"]
+            signingConfig signingConfigs.releaseWithSignedKey
         }
     }
     compileOptions {
