@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface UserDataSource {
     fun signUp(
-        major: Array<String>,
+        major: ArrayList<String>,
         nickName: String,
         password: String,
         portalAccount: String
