@@ -13,7 +13,7 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
         Glide.with(view.context)
             .load(imageUrl)
-            .transform(CenterCrop(), RoundedCorners(R.dimen.thumnail_recomended_docs_radious_size))
+            .transform(CenterCrop())
             .into(view)
     }
 }
