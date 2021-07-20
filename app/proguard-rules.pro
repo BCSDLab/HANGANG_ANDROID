@@ -23,3 +23,4 @@
 -keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
 -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
 -keep class in.hangang.hangang.data.** { *; }
+-keep class com.orhanobut.hawk.** { *; }
