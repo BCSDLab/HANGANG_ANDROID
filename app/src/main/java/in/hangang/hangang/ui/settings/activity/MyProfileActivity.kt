@@ -108,11 +108,11 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
                     editButton -> myProfileViewModel.setEditMode(true)
                     finishButton -> if (myProfileViewModel.isProfileEdited.value == true) {
                         if (myProfileViewModel.nickName != binding.profileNicknameEditText.toString()){
-                            myProfileViewModel.applyMyProfile(
+                            myProfileViewModel.applyMyProfileWithNickname(
                                 binding.profileNicknameEditText.text.toString(),
                                 myProfileViewModel.bottomSheetSelectedMajorList
                             )}else{
-                            myProfileViewModel.applyMyProfileWithNickname(
+                            myProfileViewModel.applyMyProfile(
                                 binding.profileNicknameEditText.text.toString(),
                                 myProfileViewModel.bottomSheetSelectedMajorList
                             )

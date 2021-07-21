@@ -36,7 +36,7 @@ class TimetableLectureListViewModel(
     private val _lectureFilter = MutableLiveData<LectureFilter>()
     private val _resetLectureFilter = MutableLiveData<Event<Boolean>>()
 
-    private val _lecture = MutableLiveData<RankingLectureItem>()
+    private val _lecture = MutableLiveData<Event<RankingLectureItem>>()
 
     val lectures: LiveData<Collection<LectureTimeTable>> get() = _lectures
     val timetableLectureChanged: MutableLiveData<Event<CommonResponse>> get() = _timetableLectureChanged
@@ -44,7 +44,7 @@ class TimetableLectureListViewModel(
     val isShowingScraps: LiveData<Boolean> get() = _isShowingScraps
     val lectureFilter: LiveData<LectureFilter> get() = _lectureFilter
     val resetLectureFilter: LiveData<Event<Boolean>> get() = _resetLectureFilter
-    val lecture: LiveData<RankingLectureItem> get() = _lecture
+    val lecture: LiveData<Event<RankingLectureItem>> get() = _lecture
 
     var page = 0
     var semesterDateId: Int = 5
@@ -163,7 +163,7 @@ class TimetableLectureListViewModel(
             .handleHttpException()
             .handleProgress(this)
             .subscribe({
-                _lecture.value = it
+                _lecture.value = Event(it)
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage)
             })

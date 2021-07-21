@@ -198,11 +198,11 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
                     (it as FilledCheckBox).isChecked = false
                 }
             }
-            lecture.observe(viewLifecycleOwner){
+            lecture.observe(viewLifecycleOwner, EventObserver{
                 val bundle = Bundle()
                 bundle.putParcelable("lecture", it)
                 navController.navigate(R.id.navigation_evaluation, bundle)
-            }
+            })
         }
     }
 

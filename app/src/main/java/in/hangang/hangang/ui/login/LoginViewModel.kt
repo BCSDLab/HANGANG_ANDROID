@@ -41,10 +41,4 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModelBase
         userRepository.saveAutoLogin(isAutoLoginActive)
             .subscribe {}
     }
-    fun saveAutoLoginStatus(isAutoLoginActive : Boolean){
-        userRepository.saveAutoLogin(isAutoLoginActive)
-            .subscribe {}
-    }
-
-
 }

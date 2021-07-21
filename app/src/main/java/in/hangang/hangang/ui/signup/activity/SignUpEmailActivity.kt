@@ -181,7 +181,7 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
 
     private fun initResendDialog() {
         showSimpleDialog(
-                title = getString(R.string.reset_password_dialog_resent_title),
+                title = getString(R.string.reset_password_dialog_sent_title),
                 message = getString(R.string.reset_password_dialog_check_portal_message),
                 positiveButtonText = getString(R.string.ok),
                 positiveButtonOnClickListener = { dialog, _ ->

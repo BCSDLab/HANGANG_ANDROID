@@ -73,6 +73,7 @@
     <string name="reset_password_confirm_new_password_hint">비밀번호를 한번 더 입력해주세요</string>
     <string name="reset_password_apply_new_password">비밀번호 변경</string>
     <string name="reset_password_dialog_resent_title">재전송 되었습니다.</string>
+    <string name="reset_password_dialog_sent_title">전송 되었습니다.</string>
     <string name="reset_password_dialog_check_portal_message">아우누리 메일을 확인해주세요.\n이메일 인증 완료 후 서비스를 이용할 수 있습니다.</string>
     <string name="reset_password_retry_auth">다시 인증하기</string>
     <string name="reset_password_error_auth">인증 오류</string>
