@@ -2,6 +2,7 @@ package `in`.hangang.hangang.ui.signup.activity
 
 import `in`.hangang.core.base.activity.ViewBindingActivity
 import `in`.hangang.core.base.activity.showSimpleDialog
+import `in`.hangang.core.toast.shortToast
 import `in`.hangang.hangang.R
 import `in`.hangang.hangang.databinding.ActivitySignUpMajorBinding
 import `in`.hangang.hangang.ui.login.LoginActivity
@@ -79,9 +80,7 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
     private fun initEvent() {
         binding.majorCompleteButton.setOnClickListener {
             if (binding.majorCompleteButton.isEnabled) {
-                signUpMajorViewModel.major =
-                        ArrayList(signUpMajorViewModel.majorHashMap.values).toArray(arrayOfNulls(signUpMajorViewModel.majorHashMap.values.size))
-                signUpMajorViewModel.signUp(signUpMajorViewModel.major, nickName!!, password!!, portalAccount!!)
+                signUpMajorViewModel.signUp(nickName!!, password!!, portalAccount!!)
             }
         }
     }
@@ -93,65 +92,108 @@ class SignUpMajorActivity : ViewBindingActivity<ActivitySignUpMajorBinding>() {
     private fun initCheckBox() {
         with(binding) {
             mechanicalEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked) {
-                    signUpMajorViewModel.majorHashMap.put(1, getString(R.string.mechanical_engineering))
-                    binding.majorCompleteButton.isEnabled = checkBoxCheck()
-                } else {
-                    signUpMajorViewModel.majorHashMap.remove(1)
-                    binding.majorCompleteButton.isEnabled = checkBoxCheck()
-                }
+                    if (isChecked) {
+                        if(signUpMajorViewModel.isAddMajorPossible()) {
+                            signUpMajorViewModel.major.add(getString(R.string.mechanical_engineering))
+                            binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                        } else {
+                            mechanicalEngineeringCheckbox.isChecked = false
+                            shortToast { getString(R.string.sign_up_major_limit_message)}
+                        }
+
+                    } else {
+                        signUpMajorViewModel.major.remove(getString(R.string.mechanical_engineering))
+                        binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    }
+
             }
             designEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    signUpMajorViewModel.majorHashMap.put(2, getString(R.string.design_engineering))
-                    binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    if(signUpMajorViewModel.isAddMajorPossible()) {
+                        signUpMajorViewModel.major.add(getString(R.string.design_engineering_normal))
+                        binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    } else {
+                        designEngineeringCheckbox.isChecked = false
+                        shortToast { getString(R.string.sign_up_major_limit_message)}
+                    }
+
                 } else {
-                    signUpMajorViewModel.majorHashMap.remove(2)
+                    signUpMajorViewModel.major.remove(getString(R.string.design_engineering_normal))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             mechatronicsEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    signUpMajorViewModel.majorHashMap.put(3, getString(R.string.mechatronics_engineering))
-                    binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    if(signUpMajorViewModel.isAddMajorPossible()) {
+                        signUpMajorViewModel.major.add(getString(R.string.mechatronics_engineering))
+                        binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    } else {
+                        mechatronicsEngineeringCheckbox.isChecked = false
+                        shortToast { getString(R.string.sign_up_major_limit_message)}
+                    }
+
                 } else {
-                    signUpMajorViewModel.majorHashMap.remove(3)
+                    signUpMajorViewModel.major.remove(getString(R.string.mechatronics_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             industryManagementCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    signUpMajorViewModel.majorHashMap.put(4, getString(R.string.industrial_management))
-                    binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    if(signUpMajorViewModel.isAddMajorPossible()) {
+                        signUpMajorViewModel.major.add(getString(R.string.industrial_management))
+                        binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    } else {
+                        industryManagementCheckbox.isChecked = false
+                        shortToast { getString(R.string.sign_up_major_limit_message)}
+                    }
+
                 } else {
-                    signUpMajorViewModel.majorHashMap.remove(4)
+                    signUpMajorViewModel.major.remove(getString(R.string.industrial_management))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             energyEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    signUpMajorViewModel.majorHashMap.put(5, getString(R.string.energy_engineering))
-                    binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    if(signUpMajorViewModel.isAddMajorPossible()) {
+                        signUpMajorViewModel.major.add(getString(R.string.energy_engineering))
+                        binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    } else {
+                        energyEngineeringCheckbox.isChecked = false
+                        shortToast { getString(R.string.sign_up_major_limit_message)}
+                    }
+
                 } else {
-                    signUpMajorViewModel.majorHashMap.remove(5)
+                    signUpMajorViewModel.major.remove(getString(R.string.energy_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             electronicEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    signUpMajorViewModel.majorHashMap.put(6, getString(R.string.electronic_engineering))
-                    binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    if(signUpMajorViewModel.isAddMajorPossible()) {
+                        signUpMajorViewModel.major.add(getString(R.string.electronic_engineering))
+                        binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    } else {
+                        electronicEngineeringCheckbox.isChecked = false
+                        shortToast { getString(R.string.sign_up_major_limit_message)}
+                    }
+
                 } else {
-                    signUpMajorViewModel.majorHashMap.remove(6)
+                    signUpMajorViewModel.major.remove(getString(R.string.electronic_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }
             computerEngineeringCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    signUpMajorViewModel.majorHashMap.put(7, getString(R.string.computer_engineering))
-                    binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    if(signUpMajorViewModel.isAddMajorPossible()) {
+                        signUpMajorViewModel.major.add(getString(R.string.computer_engineering))
+                        binding.majorCompleteButton.isEnabled = checkBoxCheck()
+                    } else {
+                        computerEngineeringCheckbox.isChecked = false
+                        shortToast { getString(R.string.sign_up_major_limit_message)}
+                    }
+
                 } else {
-                    signUpMajorViewModel.majorHashMap.remove(7)
+                    signUpMajorViewModel.major.remove(getString(R.string.computer_engineering))
                     binding.majorCompleteButton.isEnabled = checkBoxCheck()
                 }
             }

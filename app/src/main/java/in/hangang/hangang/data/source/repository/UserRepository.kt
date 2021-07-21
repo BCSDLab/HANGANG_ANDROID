@@ -18,7 +18,7 @@ class UserRepository(
     private val userRemoteDataSource: UserDataSource
 ) : UserDataSource {
     override fun signUp(
-        major: Array<String>,
+        major: ArrayList<String>,
         nickName: String,
         password: String,
         portalAccount: String

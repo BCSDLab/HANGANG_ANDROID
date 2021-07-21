@@ -15,6 +15,7 @@
     <color name="white1">#FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
 
+    <color name="gray_600">#fffefe</color>
     <color name="gray_500">#999999</color>
     <color name="gray_400">#fafafa</color>
     <color name="gray_300">#eeeeee</color>

@@ -23,7 +23,7 @@ class UserRemoteDataSource(
 ) :
         UserDataSource {
     override fun signUp(
-            major: Array<String>,
+            major: ArrayList<String>,
             nickName: String,
             password: String,
             portalAccount: String

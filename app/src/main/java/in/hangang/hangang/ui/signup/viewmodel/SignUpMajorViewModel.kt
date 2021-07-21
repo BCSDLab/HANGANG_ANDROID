@@ -25,9 +25,8 @@ class SignUpMajorViewModel(
     val nickName: String = _nickName
     val password: String = _password
     var majorHashMap: HashMap<Int, String> = HashMap<Int, String>()
-    var major = emptyArray<String>()
+    var major = ArrayList<String>()
     fun signUp(
-            major: Array<String>,
             nickName: String,
             password: String,
             portalAccount: String
@@ -48,5 +47,8 @@ class SignUpMajorViewModel(
                             }).addTo(compositeDisposable)
         }
 
+    }
+    fun isAddMajorPossible(): Boolean {
+        return major.size < 2
     }
 }

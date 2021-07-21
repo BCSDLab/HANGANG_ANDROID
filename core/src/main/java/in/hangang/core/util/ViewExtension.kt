@@ -15,3 +15,20 @@ fun View.disableClickTemporarily(){
         isClickable = true
     },500)
 }
+inline fun View.setOnSingleClickListener(
+    interval: Long = 600L,
+    crossinline action: (View) -> Unit
+) {
+    var clickable = true
+    setOnClickListener {
+        if (clickable) {
+            clickable = false
+            this.run {
+                postDelayed({ clickable = true }, interval)
+                action(this)
+            }
+        } else {
+            LogUtil.d("Double Clicked wait for $interval")
+        }
+    }
+}

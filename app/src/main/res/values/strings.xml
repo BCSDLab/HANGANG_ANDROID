@@ -56,6 +56,7 @@
     <string name="sign_up_email_duplicated_error_message">이미 가입된 이메일입니다!</string>
     <string name="sign_up_email_five_limit_title">인증 횟수가 초과되었습니다.</string>
     <string name="sign_up_email_five_limit_message">하루 최대 5번의 인증 횟수가\n만료되어 24시간 이후에 이용하실 수 있습니다.</string>
+    <string name="sign_up_major_limit_message">"전송은 최대 2개까지만 선택 가능합니다" </string>
 
     <string name="reset_password_app_bar_title">비밀번호 찾기</string>
     <string name="reset_password_auth_koreatech_email_title">학교 이메일 인증</string>
@@ -93,6 +94,7 @@
 
     <string name="mechanical_engineering">기계공학부</string>
     <string name="design_engineering">디자인·건축공학부</string>
+    <string name="design_engineering_normal">디자인건축공학부</string>
     <string name="mechatronics_engineering">메카트로닉스공학부</string>
     <string name="industrial_management">산업경영학부</string>
     <string name="energy_engineering">에너지신소재화학공학부</string>
