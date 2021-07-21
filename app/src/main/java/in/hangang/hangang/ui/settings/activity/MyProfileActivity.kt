@@ -72,6 +72,7 @@ class MyProfileActivity : ViewBindingActivity<ActivityMyProfileBinding>() {
             }
             binding.profileMajorSecondDelete.setOnClickListener {
                 myProfileViewModel.bottomSheetSelectedMajorList.removeAt(1)
+                addMajor.isVisible = true
                 majorSecondViews(false)
             }
 
