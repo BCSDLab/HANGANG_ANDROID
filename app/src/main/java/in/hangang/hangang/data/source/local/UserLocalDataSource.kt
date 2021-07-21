@@ -23,7 +23,7 @@ class UserLocalDataSource : UserDataSource {
     private var user: User? = null
 
     override fun signUp(
-            major: Array<String>,
+            major: ArrayList<String>,
             nickName: String,
             password: String,
             portalAccount: String

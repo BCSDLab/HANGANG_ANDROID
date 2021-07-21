@@ -44,7 +44,6 @@ class SignUpEmailActivity : ViewBindingActivity<ActivitySignUpEmailBinding>() {
                 var intent = Intent(this, SignUpActivity::class.java).run {
                     putExtra("id", binding.emailEditText.text.toString())
                     startActivity(this)
-                    finish()
                 }
             } else {
                 binding.signupEmailConfigErrorTextview.text = getString(R.string.sign_up_email_config_error_message)
