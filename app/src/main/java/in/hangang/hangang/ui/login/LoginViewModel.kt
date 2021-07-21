@@ -35,8 +35,11 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModelBase
             }, { _ ->
                 _errorConfig.value = true
             }).addTo(compositeDisposable)
+    }
 
-
+    fun saveAutoLoginStatus(isAutoLoginActive : Boolean){
+        userRepository.saveAutoLogin(isAutoLoginActive)
+            .subscribe {}
     }
 
 
