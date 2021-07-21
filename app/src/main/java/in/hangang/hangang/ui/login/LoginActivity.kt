@@ -52,6 +52,7 @@ class LoginActivity : ViewBindingActivity<ActivityLoginBinding>() {
         with(loginViewModel) {
             isLoginSuccess.observe(this@LoginActivity) {
                 if (it) {
+                    saveAutoLoginStatus(true)
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
                 }
