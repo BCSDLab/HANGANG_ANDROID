@@ -22,11 +22,12 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.AdapterView
+import android.widget.HorizontalScrollView
 import android.widget.RatingBar
+import androidx.core.widget.NestedScrollView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
@@ -94,6 +95,12 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
                 }
 
             })
+            isLoading.observe(this@LectureEvaluationActivity, {
+                if(it)
+                    showProgressDialog()
+                else
+                    hideProgressDialog()
+            })
         }
     }
     fun init(){
@@ -121,6 +128,9 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
                         isKeyboardShowing = true
                         binding.root.setPadding(0, 0, 0, keypadHeight)
                         var height = keypadHeight -keypadBaseHeight
+                        lifecycleScope.launch {
+                            focusOnViewAsync(binding.lectureEvaluationNestedscrollview, binding.lectureEvaluationCompleteButton)
+                        }
 
                     }
                 } else {
@@ -153,6 +163,12 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
         lectureEvaluationViewModel.hashTag.add(1)
 
 
+    }
+    private fun CoroutineScope.focusOnViewAsync(
+        scroll: NestedScrollView,
+        view: RoundedCornerButton
+    ) = async(Dispatchers.Main) {
+        scroll.smoothScrollTo(0,view.bottom)
     }
     inner class LectureEvaluateRatingbarChangeListener: RatingBar.OnRatingBarChangeListener{
         override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
@@ -248,6 +264,7 @@ class LectureEvaluationActivity : ViewBindingActivity<ActivityLectureEvaluationB
         }
         binding.lectureEvaluationCompleteButton.setOnClickListener {
             if(it.isEnabled) {
+                LogUtil.e("CLick")
                 lectureEvaluationViewModel.comment = binding.lectureEvaluationComment.text.toString()
                 lectureEvaluationViewModel.rating = binding.lectureEvaluationRatingBar.rating
                 lectureEvaluationViewModel.postEvaluation()
