@@ -5,6 +5,7 @@
     android:isScrollContainer="true">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/lecture_evaluation_nestedscrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
