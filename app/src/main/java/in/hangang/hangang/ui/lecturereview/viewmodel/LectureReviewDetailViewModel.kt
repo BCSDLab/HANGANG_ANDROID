@@ -78,48 +78,57 @@ class LectureReviewDetailViewModel(
     //var lectureReviewItem = MutableLiveData<LectureReview>()
 
     fun reportLectureReview(lectureReviewReportRequest: LectureReviewReportRequest) {
+        LogUtil.e("reportLectureReview1")
         lectureRepository.reportLectureReview(lectureReviewReportRequest)
             .handleHttpException()
             .handleProgress(this)
             .withThread()
             .subscribe({
                 _reportResult.value = it
+                LogUtil.e("reportLectureReview2")
             }, { LogUtil.e(it.message.toString()) })
             .addTo(compositeDisposable)
     }
     fun getPersonalReviewCount(id:Int, keyword: String?, sort: String) {
+        LogUtil.e("getPersonlReviewCOunt1")
         lectureRepository.getLectureReviewPersonalCount(id,keyword, sort)
             .handleHttpException()
             .handleProgress(this)
             .withThread()
             .subscribe({
                 _reviewCount.value = it.count
+                LogUtil.e("getPersonlReviewCOunt2")
             }, {
                 LogUtil.e(it.message.toString())
             })
     }
     fun getReviewList(id: Int, keyword: String?, sort: String) {
+        LogUtil.e("getReviewList1")
         lectureRepository.getLectureReviewList(id, keyword, sort)
             .cachedIn(viewModelScope)
             .subscribe {
                 _reviewList.value = it
+                LogUtil.e("getReviewList2")
             }
             .addTo(compositeDisposable)
     }
 
     fun getRecommentedDocs(keyword: String) {
+        LogUtil.e("getRecommentedDocs2")
         lectureRepository.getRecommentedDocs(keyword)
             .handleHttpException()
             .handleProgress(this)
             .withThread()
             .subscribe({
                 _recommendedDocs.value = it.result
+                LogUtil.e("getRecommentedDocs2")
             }, {
                 LogUtil.e(it.message.toString())
             })
     }
 
     fun getEvaluationRating(id: Int) {
+        LogUtil.e("getEvaluationRationg1")
         lectureRepository.getEvaluationRating(id)
             .handleHttpException()
             .handleProgress(this)
@@ -127,6 +136,7 @@ class LectureReviewDetailViewModel(
             .map { it -> getBarEntryList(it) }
             .subscribe({
                 _chartList.value = it
+                LogUtil.e("getEvaluationRationg2")
             }, {
                 LogUtil.e("Error : ${it.toCommonResponse().errorMessage}")
             })
@@ -134,12 +144,14 @@ class LectureReviewDetailViewModel(
     }
 
     fun getEvaluationTotal(id: Int) {
+        LogUtil.e("getEvaluationTOtal1")
         lectureRepository.getEvaluationTotal(id)
             .handleHttpException()
             .handleProgress(this)
             .withThread()
             .subscribe({
                 _evaluationTotal.value = it
+                LogUtil.e("getEvaluationTOtal2")
             }, {
                 LogUtil.e("Error : ${it.toCommonResponse().errorMessage}")
             })
@@ -157,6 +169,7 @@ class LectureReviewDetailViewModel(
     }
 
     fun postReviewRecommend(reviewId: Int) {
+        LogUtil.e("postReviewRecommend1")
         var reviewRecommendRequest = ReviewRecommendRequest(reviewId)
         lectureRepository.postReviewRecommend(reviewRecommendRequest)
             .handleHttpException()
@@ -164,6 +177,7 @@ class LectureReviewDetailViewModel(
             .withThread()
             .subscribe({
                 commonResponse.value = it
+                LogUtil.e("postReviewRecommend2")
             }, {
                 LogUtil.e(it.message.toString())
             })
@@ -230,12 +244,14 @@ class LectureReviewDetailViewModel(
         }
     }
     fun addLectureInTimeTable(classLectureId: Int, timetableId: Int) {
+        LogUtil.e("add;ectireInTimeTable1")
         timeTableRepository.addLectureInTimeTable(classLectureId, timetableId)
             .handleHttpException()
             .handleProgress(this)
             .withThread()
             .subscribe({
                 //commonResponse.value = it
+                LogUtil.e("add;ectireInTimeTable2")
             }, {
                 LogUtil.e(it.message.toString())
             })
@@ -248,12 +264,14 @@ class LectureReviewDetailViewModel(
             .withThread()
             .subscribe({
                 commonResponse.value = it
+                LogUtil.e("deletelectureintimetable")
             }, {
                 LogUtil.e(it.message.toString())
             })
             .addTo(compositeDisposable)
     }
     fun postScrap(id: Int) {
+        LogUtil.e("postscrap1")
         var scrapedLecture: LectureEvaluationIdRequest = LectureEvaluationIdRequest(id)
         lectureRepository.postScrapedLecture(scrapedLecture)
             .handleHttpException()
@@ -261,6 +279,7 @@ class LectureReviewDetailViewModel(
             .withThread()
             .subscribe({
                 _scrapResult.value = it
+                LogUtil.e("postscrap2")
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage.toString())
             })
@@ -275,6 +294,7 @@ class LectureReviewDetailViewModel(
             .handleProgress(this)
             .withThread()
             .subscribe({
+                LogUtil.e("deleteScrap")
                 _scrapResult.value = it
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage.toString())
@@ -304,12 +324,14 @@ class LectureReviewDetailViewModel(
         }
     }
     fun getSemesterId(){
+        LogUtil.e("semeste1")
         timeTableRepository.getSemesterNow()
             .handleHttpException()
             .handleProgress(this)
             .withThread()
             .subscribe({
                 _semester.value = it
+                LogUtil.e("semester2")
             }, {
                 LogUtil.e(it.toCommonResponse().errorMessage.toString())
             })

@@ -189,12 +189,7 @@ class LectureReviewDetailFragment : ViewBindingFragment<FragmentLectureReviewDet
                     lectureDetailReviewAdapter.submitData(lifecycle, it)
                 }
             })
-            isLoading.observe(viewLifecycleOwner, {
-                if (it) {
-                    showProgressDialog()
-                } else
-                    hideProgressDialog()
-            })
+
             reportResult.observe(viewLifecycleOwner, {
                 if (it.httpStatus == "OK") {
                     makeReportResultDialog(
