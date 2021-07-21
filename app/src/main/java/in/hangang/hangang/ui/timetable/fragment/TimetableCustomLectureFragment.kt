@@ -65,6 +65,9 @@ class TimetableCustomLectureFragment :
     }
 
     private fun initView() {
+        binding.root.setOnClickListener {
+            //여백 터치 시 의도치 않은 동작 방지
+        }
         binding.buttonTimetableCustomLectureAddTime.setOnClickListener {
             HangangDialogUtil.makeTimetableCustomLectureTimePickerDialog(requireContext()) { week: Int, startTime: Pair<Int, Int>, endTime: Pair<Int, Int> ->
                 timetableViewModel.addTimestamp(

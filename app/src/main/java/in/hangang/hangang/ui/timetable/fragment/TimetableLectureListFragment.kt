@@ -2,6 +2,7 @@ package `in`.hangang.hangang.ui.timetable.fragment
 
 import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
+import `in`.hangang.core.util.hideKeyboard
 import `in`.hangang.core.view.button.checkbox.FilledCheckBox
 import `in`.hangang.core.view.childViews
 import `in`.hangang.hangang.R
@@ -15,6 +16,8 @@ import `in`.hangang.hangang.ui.timetable.listener.TimetableLectureListener
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -87,16 +90,24 @@ class TimetableLectureListFragment : ViewBindingFragment<FragmentTimetableLectur
             }
         }
         binding.timetableLectureSearchBar.setSearchListener {
+            requireActivity().hideKeyboard()
             timetableLectureListViewModel.setLectureFilter(
                     getLectureFilter().copy(
                             keyword = it
                     )
             )
         }
+        binding.timetableLectureSearchBar.searchField.onFocusChangeListener = null
+        binding.timetableLectureSearchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if(s.isNullOrEmpty()) binding.timetableLectureSearchBar.search()
+            }
+        })
         binding.buttonTimetableLectureFilter.setOnClickListener {
             timetableLectureFilterActivityResult.launch(getLectureFilter())
         }
-
 
         binding.recyclerViewTimetableLectures.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTimetableLectures.adapter = timetableLectureAdapter

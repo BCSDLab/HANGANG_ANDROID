@@ -4,6 +4,7 @@ import `in`.hangang.core.base.fragment.ViewBindingFragment
 import `in`.hangang.core.livedata.EventObserver
 import `in`.hangang.core.progressdialog.changeProgressState
 import `in`.hangang.core.util.DialogUtil
+import `in`.hangang.core.util.hideKeyboard
 import `in`.hangang.core.view.appbar.appBarImageButton
 import `in`.hangang.core.view.appbar.appBarTextButton
 import `in`.hangang.core.view.appbar.interfaces.OnAppBarButtonClickListener
@@ -17,7 +18,9 @@ import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureDetailViewMod
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableLectureListViewModel
 import `in`.hangang.hangang.ui.timetable.viewmodel.TimetableViewModel
 import `in`.hangang.hangang.util.file.FileUtil
+import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +28,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -62,6 +66,18 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
             }
         }
+
+    val requestReadPermissionResult = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if(it) {
+            timetableViewModel.getTimetableBitmapImage(
+                fileUtil,
+                binding.timetableHeader,
+                binding.timetableLayout
+            )
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.timetable_require_permission_message), Toast.LENGTH_SHORT).show()
+        }
+    }
 
     private val appBarOpenTimetableListButton by lazy {
         appBarImageButton(R.drawable.ic_list)
@@ -193,7 +209,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                 showCommonErrorDialog(it.message ?: "")
             })
             onlyCustomLectureEvent.observe(viewLifecycleOwner, EventObserver {
-                if(it) showCanOnlyAddCustomLectureTimetableDialog()
+                if (it) showCanOnlyAddCustomLectureTimetableDialog()
             })
         }
 
@@ -205,7 +221,12 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
         }
         with(binding.timetableLayout) {
             setOnClickListener {
-                timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
+                requireActivity().hideKeyboard()
+                if (timetableViewModel.mode.value == TimetableViewModel.Mode.MODE_LECTURE_LIST ||
+                    timetableViewModel.mode.value == TimetableViewModel.Mode.MODE_LECTURE_DETAIL
+                ) {
+                    timetableViewModel.setMode(TimetableViewModel.Mode.MODE_NORMAL)
+                }
             }
             setTimetableItemClickListener { view: View, lectureTimeTable: LectureTimeTable ->
                 timetableViewModel.setMode(TimetableViewModel.Mode.MODE_LECTURE_DETAIL)
@@ -308,11 +329,15 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
                     }
                 }
                 R.id.menu_item_save_image -> {
-                    timetableViewModel.getTimetableBitmapImage(
-                        fileUtil,
-                        binding.timetableHeader,
-                        binding.timetableLayout
-                    )
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        timetableViewModel.getTimetableBitmapImage(
+                            fileUtil,
+                            binding.timetableHeader,
+                            binding.timetableLayout
+                        )
+                    } else {
+                        requestReadPermissionResult.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    }
                 }
                 R.id.menu_item_edit_timetable_name -> {
                     showEditTimeTableNameDialog()
@@ -414,7 +439,7 @@ class TimetableFragment : ViewBindingFragment<FragmentTimetableBinding>() {
     private fun showCommonErrorDialog(message: String) {
         DialogUtil.makeSimpleDialog(
             requireContext(),
-            message = if(message.isNullOrBlank())
+            message = if (message.isNullOrBlank())
                 getString(R.string.common_error_message) else message,
             positiveButtonText = getString(R.string.ok),
             positiveButtonOnClickListener = { dialog, _ ->
