@@ -8,7 +8,9 @@ import `in`.hangang.hangang.constant.REFRESH_TOKEN
 import `in`.hangang.hangang.ui.login.LoginActivity
 import android.content.Context
 import android.content.Intent
+import android.os.Looper
 import android.widget.Toast
+import androidx.core.os.HandlerCompat
 import com.orhanobut.hawk.Hawk
 import io.reactivex.rxjava3.subjects.PublishSubject
 import okhttp3.Authenticator
@@ -85,15 +87,19 @@ class TokenAuthenticator(
     }
 
     private fun goToLoginActivity(){
+        val handler = HandlerCompat.createAsync(Looper.getMainLooper())
         Intent(context.applicationContext, LoginActivity::class.java).run {
-            Toast.makeText(
-                context.applicationContext,
-                context.getString(R.string.token_expired),
-                Toast.LENGTH_SHORT
-            ).show()
+            handler.post{
+                Toast.makeText(
+                    context.applicationContext,
+                    context.getString(R.string.token_expired),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(this)
         }
+
     }
 
     companion object {
